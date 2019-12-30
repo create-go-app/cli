@@ -1,0 +1,7 @@
+# OS specific
+**/.DS_Store
+
+# Dev builds
+**/app/
+**/build/
+pkged.go

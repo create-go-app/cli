@@ -1,0 +1,8 @@
+# OS specific
+.DS_store
+
+# Dev builds
+**/build/
+
+# Node.js dependencies
+**/node_modules/
