@@ -1,4 +1,4 @@
-<h1 align="center">🕶 CLI for Create Go App</h1>
+<h1 align="center">🕶 Create Go App CLI</h1>
 <h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
 
 <img width="100%" src="images/screenshot.jpg" alt="Create Go App screenshot"/>
@@ -44,6 +44,24 @@ GLOBAL OPTIONS:
 ```
 
 > **Note:** `--path` and `--frontend` commands are _optional_, because they have default values.
+
+## Available production-ready templates
+
+**Golang:**
+
+- [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
+
+**JavaScript:**
+
+- [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with Preact ([preactjs/preact](https://github.com/preactjs/preact)).
+
+### User templates
+
+Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `--backend` (or/and `--frontend`) with HTTPS address to your repository and run:
+
+```console
+foo@bar:~$ cgapp -n another-app -b https://github.com/user/my-backend-template
+```
 
 ## Requirements
 
