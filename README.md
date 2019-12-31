@@ -3,11 +3,45 @@
 
 <img width="100%" src="images/screenshot.jpg" alt="Create Go App screenshot"/>
 
+<br/>
+
 ## The Why?
 
 <img align="right" width="196px" src="images/logo_gopher.png" alt="Create Go App logo"/>
 
 Coming soon...
+
+<br/>
+
+## Install
+
+Coming soon...
+
+## Usage
+
+```console
+foo@bar:~$ cgapp [command] [value]
+```
+
+For example, if you want to create new app called `my-app` into `./app` folder with [labstack/echo](https://github.com/labstack/echo) on backend and [Preact.js](https://github.com/preactjs/preact) as frontend, just run:
+
+```console
+foo@bar:~$ cgapp -n my-app -b echo -f preact -p ./app
+```
+
+You can see all available CLI commands by running `cgapp` with `--help`:
+
+```console
+foo@bar:~$ cgapp --help
+
+GLOBAL OPTIONS:
+   --name value, -n value      name of your go module, ex. github.com/user/my-app
+   --path value, -p value      path to create app, ex. ~/projects/my-app (default: ".")
+   --backend value, -b value   backend for your app, ex. Echo, Gin, Iris, net/http
+   --frontend value, -f value  frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
+   --help, -h                  show help (default: false)
+   --version, -v               print the version (default: false)
+```
 
 ## Requirements
 
