@@ -7,6 +7,8 @@
 
 <img align="right" width="196px" src="images/logo_gopher.png" alt="Create Go App logo"/>
 
+Coming soon...
+
 ## Requirements
 
 - Go `1.11+`
