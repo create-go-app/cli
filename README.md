@@ -18,8 +18,9 @@
 
 ### Sponsors
 
+| Logo | Sponsor description | Link to website |
 | ------------ | ------------- | ------------- |
-| <img align="center" width="100px" src="images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | True web artisans: IT specialists around the world, who are ready to share their experience to solve your business objectives. | [https://1wa.co](https://1wa.co) |
+| <img align="center" width="100px" src="images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — IT specialists around the world, who are ready to share their experience to solve your business objectives. | [https://1wa.co](https://1wa.co) |
 
 ## Project assistance
 
