@@ -1,4 +1,4 @@
-<h1 align="center">🔧 CLI for Create Go App</h1>
+<h1 align="center">🕶 CLI for Create Go App</h1>
 <h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
 
 <img width="100%" src="images/screenshot.jpg" alt="Create Go App screenshot"/>
