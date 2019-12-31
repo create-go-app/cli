@@ -23,13 +23,13 @@ Coming soon...
 foo@bar:~$ cgapp [command] [value]
 ```
 
-For example, if you want to create new app called `my-app` into `./app` folder with [labstack/echo](https://github.com/labstack/echo) on backend and [Preact.js](https://github.com/preactjs/preact) as frontend, just run:
+> **For example:** if you want to create new app called `my-app` into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend, just run:
+>
+>```console
+>foo@bar:~$ cgapp -n my-app -b echo -f preact -p ./app
+>```
 
-```console
-foo@bar:~$ cgapp -n my-app -b echo -f preact -p ./app
-```
-
-You can see all available CLI commands by running `cgapp` with `--help`:
+You can see all available CLI commands (short and full names) by running `cgapp` with `--help`:
 
 ```console
 foo@bar:~$ cgapp --help
