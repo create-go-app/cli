@@ -43,6 +43,8 @@ GLOBAL OPTIONS:
    --version, -v               print the version (default: false)
 ```
 
+> **Note:** `--path` and `--frontend` commands are _optional_, because they have default values.
+
 ## Requirements
 
 - Go `1.11+`
