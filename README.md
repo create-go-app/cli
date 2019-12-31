@@ -16,12 +16,6 @@
 
 - Idea and active development by [Vic Shóstak](https://github.com/koddr) (aka Koddr).
 
-### Sponsors
-
-| Logo | Sponsor description | URL |
-| ------------ | ------------- | ------------- |
-| <img align="center" width="100px" src="images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — IT specialists around the world, who are ready to share their experience to solve your business objectives. | [https://1wa.co](https://1wa.co) |
-
 ## Project assistance
 
 If you want to say «thank you» or/and support active development `create-go-app/cli`:
@@ -32,6 +26,13 @@ If you want to say «thank you» or/and support active development `create-go-ap
 4. Join DigitalOcean at our [referral link](https://m.do.co/c/b41859fa9b6e) (your profit is **\$100** and we get \$25).
 
 Thanks for your support! 😘 Together, we make this project better every day.
+
+### Sponsors
+
+| Logo | Sponsor description | URL |
+| ------------ | ------------- | ------------- |
+| <img align="center" width="100px" src="images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — IT specialists around the world, who are ready to share their experience to solve your business objectives. | [https://1wa.co](https://1wa.co) |
+|  | <div align="center">💡 <a href="mailto:truewebartisans@gmail.com">Want to become a sponsor too?</a></div> |  |
 
 ## License
 
