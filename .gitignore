@@ -5,3 +5,6 @@
 **/app/
 **/build/
 pkged.go
+
+# Tests
+**/tmp/

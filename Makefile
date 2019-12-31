@@ -2,8 +2,11 @@
 
 run:
 	rm -rf ./app \
-	&& mkdir ./app \
 	&& ./build/macOS/cgapp -n my-app -b echo -f preact -p ./app
+
+clean:
+	rm -rf ./build ./app
+	@echo "[✔️] Project was cleaned!"
 
 build-macosx:
 	rm -rf ./build ./app ./configs/**/.DS_Store \
