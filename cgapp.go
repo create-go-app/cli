@@ -4,31 +4,40 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/markbates/pkger"
+	"github.com/schollz/progressbar/v2"
 	"github.com/urfave/cli/v2"
 	"gopkg.in/src-d/go-git.v4"
 )
 
 const (
-	noColor string = "\033[0m"
-	red     string = "\033[0;31m"
-	green   string = "\033[0;32m"
-	cyan    string = "\033[0;36m"
-	yellow  string = "\033[1;33m"
+	noColor      string = "\033[0m"
+	red          string = "\033[0;31m"
+	green        string = "\033[0;32m"
+	cyan         string = "\033[0;36m"
+	yellow       string = "\033[1;33m"
+	configFolder string = "/configs"
 )
 
 var (
-	appName      string
-	appBackend   string
-	appFrontend  string
-	appPath      string
-	configFolder string = "/configs"
-	registry            = map[string]string{
-		"echo":   "create-go-app/echo-go-template",
+	appName     string
+	appBackend  string
+	appFrontend string
+	appPath     string
+	registry    = map[string]string{
+		// "net/http": "create-go-app/net_http-go-template",
+		"echo": "create-go-app/echo-go-template",
+		// "gin":      "create-go-app/gin-go-template",
+		// "iris":     "create-go-app/iris-go-template",
+		// "react":    "create-go-app/react-js-template",
 		"preact": "create-go-app/preact-js-template",
+		// "vue":      "create-go-app/vue-js-template",
+		// "svelte":   "create-go-app/svelte-js-template",
 	}
 )
 
@@ -54,28 +63,14 @@ func main() {
 	cgapp := &cli.App{
 		Name:    "cgapp",
 		Usage:   "set up a new Go (Golang) full stack app by running one command.",
-		Version: "0.1.0",
+		Version: "0.1.2",
 		Flags: []cli.Flag{
-			&cli.StringFlag{
-				Name:        "name",
-				Aliases:     []string{"n"},
-				Usage:       "name of your go module, ex. github.com/user/my-app",
-				Required:    true,
-				Destination: &appName,
-			},
-			&cli.StringFlag{
-				Name:        "path",
-				Aliases:     []string{"p"},
-				Value:       ".",
-				Usage:       "path to create app, ex. ~/projects/my-app",
-				Required:    false,
-				Destination: &appPath,
-			},
 			&cli.StringFlag{
 				Name:        "backend",
 				Aliases:     []string{"b"},
+				Value:       "net/http",
 				Usage:       "backend for your app, ex. Echo, Gin, Iris, net/http",
-				Required:    true,
+				Required:    false,
 				Destination: &appBackend,
 			},
 			&cli.StringFlag{
@@ -85,6 +80,14 @@ func main() {
 				Usage:       "frontend for your app, ex. (P)React, Vue, Svelte",
 				Required:    false,
 				Destination: &appFrontend,
+			},
+			&cli.StringFlag{
+				Name:        "path",
+				Aliases:     []string{"p"},
+				Value:       ".",
+				Usage:       "path to create app, ex. ~/projects/my-app",
+				Required:    false,
+				Destination: &appPath,
 			},
 		},
 		Action: func(c *cli.Context) error {
@@ -107,7 +110,7 @@ func main() {
 			fmt.Printf("\n%v▼ Creating app backend%v\n\n", cyan, noColor)
 			errChecker(createApp(&appConfig{
 				name:   strings.ToLower(appBackend),
-				match:  "^(nethttp|echo|gin|iris)$",
+				match:  "^(net/http|echo|gin|iris)$",
 				view:   "backend",
 				folder: appPath,
 			}))
@@ -122,11 +125,31 @@ func main() {
 					view:   "frontend",
 					folder: appPath,
 				}))
+
+				// Install dependencies for frontend
+				fmt.Printf("\n%v▼ Installing frontend dependencies%v (may take some time!)\n\n", cyan, noColor)
+
+				// Create progress bar with 0%
+				bar := progressbar.NewOptions(100, progressbar.OptionSetRenderBlankState(true))
+
+				// Go to ./frontend folder and run npm install
+				cmd := exec.Command("npm", "install")
+				cmd.Dir = appPath + string(os.PathSeparator) + "frontend"
+				errChecker(cmd.Run())
+
+				// Run progress bar from 0% to 100%
+				for i := 0; i < 100; i++ {
+					bar.Add(1)
+					time.Sleep(10 * time.Millisecond)
+				}
+
+				// Show report
+				fmt.Printf("\n\n%v[✔️]%v Frontend dependencies was installed!\n", green, noColor)
 			}
 
 			// Show report
 			fmt.Printf(
-				"\n%v👌 Done! Run `docker-compose up` from folder '%v'...%v\n\n",
+				"\n%v👌 Done! Run `make` from folder '%v'...%v\n\n",
 				green, appPath, noColor,
 			)
 
@@ -134,6 +157,7 @@ func main() {
 			return nil
 		},
 	}
+
 	// Run CLI app
 	errChecker(cgapp.Run(os.Args))
 }
@@ -195,7 +219,7 @@ func createApp(c *appConfig) error {
 	} else {
 		// Else create from user template (from GitHub, etc)
 		_, err := git.PlainClone(folder, false, &git.CloneOptions{
-			URL:      c.name,
+			URL:      "https://" + c.name,
 			Progress: os.Stdout,
 		})
 		errChecker(err)
