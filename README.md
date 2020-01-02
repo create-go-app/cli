@@ -46,7 +46,7 @@ GLOBAL OPTIONS:
    --version, -v               print the version (default: false)
 ```
 
-> **Please note:** all commands are _optional_, because they have default values. Default app is built-in `net/http` on backend without any frontend into current folder.
+> **Please note:** all commands are _optional_, because they have a default values. Default app is built-in `net/http` on backend without any frontend into current folder.
 
 ## Available production-ready templates
 
