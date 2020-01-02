@@ -16,25 +16,32 @@ import (
 )
 
 const (
-	noColor      string = "\033[0m"
-	red          string = "\033[0;31m"
-	green        string = "\033[0;32m"
-	cyan         string = "\033[0;36m"
-	yellow       string = "\033[1;33m"
+	// Colors:
+	red    string = "\033[0;31m"
+	green  string = "\033[0;32m"
+	cyan   string = "\033[0;36m"
+	yellow string = "\033[1;33m"
+
+	// Clear color
+	noColor string = "\033[0m"
+
+	// Configs folder
 	configFolder string = "/configs"
 )
 
 var (
-	appName     string
+	// App options:
 	appBackend  string
 	appFrontend string
 	appPath     string
-	registry    = map[string]string{
-		// "net/http": "create-go-app/net_http-go-template",
-		"echo": "create-go-app/echo-go-template",
+
+	// Templates registry
+	registry = map[string]string{
+		"net/http": "create-go-app/net_http-go-template",
+		"echo":     "create-go-app/echo-go-template",
 		// "gin":      "create-go-app/gin-go-template",
 		// "iris":     "create-go-app/iris-go-template",
-		// "react":    "create-go-app/react-js-template",
+		"react":  "create-go-app/react-js-template",
 		"preact": "create-go-app/preact-js-template",
 		// "vue":      "create-go-app/vue-js-template",
 		// "svelte":   "create-go-app/svelte-js-template",
@@ -92,7 +99,7 @@ func main() {
 		},
 		Action: func(c *cli.Context) error {
 			// Start message
-			fmt.Printf("\n%v▶️ Start creating new app '%v'...%v\n", yellow, appName, noColor)
+			fmt.Printf("\n%v▶️ Start creating new app...%v\n", yellow, noColor)
 
 			// Create app folder
 			errChecker(os.Mkdir(appPath, 0755))
@@ -143,11 +150,11 @@ func main() {
 					time.Sleep(10 * time.Millisecond)
 				}
 
-				// Show report
+				// Show success report
 				fmt.Printf("\n\n%v[✔️]%v Frontend dependencies was installed!\n", green, noColor)
 			}
 
-			// Show report
+			// End message
 			fmt.Printf(
 				"\n%v👌 Done! Run `make` from folder '%v'...%v\n\n",
 				green, appPath, noColor,
@@ -184,7 +191,7 @@ func createConfig(e *embedConfig) error {
 			_, err = io.Copy(to, from)
 			errChecker(err)
 
-			// Show report
+			// Show report for each file
 			fmt.Printf("— File '%v' was created!\n", folder)
 		}
 
@@ -208,7 +215,7 @@ func createApp(c *appConfig) error {
 		})
 		errChecker(err)
 
-		// Show report
+		// Show success report
 		fmt.Printf(
 			"\n%v[✔️]%v %v (%v) was created with default template '%v'!\n",
 			green, noColor,
@@ -224,7 +231,7 @@ func createApp(c *appConfig) error {
 		})
 		errChecker(err)
 
-		// Show report
+		// Show success report
 		fmt.Printf(
 			"\n%v[✔️]%v %v was created with user template '%v'!\n",
 			green, noColor,
@@ -240,7 +247,7 @@ func createApp(c *appConfig) error {
 // errChecker function for check error
 func errChecker(err error) {
 	if err != nil {
-		// Show report
+		// Show error report
 		fmt.Printf("\n%v[✘] Error: %v%v\n\n", red, err, noColor)
 		os.Exit(1)
 	}

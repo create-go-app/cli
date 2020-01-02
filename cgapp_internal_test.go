@@ -63,8 +63,8 @@ func Test_createApp(t *testing.T) {
 			"success create frontend from user template",
 			args{
 				&appConfig{
-					name:   "https://github.com/create-go-app/preact-js-template",
-					match:  "^(vue)$",
+					name:   "github.com/create-go-app/react-js-template",
+					match:  "^(react)$",
 					view:   "frontend",
 					folder: "./tmp",
 				},
