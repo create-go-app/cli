@@ -2,11 +2,11 @@
 
 run:
 	rm -rf ./app \
-	&& ./build/macOS/cgapp -n my-app -b echo -f preact -p ./app
+	&& ./build/macOS/cgapp -b echo -f preact -p ./app
 
 run-external:
 	rm -rf ~/Downloads/app \
-	&& ./build/macOS/cgapp -n my-app -b echo -f github.com/koddr/sweetconfirm.js -p ~/Downloads/app
+	&& ./build/macOS/cgapp -b echo -f github.com/koddr/sweetconfirm.js -p ~/Downloads/app
 
 clean:
 	rm -rf ./build ./app

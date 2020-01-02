@@ -215,6 +215,9 @@ func createApp(c *appConfig) error {
 		})
 		errChecker(err)
 
+		// Clean
+		os.RemoveAll(folder + string(os.PathSeparator) + ".git")
+
 		// Show success report
 		fmt.Printf(
 			"\n%v[✔️]%v %v (%v) was created with default template '%v'!\n",
@@ -230,6 +233,9 @@ func createApp(c *appConfig) error {
 			Progress: os.Stdout,
 		})
 		errChecker(err)
+
+		// Clean
+		os.RemoveAll(folder + string(os.PathSeparator) + ".git")
 
 		// Show success report
 		fmt.Printf(
