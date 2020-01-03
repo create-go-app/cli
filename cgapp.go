@@ -134,7 +134,10 @@ func main() {
 				}))
 
 				// Install dependencies for frontend
-				fmt.Printf("\n%v▼ Installing frontend dependencies%v (may take some time!)\n\n", cyan, noColor)
+				fmt.Printf(
+					"\n%v▼ Installing frontend dependencies%v (may take some time!)\n\n",
+					cyan, noColor,
+				)
 
 				// Create progress bar with 0%
 				bar := progressbar.NewOptions(100, progressbar.OptionSetRenderBlankState(true))
