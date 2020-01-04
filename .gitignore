@@ -1,10 +1,10 @@
 # OS specific
-**/.DS_Store
+.DS_Store
 
 # Dev builds
-**/app/
-**/build/
+app/
+build/
 pkged.go
 
 # Tests
-**/tmp/
+tmp/
