@@ -1,4 +1,4 @@
-<h1 align="center">🕶 Create Go App CLI</h1>
+<h1 align="center">[WIP] 🕶 Create Go App CLI</h1>
 <h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
 
 <img width="100%" src="images/screenshot.jpg" alt="Create Go App screenshot"/>
@@ -9,13 +9,13 @@
 
 <img align="right" width="196px" src="images/logo_gopher.png" alt="Create Go App logo"/>
 
-Coming soon...
+WIP
 
 <br/>
 
 ## Install
 
-Coming soon...
+WIP
 
 ## Usage
 
@@ -68,7 +68,7 @@ Create Go App CLI provide creation your own template, instead of those prepared 
 foo@bar:~$ cgapp -b github.com/user1/my-back-template -f github.com/user2/my-front-template
 ```
 
-> **Please note:** the _https://_ protocol will add automatically.
+> **Please note:** the _https_ protocol will add automatically.
 
 ## Requirements
 

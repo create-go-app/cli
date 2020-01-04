@@ -10,6 +10,10 @@ run-external:
 	rm -rf ~/Downloads/app \
 	&& $(CGAPP) -b echo -f github.com/koddr/sweetconfirm.js -p ~/Downloads/app
 
+test:
+	go test ./cmd/cgapp/*.go
+	@echo "[✔️] Project was tested!"
+
 clean:
 	rm -rf ./build ./app
 	@echo "[✔️] Project was cleaned!"
