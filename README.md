@@ -20,7 +20,7 @@ WIP
 ## Usage
 
 ```console
-foo@bar:~$ cgapp [command] [value]
+foo@bar:~$ cgapp [OPTION] [value]
 ```
 
 ### Example
