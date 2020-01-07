@@ -40,13 +40,11 @@ That's all you need! 🎉
 foo@bar:~$ cgapp [COMMAND] [OPTION] [value]
 ```
 
-### Example
+For example, create new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
 
 ```console
 foo@bar:~$ cgapp init -b echo -f preact -p ./app
 ```
-
-This created new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend.
 
 ## Commands & Options
 
