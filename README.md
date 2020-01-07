@@ -13,14 +13,26 @@ WIP
 
 <br/>
 
+## Requirements
+
+- Go `1.11+`
+- Go Modules
+
 ## Install
+
+First, `git clone` this repository and go to `./cli` folder:
 
 ```console
 foo@bar:~$ git clone https://github.com/create-go-app/cli.git
 foo@bar:~$ cd cli
+```
 
+Second, install CLI to the `$GOPATH/bin` directory (as usual):
+```console
 foo@bar:cli$ go install
 ```
+
+That's all you need! 🎉
 
 ## Usage
 
@@ -36,7 +48,7 @@ foo@bar:~$ cgapp init -b echo -f preact -p ./app
 
 This created new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend.
 
-## Options
+## Commands & Options
 
 You can see all available CLI commands (short and full names) by running command with `--help` option.
 
@@ -57,6 +69,8 @@ OPTIONS:
    --frontend value, -f value  frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
    --help, -h                  show help (default: false)
 ```
+
+> **Please note:** default app is built-in `net/http` on backend without any frontend into current folder.
 
 ### `docker`
 
@@ -80,8 +94,6 @@ OPTIONS:
    --version, -v           print the version (default: false)
 ```
 
-> **Please note:** all commands are _optional_, because they have a default values. Default app is built-in `net/http` on backend without any frontend into current folder.
-
 ## Available production-ready templates
 
 **Golang:**
@@ -94,7 +106,13 @@ OPTIONS:
 - [create-go-app/react-js-template](https://github.com/create-go-app/react-js-template) — Frontend template with React.js ([facebook/react](https://github.com/facebook/react)).
 - [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with Preact.js ([preactjs/preact](https://github.com/preactjs/preact)).
 
-### User templates
+## Configured production-ready Docker containers
+
+**Web server:**
+
+- [create-go-app/nginx-certbot-docker](https://github.com/create-go-app/nginx-certbot-docker) — Docker container with Nginx and Certbot.
+
+## User templates & containers
 
 Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `--backend` (or/and `--frontend`) with address to your repository and run:
 
@@ -103,11 +121,6 @@ foo@bar:~$ cgapp init -b github.com/user1/my-back-template -f github.com/user2/m
 ```
 
 > **Please note:** the _https_ protocol will add automatically.
-
-## Requirements
-
-- Go `1.11+`
-- Go Modules
 
 ## Developers
 
