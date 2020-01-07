@@ -1,17 +1,25 @@
 CGAPP=./build/macOS/cgapp
 
-.PHONY: run
+.PHONY: clean
 
-run:
+run-init:
 	rm -rf ./app \
-	&& $(CGAPP) -b echo -f preact -p ./app
+	&& $(CGAPP) init -p ./app -b net/http -f preact
 
-run-external:
+run-docker:
+	rm -rf ./app \
+	&& $(CGAPP) docker -p ./app nginx
+
+run-ex-init:
 	rm -rf ~/Downloads/app \
-	&& $(CGAPP) -b echo -f github.com/koddr/sweetconfirm.js -p ~/Downloads/app
+	&& $(CGAPP) init -p ~/Downloads/app -b net/http -f preact
+
+run-ex-docker:
+	rm -rf ~/Downloads/app \
+	&& $(CGAPP) docker -p ~/Downloads/app nginx
 
 test:
-	go test ./cmd/cgapp/*.go
+	go test ./internal/cgapp/*.go
 	@echo "[✔️] Project was tested!"
 
 clean:
@@ -21,5 +29,5 @@ clean:
 build-macosx:
 	rm -rf ./build ./app ./configs/**/.DS_Store \
 	&& pkger \
-	&& GOOS=darwin GOARCH=amd64 go build -o $(CGAPP) ./*.go
+	&& GOOS=darwin GOARCH=amd64 go build -o $(CGAPP) ./cmd/cgapp/*.go
 	@echo "[✔️] Build for macOS (amd64) complete!"

@@ -15,35 +15,69 @@ WIP
 
 ## Install
 
-WIP
+```console
+foo@bar:~$ git clone https://github.com/create-go-app/cli.git
+foo@bar:~$ cd cli
+
+foo@bar:cli$ go install
+```
 
 ## Usage
 
 ```console
-foo@bar:~$ cgapp [OPTION] [value]
+foo@bar:~$ cgapp [COMMAND] [OPTION] [value]
 ```
 
 ### Example
 
 ```console
-foo@bar:~$ cgapp -b echo -f preact -p ./app
+foo@bar:~$ cgapp init -b echo -f preact -p ./app
 ```
 
 This created new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend.
 
 ## Options
 
-You can see all available CLI commands (short and full names) by running `cgapp` with `--help`:
+You can see all available CLI commands (short and full names) by running command with `--help` option.
+
+### `init`
 
 ```console
-foo@bar:~$ cgapp --help
+foo@bar:~$ cgapp init --help
 
-GLOBAL OPTIONS:
-   --backend value, -b value   backend for your app, ex. Echo, Gin, Iris (default: "net/http")
-   --frontend value, -f value  frontend for your app, ex. (p)React, Vue, Svelte (default: "none")
+NAME:
+   cgapp init - init new app
+
+USAGE:
+   cgapp init [command options] [arguments...]
+
+OPTIONS:
    --path value, -p value      path to create app, ex. ~/projects/my-app (default: ".")
+   --backend value, -b value   backend for your app, ex. net/http, Echo, Gin, Iris (default: "net/http")
+   --frontend value, -f value  frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
    --help, -h                  show help (default: false)
-   --version, -v               print the version (default: false)
+```
+
+### `docker`
+
+```console
+foo@bar:~$ cgapp docker --help
+
+NAME:
+   cgapp docker - create configured Docker containers
+
+USAGE:
+   cgapp docker command [command options] [arguments...]
+
+COMMANDS:
+   help, h  Shows a list of commands or help for one command
+   Configured Docker containers:
+     nginx  container with Nginx (alpine:latest) and Certbot
+
+OPTIONS:
+   --path value, -p value  path to create containers, ex. ~/projects/my-app (default: ".")
+   --help, -h              show help (default: false)
+   --version, -v           print the version (default: false)
 ```
 
 > **Please note:** all commands are _optional_, because they have a default values. Default app is built-in `net/http` on backend without any frontend into current folder.
@@ -65,7 +99,7 @@ GLOBAL OPTIONS:
 Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `--backend` (or/and `--frontend`) with address to your repository and run:
 
 ```console
-foo@bar:~$ cgapp -b github.com/user1/my-back-template -f github.com/user2/my-front-template
+foo@bar:~$ cgapp init -b github.com/user1/my-back-template -f github.com/user2/my-front-template
 ```
 
 > **Please note:** the _https_ protocol will add automatically.

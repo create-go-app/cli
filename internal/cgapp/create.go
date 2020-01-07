@@ -58,10 +58,10 @@ func CreateConfig(e *embedConfig) error {
 
 // CreateApp function for create app
 func CreateApp(c *appConfig, registry map[string]string) error {
-	// Create path to backend|frontend folder
+	// Create path to folder
 	folder := c.folder + string(os.PathSeparator) + c.view
 
-	// Create match expration for backend frameworks
+	// Create match expration for frameworks/containers
 	match, _ := regexp.MatchString(c.match, c.name)
 	if match {
 		// If match, create from default template

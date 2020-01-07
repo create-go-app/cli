@@ -1,40 +1,19 @@
 version: "3.7"
 
 services:
+  static:
+    container_name: static
+    build:
+      context: ./frontend
+
   app:
     container_name: app
     build:
-      context: .
+      context: ./backend
     networks:
       nginx_net:
     restart: always
 
-  nginx:
-    container_name: nginx
-    image: nginx:alpine
-    networks:
-      nginx_net:
-    volumes:
-      - ./configs/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./configs/certbot/conf:/etc/letsencrypt
-      - ./configs/certbot/www:/var/www/certbot
-    ports:
-      - 80:80
-      - 443:443
-    restart: unless-stopped
-    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
-
-  certbot:
-    container_name: certbot
-    image: certbot/certbot
-    networks:
-      nginx_net:
-    volumes:
-      - ./configs/certbot/conf:/etc/letsencrypt
-      - ./configs/certbot/www:/var/www/certbot
-    restart: unless-stopped
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-
 networks:
   nginx_net:
-    name: nginx_net
+    external: true
