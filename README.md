@@ -68,7 +68,7 @@ OPTIONS:
    --help, -h                  show help (default: false)
 ```
 
-> **Please note:** default app is built-in `net/http` on backend without any frontend into current folder.
+> **Tip:** if you just run `cgapp init`, it's create into current folder built-in backend with `net/http` package and  without any frontend.
 
 ### `docker`
 
