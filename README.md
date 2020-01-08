@@ -97,11 +97,11 @@ OPTIONS:
 **Golang:**
 
 - (_default_) [create-go-app/net_http-go-template](https://github.com/create-go-app/net_http-go-template) — Backend template with built-in `net/http` ([pkg/net/http](https://golang.org/pkg/net/http/)).
-- [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
+- [WIP] [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
 
 **JavaScript:**
 
-- [create-go-app/react-js-template](https://github.com/create-go-app/react-js-template) — Frontend template with React.js ([facebook/react](https://github.com/facebook/react)).
+- [WIP] [create-go-app/react-js-template](https://github.com/create-go-app/react-js-template) — Frontend template with React.js ([facebook/react](https://github.com/facebook/react)).
 - [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with Preact.js ([preactjs/preact](https://github.com/preactjs/preact)).
 
 ## Configured production-ready Docker containers
