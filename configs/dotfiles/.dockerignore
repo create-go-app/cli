@@ -1,9 +1,0 @@
-# Files
-.gitignore
-.editorconfig
-.prettierignore
-Makefile
-
-# Folders
-.git/
-frontend/static/

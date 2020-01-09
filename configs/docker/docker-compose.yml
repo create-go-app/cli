@@ -1,19 +1,22 @@
 version: "3.7"
 
 services:
-  static:
-    container_name: static
+  frontend:
+    container_name: frontend
     build:
       context: ./frontend
+    volumes:
+      - static:/frontend/build
 
-  app:
-    container_name: app
+  backend:
+    container_name: backend
     build:
       context: ./backend
-    networks:
-      nginx_net:
+    volumes:
+      - static:/frontend/build
     restart: always
+    depends_on:
+      - frontend
 
-networks:
-  nginx_net:
-    external: true
+volumes:
+  static:

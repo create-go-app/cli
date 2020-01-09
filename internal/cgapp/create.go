@@ -76,10 +76,9 @@ func CreateApp(c *appConfig, registry map[string]string) error {
 
 		// Show success report
 		fmt.Printf(
-			"\n%v[✔️]%v %v (%v) was created with default template '%v'!\n",
+			"\n%v[✔️]%v %v was created with default template '%v'!\n",
 			green, noColor,
 			strings.Title(c.view),
-			strings.Title(c.name),
 			registry[c.name],
 		)
 	} else {
