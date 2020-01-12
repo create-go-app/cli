@@ -15,8 +15,7 @@ run-ex-init:
 	&& $(CGAPP) init -p ~/Downloads/app -b net/http -f preact
 
 run-ex-docker:
-	rm -rf ~/Downloads/app \
-	&& $(CGAPP) docker -p ~/Downloads/app nginx
+	$(CGAPP) docker -p ~/Downloads/app nginx
 
 test:
 	go test ./internal/cgapp/*.go

@@ -179,11 +179,11 @@ func New(version string, registry map[string]string) {
 							)
 
 							// Create app folder, if not exist
-							if _, err := os.Stat(appPath); !os.IsNotExist(err) {
+							if _, err := os.Stat(appPath); os.IsNotExist(err) {
 								os.Mkdir(appPath, 0755)
 							}
 
-							// Check frontend folder
+							// Check ./frontend folder
 							_, err := os.Stat(appPath + string(os.PathSeparator) + "frontend")
 							if !os.IsNotExist(err) {
 								// If exists, copy fullstack app docker-compose file
@@ -195,11 +195,7 @@ func New(version string, registry map[string]string) {
 
 							// Copy docker-compose configs files
 							fmt.Printf("\n%v> Copy docker-compose.yml file%v\n\n", cyan, noColor)
-							ErrChecker(CopyFile(appStack, "docker-compose.yml"))
-							fmt.Printf(
-								"\n%v[OK]%v docker-compose.yml file was copied!\n",
-								green, noColor,
-							)
+							ErrChecker(CopyFolder(appStack))
 
 							// Create container files
 							fmt.Printf(
