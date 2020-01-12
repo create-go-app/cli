@@ -1,7 +1,7 @@
 # macOS
 .DS_store
 
-# Dev builds
+# Go builds
 **/build/
 
 # Node.js dependencies

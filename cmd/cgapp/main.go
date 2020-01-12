@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/create-go-app/cli/internal/cgapp"
-	"github.com/markbates/pkger"
 )
 
 var (
@@ -29,9 +28,6 @@ var (
 )
 
 func main() {
-	// Embed ./configs folder
-	pkger.Include("/configs")
-
 	// Start new CLI app
 	cgapp.New(version, registry)
 }

@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
-	github.com/markbates/pkger v0.13.0
+	github.com/markbates/pkger v0.14.0
 	github.com/schollz/progressbar/v2 v2.15.0
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/urfave/cli/v2 v2.1.1

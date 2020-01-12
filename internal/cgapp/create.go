@@ -11,12 +11,6 @@ import (
 	"gopkg.in/src-d/go-git.v4"
 )
 
-// embedConfig struct for embed configuration
-type embedConfig struct {
-	embedFolder string
-	appFolder   string
-}
-
 // appConfig struct for app configuration
 type appConfig struct {
 	name   string
@@ -26,10 +20,10 @@ type appConfig struct {
 }
 
 // CreateConfig function for create app's config files from embed folder
-func CreateConfig(e *embedConfig) error {
-	return pkger.Walk(e.embedFolder, func(path string, info os.FileInfo, err error) error {
+func CreateConfig(appPath string) error {
+	return pkger.Walk("/configs", func(path string, info os.FileInfo, err error) error {
 		// Define files paths
-		folder := e.appFolder + string(os.PathSeparator) + info.Name()
+		folder := appPath + string(os.PathSeparator) + info.Name()
 
 		// Create files
 		if !info.IsDir() {
@@ -62,7 +56,10 @@ func CreateApp(c *appConfig, registry map[string]string) error {
 	folder := c.folder + string(os.PathSeparator) + c.view
 
 	// Create match expration for frameworks/containers
-	match, _ := regexp.MatchString(c.match, c.name)
+	match, err := regexp.MatchString(c.match, c.name)
+	ErrChecker(err)
+
+	// Check for regexp
 	if match {
 		// If match, create from default template
 		_, err := git.PlainClone(folder, false, &git.CloneOptions{
@@ -76,7 +73,7 @@ func CreateApp(c *appConfig, registry map[string]string) error {
 
 		// Show success report
 		fmt.Printf(
-			"\n%v[✔️]%v %v was created with default template '%v'!\n",
+			"\n%v[OK]%v %v was created with default template '%v'!\n",
 			green, noColor,
 			strings.Title(c.view),
 			registry[c.name],
@@ -94,7 +91,7 @@ func CreateApp(c *appConfig, registry map[string]string) error {
 
 		// Show success report
 		fmt.Printf(
-			"\n%v[✔️]%v %v was created with user template '%v'!\n",
+			"\n%v[OK]%v %v was created with user template '%v'!\n",
 			green, noColor,
 			strings.Title(c.view),
 			c.name,
