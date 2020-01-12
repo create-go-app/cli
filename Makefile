@@ -28,5 +28,6 @@ clean:
 
 build-macosx:
 	rm -rf ./build ./app **/.DS_Store \
+	&& pkger \
 	&& GOOS=darwin GOARCH=amd64 go build -o $(CGAPP) ./cmd/cgapp/*.go
 	@echo "[✔️] Build for macOS (amd64) complete!"

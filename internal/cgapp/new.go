@@ -22,8 +22,8 @@ const (
 	noColor string = "\033[0m"
 
 	// Configs
-	dotfiles string = "configs/dotfiles"
-	docker   string = "configs/docker"
+	dotfiles string = "/configs/dotfiles"
+	docker   string = "/configs/docker"
 )
 
 var (

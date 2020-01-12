@@ -4,19 +4,20 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
+
+	"github.com/markbates/pkger"
 )
 
 // CopyFolder function for copy all files from app config
 func CopyFolder(folderName string) error {
-	return filepath.Walk(folderName, func(path string, file os.FileInfo, err error) error {
+	return pkger.Walk(folderName, func(path string, file os.FileInfo, err error) error {
 		// Define files paths
 		folder := appPath + string(os.PathSeparator) + file.Name()
 
 		// Create files (skip directories)
 		if !file.IsDir() {
 			// Open file
-			from, err := os.Open(path)
+			from, err := pkger.Open(path)
 			ErrChecker(err)
 			defer from.Close()
 
@@ -40,14 +41,14 @@ func CopyFolder(folderName string) error {
 
 // CopyFile function for copy only single file from app config
 func CopyFile(folderName, fileName string) error {
-	return filepath.Walk(folderName, func(path string, file os.FileInfo, err error) error {
+	return pkger.Walk(folderName, func(path string, file os.FileInfo, err error) error {
 		// Define files paths
 		folder := appPath + string(os.PathSeparator) + file.Name()
 
 		// Create files (skip directories)
 		if !file.IsDir() && fileName == file.Name() {
 			// Open file
-			from, err := os.Open(path)
+			from, err := pkger.Open(path)
 			ErrChecker(err)
 			defer from.Close()
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/create-go-app/cli/internal/cgapp"
+	"github.com/markbates/pkger"
 )
 
 var (
@@ -28,6 +29,9 @@ var (
 )
 
 func main() {
+	// Add ./configs folder to binary
+	_ = pkger.Dir("/configs")
+
 	// Start new CLI app
 	cgapp.New(version, registry)
 }
