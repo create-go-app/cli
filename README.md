@@ -20,16 +20,16 @@ WIP
 
 ## Install
 
-First, `git clone` this repository and go to `./cli` folder:
+First, get `cgapp` CLI package (wait for getting all dependencies, please):
 
 ```console
-foo@bar:~$ git clone https://github.com/create-go-app/cli.git
-foo@bar:~$ cd cli
+foo@bar:~$ go get github.com/create-go-app/cli/cmd/cgapp
 ```
 
-Second, install CLI to the `$GOPATH/bin` directory (as usual):
+Second, install to the `$GOPATH/bin` directory as usual:
+
 ```console
-foo@bar:cli$ go install
+foo@bar:~$ go install github.com/create-go-app/cli/cmd/cgapp
 ```
 
 That's all you need! 🎉
@@ -68,7 +68,7 @@ OPTIONS:
    --help, -h                  show help (default: false)
 ```
 
-> **Tip:** if you just run `cgapp init`, it's create into current folder built-in backend with `net/http` package and  without any frontend.
+> **Tip:** if you just run `cgapp init`, it's create into current folder built-in backend with `net/http` package and without any frontend.
 
 ### `docker`
 
@@ -97,11 +97,11 @@ OPTIONS:
 **Golang:**
 
 - (_default_) [create-go-app/net_http-go-template](https://github.com/create-go-app/net_http-go-template) — Backend template with built-in `net/http` ([pkg/net/http](https://golang.org/pkg/net/http/)).
-- [WIP] [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
+- [WIP][create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
 
 **JavaScript:**
 
-- [WIP] [create-go-app/react-js-template](https://github.com/create-go-app/react-js-template) — Frontend template with React.js ([facebook/react](https://github.com/facebook/react)).
+- [WIP][create-go-app/react-js-template](https://github.com/create-go-app/react-js-template) — Frontend template with React.js ([facebook/react](https://github.com/facebook/react)).
 - [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with Preact.js ([preactjs/preact](https://github.com/preactjs/preact)).
 
 ## Configured production-ready Docker containers
@@ -112,13 +112,27 @@ OPTIONS:
 
 ## User templates & containers
 
-Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `--backend` (or/and `--frontend`) with address to your repository and run:
+Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `-b` or/and `-f` with address to your repository and run:
 
 ```console
 foo@bar:~$ cgapp init -b github.com/user1/my-back-template -f github.com/user2/my-front-template
 ```
 
 > **Please note:** the _https_ protocol will add automatically.
+
+## How to update CLI to latest version?
+
+Similar to install, but add `-u` option:
+
+```console
+foo@bar:~$ go get -u github.com/create-go-app/cli/cmd/cgapp
+```
+
+And now, install again:
+
+```console
+foo@bar:~$ go install github.com/create-go-app/cli/cmd/cgapp
+```
 
 ## Developers
 
@@ -131,7 +145,7 @@ If you want to say «thank you» or/and support active development `create-go-ap
 1. Add a GitHub Star to project.
 2. Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=Set%20up%20a%20new%20Go%20%28Golang%29%20full%20stack%20app%20by%20running%20one%20CLI%20command%21%26url%3Dhttps%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
 3. Donate some money to project author via PayPal: [@paypal.me/koddr](https://paypal.me/koddr?locale.x=en_EN).
-4. Join DigitalOcean at our [referral link](https://m.do.co/c/b41859fa9b6e) (your profit is **\$100** and we get \$25).
+4. Join DigitalOcean at our [referral link](https://m.do.co/c/b41859fa9b6e) (your profit is **$100** and we get $25).
 5. Become a sponsor.
 
 Thanks for your support! 😘 Together, we make this project better every day.
