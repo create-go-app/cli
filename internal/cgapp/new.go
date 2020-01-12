@@ -20,6 +20,10 @@ const (
 
 	// Clear color
 	noColor string = "\033[0m"
+
+	// Configs
+	dotfiles string = "configs/dotfiles"
+	docker   string = "configs/docker"
 )
 
 var (
@@ -27,6 +31,7 @@ var (
 	appBackend  string
 	appFrontend string
 	appPath     string
+	appStack    string
 )
 
 // New function for start new CLI
@@ -75,15 +80,15 @@ func New(version string, registry map[string]string) {
 					ErrChecker(os.Mkdir(appPath, 0755))
 					fmt.Printf("\n%v[OK]%v Main app folder was created!\n", green, noColor)
 
-					// Create configs files
-					fmt.Printf("\n%v> Creating app config%v\n\n", cyan, noColor)
-					ErrChecker(CreateConfig(appPath))
-					fmt.Printf("\n%v[OK]%v App config was created!\n", green, noColor)
+					// Copy configs files
+					fmt.Printf("\n%v> Copy app config files%v\n\n", cyan, noColor)
+					ErrChecker(CopyFolder(dotfiles))
+					fmt.Printf("\n%v[OK]%v Config files was copied!\n", green, noColor)
 
 					// Create backend files
 					fmt.Printf("\n%v> Creating app backend%v\n\n", cyan, noColor)
 					ErrChecker(
-						CreateApp(&appConfig{
+						Create(&Config{
 							name:   strings.ToLower(appBackend),
 							match:  "^(net/http|echo|gin|iris)$",
 							view:   "backend",
@@ -98,7 +103,7 @@ func New(version string, registry map[string]string) {
 						// Create frontend files
 						fmt.Printf("\n%v> Creating app frontend%v\n\n", cyan, noColor)
 						ErrChecker(
-							CreateApp(&appConfig{
+							Create(&Config{
 								name:   strings.ToLower(appFrontend),
 								match:  "^(p?react|vue|svelte)$",
 								view:   "frontend",
@@ -178,13 +183,31 @@ func New(version string, registry map[string]string) {
 								os.Mkdir(appPath, 0755)
 							}
 
+							// Check frontend folder
+							_, err := os.Stat(appPath + string(os.PathSeparator) + "frontend")
+							if !os.IsNotExist(err) {
+								// If exists, copy fullstack app docker-compose file
+								appStack = docker + string(os.PathSeparator) + "nginx-fullstack"
+							} else {
+								// Else, copy only backend docker-compose file
+								appStack = docker + string(os.PathSeparator) + "nginx-backend-only"
+							}
+
+							// Copy docker-compose configs files
+							fmt.Printf("\n%v> Copy docker-compose.yml file%v\n\n", cyan, noColor)
+							ErrChecker(CopyFile(appStack, "docker-compose.yml"))
+							fmt.Printf(
+								"\n%v[OK]%v docker-compose.yml file was copied!\n",
+								green, noColor,
+							)
+
 							// Create container files
 							fmt.Printf(
 								"\n%v> Creating container with Nginx and Certbot%v\n\n",
 								cyan, noColor,
 							)
 							ErrChecker(
-								CreateApp(&appConfig{
+								Create(&Config{
 									name:   "nginx",
 									match:  "^(nginx)$",
 									view:   "nginx",

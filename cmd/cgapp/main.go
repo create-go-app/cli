@@ -6,7 +6,7 @@ import (
 
 var (
 	// CLI version
-	version string = "0.2.1"
+	version string = "0.3.0"
 
 	// Templates registry
 	registry = map[string]string{

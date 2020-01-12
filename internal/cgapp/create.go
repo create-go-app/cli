@@ -2,56 +2,23 @@ package cgapp
 
 import (
 	"fmt"
-	"io"
 	"os"
 	"regexp"
 	"strings"
 
-	"github.com/markbates/pkger"
 	"gopkg.in/src-d/go-git.v4"
 )
 
-// appConfig struct for app configuration
-type appConfig struct {
+// Config struct for app configuration
+type Config struct {
 	name   string
 	match  string
 	view   string
 	folder string
 }
 
-// CreateConfig function for create app's config files from embed folder
-func CreateConfig(appPath string) error {
-	return pkger.Walk("/configs", func(path string, info os.FileInfo, err error) error {
-		// Define files paths
-		folder := appPath + string(os.PathSeparator) + info.Name()
-
-		// Create files
-		if !info.IsDir() {
-			// Open file from embed binary
-			from, err := pkger.Open(path)
-			ErrChecker(err)
-			defer from.Close()
-
-			// Create file
-			to, err := os.Create(folder)
-			ErrChecker(err)
-			defer to.Close()
-
-			// Copy data from embed binary to real file
-			_, err = io.Copy(to, from)
-			ErrChecker(err)
-
-			// Show report for each file
-			fmt.Printf("— File '%v' was created!\n", folder)
-		}
-
-		// Default return
-		return nil
-	})
-}
-
-// CreateApp function for create app
-func CreateApp(c *appConfig, registry map[string]string) error {
+// Create function for create app
+func Create(c *Config, registry map[string]string) error {
 	// Create path to folder
 	folder := c.folder + string(os.PathSeparator) + c.view
 
