@@ -37,60 +37,40 @@ That's all you need! 🎉
 ## Usage
 
 ```console
-foo@bar:~$ cgapp [COMMAND] [OPTION] [value]
+foo@bar:~$ cgapp [command] [command options] [arguments...]
 ```
 
 For example, create new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
 
 ```console
-foo@bar:~$ cgapp init -b echo -f preact -p ./app
+foo@bar:~$ cgapp start -b echo -f preact -p ./app
 ```
 
 ## Commands & Options
 
 You can see all available CLI commands (short and full names) by running command with `--help` option.
 
-### `init`
+### `start`
 
 ```console
-foo@bar:~$ cgapp init --help
+foo@bar:~$ cgapp start --help
 
 NAME:
-   cgapp init - init new app
+   cgapp start - start new app
 
 USAGE:
-   cgapp init [command options] [arguments...]
+   cgapp start [command options] [arguments...]
 
 OPTIONS:
-   --path value, -p value      path to create app, ex. ~/projects/my-app (default: ".")
-   --backend value, -b value   backend for your app, ex. net/http, Echo, Gin, Iris (default: "net/http")
-   --frontend value, -f value  frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
-   --help, -h                  show help (default: false)
+   --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
+   --backend value, -b value    backend for your app, ex. Echo, Gin, Iris, net/http (default: "net/http")
+   --frontend value, -f value   frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
+   --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "nginx")
+   --database value, -d value   database for your app, ex. Postgres (default: "none")
+   --help, -h                   show help (default: false)
 ```
 
-> **Tip:** if you just run `cgapp init`, it's create into current folder built-in backend with `net/http` package and without any frontend.
-
-### `docker`
-
-```console
-foo@bar:~$ cgapp docker --help
-
-NAME:
-   cgapp docker - create configured Docker containers
-
-USAGE:
-   cgapp docker command [command options] [arguments...]
-
-COMMANDS:
-   help, h  Shows a list of commands or help for one command
-   Configured Docker containers:
-     nginx  container with Nginx (alpine:latest) and Certbot
-
-OPTIONS:
-   --path value, -p value  path to create containers, ex. ~/projects/my-app (default: ".")
-   --help, -h              show help (default: false)
-   --version, -v           print the version (default: false)
-```
+> **Tip:** if you just run `cgapp start`, it's create into current folder built-in backend with `net/http` package and without any frontend.
 
 ## Available production-ready templates
 
@@ -112,7 +92,7 @@ OPTIONS:
 
 ## User templates & containers
 
-Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `-b` or/and `-f` with address to your repository and run:
+Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `-b`, `-f`, `-w` or/and `-d` with address to your repository and run:
 
 ```console
 foo@bar:~$ cgapp init -b github.com/user1/my-back-template -f github.com/user2/my-front-template

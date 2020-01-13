@@ -6,9 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"time"
 
-	"github.com/schollz/progressbar/v2"
 	"github.com/urfave/cli/v2"
 )
 
@@ -21,17 +19,15 @@ const (
 
 	// Clear color
 	noColor string = "\033[0m"
-
-	// Defalt config folders
-	configsFolder string = "github.com/create-go-app/cli/configs"
 )
 
 var (
 	// App options:
-	appBackend  string
-	appFrontend string
-	appPath     string
-	appStack    string
+	appPath      string
+	appBackend   string
+	appFrontend  string
+	appWebServer string
+	appDatabase  string
 )
 
 // New function for start new CLI
@@ -44,8 +40,8 @@ func New(version string, registry map[string]string) {
 		EnableBashCompletion: true,
 		Commands: []*cli.Command{
 			{
-				Name:  "init",
-				Usage: "init new app",
+				Name:  "start",
+				Usage: "start new app",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "path",
@@ -71,22 +67,35 @@ func New(version string, registry map[string]string) {
 						Required:    false,
 						Destination: &appFrontend,
 					},
+					&cli.StringFlag{
+						Name:        "webserver",
+						Aliases:     []string{"w"},
+						Value:       "none",
+						Usage:       "web/proxy server for your app, ex. Nginx",
+						Required:    false,
+						Destination: &appWebServer,
+					},
+					&cli.StringFlag{
+						Name:        "database",
+						Aliases:     []string{"d"},
+						Value:       "none",
+						Usage:       "database for your app, ex. Postgres",
+						Required:    false,
+						Destination: &appDatabase,
+					},
 				},
 				Action: func(c *cli.Context) error {
 					// Start message
-					fmt.Printf("\n%v> Start creating new app...%v\n", yellow, noColor)
+					fmt.Printf("\n%v[START] Creating a new app...%v\n", green, noColor)
 
-					// Create app folder
+					// Create app folder and config files
+					fmt.Printf("\n%v> App folder and config files%v\n", cyan, noColor)
 					ErrChecker(os.Mkdir(appPath, 0755))
-					fmt.Printf("\n%v[OK]%v Main app folder was created!\n", green, noColor)
-
-					// Copy configs files
-					fmt.Printf("\n%v> Copy app config files%v\n\n", cyan, noColor)
-					ErrChecker(CopyFolderFromGit(configsFolder, "dotfiles"))
-					fmt.Printf("\n%v[OK]%v Config files was copied!\n", green, noColor)
+					fmt.Printf("\n%v[OK]%v App folder was created!\n", green, noColor)
+					ErrChecker(File("Makefile", ""))
 
 					// Create backend files
-					fmt.Printf("\n%v> Creating app backend%v\n\n", cyan, noColor)
+					fmt.Printf("\n%v> App backend%v\n\n", cyan, noColor)
 					ErrChecker(
 						Create(&Config{
 							name:   strings.ToLower(appBackend),
@@ -101,7 +110,7 @@ func New(version string, registry map[string]string) {
 					// If need to create frontend too
 					if appFrontend != "none" {
 						// Create frontend files
-						fmt.Printf("\n%v> Creating app frontend%v\n\n", cyan, noColor)
+						fmt.Printf("\n%v> App frontend%v\n\n", cyan, noColor)
 						ErrChecker(
 							Create(&Config{
 								name:   strings.ToLower(appFrontend),
@@ -113,95 +122,37 @@ func New(version string, registry map[string]string) {
 							),
 						)
 
-						// Install dependencies for frontend
-						fmt.Printf(
-							"\n%v> Installing frontend dependencies%v (may take some time!)\n\n",
-							cyan, noColor,
-						)
-
-						// Create progress bar with 0%
-						bar := progressbar.NewOptions(
-							100,
-							progressbar.OptionSetRenderBlankState(true),
-						)
+						// Install frontend dependencies frontend
+						fmt.Printf("\n%v> Frontend dependencies%v\n", cyan, noColor)
 
 						// Go to ./frontend folder and run npm install
+						fmt.Printf(
+							"\n%v[WAIT]%v Installing frontend dependencies (may take some time)!\n",
+							yellow, noColor,
+						)
 						cmd := exec.Command("npm", "install")
 						cmd.Dir = filepath.Join(appPath, "frontend")
 						ErrChecker(cmd.Run())
 
-						// Run progress bar from 0% to 100%
-						for i := 0; i < 100; i++ {
-							bar.Add(1)
-							time.Sleep(10 * time.Millisecond)
-						}
-
 						// Show success report
 						fmt.Printf(
-							"\n\n%v[OK]%v Frontend dependencies was installed!\n",
+							"%v[OK]%v Frontend dependencies was installed!\n",
 							green, noColor,
 						)
 					}
 
-					// End message
-					fmt.Printf(
-						"\n%v[DONE] Run `make` from '%v' folder...%v\n\n",
-						green, appPath, noColor,
-					)
+					// Create Docker containers
+					if appWebServer != "none" || appDatabase != "none" {
+						// Start message
+						fmt.Printf(
+							"\n%v[START] Configuring Docker containers...%v\n",
+							green, noColor,
+						)
 
-					// Default return
-					return nil
-				},
-			},
-			{
-				Name:  "docker",
-				Usage: "create configured Docker containers",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "path",
-						Aliases:     []string{"p"},
-						Value:       ".",
-						Usage:       "path to create containers, ex. ~/projects/my-app",
-						Required:    false,
-						Destination: &appPath,
-					},
-				},
-				Subcommands: []*cli.Command{
-					{
-						Name:     "nginx",
-						Usage:    "container with Nginx (alpine:latest) and Certbot",
-						Category: "Configured Docker containers",
-						Action: func(c *cli.Context) error {
-							// Start message
-							fmt.Printf(
-								"\n%v> Start configuring Docker containers...%v\n",
-								yellow, noColor,
-							)
-
-							// Create app folder, if not exist
-							if _, err := os.Stat(appPath); os.IsNotExist(err) {
-								os.Mkdir(appPath, 0755)
-							}
-
-							// Check ./frontend folder
-							_, err := os.Stat(filepath.Join(appPath, "frontend"))
-							if !os.IsNotExist(err) {
-								// If exists, copy fullstack app docker-compose file
-								appStack = "docker/nginx-fullstack"
-							} else {
-								// Else, copy only backend docker-compose file
-								appStack = "docker/nginx-backend-only"
-							}
-
-							// Copy docker-compose configs files
-							fmt.Printf("\n%v> Copy docker-compose.yml file%v\n\n", cyan, noColor)
-							ErrChecker(CopyFolderFromGit(configsFolder, appStack))
-
+						// If need to create web/proxy server too
+						if appWebServer != "none" {
 							// Create container files
-							fmt.Printf(
-								"\n%v> Creating container with Nginx and Certbot%v\n\n",
-								cyan, noColor,
-							)
+							fmt.Printf("\n%v> Web/proxy server%v\n\n", cyan, noColor)
 							ErrChecker(
 								Create(&Config{
 									name:   "nginx",
@@ -212,17 +163,46 @@ func New(version string, registry map[string]string) {
 									registry,
 								),
 							)
+						}
 
-							// End message
-							fmt.Printf(
-								"\n%v[DONE] Run `docker-compose up` from '%v' folder...%v\n\n",
-								green, appPath, noColor,
+						// If need to create database too
+						if appDatabase != "none" {
+							// Create database files
+							fmt.Printf("\n%v> Database%v\n\n", cyan, noColor)
+							ErrChecker(
+								Create(&Config{
+									name:   strings.ToLower(appDatabase),
+									match:  "^(postgres)$",
+									view:   "database",
+									folder: appPath,
+								},
+									registry,
+								),
 							)
+						}
 
-							// Default return
-							return nil
-						},
-					},
+						// Create docker-compose configs file
+						fmt.Printf("\n%v> File docker-compose.yml%v\n\n", cyan, noColor)
+
+						// Check ./frontend folder
+						_, err := os.Stat(filepath.Join(appPath, "frontend"))
+						if !os.IsNotExist(err) {
+							// If exists, create fullstack app docker-compose file
+							ErrChecker(File("docker-compose.yml", ""))
+						} else {
+							// Else, create only backend docker-compose file
+							ErrChecker(File("docker-compose.yml", ""))
+						}
+					}
+
+					// End message
+					fmt.Printf(
+						"\n%v[DONE] Run %vdocker-compose up --build%v %vfrom '%v' folder!%v\n\n",
+						green, yellow, noColor, green, appPath, noColor,
+					)
+
+					// Default return
+					return nil
 				},
 			},
 		},

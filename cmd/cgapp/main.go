@@ -5,8 +5,8 @@ import (
 )
 
 var (
-	// CLI version
-	version string = "0.3.0"
+	// cgapp CLI version
+	version string = "0.4.0"
 
 	// Templates registry
 	registry = map[string]string{
@@ -24,6 +24,7 @@ var (
 
 		// Docker containers
 		"nginx": "create-go-app/nginx-certbot-docker",
+		// "postgres": "create-go-app/postgres-docker",
 	}
 )
 

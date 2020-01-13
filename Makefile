@@ -7,28 +7,21 @@ clean:
 	@echo "[OK] Project was cleaned!"
 
 test:
-	@go test ./internal/cgapp/*.go
+	@go test ./...
 	@echo "[OK] Project was tested!"
 
 install:
-	@go install ./cmd/cgapp/*.go
+	@go install ./...
 	@echo "[OK] Project was installed to GOPATH/bin folder!"
 
-build-macosx: clean
-	@GOOS=darwin GOARCH=amd64 go build -o $(CGAPP) ./cmd/cgapp/*.go
-	@echo "[OK] Build for macOS (amd64) complete!"
-
-run-init:
+run:
 	@rm -rf ./app
-	@$(CGAPP) init -p ./app -b net/http -f preact
+	@$(CGAPP) start -p ./app
 
-run-docker:
-	@rm -rf ./app
-	@$(CGAPP) docker -p ./app nginx
-
-run-ex-init:
+run-ex:
 	@rm -rf ~/Downloads/app
-	@$(CGAPP) init -p ~/Downloads/app -b net/http -f preact
+	@$(CGAPP) start -p ~/Downloads/app -b net/http -f preact -w nginx
 
-run-ex-docker:
-	@$(CGAPP) docker -p ~/Downloads/app nginx
+build-macosx: clean
+	@GOOS=darwin GOARCH=amd64 go build -o $(CGAPP) ./cmd/cgapp/...
+	@echo "[OK] Build for macOS (amd64) complete!"
