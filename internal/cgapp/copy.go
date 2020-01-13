@@ -1,23 +1,46 @@
 package cgapp
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
-	"github.com/markbates/pkger"
+	"github.com/posener/gitfs"
+	"github.com/posener/gitfs/fsutil"
 )
 
-// CopyFolder function for copy all files from app config
-func CopyFolder(folderName string) error {
-	return pkger.Walk(folderName, func(path string, file os.FileInfo, err error) error {
-		// Define files paths
-		folder := appPath + string(os.PathSeparator) + file.Name()
+// CopyFolderFromGit function for get all files from git repository
+func CopyFolderFromGit(repositoryName, folderName string) error {
+	// Define repository
+	repository := filepath.Join(repositoryName, folderName)
 
-		// Create files (skip directories)
-		if !file.IsDir() {
+	// Define folder path
+	folder := filepath.Join(appPath)
+
+	// Define context
+	ctx := context.Background()
+
+	// Create filesystem from repository
+	fs, err := gitfs.New(ctx, repository)
+	ErrChecker(err)
+
+	// Create walker for filesystem
+	walker := fsutil.Walk(fs, "")
+
+	// Walk for each file
+	for walker.Step() {
+		// Error report
+		ErrChecker(walker.Err())
+
+		// Re-define each file path
+		folder = filepath.Join(appPath, walker.Path())
+
+		// If not directory, create file
+		if !walker.Stat().IsDir() {
 			// Open file
-			from, err := pkger.Open(path)
+			from, err := fs.Open(walker.Path())
 			ErrChecker(err)
 			defer from.Close()
 
@@ -33,8 +56,8 @@ func CopyFolder(folderName string) error {
 			// Show report for each file
 			fmt.Printf("— File '%v' was copied!\n", folder)
 		}
+	}
 
-		// Default return
-		return nil
-	})
+	// Default return
+	return nil
 }

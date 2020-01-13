@@ -3,6 +3,7 @@ package cgapp
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 
@@ -20,7 +21,7 @@ type Config struct {
 // Create function for create app
 func Create(c *Config, registry map[string]string) error {
 	// Create path to folder
-	folder := c.folder + string(os.PathSeparator) + c.view
+	folder := filepath.Join(c.folder, c.view)
 
 	// Create match expration for frameworks/containers
 	match, err := regexp.MatchString(c.match, c.name)
@@ -34,9 +35,6 @@ func Create(c *Config, registry map[string]string) error {
 			Progress: os.Stdout,
 		})
 		ErrChecker(err)
-
-		// Clean
-		os.RemoveAll(folder + string(os.PathSeparator) + ".git")
 
 		// Show success report
 		fmt.Printf(
@@ -53,9 +51,6 @@ func Create(c *Config, registry map[string]string) error {
 		})
 		ErrChecker(err)
 
-		// Clean
-		os.RemoveAll(folder + string(os.PathSeparator) + ".git")
-
 		// Show success report
 		fmt.Printf(
 			"\n%v[OK]%v %v was created with user template '%v'!\n",
@@ -64,6 +59,9 @@ func Create(c *Config, registry map[string]string) error {
 			c.name,
 		)
 	}
+
+	// Clean
+	os.RemoveAll(filepath.Join(folder, ".git"))
 
 	// Default return
 	return nil

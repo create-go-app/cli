@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -21,9 +22,8 @@ const (
 	// Clear color
 	noColor string = "\033[0m"
 
-	// Configs
-	dotfiles string = "/configs/dotfiles"
-	docker   string = "/configs/docker"
+	// Defalt config folders
+	configsFolder string = "github.com/create-go-app/cli/configs"
 )
 
 var (
@@ -82,7 +82,7 @@ func New(version string, registry map[string]string) {
 
 					// Copy configs files
 					fmt.Printf("\n%v> Copy app config files%v\n\n", cyan, noColor)
-					ErrChecker(CopyFolder(dotfiles))
+					ErrChecker(CopyFolderFromGit(configsFolder, "dotfiles"))
 					fmt.Printf("\n%v[OK]%v Config files was copied!\n", green, noColor)
 
 					// Create backend files
@@ -127,7 +127,7 @@ func New(version string, registry map[string]string) {
 
 						// Go to ./frontend folder and run npm install
 						cmd := exec.Command("npm", "install")
-						cmd.Dir = appPath + string(os.PathSeparator) + "frontend"
+						cmd.Dir = filepath.Join(appPath, "frontend")
 						ErrChecker(cmd.Run())
 
 						// Run progress bar from 0% to 100%
@@ -184,18 +184,18 @@ func New(version string, registry map[string]string) {
 							}
 
 							// Check ./frontend folder
-							_, err := os.Stat(appPath + string(os.PathSeparator) + "frontend")
+							_, err := os.Stat(filepath.Join(appPath, "frontend"))
 							if !os.IsNotExist(err) {
 								// If exists, copy fullstack app docker-compose file
-								appStack = docker + string(os.PathSeparator) + "nginx-fullstack"
+								appStack = "docker/nginx-fullstack"
 							} else {
 								// Else, copy only backend docker-compose file
-								appStack = docker + string(os.PathSeparator) + "nginx-backend-only"
+								appStack = "docker/nginx-backend-only"
 							}
 
 							// Copy docker-compose configs files
 							fmt.Printf("\n%v> Copy docker-compose.yml file%v\n\n", cyan, noColor)
-							ErrChecker(CopyFolder(appStack))
+							ErrChecker(CopyFolderFromGit(configsFolder, appStack))
 
 							// Create container files
 							fmt.Printf(
