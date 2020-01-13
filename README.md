@@ -65,7 +65,7 @@ OPTIONS:
    --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
    --backend value, -b value    backend for your app, ex. Echo, Gin, Iris, net/http (default: "net/http")
    --frontend value, -f value   frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
-   --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "nginx")
+   --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "none")
    --database value, -d value   database for your app, ex. Postgres (default: "none")
    --help, -h                   show help (default: false)
 ```
