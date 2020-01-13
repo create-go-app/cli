@@ -23,7 +23,7 @@ func CopyFolderFromGit(repositoryName, folderName string) error {
 	ctx := context.Background()
 
 	// Create filesystem from repository
-	fs, err := gitfs.New(ctx, repository)
+	fs, err := gitfs.New(ctx, repository, nil)
 	ErrChecker(err)
 
 	// Create walker for filesystem
