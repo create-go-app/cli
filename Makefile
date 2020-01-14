@@ -3,12 +3,14 @@ GREEN=\033[0;32m
 NOCOLOR=\033[0m
 
 # Define app variables
-CGAPP=./build/macOS/cgapp
+NAME=cgapp
+APP=./app
+BUILD=./build
 
 .PHONY: clean
 
 clean:
-	@rm -rf ./build ./app **/.DS_Store
+	@rm -rf $(BUILD) $(APP) **/.DS_Store
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was cleaned!"
 
 test:
@@ -20,13 +22,13 @@ install:
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was installed to GOPATH/bin folder!"
 
 run:
-	@rm -rf ./app
-	@$(CGAPP) start -p ./app
+	@$(BUILD)/darwin/$(NAME) start -p $(APP)
 
-run-ex:
-	@rm -rf ~/Downloads/app
-	@$(CGAPP) start -p ~/Downloads/app -b net/http -f preact -w nginx
-
-build-macosx: clean
-	@GOOS=darwin GOARCH=amd64 go build -o $(CGAPP) ./cmd/cgapp/...
-	@echo "$(GREEN)[OK]$(NOCOLOR) Build for macOS (amd64) complete!"
+build: clean
+	@CGO_ENABLED=0 GOARCH=amd64
+	@GOOS=darwin go build -o $(BUILD)/darwin/$(NAME) ./cmd/$(NAME)/...
+	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for macOS x64 was builded!"
+	@GOOS=linux go build -o $(BUILD)/linux/$(NAME) ./cmd/$(NAME)/...
+	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for GNU/Linux x64 was builded!"
+	@GOOS=windows go build -ldflags="-H windowsgui" -o $(BUILD)/windows/$(NAME).exe ./cmd/$(NAME)/...
+	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for MS Windows x64 was builded!"
