@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/create-go-app/cli/configs"
 	"github.com/urfave/cli/v2"
 )
 
@@ -85,17 +86,38 @@ func New(version string, registry map[string]string) {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					// Start message
+					/*
+					 *	START message
+					 */
+
 					fmt.Printf("\n%v[START] Creating a new app...%v\n", green, noColor)
 
-					// Create app folder and config files
+					/*
+					 *	FOLDER for app
+					 */
+
 					fmt.Printf("\n%v> App folder and config files%v\n", cyan, noColor)
+
+					// Create main folder for app
 					ErrChecker(os.Mkdir(appPath, 0755))
 					fmt.Printf("\n%v[OK]%v App folder was created!\n", green, noColor)
-					ErrChecker(File("Makefile", ""))
+
+					/*
+					 *	CONFIG files
+					 */
+
+					// Create config files for app
+					ErrChecker(File(".editorconfig", configs.EditorConfig))
+					ErrChecker(File(".gitignore", configs.GitIgnore))
+					ErrChecker(File("Makefile", configs.MakeFile))
+
+					/*
+					 *	BACKEND files
+					 */
+
+					fmt.Printf("\n%v> App backend%v\n\n", cyan, noColor)
 
 					// Create backend files
-					fmt.Printf("\n%v> App backend%v\n\n", cyan, noColor)
 					ErrChecker(
 						Create(&Config{
 							name:   strings.ToLower(appBackend),
@@ -107,10 +129,14 @@ func New(version string, registry map[string]string) {
 						),
 					)
 
-					// If need to create frontend too
+					/*
+					 *	FRONTEND files
+					 */
+
 					if appFrontend != "none" {
-						// Create frontend files
 						fmt.Printf("\n%v> App frontend%v\n\n", cyan, noColor)
+
+						// Create frontend files
 						ErrChecker(
 							Create(&Config{
 								name:   strings.ToLower(appFrontend),
@@ -122,37 +148,46 @@ func New(version string, registry map[string]string) {
 							),
 						)
 
-						// Install frontend dependencies frontend
+						/*
+						 *	FRONTEND dependencies
+						 */
+
 						fmt.Printf("\n%v> Frontend dependencies%v\n", cyan, noColor)
 
-						// Go to ./frontend folder and run npm install
 						fmt.Printf(
 							"\n%v[WAIT]%v Installing frontend dependencies (may take some time)!\n",
 							yellow, noColor,
 						)
+
+						// Go to ./frontend folder and run npm install
 						cmd := exec.Command("npm", "install")
 						cmd.Dir = filepath.Join(appPath, "frontend")
 						ErrChecker(cmd.Run())
 
-						// Show success report
 						fmt.Printf(
 							"%v[OK]%v Frontend dependencies was installed!\n",
 							green, noColor,
 						)
 					}
 
-					// Create Docker containers
+					/*
+					 *	DOCKER containers
+					 */
+
 					if appWebServer != "none" || appDatabase != "none" {
-						// Start message
 						fmt.Printf(
 							"\n%v[START] Configuring Docker containers...%v\n",
 							green, noColor,
 						)
 
-						// If need to create web/proxy server too
+						/*
+						 *	WEB/PROXY SERVER container
+						 */
+
 						if appWebServer != "none" {
-							// Create container files
 							fmt.Printf("\n%v> Web/proxy server%v\n\n", cyan, noColor)
+
+							// Create container files
 							ErrChecker(
 								Create(&Config{
 									name:   "nginx",
@@ -165,10 +200,14 @@ func New(version string, registry map[string]string) {
 							)
 						}
 
-						// If need to create database too
+						/*
+						 *	DATABASE container
+						 */
+
 						if appDatabase != "none" {
-							// Create database files
 							fmt.Printf("\n%v> Database%v\n\n", cyan, noColor)
+
+							// Create database files
 							ErrChecker(
 								Create(&Config{
 									name:   strings.ToLower(appDatabase),
@@ -181,27 +220,32 @@ func New(version string, registry map[string]string) {
 							)
 						}
 
-						// Create docker-compose configs file
+						/*
+						 *	DOCKER-COMPOSE file
+						 */
+
 						fmt.Printf("\n%v> File docker-compose.yml%v\n\n", cyan, noColor)
 
 						// Check ./frontend folder
 						_, err := os.Stat(filepath.Join(appPath, "frontend"))
 						if !os.IsNotExist(err) {
 							// If exists, create fullstack app docker-compose file
-							ErrChecker(File("docker-compose.yml", ""))
+							ErrChecker(File("docker-compose.yml", configs.FullStackApp))
 						} else {
 							// Else, create only backend docker-compose file
-							ErrChecker(File("docker-compose.yml", ""))
+							ErrChecker(File("docker-compose.yml", configs.BackendOnly))
 						}
 					}
 
-					// End message
+					/*
+					 *	END message
+					 */
+
 					fmt.Printf(
 						"\n%v[DONE] Run %vdocker-compose up --build%v %vfrom '%v' folder!%v\n\n",
 						green, yellow, noColor, green, appPath, noColor,
 					)
 
-					// Default return
 					return nil
 				},
 			},

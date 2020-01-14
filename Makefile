@@ -1,18 +1,23 @@
+# Define colors
+GREEN=\033[0;32m
+NOCOLOR=\033[0m
+
+# Define app variables
 CGAPP=./build/macOS/cgapp
 
 .PHONY: clean
 
 clean:
 	@rm -rf ./build ./app **/.DS_Store
-	@echo "[OK] Project was cleaned!"
+	@echo "$(GREEN)[OK]$(NOCOLOR) Project was cleaned!"
 
 test:
 	@go test ./...
-	@echo "[OK] Project was tested!"
+	@echo "$(GREEN)[OK]$(NOCOLOR) Project was tested!"
 
 install:
 	@go install ./...
-	@echo "[OK] Project was installed to GOPATH/bin folder!"
+	@echo "$(GREEN)[OK]$(NOCOLOR) Project was installed to GOPATH/bin folder!"
 
 run:
 	@rm -rf ./app
@@ -24,4 +29,4 @@ run-ex:
 
 build-macosx: clean
 	@GOOS=darwin GOARCH=amd64 go build -o $(CGAPP) ./cmd/cgapp/...
-	@echo "[OK] Build for macOS (amd64) complete!"
+	@echo "$(GREEN)[OK]$(NOCOLOR) Build for macOS (amd64) complete!"

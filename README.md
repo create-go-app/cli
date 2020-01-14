@@ -1,4 +1,4 @@
-<h1 align="center">[WIP] 🕶 Create Go App CLI</h1>
+<h1 align="center">🕶 Create Go App CLI</h1>
 <h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
 
 <img width="100%" src="images/screenshot.jpg" alt="Create Go App screenshot"/>
@@ -86,16 +86,24 @@ OPTIONS:
 
 ## Configured production-ready Docker containers
 
-**Web server:**
+**Web/Proxy server:**
 
 - [create-go-app/nginx-certbot-docker](https://github.com/create-go-app/nginx-certbot-docker) — Docker container with Nginx and Certbot.
 
+**Database:**
+
+- [create-go-app/postgres-docker](https://github.com/create-go-app/postgres-docker) — Docker container with PostgreSQL.
+
 ## User templates & containers
 
-Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `-b`, `-f`, `-w` or/and `-d` with address to your repository and run:
+Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `--backend` (`-b`), `--frontend` (`-f`), `--webserver` (`-w`) and `--database` (`-d`) with addresses to your repositories and run:
 
 ```console
-foo@bar:~$ cgapp init -b github.com/user1/my-back-template -f github.com/user2/my-front-template
+foo@bar:~$ cgapp start \
+           -b github.com/user/my-back-template \
+           -f gitlab.com/user/my-front-template \
+           -w github.com/user/my-webserver-container-template \
+           -d bitbucket.org/user/my-database-container-template
 ```
 
 > **Please note:** the _https_ protocol will add automatically.
