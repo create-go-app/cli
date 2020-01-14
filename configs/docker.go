@@ -1,7 +1,7 @@
 package configs
 
 // BackendOnly with Go, Nginx, Certbot (docker-compose.yml)
-var BackendOnly string = (`# docker-compose.yml by Create Go App Authors
+var BackendOnly string = (`# docker-compose.yml by Create Go App authors (https://cgapp.1wa.co)
 version: "3.7"
 
 services:
@@ -47,7 +47,7 @@ networks:
 `)
 
 // FullStackApp with Go, Node.js, Nginx, Certbot (docker-compose.yml)
-var FullStackApp string = (`# docker-compose.yml by Create Go App Authors
+var FullStackApp string = (`# docker-compose.yml by Create Go App authors (https://cgapp.1wa.co)
 version: "3.7"
 
 services:
