@@ -32,7 +32,7 @@ build-backend-windows:
 	@cd ./backend
 	@GOOS=windows GOARCH=amd64
 	@go build -ldflags="-H windowsgui" -o $(BACKEND)/build/backend $(BACKEND)/...
-	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for GNU/Linux x64 was builded!"
+	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for MS Windows x64 was builded!"
 
 build-frontend:
 	@cd $(FRONTEND)
