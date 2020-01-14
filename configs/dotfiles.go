@@ -1,7 +1,7 @@
 package configs
 
 // EditorConfig is .editorconfig file
-var EditorConfig string = (`# .editorconfig by Create Go App Authors
+var EditorConfig string = (`# .editorconfig by Create Go App authors (https://cgapp.1wa.co)
 root = true
 
 [*]
@@ -17,7 +17,7 @@ indent_size = 4
 `)
 
 // GitIgnore is .gitignore file
-var GitIgnore string = (`# .gitignore by Create Go App Authors
+var GitIgnore string = (`# .gitignore by Create Go App authors (https://cgapp.1wa.co)
 # macOS
 .DS_store
 
@@ -29,7 +29,7 @@ var GitIgnore string = (`# .gitignore by Create Go App Authors
 `)
 
 // MakeFile is Makefile with run/build/install instructions
-var MakeFile string = (`# Makefile by Create Go App Authors
+var MakeFile string = (`# Makefile by Create Go App authors (https://cgapp.1wa.co)
 # Define colors
 GREEN=\033[0;32m
 NOCOLOR=\033[0m
@@ -47,26 +47,12 @@ run-frontend:
 	@cd $(FRONTEND)
 	@npm start
 
-build-backend-darwin:
-	@cd ./backend
-	@GOOS=darwin GOARCH=amd64
-	@go build -o $(BACKEND)/build/backend $(BACKEND)/...
-	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for macOS x64 was builded!"
-
-build-backend-linux:
-	@cd ./backend
-	@GOOS=linux GOARCH=amd64
-	@go build -o $(BACKEND)/build/backend $(BACKEND)/...
-	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for GNU/Linux x64 was builded!"
-
-build-backend-windows:
-	@cd ./backend
-	@GOOS=windows GOARCH=amd64
-	@go build -ldflags="-H windowsgui" -o $(BACKEND)/build/backend $(BACKEND)/...
-	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for GNU/Linux x64 was builded!"
+build-backend:
+	@cd $(BACKEND)
+	@make build
 
 build-frontend:
 	@cd $(FRONTEND)
 	@npm run build
-	@echo "$(GREEN)[OK]$(NOCOLOR) App frontend was builded!"
+	@echo "$(GREEN)[OK]$(NOCOLOR) Project frontend was builded!"
 `)
