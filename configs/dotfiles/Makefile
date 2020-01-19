@@ -9,12 +9,21 @@ FRONTEND=./frontend
 
 .PHONY: deploy
 
+deploy:
+	@docker-compose up --build --force-recreate
+	@echo "$(GREEN)[OK]$(NOCOLOR) App (dev) was deployed!"
+
+deploy-prod:
+	@docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+	@echo "$(GREEN)[OK]$(NOCOLOR) App (prod) was deployed!"
+
 backend-run:
 	@cd $(BACKEND)
-	@go run ./...
+	@go run ./cmd/apiserver/*.go
 
 backend-test:
-	@go test ./...
+	@cd $(BACKEND)
+	@go test ./internal/apiserver/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was tested!"
 
 backend-build-darwin:
@@ -50,11 +59,3 @@ certbot-prod:
 	@cd nginx/scripts
 	@chmod +x ./register_ssl_for_domain.sh
 	@./register_ssl_for_domain.sh --domains $(DOMAINS) --email $(EMAIL) --staging 0
-
-deploy:
-	@docker-compose up --build --force-recreate
-	@echo "$(GREEN)[OK]$(NOCOLOR) App (dev) was deployed!"
-
-deploy-prod:
-	@docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-	@echo "$(GREEN)[OK]$(NOCOLOR) App (prod) was deployed!"
