@@ -188,9 +188,9 @@ func New(version string, registry map[string]string) {
 					// Create container files
 					ErrChecker(
 						Create(&Config{
-							name:   "nginx",
+							name:   strings.ToLower(appWebServer),
 							match:  "^(nginx)$",
-							view:   "nginx",
+							view:   "webserver",
 							folder: appPath,
 						},
 							registry,

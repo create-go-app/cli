@@ -43,7 +43,7 @@ foo@bar:~$ cgapp [command] [command options] [arguments...]
 For example, create new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
 
 ```console
-foo@bar:~$ cgapp start -b echo -f preact -p ./app
+foo@bar:~$ cgapp start -p ./app -b echo -f preact
 ```
 
 ## Commands & Options
@@ -70,7 +70,7 @@ OPTIONS:
    --help, -h                   show help (default: false)
 ```
 
-> **Tip:** if you just run `cgapp start`, it's create into current folder built-in backend with `net/http` package and without any frontend.
+> **Tip:** if you just run `cgapp start`, it's create into current folder built-in backend with `net/http` package and configured Docker container with `Nginx` and `Certbot`. Without any frontend.
 
 ## Available production-ready templates
 
