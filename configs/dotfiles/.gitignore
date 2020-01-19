@@ -1,8 +1,9 @@
-# .gitignore by Create Go App Authors
+# .gitignore by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 # macOS
 .DS_store
 
 # Go builds
+**/app/
 **/build/
 
 # Node.js dependencies

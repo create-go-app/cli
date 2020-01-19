@@ -1,10 +1,9 @@
-# OS specific
+# macOS
 .DS_Store
 
 # Dev builds
 app/
 build/
-pkged.go
 
 # Tests
-tmp/
+**/tmp/

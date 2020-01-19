@@ -1,7 +1,7 @@
 package configs
 
-// BackendOnly with Go, Nginx, Certbot (docker-compose.yml)
-var BackendOnly string = (`# docker-compose.yml by Create Go App authors (https://cgapp.1wa.co)
+// BackendService with Go, Nginx, Certbot, Postgres (docker-compose.yml)
+var BackendService string = (`# docker-compose.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 version: "3.7"
 
 services:
@@ -46,8 +46,8 @@ networks:
     name: cgapp_net
 `)
 
-// FullStackApp with Go, Node.js, Nginx, Certbot (docker-compose.yml)
-var FullStackApp string = (`# docker-compose.yml by Create Go App authors (https://cgapp.1wa.co)
+// FullstackService docker-compose with Go, Node.js, Nginx, Certbot, Postgres (docker-compose.yml)
+var FullstackService string = (`# docker-compose.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 version: "3.7"
 
 services:
@@ -61,8 +61,8 @@ services:
   backend:
     container_name: backend
     build:
-      context: ./backend
-    volumes:
+	  context: ./backend
+	volumes:
       - static:/frontend/build
     networks:
       - cgapp_net

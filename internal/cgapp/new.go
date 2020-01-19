@@ -71,7 +71,7 @@ func New(version string, registry map[string]string) {
 					&cli.StringFlag{
 						Name:        "webserver",
 						Aliases:     []string{"w"},
-						Value:       "none",
+						Value:       "nginx",
 						Usage:       "web/proxy server for your app, ex. Nginx",
 						Required:    false,
 						Destination: &appWebServer,
@@ -174,67 +174,63 @@ func New(version string, registry map[string]string) {
 					 *	DOCKER containers
 					 */
 
-					if appWebServer != "none" || appDatabase != "none" {
-						fmt.Printf(
-							"\n%v[START] Configuring Docker containers...%v\n",
-							green, noColor,
+					fmt.Printf(
+						"\n%v[START] Configuring Docker containers...%v\n",
+						green, noColor,
+					)
+
+					/*
+					 *	WEB/PROXY SERVER container
+					 */
+
+					fmt.Printf("\n%v> Web/proxy server%v\n\n", cyan, noColor)
+
+					// Create container files
+					ErrChecker(
+						Create(&Config{
+							name:   "nginx",
+							match:  "^(nginx)$",
+							view:   "nginx",
+							folder: appPath,
+						},
+							registry,
+						),
+					)
+
+					/*
+					 *	DATABASE container
+					 */
+
+					if appDatabase != "none" {
+						fmt.Printf("\n%v> Database%v\n\n", cyan, noColor)
+
+						// Create database files
+						ErrChecker(
+							Create(&Config{
+								name:   strings.ToLower(appDatabase),
+								match:  "^(postgres)$",
+								view:   "database",
+								folder: appPath,
+							},
+								registry,
+							),
 						)
+					}
 
-						/*
-						 *	WEB/PROXY SERVER container
-						 */
+					/*
+					 *	DOCKER-COMPOSE file
+					 */
 
-						if appWebServer != "none" {
-							fmt.Printf("\n%v> Web/proxy server%v\n\n", cyan, noColor)
+					fmt.Printf("\n%v> File docker-compose.yml%v\n\n", cyan, noColor)
 
-							// Create container files
-							ErrChecker(
-								Create(&Config{
-									name:   "nginx",
-									match:  "^(nginx)$",
-									view:   "nginx",
-									folder: appPath,
-								},
-									registry,
-								),
-							)
-						}
-
-						/*
-						 *	DATABASE container
-						 */
-
-						if appDatabase != "none" {
-							fmt.Printf("\n%v> Database%v\n\n", cyan, noColor)
-
-							// Create database files
-							ErrChecker(
-								Create(&Config{
-									name:   strings.ToLower(appDatabase),
-									match:  "^(postgres)$",
-									view:   "database",
-									folder: appPath,
-								},
-									registry,
-								),
-							)
-						}
-
-						/*
-						 *	DOCKER-COMPOSE file
-						 */
-
-						fmt.Printf("\n%v> File docker-compose.yml%v\n\n", cyan, noColor)
-
-						// Check ./frontend folder
-						_, err := os.Stat(filepath.Join(appPath, "frontend"))
-						if !os.IsNotExist(err) {
-							// If exists, create fullstack app docker-compose file
-							ErrChecker(File("docker-compose.yml", configs.FullStackApp))
-						} else {
-							// Else, create only backend docker-compose file
-							ErrChecker(File("docker-compose.yml", configs.BackendOnly))
-						}
+					// Check ./frontend folder
+					_, err := os.Stat(filepath.Join(appPath, "frontend"))
+					if !os.IsNotExist(err) {
+						// If exists, create fullstack app docker-compose override file
+						ErrChecker(File("docker-compose.yml", configs.FullstackService))
+					} else {
+						// Default docker-compose.yml
+						ErrChecker(File("docker-compose.yml", configs.BackendService))
 					}
 
 					/*

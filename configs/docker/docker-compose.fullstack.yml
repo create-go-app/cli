@@ -1,4 +1,4 @@
-# docker-compose.yml by Create Go App Authors
+# docker-compose.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 version: "3.7"
 
 services:
@@ -12,7 +12,7 @@ services:
   backend:
     container_name: backend
     build:
-      context: ./backend
+    context: ./backend
     volumes:
       - static:/frontend/build
     networks:

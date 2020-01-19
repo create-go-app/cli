@@ -26,9 +26,9 @@ run:
 
 build: clean
 	@CGO_ENABLED=0 GOARCH=amd64
-	@GOOS=darwin go build -o $(BUILD)/darwin/$(NAME) ./cmd/$(NAME)/...
+	@GOOS=darwin go build -o $(BUILD)/darwin/$(NAME) ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for macOS x64 was builded!"
-	@GOOS=linux go build -o $(BUILD)/linux/$(NAME) ./cmd/$(NAME)/...
+	@GOOS=linux go build -o $(BUILD)/linux/$(NAME) ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for GNU/Linux x64 was builded!"
-	@GOOS=windows go build -ldflags="-H windowsgui" -o $(BUILD)/windows/$(NAME).exe ./cmd/$(NAME)/...
+	@GOOS=windows go build -ldflags="-H windowsgui" -o $(BUILD)/windows/$(NAME).exe ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for MS Windows x64 was builded!"

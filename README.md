@@ -65,7 +65,7 @@ OPTIONS:
    --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
    --backend value, -b value    backend for your app, ex. Echo, Gin, Iris, net/http (default: "net/http")
    --frontend value, -f value   frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
-   --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "none")
+   --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "nginx")
    --database value, -d value   database for your app, ex. Postgres (default: "none")
    --help, -h                   show help (default: false)
 ```
@@ -100,10 +100,10 @@ Create Go App CLI provide creation your own template, instead of those prepared 
 
 ```console
 foo@bar:~$ cgapp start \
-           -b github.com/user/my-back-template \
-           -f gitlab.com/user/my-front-template \
-           -w github.com/user/my-webserver-container-template \
-           -d bitbucket.org/user/my-database-container-template
+                      -b github.com/user/my-back-template \
+                      -f gitlab.com/user/my-front-template \
+                      -w github.com/user/my-webserver-container-template \
+                      -d bitbucket.org/user/my-database-container-template
 ```
 
 > **Please note:** the _https_ protocol will add automatically.
