@@ -6,6 +6,7 @@ NOCOLOR=\033[0m
 # Define app variables
 BACKEND=./backend
 FRONTEND=./frontend
+WEBSERVER=./webserver
 NAME=apiserver
 
 .PHONY: deploy
@@ -52,13 +53,11 @@ frontend-build:
 	@echo "$(GREEN)[OK]$(NOCOLOR) App frontend was builded!"
 
 certbot:
-	@cd webserver/scripts
-	@chmod +x ./register_ssl_for_domain.sh
-	@./register_ssl_for_domain.sh \
+	@chmod +x $(WEBSERVER)/scripts/register_ssl_for_domain.sh
+	@sudo $(WEBSERVER)/scripts/register_ssl_for_domain.sh \
 	--domains $(DOMAINS) --email $(EMAIL) --data-path $(DATA_PATH) --staging 1
 
 certbot-prod:
-	@cd webserver/scripts
-	@chmod +x ./register_ssl_for_domain.sh
-	@./register_ssl_for_domain.sh \
+	@chmod +x $(WEBSERVER)/scripts/register_ssl_for_domain.sh
+	@sudo $(WEBSERVER)/scripts/register_ssl_for_domain.sh \
 	--domains $(DOMAINS) --email $(EMAIL) --data-path $(DATA_PATH) --staging 0
