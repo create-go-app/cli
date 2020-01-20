@@ -6,7 +6,7 @@ import (
 
 var (
 	// cgapp CLI version
-	version string = "0.5.2"
+	version string = "0.5.3"
 
 	// Templates registry
 	registry = map[string]string{

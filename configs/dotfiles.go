@@ -50,7 +50,7 @@ deploy:
 	@echo "$(GREEN)[OK]$(NOCOLOR) App (dev) was deployed!"
 
 deploy-prod:
-	@docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+	@docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build --force-recreate -d
 	@echo "$(GREEN)[OK]$(NOCOLOR) App (prod) was deployed!"
 
 backend-run:
@@ -87,12 +87,14 @@ frontend-build:
 	@echo "$(GREEN)[OK]$(NOCOLOR) App frontend was builded!"
 
 certbot:
-	@cd nginx/scripts
+	@cd webserver/scripts
 	@chmod +x ./register_ssl_for_domain.sh
-	@./register_ssl_for_domain.sh --domains $(DOMAINS) --email $(EMAIL) --staging 1
+	@./register_ssl_for_domain.sh \
+	--domains $(DOMAINS) --email $(EMAIL) --data-path $(DATA_PATH) --staging 1
 
 certbot-prod:
-	@cd nginx/scripts
+	@cd webserver/scripts
 	@chmod +x ./register_ssl_for_domain.sh
-	@./register_ssl_for_domain.sh --domains $(DOMAINS) --email $(EMAIL) --staging 0
+	@./register_ssl_for_domain.sh \
+	--domains $(DOMAINS) --email $(EMAIL) --data-path $(DATA_PATH) --staging 0
 `)

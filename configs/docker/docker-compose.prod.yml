@@ -1,0 +1,10 @@
+# docker-compose.prod.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+version: "3.7"
+
+services:
+    nginx:
+        environment:
+            - APP_DOMAIN=example.com
+        ports:
+            - 80:80
+            - 443:443

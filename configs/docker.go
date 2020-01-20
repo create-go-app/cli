@@ -24,10 +24,9 @@ services:
             - ./webserver/certbot/conf:/etc/letsencrypt
             - ./webserver/certbot/www:/var/www/certbot
         environment:
-            - APP_DOMAIN=example.com
+            - APP_DOMAIN=localhost
         ports:
             - 80:80
-            - 443:443
         restart: unless-stopped
         command: /bin/sh -c "envsubst < /etc/nginx/conf.d/default.template.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
         depends_on:
@@ -43,10 +42,25 @@ services:
             - ./webserver/certbot/www:/var/www/certbot
         restart: unless-stopped
         entrypoint: /bin/sh -c "trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;"
+        depends_on:
+            - nginx
 
 networks:
     cgapp_net:
         name: cgapp_net
+`)
+
+// NginxProdService Nginx config for production (docker-compose.prod.yml)
+var NginxProdService string = (`# docker-compose.prod.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+version: "3.7"
+
+services:
+    nginx:
+        environment:
+            - APP_DOMAIN=example.com
+        ports:
+            - 80:80
+            - 443:443
 `)
 
 // FullstackService docker-compose with Go, Node.js, Nginx, Certbot, Postgres (docker-compose.yml)
@@ -85,7 +99,6 @@ services:
             - APP_DOMAIN=example.com
         ports:
             - 80:80
-            - 443:443
         restart: unless-stopped
         command: /bin/sh -c "envsubst < /etc/nginx/conf.d/default.template.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
         depends_on:
@@ -99,8 +112,10 @@ services:
         volumes:
             - ./webserver/certbot/conf:/etc/letsencrypt
             - ./webserver/certbot/www:/var/www/certbot
-        restart: unless-stopped
+		restart: unless-stopped
         entrypoint: /bin/sh -c "trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;"
+        depends_on:
+            - nginx
 
 networks:
     cgapp_net:
@@ -108,5 +123,4 @@ networks:
 
 volumes:
     static:
-
 `)

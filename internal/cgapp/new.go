@@ -233,12 +233,15 @@ func New(version string, registry map[string]string) {
 						ErrChecker(File("docker-compose.yml", configs.BackendService))
 					}
 
+					// Production docker-compose.yml
+					ErrChecker(File("docker-compose.prod.yml", configs.NginxProdService))
+
 					/*
 					 *	END message
 					 */
 
 					fmt.Printf(
-						"\n%v[DONE] Run %vdocker-compose up --build%v %vfrom '%v' folder!%v\n\n",
+						"\n%v[DONE] Run %vmake%v %vfrom '%v' folder!%v\n\n",
 						green, yellow, noColor, green, appPath, noColor,
 					)
 
