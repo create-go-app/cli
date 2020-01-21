@@ -41,8 +41,8 @@ func New(version string, registry map[string]string) {
 		EnableBashCompletion: true,
 		Commands: []*cli.Command{
 			{
-				Name:  "start",
-				Usage: "start new app",
+				Name:  "create",
+				Usage: "create new Go app",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "path",
