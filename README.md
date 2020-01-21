@@ -3,22 +3,14 @@
 
 <img width="100%" src="images/screenshot.jpg" alt="Create Go App screenshot"/>
 
-<br/>
-
-## The Why?
-
-<img align="right" width="196px" src="images/logo_gopher.png" alt="Create Go App logo"/>
-
-WIP
-
-<br/>
-
 ## Requirements
 
 - Go `1.11+`
 - Go Modules
 
 ## Install
+
+<img align="right" width="196px" src="images/logo_gopher.png" alt="Create Go App logo"/>
 
 First, get `cgapp` CLI package (wait for getting all dependencies, please):
 
