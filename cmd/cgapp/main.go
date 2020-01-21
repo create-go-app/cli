@@ -23,8 +23,8 @@ var (
 		// "svelte":   "create-go-app/svelte-js-template",
 
 		// Docker containers
-		"nginx": "create-go-app/nginx-certbot-docker",
-		// "postgres": "create-go-app/postgres-docker",
+		"nginx":    "create-go-app/nginx-certbot-docker",
+		"postgres": "create-go-app/postgres-docker",
 	}
 )
 
