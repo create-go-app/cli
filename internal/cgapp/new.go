@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/create-go-app/cli/configs"
+	box "github.com/create-go-app/cli/configs"
 	"github.com/urfave/cli/v2"
 )
 
@@ -107,9 +107,9 @@ func New(version string, registry map[string]string) {
 					 */
 
 					// Create config files for app
-					ErrChecker(File(".editorconfig", configs.EditorConfig))
-					ErrChecker(File(".gitignore", configs.GitIgnore))
-					ErrChecker(File("Makefile", configs.MakeFile))
+					ErrChecker(File(".editorconfig", box.Get("/dotfiles/.editorconfig")))
+					ErrChecker(File(".gitignore", box.Get("/dotfiles/.gitignore")))
+					ErrChecker(File("Makefile", box.Get("/dotfiles/Makefile")))
 
 					/*
 					 *	BACKEND files
@@ -227,14 +227,29 @@ func New(version string, registry map[string]string) {
 					_, err := os.Stat(filepath.Join(appPath, "frontend"))
 					if !os.IsNotExist(err) {
 						// If exists, create fullstack app docker-compose override file
-						ErrChecker(File("docker-compose.yml", configs.FullstackService))
+						ErrChecker(
+							File(
+								"docker-compose.yml",
+								box.Get("/docker/docker-compose.fullstack.yml"),
+							),
+						)
 					} else {
 						// Default docker-compose.yml
-						ErrChecker(File("docker-compose.yml", configs.BackendService))
+						ErrChecker(
+							File(
+								"docker-compose.yml",
+								box.Get("/docker/docker-compose.backend.yml"),
+							),
+						)
 					}
 
-					// Production docker-compose.yml
-					ErrChecker(File("docker-compose.prod.yml", configs.NginxProdService))
+					// Production settings docker-compose.prod.yml
+					ErrChecker(
+						File(
+							"docker-compose.prod.yml",
+							box.Get("/docker/docker-compose.fullstack.yml"),
+						),
+					)
 
 					/*
 					 *	END message

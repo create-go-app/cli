@@ -24,7 +24,11 @@ install:
 run:
 	@$(BUILD)/darwin/$(NAME) start -p $(APP)
 
-build: clean
+generate:
+	@go generate ./configs/defaults.go
+	@echo "$(GREEN)[OK]$(NOCOLOR) Embed configs was generated!"
+
+build: clean generate
 	@CGO_ENABLED=0 GOARCH=amd64
 	@GOOS=darwin go build -o $(BUILD)/darwin/$(NAME) ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for macOS x64 was builded!"
