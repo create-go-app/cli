@@ -1,4 +1,5 @@
 # Makefile by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+
 # Define colors
 GREEN=\033[0;32m
 NOCOLOR=\033[0m
