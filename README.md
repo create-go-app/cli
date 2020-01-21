@@ -43,23 +43,23 @@ foo@bar:~$ cgapp [command] [command options] [arguments...]
 For example, create new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
 
 ```console
-foo@bar:~$ cgapp start -p ./app -b echo -f preact
+foo@bar:~$ cgapp create -p ./app -b echo -f preact
 ```
 
 ## Commands & Options
 
 You can see all available CLI commands (short and full names) by running command with `--help` option.
 
-### `start`
+### `create`
 
 ```console
-foo@bar:~$ cgapp start --help
+foo@bar:~$ cgapp create --help
 
 NAME:
-   cgapp start - start new app
+   cgapp create - create new Go app
 
 USAGE:
-   cgapp start [command options] [arguments...]
+   cgapp create [command options] [arguments...]
 
 OPTIONS:
    --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
@@ -70,7 +70,7 @@ OPTIONS:
    --help, -h                   show help (default: false)
 ```
 
-> **Tip:** if you just run `cgapp start`, it's create into current folder built-in backend with `net/http` package and configured Docker container with `Nginx` and `Certbot`. Without any frontend.
+> **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package and configured Docker container with `Nginx` and `Certbot`. Without any frontend.
 
 ## Available production-ready templates
 
@@ -99,11 +99,11 @@ OPTIONS:
 Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `--backend` (`-b`), `--frontend` (`-f`), `--webserver` (`-w`) and `--database` (`-d`) with addresses to your repositories and run:
 
 ```console
-foo@bar:~$ cgapp start \
-                      -b github.com/user/my-back-template \
-                      -f gitlab.com/user/my-front-template \
-                      -w github.com/user/my-webserver-container-template \
-                      -d bitbucket.org/user/my-database-container-template
+foo@bar:~$ cgapp create \
+                       -b github.com/user/my-back-template \
+                       -f gitlab.com/user/my-front-template \
+                       -w github.com/user/my-webserver-container-template \
+                       -d bitbucket.org/user/my-database-container-template
 ```
 
 > **Please note:** the _https_ protocol will add automatically.
