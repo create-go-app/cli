@@ -17,7 +17,7 @@ test:
 	@go test ./...
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was tested!"
 
-install:
+install: generate
 	@go install ./...
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was installed to GOPATH/bin folder!"
 
@@ -25,7 +25,7 @@ run:
 	@$(BUILD)/darwin/$(NAME) start -p $(APP)
 
 generate:
-	@go generate ./configs/defaults.go
+	@go generate ./...
 	@echo "$(GREEN)[OK]$(NOCOLOR) Embed configs was generated!"
 
 build: clean generate
