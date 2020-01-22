@@ -6,6 +6,7 @@ services:
     nginx:
         environment:
             - APP_DOMAIN=example.com
+            # - APP_STATIC_FOLDER=static # uncomment, if you created app with frontend
         ports:
             - 80:80
             - 443:443

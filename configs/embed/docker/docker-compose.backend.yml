@@ -17,14 +17,14 @@ services:
         networks:
             - cgapp_net
         volumes:
-            - ./webserver/configs/default.template.conf:/etc/nginx/conf.d/default.template.conf
+            - ./webserver/configs/default.backend.conf:/etc/nginx/conf.d/default.template.conf
             - ./webserver/configs/nginx.conf:/etc/nginx/nginx.conf
             - ./webserver/certbot/conf:/etc/letsencrypt
             - ./webserver/certbot/www:/var/www/certbot
         environment:
             - APP_DOMAIN=localhost
         ports:
-            - 80:80
+            - 8080:8080
         restart: unless-stopped
         command: /bin/sh -c "envsubst < /etc/nginx/conf.d/default.template.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
         depends_on:
