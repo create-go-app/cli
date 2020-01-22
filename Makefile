@@ -28,7 +28,11 @@ generate:
 	@go generate ./...
 	@echo "$(GREEN)[OK]$(NOCOLOR) Embed configs was generated!"
 
-build: clean generate
+security:
+	@gosec ./...
+	@echo "$(GREEN)[OK]$(NOCOLOR) Go security check was completed!"
+
+build: clean generate security
 	@CGO_ENABLED=0 GOARCH=amd64
 	@GOOS=darwin go build -o $(BUILD)/darwin/$(NAME) ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for macOS x64 was builded!"

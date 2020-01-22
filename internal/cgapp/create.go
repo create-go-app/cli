@@ -61,8 +61,8 @@ func Create(c *Config, registry map[string]string) error {
 	}
 
 	// Clean
-	os.RemoveAll(filepath.Join(folder, ".git"))
-	os.RemoveAll(filepath.Join(folder, ".github"))
+	ErrChecker(os.RemoveAll(filepath.Join(folder, ".git")))
+	ErrChecker(os.RemoveAll(filepath.Join(folder, ".github")))
 
 	// Default return
 	return nil

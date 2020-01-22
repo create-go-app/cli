@@ -99,7 +99,7 @@ func New(version string, registry map[string]string) {
 					fmt.Printf("\n%v> App folder and config files%v\n", cyan, noColor)
 
 					// Create main folder for app
-					ErrChecker(os.Mkdir(appPath, 0755))
+					ErrChecker(os.Mkdir(appPath, 0750))
 					fmt.Printf("\n%v[OK]%v App folder was created!\n", green, noColor)
 
 					/*
