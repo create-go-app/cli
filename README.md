@@ -57,9 +57,9 @@ USAGE:
 
 OPTIONS:
    --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
-   --backend value, -b value    backend for your app, ex. Echo, Gin, Iris, net/http (default: "net/http")
+   --backend value, -b value    backend for your app, ex. Echo, Gin, Iris, Fiber (default: "net/http")
    --frontend value, -f value   frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
-   --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "nginx")
+   --webserver value, -w value  web/proxy server for your app (default: "nginx")
    --database value, -d value   database for your app, ex. Postgres (default: "none")
    --help, -h                   show help (default: false)
 ```
@@ -72,6 +72,7 @@ OPTIONS:
 
 - (_default_) [create-go-app/net_http-go-template](https://github.com/create-go-app/net_http-go-template) — Backend template with built-in `net/http` ([pkg/net/http](https://golang.org/pkg/net/http/)).
 - [WIP] [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
+- [create-go-app/fiber-go-template](https://github.com/create-go-app/fiber-go-template) — Backend template with Fiber ([gofiber/fiber](https://github.com/gofiber/fiber)).
 
 **JavaScript:**
 
