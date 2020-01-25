@@ -121,7 +121,7 @@ func New(version string, registry map[string]string) {
 					ErrChecker(
 						Create(&Config{
 							name:   strings.ToLower(appBackend),
-							match:  "^(net/http|echo|gin|iris)$",
+							match:  "^(net/http|echo|gin|iris|fiber)$",
 							view:   "backend",
 							folder: appPath,
 						},
