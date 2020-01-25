@@ -22,7 +22,7 @@ install: generate
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was installed to GOPATH/bin folder!"
 
 run:
-	@$(BUILD)/darwin/$(NAME) start -p $(APP)
+	@$(BUILD)/darwin/$(NAME) create -p $(APP)
 
 generate:
 	@go generate ./...

@@ -90,6 +90,15 @@ func New(version string, registry map[string]string) {
 					 *	START message
 					 */
 
+					fmt.Printf(`%v ________   ________   ________   ________   ________
+|\   ____\ |\   ____\ |\   __  \ |\   __  \ |\   __  \
+\ \  \___| \ \  \___| \ \  \|\  \\ \  \|\  \\ \  \|\  \
+ \ \  \     \ \  \  ___\ \   __  \\ \   ____\\ \   ____\
+  \ \  \____ \ \  \|\  \\ \  \ \  \\ \  \___| \ \  \___|
+   \ \_______\\ \_______\\ \__\ \__\\ \__\     \ \__\
+    \|_______| \|_______| \|__|\|__| \|__|      \|__|  %vv%v
+					%v`, yellow, red, version, noColor)
+
 					fmt.Printf("\n%v[START] Creating a new app...%v\n", green, noColor)
 
 					/*
