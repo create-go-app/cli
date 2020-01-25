@@ -43,7 +43,6 @@ foo@bar:~$ cgapp create -p ./app -b echo -f preact
 ## Commands & Options
 
 You can see all available CLI commands (short and full names) by running command with `--help` option.
-ˇ
 
 ### `create`
 
