@@ -3,7 +3,7 @@
 
 <p align="center"><img src="https://img.shields.io/badge/cli_version-0.6.0_beta-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
 
-<img width="100%" src="images/screenshot.jpg" alt="Create Go App screenshot"/>
+[![asciicast](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve.svg)](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve)
 
 ## Requirements
 
