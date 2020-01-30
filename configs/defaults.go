@@ -6,6 +6,7 @@ type configsBox struct {
 	storage map[string][]byte
 }
 
+// Create new box for configs
 func newConfigsBox() *configsBox {
 	return &configsBox{storage: make(map[string][]byte)}
 }
