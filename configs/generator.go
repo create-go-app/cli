@@ -26,7 +26,7 @@ var tmpl = template.Must(template.New("").Funcs(conv).Parse(`package box
 
 func init() {
 	{{- range $name, $file := . }}
-    	configs.Add("{{ $name }}", []byte{ {{ conv $file }} })
+    	box.Add("{{ $name }}", []byte{ {{ conv $file }} })
 	{{- end }}
 }`),
 )
