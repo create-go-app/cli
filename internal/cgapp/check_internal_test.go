@@ -1,8 +1,6 @@
 package cgapp
 
-import (
-	"testing"
-)
+import "testing"
 
 func Test_ErrChecker(t *testing.T) {
 	type args struct {
