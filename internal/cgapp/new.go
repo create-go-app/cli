@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	box "github.com/create-go-app/cli/configs"
+	"github.com/create-go-app/cli/cmd/box"
 	"github.com/urfave/cli/v2"
 )
 

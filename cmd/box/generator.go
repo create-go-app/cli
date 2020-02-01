@@ -16,7 +16,7 @@ import (
 
 const (
 	blobFileName string = "blob.go"
-	embedFolder  string = "embed"
+	embedFolder  string = "../../configs"
 )
 
 var conv = map[string]interface{}{"conv": fmtByteSlice}

@@ -4,7 +4,7 @@ import "github.com/create-go-app/cli/internal/cgapp"
 
 var (
 	// cgapp CLI version
-	version string = "0.6.0b4"
+	version string = "0.6.0b5"
 
 	// Templates registry
 	registry = map[string]string{

@@ -8,7 +8,9 @@ type embedBox struct {
 
 // Create new box for embed files
 func newEmbedBox() *embedBox {
-	return &embedBox{storage: make(map[string][]byte)}
+	return &embedBox{
+		storage: make(map[string][]byte),
+	}
 }
 
 // Add a file to box

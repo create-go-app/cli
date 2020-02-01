@@ -13,7 +13,12 @@ func Test_ErrChecker(t *testing.T) {
 		args args
 	}{
 		// TODO: Add test cases.
-		{"no error", args{err: nil}},
+		{
+			"no error",
+			args{
+				err: nil,
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
