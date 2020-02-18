@@ -56,7 +56,7 @@ func New(version string, registry map[string]string) {
 						Name:        "backend",
 						Aliases:     []string{"b"},
 						Value:       "net/http",
-						Usage:       "backend for your app, ex. Echo, Gin, Iris, Fiber",
+						Usage:       "backend for your app, ex. Echo, Gin, Fiber",
 						Required:    false,
 						Destination: &appBackend,
 					},
@@ -86,47 +86,22 @@ func New(version string, registry map[string]string) {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					/*
-					 *	START message
-					 */
-
-					fmt.Printf(`%v ________   ________   ________   ________   ________
-|\   ____\ |\   ____\ |\   __  \ |\   __  \ |\   __  \
-\ \  \___| \ \  \___| \ \  \|\  \\ \  \|\  \\ \  \|\  \
- \ \  \     \ \  \  ___\ \   __  \\ \   ____\\ \   ____\
-  \ \  \____ \ \  \|\  \\ \  \ \  \\ \  \___| \ \  \___|
-   \ \_______\\ \_______\\ \__\ \__\\ \__\     \ \__\
-    \|_______| \|_______| \|__|\|__| \|__|      \|__|  %vv%v
-					%v`, yellow, red, version, noColor)
-
+					// START message
+					fmt.Printf("\n%v[*] Create Go App%v v%v%v\n", yellow, red, version, noColor)
 					fmt.Printf("\n%v[START] Creating a new app...%v\n", green, noColor)
 
-					/*
-					 *	FOLDER for app
-					 */
-
-					fmt.Printf("\n%v> App folder and config files%v\n", cyan, noColor)
-
 					// Create main folder for app
+					fmt.Printf("\n%v> App folder and config files%v\n", cyan, noColor)
 					ErrChecker(os.Mkdir(appPath, 0750))
 					fmt.Printf("\n%v[OK]%v App folder was created!\n", green, noColor)
-
-					/*
-					 *	CONFIG files
-					 */
 
 					// Create config files for app
 					ErrChecker(File(".editorconfig", box.Get("/dotfiles/.editorconfig")))
 					ErrChecker(File(".gitignore", box.Get("/dotfiles/.gitignore")))
 					ErrChecker(File("Makefile", box.Get("/dotfiles/Makefile")))
 
-					/*
-					 *	BACKEND files
-					 */
-
-					fmt.Printf("\n%v> App backend%v\n\n", cyan, noColor)
-
 					// Create backend files
+					fmt.Printf("\n%v> App backend%v\n\n", cyan, noColor)
 					ErrChecker(
 						Create(&Config{
 							name:   strings.ToLower(appBackend),
@@ -138,14 +113,9 @@ func New(version string, registry map[string]string) {
 						),
 					)
 
-					/*
-					 *	FRONTEND files
-					 */
-
+					// Create frontend files
 					if appFrontend != "none" {
 						fmt.Printf("\n%v> App frontend%v\n\n", cyan, noColor)
-
-						// Create frontend files
 						ErrChecker(
 							Create(&Config{
 								name:   strings.ToLower(appFrontend),
@@ -157,12 +127,8 @@ func New(version string, registry map[string]string) {
 							),
 						)
 
-						/*
-						 *	FRONTEND dependencies
-						 */
-
+						// Install dependencies
 						fmt.Printf("\n%v> Frontend dependencies%v\n", cyan, noColor)
-
 						fmt.Printf(
 							"\n%v[WAIT]%v Installing frontend dependencies (may take some time)!\n",
 							yellow, noColor,
@@ -179,22 +145,11 @@ func New(version string, registry map[string]string) {
 						)
 					}
 
-					/*
-					 *	DOCKER containers
-					 */
-
-					fmt.Printf(
-						"\n%v[START] Configuring Docker containers...%v\n",
-						green, noColor,
-					)
-
-					/*
-					 *	WEB/PROXY SERVER container
-					 */
-
-					fmt.Printf("\n%v> Web/proxy server%v\n\n", cyan, noColor)
+					// Docker containers
+					fmt.Printf("\n%v[START] Configuring Docker containers...%v\n", green, noColor)
 
 					// Create container files
+					fmt.Printf("\n%v> Web/proxy server%v\n\n", cyan, noColor)
 					ErrChecker(
 						Create(&Config{
 							name:   strings.ToLower(appWebServer),
@@ -206,14 +161,9 @@ func New(version string, registry map[string]string) {
 						),
 					)
 
-					/*
-					 *	DATABASE container
-					 */
-
+					// Create database files
 					if appDatabase != "none" {
 						fmt.Printf("\n%v> Database%v\n\n", cyan, noColor)
-
-						// Create database files
 						ErrChecker(
 							Create(&Config{
 								name:   strings.ToLower(appDatabase),
@@ -226,13 +176,8 @@ func New(version string, registry map[string]string) {
 						)
 					}
 
-					/*
-					 *	DOCKER-COMPOSE file
-					 */
-
-					fmt.Printf("\n%v> File docker-compose.yml%v\n\n", cyan, noColor)
-
 					// Check ./frontend folder
+					fmt.Printf("\n%v> File docker-compose.yml%v\n\n", cyan, noColor)
 					_, err := os.Stat(filepath.Join(appPath, "frontend"))
 					if !os.IsNotExist(err) {
 						// If exists, create fullstack app docker-compose override file
@@ -260,10 +205,7 @@ func New(version string, registry map[string]string) {
 						),
 					)
 
-					/*
-					 *	END message
-					 */
-
+					// END message
 					fmt.Printf(
 						"\n%v[DONE] Run %vmake%v %vfrom '%v' folder!%v\n\n",
 						green, yellow, noColor, green, appPath, noColor,
