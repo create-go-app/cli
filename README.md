@@ -1,7 +1,7 @@
 <h1 align="center">🕶 Create Go App CLI</h1>
 <h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
 
-<p align="center"><img src="https://img.shields.io/badge/cli_version-0.6.0_beta-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
+<p align="center"><img src="https://img.shields.io/badge/cli_version-0.7.0-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
 
 [![asciicast](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve.svg)](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve)
 
@@ -57,7 +57,7 @@ USAGE:
 
 OPTIONS:
    --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
-   --backend value, -b value    backend for your app, ex. Echo, Gin, Iris, Fiber (default: "net/http")
+   --backend value, -b value    backend for your app, ex. Echo, Gin, Fiber (default: "net/http")
    --frontend value, -f value   frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
    --webserver value, -w value  web/proxy server for your app (default: "nginx")
    --database value, -d value   database for your app, ex. Postgres (default: "none")
@@ -70,9 +70,9 @@ OPTIONS:
 
 **Golang:**
 
-- (_default_) [create-go-app/net_http-go-template](https://github.com/create-go-app/net_http-go-template) — Backend template with built-in `net/http` ([pkg/net/http](https://golang.org/pkg/net/http/)).
-- [WIP] [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with `Echo` ([labstack/echo](https://github.com/labstack/echo)).
+- [create-go-app/net_http-go-template](https://github.com/create-go-app/net_http-go-template) — Backend template with built-in `net/http` ([pkg/net/http](https://golang.org/pkg/net/http/)).
 - [create-go-app/fiber-go-template](https://github.com/create-go-app/fiber-go-template) — Backend template with `Fiber` ([gofiber/fiber](https://github.com/gofiber/fiber)).
+- [WIP] [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with `Echo` ([labstack/echo](https://github.com/labstack/echo)).
 
 **JavaScript:**
 
