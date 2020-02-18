@@ -17,13 +17,13 @@
 First, get `cgapp` CLI package (wait for getting all dependencies, please):
 
 ```console
-foo@bar:~$ go get github.com/create-go-app/cli/cmd/cgapp
+go get github.com/create-go-app/cli/cmd/cgapp
 ```
 
 Second, install to the `$GOPATH/bin` directory as usual:
 
 ```console
-foo@bar:~$ go install github.com/create-go-app/cli/cmd/cgapp
+go install github.com/create-go-app/cli/cmd/cgapp
 ```
 
 That's all you need! 🎉
@@ -31,13 +31,13 @@ That's all you need! 🎉
 ## Usage
 
 ```console
-foo@bar:~$ cgapp [command] [command options] [arguments...]
+cgapp [command] [command options] [arguments...]
 ```
 
 For example, create new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
 
 ```console
-foo@bar:~$ cgapp create -p ./app -b echo -f preact
+cgapp create -p ./app -b echo -f preact
 ```
 
 ## Commands & Options
@@ -47,7 +47,7 @@ You can see all available CLI commands (short and full names) by running command
 ### `create`
 
 ```console
-foo@bar:~$ cgapp create --help
+cgapp create --help
 
 NAME:
    cgapp create - create new Go app
@@ -94,11 +94,11 @@ OPTIONS:
 Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `--backend` (`-b`), `--frontend` (`-f`), `--webserver` (`-w`) and `--database` (`-d`) with addresses to your repositories and run:
 
 ```console
-foo@bar:~$ cgapp create \
-                       -b github.com/user/my-back-template \
-                       -f gitlab.com/user/my-front-template \
-                       -w github.com/user/my-webserver-container-template \
-                       -d bitbucket.org/user/my-database-container-template
+cgapp create \
+             -b github.com/user/my-back-template \
+             -f gitlab.com/user/my-front-template \
+             -w github.com/user/my-webserver-container-template \
+             -d bitbucket.org/user/my-database-container-template
 ```
 
 > **Please note:** the _https_ protocol will add automatically.
@@ -108,13 +108,13 @@ foo@bar:~$ cgapp create \
 Similar to install, but add `-u` option:
 
 ```console
-foo@bar:~$ go get -u github.com/create-go-app/cli/cmd/cgapp
+go get -u github.com/create-go-app/cli/cmd/cgapp
 ```
 
 And now, install again:
 
 ```console
-foo@bar:~$ go install github.com/create-go-app/cli/cmd/cgapp
+go install github.com/create-go-app/cli/cmd/cgapp
 ```
 
 ## Developers
