@@ -14,7 +14,7 @@ clean:
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was cleaned!"
 
 test:
-	@go test ./...
+	@go test -v ./...
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was tested!"
 
 install: generate
@@ -40,6 +40,3 @@ build: clean generate security
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for GNU/Linux x64 was builded!"
 	@GOOS=windows go build -ldflags="-H windowsgui" -o $(BUILD)/windows/$(NAME).exe ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for MS Windows x64 was builded!"
-
-test:
-	@go test ./...

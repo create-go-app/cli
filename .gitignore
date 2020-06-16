@@ -1,9 +1,9 @@
 # macOS
-.DS_Store
+**/.DS_Store
 
 # Dev builds
-app/
-build/
+**/app/
+**/build/
 
 # Tests
 **/tmp/

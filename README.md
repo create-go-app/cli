@@ -1,7 +1,7 @@
 <h1 align="center">🕶 Create Go App CLI</h1>
 <h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
 
-<p align="center"><img src="https://img.shields.io/badge/cli_version-0.7.0-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
+<p align="center"><img src="https://img.shields.io/badge/cli_version-0.8.0-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
 
 [![asciicast](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve.svg)](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve)
 
@@ -14,13 +14,13 @@
 
 <img align="right" width="196px" src="images/logo_gopher.png" alt="Create Go App logo"/>
 
-First, get `cgapp` CLI package (wait for getting all dependencies, please):
+First, get `cgapp` CLI package (_wait for getting all dependencies, please_):
 
 ```console
 go get github.com/create-go-app/cli/cmd/cgapp
 ```
 
-Second, install to the `$GOPATH/bin` directory as usual:
+Second, install to the `$GOPATH/bin` directory, as usual:
 
 ```console
 go install github.com/create-go-app/cli/cmd/cgapp
@@ -34,10 +34,10 @@ That's all you need! 🎉
 cgapp [command] [command options] [arguments...]
 ```
 
-For example, create new app into `./app` folder with [Echo](https://github.com/labstack/echo) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
+For example, create new app into `./app` folder with [Echo](https://github.com/gofiber/fiber) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
 
 ```console
-cgapp create -p ./app -b echo -f preact
+cgapp create -p ./app -b fiber -f preact
 ```
 
 ## Commands & Options
@@ -57,11 +57,11 @@ USAGE:
 
 OPTIONS:
    --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
-   --backend value, -b value    backend for your app, ex. Echo, Gin, Fiber (default: "net/http")
-   --frontend value, -f value   frontend for your app, ex. (P)React, Vue, Svelte (default: "none")
+   --backend value, -b value    backend for your app, ex. Fiber, Echo (default: "net/http")
+   --frontend value, -f value   frontend for your app, ex. Preact, React.js, React.ts (default: "none")
    --webserver value, -w value  web/proxy server for your app (default: "nginx")
    --database value, -d value   database for your app, ex. Postgres (default: "none")
-   --help, -h                   show help (default: false)
+   --help, -h                   show all available CLI commands
 ```
 
 > **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package and configured Docker container with `Nginx` and `Certbot`. Without any frontend.
@@ -77,6 +77,7 @@ OPTIONS:
 **JavaScript:**
 
 - [create-go-app/react-js-template](https://github.com/create-go-app/react-js-template) — Frontend template with `React.js` ([facebook/react](https://github.com/facebook/react)).
+- [create-go-app/react-ts-template](https://github.com/create-go-app/react-ts-template) — Frontend template with `React.js with TypeScript` ([facebook/react](https://github.com/facebook/react)).
 - [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with `Preact.js` ([preactjs/preact](https://github.com/preactjs/preact)).
 
 ## Configured production-ready Docker containers
