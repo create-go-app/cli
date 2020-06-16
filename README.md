@@ -1,7 +1,7 @@
 <h1 align="center">🕶 Create Go App CLI</h1>
 <h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
 
-<p align="center"><img src="https://img.shields.io/badge/cli_version-0.8.0-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
+<p align="center"><img src="https://img.shields.io/badge/cli_version-0.8.1-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
 
 [![asciicast](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve.svg)](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve)
 
@@ -12,7 +12,7 @@
 
 ## Install
 
-<img align="right" width="196px" src="images/logo_gopher.png" alt="Create Go App logo"/>
+<img align="right" width="196px" src=".github/images/logo_gopher.png" alt="Create Go App logo"/>
 
 First, get `cgapp` CLI package (_wait for getting all dependencies, please_):
 
@@ -138,7 +138,7 @@ Thanks for your support! 😘 Together, we make this project better every day.
 
 | Logo                                                                                                   | Sponsor description                                                                                                                 | URL                              |
 | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| <img align="center" width="100px" src="images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — IT specialists around the world, who are ready to share their experience to solve your business objectives. | [https://1wa.co](https://1wa.co) |
+| <img align="center" width="100px" src=".github/images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — Team who making UX efficiency review, friendly UI design, smart backend microservices, high-quality web apps and many more. | [https://1wa.co](https://1wa.co) |
 |                                                                                                        | <div align="center">💡 <a href="mailto:truewebartisans@gmail.com">Want to become a sponsor too?</a></div>                           |                                  |
 
 ## License
