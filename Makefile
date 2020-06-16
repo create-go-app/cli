@@ -14,7 +14,7 @@ clean:
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was cleaned!"
 
 test:
-	@go test -v ./...
+	@go test -v -cover -race ./...
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was tested!"
 
 install: generate

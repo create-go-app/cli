@@ -70,15 +70,15 @@ OPTIONS:
 
 **Golang:**
 
-- [create-go-app/net_http-go-template](https://github.com/create-go-app/net_http-go-template) — Backend template with built-in `net/http` ([pkg/net/http](https://golang.org/pkg/net/http/)).
-- [create-go-app/fiber-go-template](https://github.com/create-go-app/fiber-go-template) — Backend template with `Fiber` ([gofiber/fiber](https://github.com/gofiber/fiber)).
-- [WIP] [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with `Echo` ([labstack/echo](https://github.com/labstack/echo)).
+- `net/http` [create-go-app/net_http-go-template](https://github.com/create-go-app/net_http-go-template) — Backend template with built-in net/http ([pkg/net/http](https://golang.org/pkg/net/http/)).
+- `fiber` [create-go-app/fiber-go-template](https://github.com/create-go-app/fiber-go-template) — Backend template with Fiber ([gofiber/fiber](https://github.com/gofiber/fiber)).
+- `echo` [WIP] [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
 
 **JavaScript:**
 
-- [create-go-app/react-js-template](https://github.com/create-go-app/react-js-template) — Frontend template with `React.js` ([facebook/react](https://github.com/facebook/react)).
-- [create-go-app/react-ts-template](https://github.com/create-go-app/react-ts-template) — Frontend template with `React.js with TypeScript` ([facebook/react](https://github.com/facebook/react)).
-- [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with `Preact.js` ([preactjs/preact](https://github.com/preactjs/preact)).
+- `react-js` [create-go-app/react-js-template](https://github.com/create-go-app/react-js-template) — Frontend template with React.js ([facebook/react](https://github.com/facebook/react)).
+- `react-ts` [create-go-app/react-ts-template](https://github.com/create-go-app/react-ts-template) — Frontend template with React.js TypeScript ([facebook/react](https://github.com/facebook/react)).
+- `preact` [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with Preact ([preactjs/preact](https://github.com/preactjs/preact)).
 
 ## Configured production-ready Docker containers
 
