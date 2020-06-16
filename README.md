@@ -84,11 +84,11 @@ OPTIONS:
 
 **Web/Proxy server:**
 
-- [create-go-app/nginx-certbot-docker](https://github.com/create-go-app/nginx-certbot-docker) — Docker container with Nginx and Certbot.
+- `nginx` [create-go-app/nginx-certbot-docker](https://github.com/create-go-app/nginx-certbot-docker) — Docker container with Nginx and Certbot.
 
 **Database:**
 
-- [WIP] [create-go-app/postgres-docker](https://github.com/create-go-app/postgres-docker) — Docker container with PostgreSQL.
+- `postgres` [WIP] [create-go-app/postgres-docker](https://github.com/create-go-app/postgres-docker) — Docker container with PostgreSQL.
 
 ## User templates & containers
 
