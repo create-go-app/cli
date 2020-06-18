@@ -12,8 +12,6 @@
 
 ## Install
 
-<img align="right" width="196px" src=".github/images/logo_gopher.png" alt="Create Go App logo"/>
-
 First, get `cgapp` CLI package (_wait for getting all dependencies, please_):
 
 ```console
