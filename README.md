@@ -32,7 +32,7 @@ That's all you need! 🎉
 cgapp [command] [command options] [arguments...]
 ```
 
-For example, create new app into `./app` folder with [Echo](https://github.com/gofiber/fiber) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
+For example, create new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
 
 ```console
 cgapp create -p ./app -b fiber -f preact
