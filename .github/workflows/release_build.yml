@@ -28,4 +28,4 @@ jobs:
           version: latest
           args: release --rm-dist
         env:
-          github_token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
