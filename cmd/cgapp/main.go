@@ -1,30 +1,19 @@
 package main
 
-import "github.com/create-go-app/cli/internal/cgapp"
+import (
+	"log"
+	"os"
 
-var (
-	// cgapp CLI version
-	version string = "0.8.2"
-
-	// Templates registry
-	registry = map[string]string{
-		// Backend templates
-		"default": "create-go-app/net_http-go-template",
-		"echo":    "create-go-app/echo-go-template",
-		"fiber":   "create-go-app/fiber-go-template",
-
-		// Frontend templates
-		"react-js": "create-go-app/react-js-template",
-		"react-ts": "create-go-app/react-ts-template",
-		"preact":   "create-go-app/preact-js-template",
-
-		// Docker containers
-		"nginx":    "create-go-app/nginx-certbot-docker",
-		"postgres": "create-go-app/postgres-docker",
-	}
+	"github.com/create-go-app/cli/pkg/cgapp"
 )
 
 func main() {
 	// Start new CLI app
-	cgapp.New(version, registry)
+	cli, err := cgapp.New()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Run new CLI
+	cli.Run(os.Args)
 }

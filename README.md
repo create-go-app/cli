@@ -1,7 +1,7 @@
 <h1 align="center">🕶 Create Go App CLI</h1>
 <h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
 
-<p align="center"><img src="https://img.shields.io/badge/cli_version-0.8.2-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
+<p align="center"><img src="https://img.shields.io/badge/cli_version-0.8.3-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
 
 ## Requirements
 
@@ -121,7 +121,7 @@ If you want to say «thank you» or/and support active development `create-go-ap
 2. Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=Set%20up%20a%20new%20Go%20%28Golang%29%20full%20stack%20app%20by%20running%20one%20CLI%20command%21%26url%3Dhttps%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
 3. Donate some money to project author via PayPal: [@paypal.me/koddr](https://paypal.me/koddr?locale.x=en_EN).
 4. Join DigitalOcean at our [referral link](https://shrts.website/do/server) (your profit is **$100** and we get $25).
-5. Buy awesome [domain name with 5% discount](https://shrts.website/reg/domain) at REG.COM.
+5. Buy awesome [domain name with **5%** discount](https://shrts.website/reg/domain) at REG.COM.
 
 Thanks for your support! 😘 Together, we make this project better every day.
 

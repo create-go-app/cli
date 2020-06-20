@@ -1,6 +1,9 @@
 package cgapp
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 func Test_ErrChecker(t *testing.T) {
 	type args struct {
@@ -10,11 +13,16 @@ func Test_ErrChecker(t *testing.T) {
 		name string
 		args args
 	}{
-		// TODO: Add test cases.
 		{
 			"no error",
 			args{
 				err: nil,
+			},
+		},
+		{
+			"error",
+			args{
+				err: errors.New("This is error"),
 			},
 		},
 	}

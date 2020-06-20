@@ -33,8 +33,6 @@ func SendMessage(text, color string) {
 		case "cyan":
 			textColor = cyan
 			break
-		default:
-			break
 		}
 
 		// Send colored text
