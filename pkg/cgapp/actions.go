@@ -67,57 +67,28 @@ func CreateCLIAction(c *cli.Context) error {
 
 	// Docker containers
 	SendMessage("\n[START] Configuring Docker containers...", "green")
-
-	// Check ./frontend folder
 	SendMessage("\n[PROCESS] File docker-compose.yml", "cyan")
-	_, err := os.Stat(filepath.Join(appPath, "frontend"))
-	if !os.IsNotExist(err) {
-		// If exists, create fullstack app docker-compose override file
-		ErrChecker(
-			File(
-				"docker-compose.yml",
-				embed.Get("/docker/docker-compose.fullstack.yml"),
-			),
-		)
+
+	// Check frontend
+	if appFrontend != "none" {
+		// If `-f` argument exists, create fullstack app docker-compose override file
+		ErrChecker(File("docker-compose.yml", embed.Get("/docker/docker-compose.fullstack.yml")))
 	} else {
 		// Default docker-compose.yml
-		ErrChecker(
-			File(
-				"docker-compose.yml",
-				embed.Get("/docker/docker-compose.backend.yml"),
-			),
-		)
+		ErrChecker(File("docker-compose.yml", embed.Get("/docker/docker-compose.backend.yml")))
 	}
 
 	// Production settings docker-compose.prod.yml
-	ErrChecker(
-		File(
-			"docker-compose.prod.yml",
-			embed.Get("/docker/docker-compose.fullstack.yml"),
-		),
-	)
+	ErrChecker(File("docker-compose.prod.yml", embed.Get("/docker/docker-compose.prod.yml")))
 
 	// Create container files
-	SendMessage("\n[PROCESS] Web/proxy server", "cyan")
-	ErrChecker(
-		Create(&Config{
-			name:   strings.ToLower(appWebServer),
-			match:  "^(nginx)$",
-			view:   "webserver",
-			folder: appPath,
-		},
-			registry,
-		),
-	)
-
-	// Create database files
-	if appDatabase != "none" {
-		SendMessage("\n[PROCESS] Database", "cyan")
+	if appWebServer != "none" {
+		SendMessage("\n[PROCESS] Web/proxy server", "cyan")
 		ErrChecker(
 			Create(&Config{
-				name:   strings.ToLower(appDatabase),
-				match:  "^(postgres)$",
-				view:   "database",
+				name:   strings.ToLower(appWebServer),
+				match:  "^(nginx)$",
+				view:   "webserver",
 				folder: appPath,
 			},
 				registry,

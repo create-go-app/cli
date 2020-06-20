@@ -6,12 +6,10 @@ import (
 
 // Options
 var (
-	appPath          string
-	appBackend       string
-	appFrontend      string
-	appWebServer     string
-	appDatabase      string
-	appSilentRunning string
+	appPath      string
+	appBackend   string
+	appFrontend  string
+	appWebServer string
 )
 
 // New function for start new CLI
@@ -35,7 +33,7 @@ func New() (*cli.App, error) {
 					Name:        "path",
 					Aliases:     []string{"p"},
 					Value:       ".",
-					Usage:       "path to create app, ex. ~/projects/my-app (default: \".\")",
+					Usage:       "path to create app, ex. ~/projects/my-app",
 					Required:    false,
 					Destination: &appPath,
 				},
@@ -43,7 +41,7 @@ func New() (*cli.App, error) {
 					Name:        "backend",
 					Aliases:     []string{"b"},
 					Value:       "net/http",
-					Usage:       "backend for your app, ex. Fiber, Echo (default: \"net/http\")",
+					Usage:       "backend for your app, ex. Fiber, Echo",
 					Required:    false,
 					Destination: &appBackend,
 				},
@@ -51,32 +49,17 @@ func New() (*cli.App, error) {
 					Name:        "frontend",
 					Aliases:     []string{"f"},
 					Value:       "none",
-					Usage:       "frontend for your app, ex. Preact, React.js, React.ts (default: \"none\")",
+					Usage:       "frontend for your app, ex. Preact, React.js, React.ts",
 					Required:    false,
 					Destination: &appFrontend,
 				},
 				&cli.StringFlag{
 					Name:        "webserver",
 					Aliases:     []string{"w"},
-					Value:       "nginx",
-					Usage:       "web/proxy server for your app (default: \"nginx\")",
+					Value:       "none",
+					Usage:       "web/proxy server for your app",
 					Required:    false,
 					Destination: &appWebServer,
-				},
-				&cli.StringFlag{
-					Name:        "database",
-					Aliases:     []string{"d"},
-					Value:       "none",
-					Usage:       "database for your app, ex. Postgres (default: \"none\")",
-					Required:    false,
-					Destination: &appDatabase,
-				},
-				&cli.StringFlag{
-					Name:        "silent",
-					Value:       "none",
-					Usage:       "silent running (default: \"none\")",
-					Required:    false,
-					Destination: &appSilentRunning,
 				},
 			},
 			Action: CreateCLIAction,

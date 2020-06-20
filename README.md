@@ -54,12 +54,12 @@ OPTIONS:
    --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
    --backend value, -b value    backend for your app, ex. Fiber, Echo (default: "net/http")
    --frontend value, -f value   frontend for your app, ex. Preact, React.js, React.ts (default: "none")
-   --webserver value, -w value  web/proxy server for your app (default: "nginx")
+   --webserver value, -w value  web/proxy server for your app (default: "none")
    --database value, -d value   database for your app, ex. Postgres (default: "none")
-   --help, -h                   show all available CLI commands
+   --help, -h                   show help
 ```
 
-> **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package and configured Docker container with `Nginx` and `Certbot`. Without any frontend.
+> ☝️ **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package. Without any frontend or configured Docker containers.
 
 ## Available production-ready templates
 
@@ -67,7 +67,7 @@ OPTIONS:
 
 - `net/http` [create-go-app/net_http-go-template](https://github.com/create-go-app/net_http-go-template) — Backend template with built-in net/http ([pkg/net/http](https://golang.org/pkg/net/http/)).
 - `fiber` [create-go-app/fiber-go-template](https://github.com/create-go-app/fiber-go-template) — Backend template with Fiber ([gofiber/fiber](https://github.com/gofiber/fiber)).
-- `echo` [WIP] [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
+- `echo` _WIP_ [create-go-app/echo-go-template](https://github.com/create-go-app/echo-go-template) — Backend template with Echo ([labstack/echo](https://github.com/labstack/echo)).
 
 **JavaScript:**
 
@@ -79,11 +79,11 @@ OPTIONS:
 
 **Web/Proxy server:**
 
-- `nginx` [create-go-app/nginx-certbot-docker](https://github.com/create-go-app/nginx-certbot-docker) — Docker container with Nginx and Certbot.
+- `nginx` [create-go-app/nginx-certbot-docker](https://github.com/create-go-app/nginx-docker) — Docker container with Nginx.
 
 **Database:**
 
-- `postgres` [WIP] [create-go-app/postgres-docker](https://github.com/create-go-app/postgres-docker) — Docker container with PostgreSQL.
+- `postgres` _WIP_ [create-go-app/postgres-docker](https://github.com/create-go-app/postgres-docker) — Docker container with PostgreSQL.
 
 ## User templates & containers
 
@@ -97,11 +97,11 @@ cgapp create \
              -d bitbucket.org/user/my-database-container-template
 ```
 
-> **Please note:** the _https_ protocol will add automatically.
+> ☝️ **Please note:** the _https_ protocol will add automatically.
 
 ## How to update CLI to latest version?
 
-Similar to install, but add `-u` option:
+Similar to install, but add `-u` argument:
 
 ```console
 go get -u github.com/create-go-app/cli/cmd/cgapp
@@ -115,22 +115,22 @@ go install github.com/create-go-app/cli/cmd/cgapp
 
 ## Project assistance
 
-If you want to say «thank you» or/and support active development `create-go-app/cli`:
+If you want to say **thank you** or/and support active development `create-go-app/cli`:
 
 1. Add a GitHub Star to project.
 2. Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=Set%20up%20a%20new%20Go%20%28Golang%29%20full%20stack%20app%20by%20running%20one%20CLI%20command%21%26url%3Dhttps%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
 3. Donate some money to project author via PayPal: [@paypal.me/koddr](https://paypal.me/koddr?locale.x=en_EN).
-4. Join DigitalOcean at our [referral link](https://shrts.website/do/server) (your profit is **$100** and we get $25).
+4. Join DigitalOcean at our [referral link](https://shrts.website/do/server) (your profit is **\$100** and we get \$25).
 5. Buy awesome [domain name with **5%** discount](https://shrts.website/reg/domain) at REG.COM.
 
 Thanks for your support! 😘 Together, we make this project better every day.
 
 ### Sponsors
 
-| Logo                                                                                                   | Description                                                                                                                 | URL                              |
-| ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Logo                                                                                                           | Description                                                                                                                                         | URL                              |
+| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | <img align="center" width="100px" src=".github/images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — Team who making UX efficiency review, friendly UI design, smart backend microservices, high-quality web apps and many more. | [https://1wa.co](https://1wa.co) |
-|                                                                                                        | <div align="center">💡 <a href="mailto:truewebartisans@gmail.com">Want to become a sponsor too?</a></div>                           |                                  |
+|                                                                                                                | <div align="center">💡 <a href="mailto:truewebartisans@gmail.com">Want to become a sponsor too?</a></div>                                           |                                  |
 
 ## ⚠️ License
 
