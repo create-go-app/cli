@@ -3,12 +3,9 @@
 
 <p align="center"><img src="https://img.shields.io/badge/cli_version-0.8.1-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<img src="https://img.shields.io/badge/securego.io-success-success?style=for-the-badge&logo=none" alt="gosec" />&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
 
-[![asciicast](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve.svg)](https://asciinema.org/a/0wjeLuiQPjE0fLVLFBrnJAYve)
-
 ## Requirements
 
 - Go `1.11+`
-- Go Modules
 
 ## Install
 
@@ -116,10 +113,6 @@ And now, install again:
 go install github.com/create-go-app/cli/cmd/cgapp
 ```
 
-## Developers
-
-- Idea and active development by [Vic Shóstak](https://github.com/koddr) (aka Koddr).
-
 ## Project assistance
 
 If you want to say «thank you» or/and support active development `create-go-app/cli`:
@@ -127,18 +120,18 @@ If you want to say «thank you» or/and support active development `create-go-ap
 1. Add a GitHub Star to project.
 2. Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=Set%20up%20a%20new%20Go%20%28Golang%29%20full%20stack%20app%20by%20running%20one%20CLI%20command%21%26url%3Dhttps%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
 3. Donate some money to project author via PayPal: [@paypal.me/koddr](https://paypal.me/koddr?locale.x=en_EN).
-4. Join DigitalOcean at our [referral link](https://m.do.co/c/b41859fa9b6e) (your profit is **$100** and we get $25).
-5. Become a sponsor.
+4. Join DigitalOcean at our [referral link](https://shrts.website/do/server) (your profit is **$100** and we get $25).
+5. Buy awesome [domain name with 5% discount](https://shrts.website/reg/domain) at REG.COM.
 
 Thanks for your support! 😘 Together, we make this project better every day.
 
 ### Sponsors
 
-| Logo                                                                                                   | Sponsor description                                                                                                                 | URL                              |
+| Logo                                                                                                   | Description                                                                                                                 | URL                              |
 | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | <img align="center" width="100px" src=".github/images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — Team who making UX efficiency review, friendly UI design, smart backend microservices, high-quality web apps and many more. | [https://1wa.co](https://1wa.co) |
 |                                                                                                        | <div align="center">💡 <a href="mailto:truewebartisans@gmail.com">Want to become a sponsor too?</a></div>                           |                                  |
 
-## License
+## ⚠️ License
 
-MIT
+MIT &copy; [Vic Shóstak](https://github.com/koddr) & [True web artisans](https://1wa.co/).
