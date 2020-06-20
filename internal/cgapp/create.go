@@ -1,7 +1,6 @@
 package cgapp
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -37,11 +36,9 @@ func Create(c *Config, registry map[string]string) error {
 		ErrChecker(err)
 
 		// Show success report
-		fmt.Printf(
-			"\n%v[OK]%v %v was created with default template '%v'!\n",
-			green, noColor,
-			strings.Title(c.view),
-			registry[c.name],
+		SendMessage(
+			"[OK] "+strings.Title(c.view)+" was created with default template `"+registry[c.name]+"`!",
+			"green",
 		)
 	} else {
 		// Else create from user template (from GitHub, etc)
@@ -52,11 +49,9 @@ func Create(c *Config, registry map[string]string) error {
 		ErrChecker(err)
 
 		// Show success report
-		fmt.Printf(
-			"\n%v[OK]%v %v was created with user template '%v'!\n",
-			green, noColor,
-			strings.Title(c.view),
-			c.name,
+		SendMessage(
+			"[OK] "+strings.Title(c.view)+" was created with user template `"+c.name+"`!",
+			"green",
 		)
 	}
 

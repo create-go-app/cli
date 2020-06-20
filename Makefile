@@ -22,7 +22,7 @@ install: generate
 	@echo "$(GREEN)[OK]$(NOCOLOR) Project was installed to GOPATH/bin folder!"
 
 run:
-	@$(BUILD)/darwin/$(NAME) create -p $(APP)
+	@$(BUILD)/darwin/$(NAME) create -p $(APP) -f react-js -b echo -d postgres
 
 generate:
 	@go generate ./...
@@ -34,9 +34,9 @@ security:
 
 build: clean generate security
 	@CGO_ENABLED=0 GOARCH=amd64
-	@GOOS=darwin go build -o $(BUILD)/darwin/$(NAME) ./cmd/$(NAME)/*.go
+	@GOOS=darwin go build -ldflags="-w -s" -o $(BUILD)/darwin/$(NAME) ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for macOS x64 was builded!"
-	@GOOS=linux go build -o $(BUILD)/linux/$(NAME) ./cmd/$(NAME)/*.go
+	@GOOS=linux go build -ldflags="-w -s" -o $(BUILD)/linux/$(NAME) ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for GNU/Linux x64 was builded!"
 	@GOOS=windows go build -ldflags="-H windowsgui" -o $(BUILD)/windows/$(NAME).exe ./cmd/$(NAME)/*.go
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for MS Windows x64 was builded!"

@@ -1,15 +1,12 @@
 package cgapp
 
-import (
-	"fmt"
-	"os"
-)
+import "os"
 
 // ErrChecker function for check error
 func ErrChecker(err error) {
 	if err != nil {
 		// Show error report
-		fmt.Printf("\n%v[X] Error: %v%v\n\n", red, err, noColor)
+		SendMessage("[ERROR] "+err.Error(), "red")
 		os.Exit(1)
 	}
 }

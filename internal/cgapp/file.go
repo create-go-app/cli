@@ -1,7 +1,6 @@
 package cgapp
 
 import (
-	"fmt"
 	"io/ioutil"
 	"path/filepath"
 )
@@ -17,7 +16,7 @@ func File(name string, data []byte) error {
 	ErrChecker(err)
 
 	// Show report for file
-	fmt.Printf("%v[OK]%v File '%v' was created!\n", green, noColor, name)
+	SendMessage("[OK] File `"+name+"` was created!", "")
 
 	return nil
 }
