@@ -1,6 +1,6 @@
 //go:generate go run generator.go
 
-package box
+package embed
 
 type embedBox struct {
 	storage map[string][]byte

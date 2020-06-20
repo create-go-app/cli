@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/create-go-app/cli/internal/box"
+	"github.com/create-go-app/cli/internal/embed"
 	"github.com/urfave/cli/v2"
 )
 
@@ -22,9 +22,9 @@ func CreateCLIAction(c *cli.Context) error {
 	SendMessage("[OK] App folder was created!", "")
 
 	// Create config files for app
-	ErrChecker(File(".editorconfig", box.Get("/dotfiles/.editorconfig")))
-	ErrChecker(File(".gitignore", box.Get("/dotfiles/.gitignore")))
-	ErrChecker(File("Makefile", box.Get("/dotfiles/Makefile")))
+	ErrChecker(File(".editorconfig", embed.Get("/dotfiles/.editorconfig")))
+	ErrChecker(File(".gitignore", embed.Get("/dotfiles/.gitignore")))
+	ErrChecker(File("Makefile", embed.Get("/dotfiles/Makefile")))
 
 	// Create backend files
 	SendMessage("\n[PROCESS] App backend", "cyan")
@@ -76,7 +76,7 @@ func CreateCLIAction(c *cli.Context) error {
 		ErrChecker(
 			File(
 				"docker-compose.yml",
-				box.Get("/docker/docker-compose.fullstack.yml"),
+				embed.Get("/docker/docker-compose.fullstack.yml"),
 			),
 		)
 	} else {
@@ -84,7 +84,7 @@ func CreateCLIAction(c *cli.Context) error {
 		ErrChecker(
 			File(
 				"docker-compose.yml",
-				box.Get("/docker/docker-compose.backend.yml"),
+				embed.Get("/docker/docker-compose.backend.yml"),
 			),
 		)
 	}
@@ -93,7 +93,7 @@ func CreateCLIAction(c *cli.Context) error {
 	ErrChecker(
 		File(
 			"docker-compose.prod.yml",
-			box.Get("/docker/docker-compose.fullstack.yml"),
+			embed.Get("/docker/docker-compose.fullstack.yml"),
 		),
 	)
 
