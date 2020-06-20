@@ -79,7 +79,7 @@ OPTIONS:
 
 **Web/Proxy server:**
 
-- `nginx` [create-go-app/nginx-certbot-docker](https://github.com/create-go-app/nginx-docker) — Docker container with Nginx.
+- `nginx` [create-go-app/nginx-docker](https://github.com/create-go-app/nginx-docker) — Docker container with Nginx.
 
 **Database:**
 
