@@ -15,5 +15,7 @@ func main() {
 	}
 
 	// Run new CLI
-	cli.Run(os.Args)
+	if err = cli.Run(os.Args); err != nil {
+		log.Fatal(err)
+	}
 }
