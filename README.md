@@ -40,7 +40,7 @@ cgapp create -p ./app -b fiber -f preact
 
 ## 📚 Commands & Options
 
-> ☝️ **Tip** you can see all available Create Go App CLI commands (short and full names) by running command with `--help` (or `-h`) option.
+> ☝️ **Tip** you can see all available commands by running command with `--help` (or `-h`) option.
 
 ### `create`
 
