@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src=".github/images/cgapp_logo.svg" width="128px"/><br/>
+  <img src=".github/images/cgapp_logo.svg" width="224px"/><br/>
   Create Go App CLI
 </h1>
 <p align="center">Set up a new Go (Golang) full stack app by running one CLI command!</p>
