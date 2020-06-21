@@ -80,7 +80,7 @@ OPTIONS:
 - `react-ts` [create-go-app/react-ts-template](https://github.com/create-go-app/react-ts-template) — Frontend template with React.js TypeScript ([facebook/react](https://github.com/facebook/react)).
 - `preact` [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with Preact ([preactjs/preact](https://github.com/preactjs/preact)).
 
-## 🐳 Configured production-ready Docker containers
+## 🐳 Available production-ready Docker containers
 
 **Web/Proxy server:**
 
