@@ -116,7 +116,7 @@ You can just reinstall the CLI. The latest version will be downloaded and instal
 go install -i github.com/create-go-app/cli
 ```
 
-If you're using _standalone_ version, please go to the [release page](https://github.com/create-go-app/cli/releases) and download archive with new version.
+If you're using _standalone_ version, please go to the [release page](https://github.com/create-go-app/cli/releases) and download archive with a new version.
 
 ## ⭐️ Project assistance
 
