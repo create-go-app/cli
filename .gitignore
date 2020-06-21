@@ -4,6 +4,7 @@
 # Dev builds
 **/app/
 **/build/
+**/dist/
 
 # Tests
 **/tmp/

@@ -3,7 +3,7 @@ name: Release CLI
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          
+
       - name: Set up Go 1.14
         uses: actions/setup-go@v2
         with:

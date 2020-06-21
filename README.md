@@ -1,51 +1,58 @@
-<h1 align="center">🕶 Create Go App CLI</h1>
-<h3 align="center">Set up a new Go (Golang) full stack app by running one CLI command!</h3>
+<h1 align="center">
+   <img src=".github/images/cgapp_logo.svg" width="128px"/><br/>
+   Create Go App CLI
+</h1>
+<p align="center">Set up a new Go (Golang) full stack app by running one CLI command!</p>
 
 <p align="center"><img src="https://img.shields.io/badge/cli_version-0.8.4-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go Coverage-98%25-success?style=for-the-badge&logo=none" alt="coverage" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
 
-## Requirements
+<br/>
 
-- Go `1.11+`
+## 🚀 Install
 
-## Install
+First of all, [download](https://golang.org/dl/) and install Go. Version `1.11` or higher is required.
 
-First, get `cgapp` CLI package (_wait for getting all dependencies, please_):
-
-```console
-go get github.com/create-go-app/cli/cmd/cgapp
-```
-
-Second, install to the `$GOPATH/bin` directory, as usual:
+Installation is done using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command:
 
 ```console
-go install github.com/create-go-app/cli/cmd/cgapp
+go install -i github.com/create-go-app/cli
 ```
 
 That's all you need! 🎉
 
-## Usage
+### ~ Alternative installations
+
+We're using a [GoReleaser](https://github.com/goreleaser/goreleaser) project for shipping _standalone_ **Create Go App CLI** version to all major desktop platforms: _Apple macOS_, _GNU/Linux_, _MS Windows_. By default, for _amd64_ (x86_64) architecture.
+
+If you need this version, please go to the repository [release page](https://github.com/create-go-app/cli/releases) and download zipped archive for your platform.
+
+## ⚙️ Usage
 
 ```console
 cgapp [command] [command options] [arguments...]
 ```
 
-For example, create new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) on backend and [Preact](https://github.com/preactjs/preact) as frontend:
+For example, let's create a new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Preact](https://github.com/preactjs/preact) as frontend:
 
 ```console
 cgapp create -p ./app -b fiber -f preact
 ```
 
-## Commands & Options
+## 📚 Commands & Options
 
-You can see all available CLI commands (short and full names) by running command with `--help` option.
+> ☝️ **Tip** you can see all available Create Go App CLI commands (short and full names) by running command with `--help` (or `-h`) option.
 
 ### `create`
+
+Creates a new Go app.
+
+> ☝️ **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package. Without any frontend or configured Docker containers.
 
 ```console
 cgapp create --help
 
 NAME:
-   cgapp create - create new Go app
+   cgapp create - create a new Go app
 
 USAGE:
    cgapp create [command options] [arguments...]
@@ -59,9 +66,7 @@ OPTIONS:
    --help, -h                   show help
 ```
 
-> ☝️ **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package. Without any frontend or configured Docker containers.
-
-## Available production-ready templates
+## 📝 Available production-ready templates
 
 **Golang:**
 
@@ -75,7 +80,7 @@ OPTIONS:
 - `react-ts` [create-go-app/react-ts-template](https://github.com/create-go-app/react-ts-template) — Frontend template with React.js TypeScript ([facebook/react](https://github.com/facebook/react)).
 - `preact` [create-go-app/preact-js-template](https://github.com/create-go-app/preact-js-template) — Frontend template with Preact ([preactjs/preact](https://github.com/preactjs/preact)).
 
-## Configured production-ready Docker containers
+## 🐳 Configured production-ready Docker containers
 
 **Web/Proxy server:**
 
@@ -85,9 +90,11 @@ OPTIONS:
 
 - `postgres` _WIP_ [create-go-app/postgres-docker](https://github.com/create-go-app/postgres-docker) — Docker container with PostgreSQL.
 
-## User templates & containers
+## 👤 User templates & containers
 
-Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! Just specify `--backend` (`-b`), `--frontend` (`-f`), `--webserver` (`-w`) and `--database` (`-d`) with addresses to your repositories and run:
+Create Go App CLI provide creation your own template, instead of those prepared by authors. It's easy! 😉
+
+Just specify backend (`-b`), frontend (`-f`), webserver (`-w`) and database (`-d`) with addresses to your repositories and run:
 
 ```console
 cgapp create \
@@ -99,21 +106,17 @@ cgapp create \
 
 > ☝️ **Please note:** the _https_ protocol will add automatically.
 
-## How to update CLI to latest version?
+## 🤔 FAQ
 
-Similar to install, but add `-u` argument:
+**How to update CLI to latest version?**
 
-```console
-go get -u github.com/create-go-app/cli/cmd/cgapp
-```
-
-And now, install again:
+You can just reinstall the CLI. The latest version will be installed automatically:
 
 ```console
-go install github.com/create-go-app/cli/cmd/cgapp
+go install github.com/create-go-app/cli
 ```
 
-## Project assistance
+## ⭐️ Project assistance
 
 If you want to say **thank you** or/and support active development `create-go-app/cli`:
 
@@ -125,7 +128,7 @@ If you want to say **thank you** or/and support active development `create-go-ap
 
 Thanks for your support! 😘 Together, we make this project better every day.
 
-### Sponsors
+### ~ Sponsors
 
 | Logo                                                                                                           | Description                                                                                                                                         | URL                              |
 | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
