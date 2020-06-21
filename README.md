@@ -8,7 +8,17 @@
 
 <br/>
 
-## 🚀 Install
+## ⚡️ Quick start
+
+Let's create a new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Preact](https://github.com/preactjs/preact) as frontend:
+
+```console
+cgapp create -p ./app -b fiber -f preact
+```
+
+That's all you need to start! 😉
+
+## ⚙️ Installation
 
 First of all, [download](https://golang.org/dl/) and install Go. Version `1.11` or higher is required.
 
@@ -18,27 +28,17 @@ Installation is done using the [`go install`](https://golang.org/cmd/go/#hdr-Com
 go install -i github.com/create-go-app/cli
 ```
 
-That's all you need! 🎉
-
 ### ~ Alternative installations
 
 We're using a [GoReleaser](https://github.com/goreleaser/goreleaser) project for shipping _standalone_ **Create Go App CLI** version to all major desktop platforms: _Apple macOS_, _GNU/Linux_, _MS Windows_. By default, for _amd64_ (x86_64) architecture.
 
 If you need this version, please go to the repository [release page](https://github.com/create-go-app/cli/releases) and download zipped archive.
 
-## ⚙️ Usage
+## 📚 Commands & Options
 
 ```console
 cgapp [command] [command options] [arguments...]
 ```
-
-For example, let's create a new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Preact](https://github.com/preactjs/preact) as frontend:
-
-```console
-cgapp create -p ./app -b fiber -f preact
-```
-
-## 📚 Commands & Options
 
 > ☝️ **Tip** you can see all available commands by running command with `--help` (or `-h`) option.
 
