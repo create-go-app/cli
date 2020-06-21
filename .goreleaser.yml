@@ -21,9 +21,6 @@ builds:
       - CGO_ENABLED=0
 archives:
   - # Replacements for GOOS and GOARCH in the archive name.
-    # Keys should be valid GOOSs or GOARCHs.
-    # Values are the respective replacements.
-    # Default is empty.
     replacements:
       darwin: macOS
       linux: Linux
@@ -31,15 +28,11 @@ archives:
       amd64: x86_64
 
     # Can be used to change the archive formats for specific GOOSs.
-    # Most common use case is to archive as zip on Windows.
-    # Default is empty.
     format_overrides:
       - goos: windows
         format: zip
 
     # Additional files/template/globs you want to add to the archive.
-    # Defaults are any files matching `LICENCE*`, `LICENSE*`,
-    # `README*` and `CHANGELOG*` (case-insensitive).
     files:
       - LICENSE
       - README.md
