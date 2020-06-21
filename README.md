@@ -46,8 +46,6 @@ cgapp create -p ./app -b fiber -f preact
 
 Creates a new Go app.
 
-> ☝️ **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package. Without any frontend or configured Docker containers.
-
 ```console
 cgapp create --help
 
@@ -65,6 +63,8 @@ OPTIONS:
    --database value, -d value   database for your app, ex. Postgres (default: "none")
    --help, -h                   show help
 ```
+
+> ☝️ **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package. Without any frontend or configured Docker containers.
 
 ## 📝 Available production-ready templates
 
