@@ -66,7 +66,7 @@ OPTIONS:
 
 > 🔔 **Please note:** by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
 
-## 📝 Available production-ready templates
+## 📝 Available production-ready app templates
 
 **Golang:**
 
