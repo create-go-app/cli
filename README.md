@@ -24,7 +24,7 @@ That's all you need! 🎉
 
 We're using a [GoReleaser](https://github.com/goreleaser/goreleaser) project for shipping _standalone_ **Create Go App CLI** version to all major desktop platforms: _Apple macOS_, _GNU/Linux_, _MS Windows_. By default, for _amd64_ (x86_64) architecture.
 
-If you need this version, please go to the repository [release page](https://github.com/create-go-app/cli/releases) and download zipped archive for your platform.
+If you need this version, please go to the repository [release page](https://github.com/create-go-app/cli/releases) and download zipped archive.
 
 ## ⚙️ Usage
 
@@ -104,17 +104,19 @@ cgapp create \
              -d bitbucket.org/user/my-database-container-template
 ```
 
-> ☝️ **Please note:** the _https_ protocol will add automatically.
+> 🔔 **Please note:** the `https://` protocol will add automatically!
 
 ## 🤔 FAQ
 
 **How to update CLI to latest version?**
 
-You can just reinstall the CLI. The latest version will be installed automatically:
+You can just reinstall the CLI. The latest version will be downloaded and installed automatically:
 
 ```console
-go install github.com/create-go-app/cli
+go install -i github.com/create-go-app/cli
 ```
+
+If you're using _standalone_ version, please go to the [release page](https://github.com/create-go-app/cli/releases) and download archive with new version.
 
 ## ⭐️ Project assistance
 
