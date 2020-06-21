@@ -64,7 +64,7 @@ OPTIONS:
    --help, -h                   show help
 ```
 
-> ☝️ **Tip:** if you just run `cgapp create`, it's create into current folder built-in backend with `net/http` package. Without any frontend or configured Docker containers.
+> 🔔 **Please note:** by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
 
 ## 📝 Available production-ready templates
 
