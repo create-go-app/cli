@@ -42,7 +42,7 @@ build: clean generate security
 	@echo "$(GREEN)[OK]$(NOCOLOR) App backend for MS Windows x64 was builded!"
 
 release:
-	@goreleaser --snapshot
+	@goreleaser --snapshot --rm-dist
 
 release-test:
 	@goreleaser --snapshot --skip-publish --rm-dist
