@@ -122,7 +122,7 @@ If you're using _standalone_ version, please go to the [release page](https://gi
 
 If you want to say **thank you** or/and support active development `create-go-app/cli`:
 
-1. Add a GitHub Star to project.
+1. Add a :octocat: GitHub Star to the project.
 2. Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=Set%20up%20a%20new%20Go%20%28Golang%29%20full%20stack%20app%20by%20running%20one%20CLI%20command%21%26url%3Dhttps%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
 3. Donate some money to project author via PayPal: [@paypal.me/koddr](https://paypal.me/koddr?locale.x=en_EN).
 4. Join DigitalOcean at our [referral link](https://shrts.website/do/server) (your profit is **\$100** and we get \$25).
