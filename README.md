@@ -22,10 +22,10 @@ That's all you need to start! 😉
 
 First of all, [download](https://golang.org/dl/) and install Go. Version `1.11` or higher is required.
 
-Installation is done using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command:
+Installation is done using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with reference to `$GOPATH`:
 
 ```console
-go install -i github.com/create-go-app/cli
+go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
 ```
 
 ### ~ Alternative installations
@@ -110,10 +110,10 @@ cgapp create \
 
 **How to update CLI to latest version?**
 
-You can just reinstall the CLI. The latest version will be downloaded and installed automatically:
+You can just re-build the CLI. The latest version will be downloaded and installed automatically:
 
 ```console
-go install -i github.com/create-go-app/cli
+go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
 ```
 
 If you're using _standalone_ version, please go to the [release page](https://github.com/create-go-app/cli/releases) and download archive with a new version.
