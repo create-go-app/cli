@@ -22,10 +22,18 @@ That's all you need to start! 😉
 
 First of all, [download](https://golang.org/dl/) and install Go. Version `1.11` or higher is required.
 
-Installation is done using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with reference to `$GOPATH`:
+Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with `$GOPATH/bin`:
 
 ```console
 go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
+```
+
+Check, that the CLI is installed correctly by the `--version` (or `-v`) command:
+
+```console
+cgapp --version 
+
+# cgapp version X.X.X
 ```
 
 ### ~ Alternative installations
