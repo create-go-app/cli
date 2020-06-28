@@ -1,7 +1,7 @@
 # .gitignore by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 # macOS
-.DS_store
+**/.DS_store
 
 # Go builds
 **/app/

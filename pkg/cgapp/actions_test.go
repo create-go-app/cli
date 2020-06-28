@@ -30,7 +30,7 @@ func TestCreateCLIAction(t *testing.T) {
 		})
 	}
 
-	files := []string{".editorconfig", ".gitignore", "Makefile", "docker-compose.yml", "docker-compose.prod.yml"}
+	files := []string{".editorconfig", ".gitignore", "deploy-playbook.yml"}
 	for _, name := range files {
 		os.Remove(name)
 	}

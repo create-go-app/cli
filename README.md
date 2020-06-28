@@ -6,8 +6,6 @@
 
 <p align="center"><img src="https://img.shields.io/badge/version-v1.0.0-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-98%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
 
-<br/>
-
 ## ⚡️ Quick start
 
 Let's create a new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Preact](https://github.com/preactjs/preact) as frontend:
@@ -31,7 +29,7 @@ go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
 Check, that the CLI is installed correctly by the `--version` (or `-v`) command:
 
 ```console
-cgapp --version 
+cgapp --version
 
 # cgapp version X.X.X
 ```
@@ -67,7 +65,7 @@ OPTIONS:
    --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
    --backend value, -b value    backend for your app, ex. Fiber, Echo (default: "net/http")
    --frontend value, -f value   frontend for your app, ex. Preact, React.js, React.ts (default: "none")
-   --webserver value, -w value  web/proxy server for your app (default: "none")
+   --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "none")
    --database value, -d value   database for your app, ex. Postgres (default: "none")
    --help, -h                   show help
 ```

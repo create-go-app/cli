@@ -1,0 +1,54 @@
+version: "2"
+
+vars:
+  APP: cgapp{{exeExt}}
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  test:
+    desc: Test project
+    cmds:
+      - go test -cover ./...
+
+  security:
+    desc: Run gosec for project
+    cmds:
+      - gosec -quiet ./...
+
+  generate:
+    desc: Generate blob.go with embed files
+    cmds:
+      - go generate ./...
+
+  build:
+    desc: Test release CLI
+    cmds:
+      - task: generate
+      - task: security
+      - task: test
+      - goreleaser --snapshot --skip-publish --rm-dist
+
+  install:
+    desc: Install CLI to $GOPATH/bin
+    cmds:
+      - task: security
+      - task: test
+      - task: generate
+      - go build -i -o $GOPATH/bin/cgapp ./*.go
+
+  release:
+    desc: GitHub release for CLI
+    cmds:
+      - task: security
+      - task: test
+      - git tag -a {{.TAG}} -m "Bump {{.TAG}}"
+      - git push origin {{.TAG}}
+      - goreleaser --rm-dist
+
+  delete-tag:
+    desc: Delete git tag
+    cmds:
+      - git tag --delete {{.TAG}}

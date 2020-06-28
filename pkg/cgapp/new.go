@@ -10,6 +10,7 @@ var (
 	appBackend   string
 	appFrontend  string
 	appWebServer string
+	appDatabase  string
 )
 
 // New function for start new CLI
@@ -57,9 +58,17 @@ func New() (*cli.App, error) {
 					Name:        "webserver",
 					Aliases:     []string{"w"},
 					Value:       "none",
-					Usage:       "web/proxy server for your app",
+					Usage:       "web/proxy server for your app, ex. Nginx",
 					Required:    false,
 					Destination: &appWebServer,
+				},
+				&cli.StringFlag{
+					Name:        "database",
+					Aliases:     []string{"d"},
+					Value:       "none",
+					Usage:       "database for your app, ex. Postgres",
+					Required:    false,
+					Destination: &appDatabase,
 				},
 			},
 			Action: CreateCLIAction,

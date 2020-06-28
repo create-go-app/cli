@@ -22,9 +22,9 @@ func CreateCLIAction(c *cli.Context) error {
 	SendMessage("[OK] App folder was created!", "")
 
 	// Create config files for app
-	ErrChecker(File(".editorconfig", embed.Get("/dotfiles/.editorconfig")))
-	ErrChecker(File(".gitignore", embed.Get("/dotfiles/.gitignore")))
-	ErrChecker(File("Makefile", embed.Get("/dotfiles/Makefile")))
+	ErrChecker(File(".gitignore", embed.Get("/.gitignore")))
+	ErrChecker(File(".editorconfig", embed.Get("/.editorconfig")))
+	ErrChecker(File("deploy-playbook.yml", embed.Get("/deploy-playbook.yml")))
 
 	// Create backend files
 	SendMessage("\n[PROCESS] App backend", "cyan")
@@ -67,19 +67,6 @@ func CreateCLIAction(c *cli.Context) error {
 
 	// Docker containers
 	SendMessage("\n[START] Configuring Docker containers...", "green")
-	SendMessage("\n[PROCESS] File docker-compose.yml", "cyan")
-
-	// Check frontend
-	if appFrontend != "none" {
-		// If `-f` argument exists, create fullstack app docker-compose override file
-		ErrChecker(File("docker-compose.yml", embed.Get("/docker/docker-compose.fullstack.yml")))
-	} else {
-		// Default docker-compose.yml
-		ErrChecker(File("docker-compose.yml", embed.Get("/docker/docker-compose.backend.yml")))
-	}
-
-	// Production settings docker-compose.prod.yml
-	ErrChecker(File("docker-compose.prod.yml", embed.Get("/docker/docker-compose.prod.yml")))
 
 	// Create container files
 	if appWebServer != "none" {
@@ -89,6 +76,21 @@ func CreateCLIAction(c *cli.Context) error {
 				name:   strings.ToLower(appWebServer),
 				match:  "^(nginx)$",
 				view:   "webserver",
+				folder: appPath,
+			},
+				registry,
+			),
+		)
+	}
+
+	// Create container files
+	if appDatabase != "none" {
+		SendMessage("\n[PROCESS] Database", "cyan")
+		ErrChecker(
+			Create(&Config{
+				name:   strings.ToLower(appDatabase),
+				match:  "^(postgres)$",
+				view:   "database",
 				folder: appPath,
 			},
 				registry,

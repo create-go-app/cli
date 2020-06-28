@@ -2,7 +2,7 @@ package cgapp
 
 var (
 	// cgapp CLI version
-	version = "1.0.0"
+	version = "1.1.0"
 
 	// Templates registry
 	registry = map[string]string{
@@ -16,6 +16,7 @@ var (
 		"preact":   "create-go-app/preact-js-template",
 
 		// Docker containers
-		"nginx": "create-go-app/nginx-docker",
+		"nginx":    "create-go-app/nginx-docker",
+		"postgres": "create-go-app/postgres-docker",
 	}
 )
