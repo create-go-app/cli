@@ -148,6 +148,15 @@ ansible-playbook deploy-playbook.yml \
 - `<HOST>` is a host name from your inventory file
 - `<NETWORK_NAME>` is a network name for your Docker containers
 
+**Are there any video examples of working with the Create Go App CLI?**
+
+<p align="center">
+   <a href="" target="_blank">
+      <img src=".github/images/youtube-preview.png" alt="cgapp youtube example"/><br/>
+      🔗 youtu.be/e9443CCqxio
+   </a>
+</p>
+
 **How to update CLI to latest version?**
 
 You can just re-build the CLI. The latest version will be downloaded and installed automatically:
