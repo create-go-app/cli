@@ -124,9 +124,9 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
 
 With just one command, this playbook allows:
 
-- [ x ] - Build production-ready backend (Go) & frontend (JavaScript, TypeScript) apps, that you have chosen
-- [ x ] - Configure Docker containers for backend, static files, web server and database (by the best practices)
-- [ x ] - Running these Docker containers on your remote server or local machine
+- [x] - Build production-ready backend (Go) & frontend (JavaScript, TypeScript) apps, that you have chosen
+- [x] - Configure Docker containers for backend, static files, web server and database (by the best practices)
+- [x] - Running these Docker containers on your remote server or local machine
 
 > 👌 We strongly recommend you to using the default configs, but you are free to change them any way you want!
 
