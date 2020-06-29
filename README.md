@@ -114,6 +114,39 @@ cgapp create \
 
 ## 🤔 FAQ
 
+**What do you use to automate the server deployment process?**
+
+Each project is created with the required set of configs to start the build and deployment process on the production server or local machine. We use a helpful tool, called **[Ansible](https://docs.ansible.com)** for automate this.
+
+In the root folder of the project you will find [`deploy-playbook.yml`](https://github.com/create-go-app/cli/blob/master/configs/deploy-playbook.yml) file. Is the Ansible playbook describing the build app & deployment to server process.
+
+> 👀 Don't worry, if you are not familiar with this technology, read [this article](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) from the docs. _Besides, you can ask us about it in one of the issues._
+
+With just one command, this playbook allows:
+
+- [ x ] - Build production-ready backend (Go) & frontend (JavaScript, TypeScript) apps, that you have chosen
+- [ x ] - Configure Docker containers for backend, static files, web server and database (by the best practices)
+- [ x ] - Running these Docker containers on your remote server or local machine
+
+> 👌 We strongly recommend you to using the default configs, but you are free to change them any way you want!
+
+**What should I do for deploy my project?**
+
+1. Check, that you have Ansible `v2.9.x` (or later) is installed.
+2. Add the right host to your inventory file (`/etc/ansible/hosts`) on your local machine.
+3. Be sure, that you generate & add private SSH key to your remote server and hold private key on your local machine.
+4. Run the Ansible playbook by this command (from the root folder of your project):
+
+```bash
+ansible-playbook deploy-playbook.yml \
+                                       -u <USER> \
+                                       --extra-vars "host=<HOST> network_name=<NETWORK_NAME>"
+```
+
+- `<USER>` is an username of remote's server user (for example, `root`)
+- `<HOST>` is a host name from your inventory file
+- `<NETWORK_NAME>` is a network name for your Docker containers
+
 **How to update CLI to latest version?**
 
 You can just re-build the CLI. The latest version will be downloaded and installed automatically:

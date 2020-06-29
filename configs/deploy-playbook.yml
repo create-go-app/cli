@@ -1,3 +1,5 @@
+# deploy-playbook.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+
 ---
 - hosts: "{{ host }}"
   become: yes
