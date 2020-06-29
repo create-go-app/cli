@@ -139,9 +139,10 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
 4. Run the Ansible playbook by this command (_from the root folder of your project_):
 
 ```bash
-ansible-playbook deploy-playbook.yml \
-                                      -u <USER> \
-                                      --extra-vars "host=<HOST> network_name=<NETWORK_NAME>"
+ansible-playbook \
+                  deploy-playbook.yml \
+                  -u <USER> \
+                  --extra-vars "host=<HOST> network_name=<NETWORK_NAME>"
 ```
 
 - `<USER>` is an username of remote's server user (for example, `root`)
@@ -151,11 +152,13 @@ ansible-playbook deploy-playbook.yml \
 **Are there any video examples of working with the Create Go App CLI?**
 
 <p align="center">
-   <a href="" target="_blank">
+   <a href="https://youtu.be/e9443CCqxio" target="_blank">
       <img src=".github/images/youtube-preview.png" alt="cgapp youtube example"/><br/>
       🔗 youtu.be/e9443CCqxio
    </a>
 </p>
+
+<br/>
 
 **How to update CLI to latest version?**
 
