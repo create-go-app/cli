@@ -110,7 +110,7 @@ cgapp create \
              -d bitbucket.org/user/my-database-container-template
 ```
 
-> 🔔 **Please note:** the `https://` protocol will add automatically!
+> 🔔 Please note, that `https://` protocol will add automatically!
 
 ## 🤔 FAQ
 
