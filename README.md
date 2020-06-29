@@ -70,7 +70,7 @@ OPTIONS:
    --help, -h                   show help
 ```
 
-> 🔔 Please note, by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
+> 🔔 Please note: by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
 
 ## 📝 Available production-ready app templates
 
@@ -110,11 +110,11 @@ cgapp create \
              -d bitbucket.org/user/my-database-container-template
 ```
 
-> 🔔 Please note, that `https://` protocol will add automatically!
+> 🔔 Please note: the `https://` protocol will add automatically!
 
 ## 🤔 FAQ
 
-**What do you use to automate the server deployment process?**
+**— What do you use to automate the server deployment process?**
 
 Each project is created with the required set of configs to start the build and deployment process on the production server or local machine. We use a helpful tool, called **[Ansible](https://docs.ansible.com)** for automate this.
 
@@ -122,7 +122,7 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
 
 > 👀 Hey! Don't worry, if you are not familiar with this technology, read [this article](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) from the docs. _Besides, you can ask us about it in one of the issues._
 
-**What does this playbook do?**
+**— What does this playbook do?**
 
 - [x] Builds production-ready backend (Go) & frontend (JavaScript, TypeScript) apps, that you have chosen
 - [x] Provides the best practices for web server and database configuration
@@ -131,7 +131,7 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
 
 > 👌 We recommend to using the default configs, but you are free to change them any way you want!
 
-**What should I do for deploy my project?**
+**— What should I do for deploy my project?**
 
 1. Check, that you have Ansible `v2.9.x` (or later) is installed.
 2. Add the right host to your inventory file (`/etc/ansible/hosts`) on your local machine.
@@ -149,10 +149,10 @@ ansible-playbook \
 - `<HOST>` is a host name from your inventory file
 - `<NETWORK_NAME>` is a network name for your Docker containers
 
-**Are there any video examples of working with the Create Go App CLI?**
+**— Are there any video examples of working with the Create Go App CLI?**
 
 <p align="center">
-   <a href="https://youtu.be/e9443CCqxio" target="_blank">
+   <a href="https://youtu.be/e9443CCqxio">
       <img src=".github/images/youtube-preview.png" alt="cgapp youtube example"/><br/>
       🔗 youtu.be/e9443CCqxio
    </a>
@@ -160,7 +160,7 @@ ansible-playbook \
 
 <br/>
 
-**How to update CLI to latest version?**
+**— How to update CLI to latest version?**
 
 You can just re-build the CLI. The latest version will be downloaded and installed automatically:
 
