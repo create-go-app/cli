@@ -46,7 +46,7 @@ If you need this version, please go to the repository [release page](https://git
 cgapp [command] [command options] [arguments...]
 ```
 
-> ☝️ **Tip** you can see all available commands by running command with `--help` (or `-h`) option.
+> ☝️ Tip: you can see all available commands by running command with `--help` (or `-h`) option.
 
 ### `create`
 
@@ -70,7 +70,7 @@ OPTIONS:
    --help, -h                   show help
 ```
 
-> 🔔 **Please note:** by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
+> 🔔 Please note, by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
 
 ## 📝 Available production-ready app templates
 
@@ -120,15 +120,16 @@ Each project is created with the required set of configs to start the build and 
 
 In the root folder of the project you will find [`deploy-playbook.yml`](https://github.com/create-go-app/cli/blob/master/configs/deploy-playbook.yml) file. Is the Ansible playbook describing the build app & deployment to server process.
 
-> 👀 Don't worry, if you are not familiar with this technology, read [this article](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) from the docs. _Besides, you can ask us about it in one of the issues._
+> 👀 Hey! Don't worry, if you are not familiar with this technology, read [this article](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html) from the docs. _Besides, you can ask us about it in one of the issues._
 
-With just one command, this playbook allows:
+**What does this playbook do?**
 
-- [x] Build production-ready backend (Go) & frontend (JavaScript, TypeScript) apps, that you have chosen
-- [x] Configure Docker containers for backend, static files, web server and database (by the best practices)
-- [x] Running these Docker containers on your remote server or local machine
+- [x] Builds production-ready backend (Go) & frontend (JavaScript, TypeScript) apps, that you have chosen
+- [x] Provides the best practices for web server and database configuration
+- [x] Configures Docker network with containers for backend, static files from frontend, web server and database
+- [x] Runs these Docker containers on your remote server or local machine
 
-> 👌 We strongly recommend you to using the default configs, but you are free to change them any way you want!
+> 👌 We recommend to using the default configs, but you are free to change them any way you want!
 
 **What should I do for deploy my project?**
 
