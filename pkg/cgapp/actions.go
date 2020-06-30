@@ -72,11 +72,11 @@ func CreateCLIAction(c *cli.Context) error {
 	// Docker containers
 	if appWebServer != "none" || appDatabase != "none" {
 
-		SendMessage("\n[START] Docker containers...", "green")
+		SendMessage("\n[NEXT] Docker containers...", "green")
 
 		// Create container files
 		if appWebServer != "none" {
-			SendMessage("\n[PROCESS] Web/proxy server", "cyan")
+			SendMessage("\n[PROCESS] Web/proxy server container", "cyan")
 			ErrChecker(
 				Create(&Config{
 					name:   strings.ToLower(appWebServer),
@@ -91,7 +91,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 		// Create container files
 		if appDatabase != "none" {
-			SendMessage("\n[PROCESS] Database", "cyan")
+			SendMessage("\n[PROCESS] Database container", "cyan")
 			ErrChecker(
 				Create(&Config{
 					name:   strings.ToLower(appDatabase),
@@ -112,6 +112,37 @@ func CreateCLIAction(c *cli.Context) error {
 	SendMessage("\n[DONE] Completed in "+stopTimer+".", "cyan")
 	SendMessage("\n[!] Next steps & helpful instructions here → https://shrts.website/cgapp/faq", "yellow")
 	SendMessage("[!] Go to the `"+appPath+"` folder and make something beautiful! :)\n", "yellow")
+
+	return nil
+}
+
+// DeployCLIAction actions for `deploy` CLI command
+func DeployCLIAction(c *cli.Context) error {
+	// Start timer
+	startTimer := time.Now()
+
+	// START message
+	SendMessage("\n[*] Create Go App v"+version, "yellow")
+	SendMessage("\n[START] Deploying project to the `"+deployHost+"`...", "green")
+
+	// Create main folder for app
+	SendMessage("\n[PROCESS] Run Ansible playbook `"+deployPlaybook+"`", "cyan")
+	cmd := exec.Command(
+		"ansible-playbook",
+		deployPlaybook,
+		"-u "+deployUsername,
+		"--extra-vars 'host="+deployHost+" network_name="+deployDockerNetwork+"'",
+	)
+	cmd.Dir = filepath.Join(".")
+	ErrChecker(cmd.Run())
+
+	// Stop timer
+	stopTimer := time.Since(startTimer).String()
+
+	// END message
+	SendMessage("\n[DONE] Completed in "+stopTimer+".", "cyan")
+	SendMessage("\n[!] Next steps & helpful instructions here → https://shrts.website/cgapp/faq", "yellow")
+	SendMessage("[!] Go to the `"+deployHost+"` to see your deployed project! :)\n", "yellow")
 
 	return nil
 }

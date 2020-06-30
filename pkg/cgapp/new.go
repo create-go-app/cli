@@ -6,21 +6,28 @@ import (
 
 // Options
 var (
+	// For `create` command
 	appPath      string
 	appBackend   string
 	appFrontend  string
 	appWebServer string
 	appDatabase  string
+
+	// For `deploy` command
+	deployPlaybook      string
+	deployUsername      string
+	deployHost          string
+	deployDockerNetwork string
 )
 
 // New function for start new CLI
 func New() (*cli.App, error) {
-	// Init
+	// Init CLI
 	app := &cli.App{}
 
-	// Configure
+	// Configure CLI
 	app.Name = "cgapp"
-	app.Usage = "set up a new Go (Golang) full stack app by running one command."
+	app.Usage = "create and deploy a new Go (Golang) app by running one command."
 	app.Version = version
 	app.EnableBashCompletion = true
 
@@ -28,7 +35,7 @@ func New() (*cli.App, error) {
 	app.Commands = []*cli.Command{
 		{
 			Name:  "create",
-			Usage: "create new Go app",
+			Usage: "create a new project with the selected configuration",
 			Flags: []cli.Flag{
 				&cli.StringFlag{
 					Name:        "path",
@@ -72,6 +79,43 @@ func New() (*cli.App, error) {
 				},
 			},
 			Action: CreateCLIAction,
+		},
+		{
+			Name:  "deploy",
+			Usage: "deploy Docker containers with your project to a remote server or run on your local machine",
+			Flags: []cli.Flag{
+				&cli.StringFlag{
+					Name:        "playbook",
+					Aliases:     []string{"p"},
+					Value:       "deploy-playbook.yml",
+					Usage:       "name of Ansible playbook, ex. my-play.yml",
+					Required:    false,
+					Destination: &deployPlaybook,
+				},
+				&cli.StringFlag{
+					Name:        "username",
+					Aliases:     []string{"u"},
+					Usage:       "username of remote's server user or your local machine, ex. root",
+					Required:    true,
+					Destination: &deployUsername,
+				},
+				&cli.StringFlag{
+					Name:        "host",
+					Aliases:     []string{"s"},
+					Usage:       "host name of remote's server or local machine (from Ansible inventory), ex. do_server_1",
+					Required:    true,
+					Destination: &deployHost,
+				},
+				&cli.StringFlag{
+					Name:        "network",
+					Aliases:     []string{"n"},
+					Value:       "cgapp_network",
+					Usage:       "network for Docker containers, ex. my_net",
+					Required:    false,
+					Destination: &deployDockerNetwork,
+				},
+			},
+			Action: DeployCLIAction,
 		},
 	}
 

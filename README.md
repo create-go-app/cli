@@ -4,7 +4,7 @@
 </h1>
 <p align="center">Set up a new Go (Golang) full stack app by running one CLI command!</p>
 
-<p align="center"><img src="https://img.shields.io/badge/version-v1.1.1-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-100%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="lisense" /></p>
+<p align="center"><img src="https://img.shields.io/badge/version-v1.2.0-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-100%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="license" /></p>
 
 ## ⚡️ Quick start
 
@@ -30,8 +30,6 @@ Check, that the CLI is installed correctly by the `--version` (or `-v`) command:
 
 ```console
 cgapp --version
-
-# cgapp version X.X.X
 ```
 
 ### ~ Alternative installations
@@ -50,13 +48,13 @@ cgapp [command] [command options] [arguments...]
 
 ### `create`
 
-Creates a new Go app.
+CLI command to create a new project with the selected configuration.
 
 ```console
 cgapp create --help
 
 NAME:
-   cgapp create - create a new Go app
+   cgapp create - create a new project with the selected configuration
 
 USAGE:
    cgapp create [command options] [arguments...]
@@ -68,6 +66,29 @@ OPTIONS:
    --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "none")
    --database value, -d value   database for your app, ex. Postgres (default: "none")
    --help, -h                   show help
+```
+
+> 🔔 Please note: by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
+
+### `deploy`
+
+CLI command for deploy Docker containers with your project to a remote server or run on your local machine.
+
+```console
+cgapp deploy --help
+
+NAME:
+   cgapp deploy - deploy Docker containers with your project to a remote server or run on your local machine
+
+USAGE:
+   cgapp deploy [command options] [arguments...]
+
+OPTIONS:
+   --playbook value, -p value  name of Ansible playbook, ex. my-play.yml (default: "deploy-playbook.yml")
+   --username value, -u value  username of remote's server user or your local machine, ex. root
+   --host value, -s value      host name of remote's server or local machine (from Ansible inventory), ex. do_server_1
+   --network value, -n value   network for Docker containers, ex. my_net (default: "cgapp_network")
+   --help, -h                  show help (default: false)
 ```
 
 > 🔔 Please note: by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
@@ -102,7 +123,7 @@ Create Go App CLI provide creation your own template, instead of those prepared 
 
 Just specify backend (`-b`), frontend (`-f`), webserver (`-w`) and database (`-d`) with addresses to your repositories and run:
 
-```console
+```bash
 cgapp create \
              -b github.com/user/my-back-template \
              -f gitlab.com/user/my-front-template \
@@ -133,9 +154,12 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
 
 **— What should I do for deploy my project?**
 
-1. Check, that you have Ansible `v2.9.x` (or later) is installed.
-2. Add the right host to your inventory file (`/etc/ansible/hosts`) on your local machine.
-3. Be sure, that you generate & add private SSH key to your remote server and hold private key on your local machine.
+1. Check, that you have Ansible `v2.9.x` (_or later_) is installed.
+2. Add the right host to your inventory file (_into `/etc/ansible/hosts`_) on your local machine.
+3. Be sure, you're working with a SSH key correctly:
+   - Generate a new SSH key by command `ssh-keygen` on your local machine;
+   - Add a **public** key part (_with `*.pub` extension_) into a bottom of `~/.ssh/authorized_keys` file (_with "one line" format_) on your remote server;
+   - Save a **private** key part on your local machine;
 4. Run the Ansible playbook by this command (_from the root folder of your project_):
 
 ```bash

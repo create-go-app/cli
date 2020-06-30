@@ -17,7 +17,7 @@ func TestCreateCLIAction(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"success action",
+			"successfully executing create action",
 			args{},
 			false,
 		},
@@ -33,5 +33,29 @@ func TestCreateCLIAction(t *testing.T) {
 	files := []string{".editorconfig", ".gitignore", "deploy-playbook.yml"}
 	for _, name := range files {
 		os.Remove(name)
+	}
+}
+
+func TestDeployCLIAction(t *testing.T) {
+	type args struct {
+		c *cli.Context
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully executing deploy action",
+			args{},
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := DeployCLIAction(tt.args.c); (err != nil) != tt.wantErr {
+				t.Errorf("DeployCLIAction() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
 	}
 }

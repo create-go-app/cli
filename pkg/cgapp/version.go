@@ -2,7 +2,7 @@ package cgapp
 
 var (
 	// cgapp CLI version
-	version = "1.1.1"
+	version = "1.2.0"
 
 	// Templates registry
 	registry = map[string]string{
