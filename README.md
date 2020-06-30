@@ -50,22 +50,21 @@ cgapp [command] [command options] [arguments...]
 
 CLI command to create a new project with the selected configuration.
 
+#### Usage
+
 ```console
-cgapp create --help
+cgapp create [command options] [arguments...]
+```
 
-NAME:
-   cgapp create - create a new project with the selected configuration
+#### Options
 
-USAGE:
-   cgapp create [command options] [arguments...]
-
-OPTIONS:
-   --path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
-   --backend value, -b value    backend for your app, ex. Fiber, Echo (default: "net/http")
-   --frontend value, -f value   frontend for your app, ex. Preact, React.js, React.ts (default: "none")
-   --webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "none")
-   --database value, -d value   database for your app, ex. Postgres (default: "none")
-   --help, -h                   show help
+```console
+--path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
+--backend value, -b value    backend for your app, ex. Fiber, Echo (default: "net/http")
+--frontend value, -f value   frontend for your app, ex. Preact, React.js, React.ts (default: "none")
+--webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "none")
+--database value, -d value   database for your app, ex. Postgres (default: "none")
+--help, -h                   show help
 ```
 
 > 🔔 Please note: by default, `cgapp create` command without any options will create into current folder default backend (`net/http`) without frontend or configured Docker containers!
@@ -74,21 +73,20 @@ OPTIONS:
 
 CLI command for deploy Docker containers with your project to a remote server or run on your local machine.
 
+#### Usage
+
 ```console
-cgapp deploy --help
+cgapp deploy [command options] [arguments...]
+```
 
-NAME:
-   cgapp deploy - deploy Docker containers with your project to a remote server or run on your local machine
+#### Options
 
-USAGE:
-   cgapp deploy [command options] [arguments...]
-
-OPTIONS:
-   --playbook value, -p value  name of Ansible playbook, ex. my-play.yml (default: "deploy-playbook.yml")
-   --username value, -u value  username of remote's server user or your local machine, ex. root
-   --host value, -s value      host name of remote's server or local machine (from Ansible inventory), ex. do_server_1
-   --network value, -n value   network for Docker containers, ex. my_net (default: "cgapp_network")
-   --help, -h                  show help (default: false)
+```console
+--playbook value, -p value  name of Ansible playbook, ex. my-play.yml (default: "deploy-playbook.yml")
+--username value, -u value  username of remote's server user or your local machine, ex. root
+--host value, -s value      host name of remote's server or local machine (from Ansible inventory), ex. do_server_1
+--network value, -n value   network for Docker containers, ex. my_net (default: "cgapp_network")
+--help, -h                  show help (default: false)
 ```
 
 ## 📝 Available production-ready app templates
