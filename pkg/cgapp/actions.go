@@ -127,13 +127,22 @@ func DeployCLIAction(c *cli.Context) error {
 
 	// Create main folder for app
 	SendMessage("\n[PROCESS] Run Ansible playbook `"+deployPlaybook+"`", "cyan")
+
+	// Check, if need to ask password for user
+	// See: https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options
+	askBecomePass := ""
+	if c.Bool("ask-become-pass") {
+		askBecomePass = "--ask-become-pass" // #nosec G101
+	}
+
+	// Execute command
 	cmd := exec.Command(
 		"ansible-playbook",
 		deployPlaybook,
 		"-u "+deployUsername,
 		"--extra-vars 'host="+deployHost+" network_name="+deployDockerNetwork+"'",
+		askBecomePass,
 	)
-	cmd.Dir = filepath.Join(".")
 	ErrChecker(cmd.Run())
 
 	// Stop timer

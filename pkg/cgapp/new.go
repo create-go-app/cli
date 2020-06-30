@@ -18,6 +18,7 @@ var (
 	deployUsername      string
 	deployHost          string
 	deployDockerNetwork string
+	deployAskBecomePass bool
 )
 
 // New function for start new CLI
@@ -89,7 +90,6 @@ func New() (*cli.App, error) {
 					Aliases:     []string{"p"},
 					Value:       "deploy-playbook.yml",
 					Usage:       "name of Ansible playbook, ex. my-play.yml",
-					Required:    false,
 					Destination: &deployPlaybook,
 				},
 				&cli.StringFlag{
@@ -111,8 +111,13 @@ func New() (*cli.App, error) {
 					Aliases:     []string{"n"},
 					Value:       "cgapp_network",
 					Usage:       "network for Docker containers, ex. my_net",
-					Required:    false,
 					Destination: &deployDockerNetwork,
+				},
+				&cli.BoolFlag{
+					Name:        "ask-become-pass",
+					Aliases:     []string{"a"},
+					Usage:       "asking you to enter become user's password at start",
+					Destination: &deployAskBecomePass,
 				},
 			},
 			Action: DeployCLIAction,

@@ -2,19 +2,26 @@
   <img src=".github/images/cgapp_logo.svg?v2" width="224px"/><br/>
   Create Go App CLI
 </h1>
-<p align="center">Set up a new Go (Golang) full stack app by running one CLI command!</p>
+<p align="center">Create a new production-ready Go project by running one CLI command!</p>
 
-<p align="center"><img src="https://img.shields.io/badge/version-v1.2.0_pre-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-100%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="license" /></p>
+<p align="center"><img src="https://img.shields.io/badge/version-v1.2.0_beta-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-98%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="license" /></p>
 
 ## ⚡️ Quick start
 
-Let's create a new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Nginx](https://nginx.org/) as web server:
+Let's create a new project into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Nginx](https://nginx.org/) as web server:
 
 ```console
 cgapp create -p ./app -b fiber -w nginx
 ```
 
-That's all you need to start! 😉
+Okay, it works! Now, you can deploy this project to a remote server or run on your local machine in isolated Docker containers (one for `Fiber` and one for `Nginx`):
+
+```console
+cd ./app
+cgapp deploy -u john_doe -s localhost --ask-become-pass
+```
+
+That's all you need to start! 🎉
 
 ## ⚙️ Installation
 
@@ -86,6 +93,7 @@ cgapp deploy [command options] [arguments...]
 --username value, -u value  username of remote's server user or your local machine, ex. root (default: "none")
 --host value, -s value      host name of remote's server or local machine (from Ansible inventory), ex. do_server_1 (default: "none")
 --network value, -n value   network for Docker containers, ex. my_net (default: "cgapp_network")
+--ask-become-pass, -a       asking you to enter become user's password at start (default: false)
 --help, -h                  show help
 ```
 
