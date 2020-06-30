@@ -89,7 +89,7 @@ cgapp deploy [command options] [arguments...]
 --help, -h                  show help
 ```
 
-> 🔔 Please note: you should only run `cgapp deploy` from the root folder of your project, which created with `cgapp create`!
+> 🔔 Please note: you should only run the `cgapp deploy` command from the root folder of your project, which created with the `cgapp create` command! _It's a necessary condition for everything to work perfectly._
 
 ## 📝 Available production-ready app templates
 
