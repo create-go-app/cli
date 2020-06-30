@@ -1,6 +1,8 @@
 package cgapp
 
 import (
+	"bufio"
+	"bytes"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -126,7 +128,7 @@ func DeployCLIAction(c *cli.Context) error {
 	SendMessage("\n[START] Deploying project to the `"+deployHost+"`...", "green")
 
 	// Create main folder for app
-	SendMessage("\n[PROCESS] Run Ansible playbook `"+deployPlaybook+"`", "cyan")
+	SendMessage("\n[PROCESS] Run Ansible playbook `"+deployPlaybook+"`\n", "cyan")
 
 	// Check, if need to ask password for user
 	// See: https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options
@@ -135,21 +137,45 @@ func DeployCLIAction(c *cli.Context) error {
 		askBecomePass = "--ask-become-pass" // #nosec G101
 	}
 
-	// Execute command
+	// Create buffer for stderr
+	stderr := &bytes.Buffer{}
+
+	// Collect command line
 	cmd := exec.Command(
 		"ansible-playbook",
 		deployPlaybook,
-		"-u "+deployUsername,
-		"--extra-vars 'host="+deployHost+" network_name="+deployDockerNetwork+"'",
+		"-u",
+		deployUsername,
+		"-e",
+		"host="+deployHost+" network_name="+deployDockerNetwork,
 		askBecomePass,
 	)
-	ErrChecker(cmd.Run())
+
+	// Set buffer for stderr from cmd
+	cmd.Stderr = stderr
+
+	// Create a new reader
+	cmdReader, err := cmd.StdoutPipe()
+	ErrChecker(err)
+
+	// Create a new scanner and run goroutine func with output
+	scanner := bufio.NewScanner(cmdReader)
+	go func() {
+		for scanner.Scan() {
+			SendMessage(scanner.Text(), "")
+		}
+	}()
+
+	// Run executing command
+	if err := cmd.Run(); err != nil {
+		SendMessage(stderr.String(), "red")
+	}
 
 	// Stop timer
 	stopTimer := time.Since(startTimer).String()
 
 	// END message
-	SendMessage("\n[DONE] Completed in "+stopTimer+".", "cyan")
+	SendMessage("[DONE] Completed in "+stopTimer+".", "cyan")
 	SendMessage("\n[!] Next steps & helpful instructions here → https://shrts.website/cgapp/faq", "yellow")
 	SendMessage("[!] Go to the `"+deployHost+"` to see your deployed project! :)\n", "yellow")
 

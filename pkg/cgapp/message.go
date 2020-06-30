@@ -4,7 +4,7 @@ import "fmt"
 
 // SendMessage function for send message (colored or common)
 func SendMessage(text, color string) {
-	//
+	// Check, if color is selected
 	if color == "" {
 		// Send common text
 		fmt.Printf("%v\n", text)

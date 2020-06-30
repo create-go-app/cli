@@ -4,7 +4,7 @@
 </h1>
 <p align="center">Create a new production-ready Go project by running one CLI command!</p>
 
-<p align="center"><img src="https://img.shields.io/badge/version-v1.2.0_beta-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-98%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="license" /></p>
+<p align="center"><img src="https://img.shields.io/badge/version-v1.2.0-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" />&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-98%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="license" /></p>
 
 ## ⚡️ Quick start
 
@@ -18,7 +18,7 @@ Okay, it works! Now, you can deploy this project to a remote server or run on yo
 
 ```console
 cd ./app
-cgapp deploy -u john_doe -s localhost --ask-become-pass
+cgapp deploy -u john_doe --ask-become-pass
 ```
 
 That's all you need to start! 🎉
@@ -91,9 +91,9 @@ cgapp deploy [command options] [arguments...]
 ```console
 --playbook value, -p value  name of Ansible playbook, ex. my-play.yml (default: "deploy-playbook.yml")
 --username value, -u value  username of remote's server user or your local machine, ex. root (default: "none")
---host value, -s value      host name of remote's server or local machine (from Ansible inventory), ex. do_server_1 (default: "none")
+--host value, -s value      host name of remote's server or local machine (from Ansible inventory), ex. do_server_1 (default: "localhost")
 --network value, -n value   network for Docker containers, ex. my_net (default: "cgapp_network")
---ask-become-pass, -a       asking you to enter become user's password at start (default: false)
+--ask-become-pass           asking you to enter become user's password at start (default: false)
 --help, -h                  show help
 ```
 
@@ -141,6 +141,16 @@ cgapp create \
 
 ## 🤔 FAQ
 
+**— How to update CLI to latest version?**
+
+You can just re-build the CLI. The latest version will be downloaded and installed automatically:
+
+```console
+go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
+```
+
+If you're using _standalone_ version, please go to the [release page](https://github.com/create-go-app/cli/releases) and download archive with a new version.
+
 **— What do you use to automate the server deployment process?**
 
 Each project is created with the required set of configs to start the build and deployment process on the production server or local machine. We use a helpful tool, called **[Ansible](https://docs.ansible.com)** for automate this.
@@ -156,7 +166,7 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
 - [x] Configures Docker network with containers for backend, static files from frontend, web server and database
 - [x] Runs these Docker containers on your remote server or local machine
 
-> 👌 We recommend to using the default configs, but you are free to change them any way you want!
+> 👌 We recommend to using our default playbook, but you are free to change them any way you want!
 
 **— What should I do for deploy my project?**
 
@@ -169,15 +179,15 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
 4. Run the built-in `cgapp deploy` command (_from the root folder of your project_):
 
 ```console
-cgapp deploy -p <PLAYBOOK_NAME> -u <USER> -s <HOST> -n <NETWORK_NAME>
+cgapp deploy -p <PLAYBOOK_NAME> -u <USER> -s <HOST> -n <NETWORK_NAME> [EXTRA_VARS...]
 ```
 
-- `<PLAYBOOK_NAME>` (_optional_) is the Ansible playbook name (by default, `deploy-playbook.yml`)
+- `<PLAYBOOK_NAME>` (_optional_, default: `deploy-playbook.yml`) is the Ansible playbook name
 - `<USER>` (**required**) is an username of remote's server user (for example, `root`)
-- `<HOST>` (**required**) is a host name from your inventory file (for example, `localhost`)
-- `<NETWORK_NAME>` (_optional_) is a network name for your Docker containers (by default, `cgapp_network`)
+- `<HOST>` (_optional_, default: `localhost`) is a host name from your inventory file
+- `<NETWORK_NAME>` (_optional_, default: `cgapp_network`) is a network name for your Docker containers
 
-> 👌 If you need to deploy with entering password for user, you can add `--ask-become-password` (or `-a`) option. _This is a standard Ansible argument to ask for privilege escalation password (see [docs](https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options))._
+> 👌 If you need to deploy (_or run_) project with entering password for user, you can add `--ask-become-pass` variable in `[EXTRA_VARS...]` section. You will be prompted to enter `<USER>`'s password at the beginning. _This is an alias of the standard Ansible argument to ask for a privilege escalation password (see [docs](https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options))._
 
 **— Are there any video examples of working with the Create Go App CLI?**
 
@@ -187,18 +197,6 @@ cgapp deploy -p <PLAYBOOK_NAME> -u <USER> -s <HOST> -n <NETWORK_NAME>
       🔗 youtu.be/e9443CCqxio
    </a>
 </p>
-
-<br/>
-
-**— How to update CLI to latest version?**
-
-You can just re-build the CLI. The latest version will be downloaded and installed automatically:
-
-```console
-go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
-```
-
-If you're using _standalone_ version, please go to the [release page](https://github.com/create-go-app/cli/releases) and download archive with a new version.
 
 ## ⭐️ Project assistance
 

@@ -102,8 +102,8 @@ func New() (*cli.App, error) {
 				&cli.StringFlag{
 					Name:        "host",
 					Aliases:     []string{"s"},
+					Value:       "localhost",
 					Usage:       "host name of remote's server or local machine (from Ansible inventory), ex. do_server_1",
-					Required:    true,
 					Destination: &deployHost,
 				},
 				&cli.StringFlag{
@@ -115,7 +115,6 @@ func New() (*cli.App, error) {
 				},
 				&cli.BoolFlag{
 					Name:        "ask-become-pass",
-					Aliases:     []string{"a"},
 					Usage:       "asking you to enter become user's password at start",
 					Destination: &deployAskBecomePass,
 				},
