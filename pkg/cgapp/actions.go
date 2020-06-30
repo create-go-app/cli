@@ -13,7 +13,7 @@ import (
 
 // CreateCLIAction actions for `create` CLI command
 func CreateCLIAction(c *cli.Context) error {
-	// Start Timer
+	// Start timer
 	startTimer := time.Now()
 
 	// START message

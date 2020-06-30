@@ -8,10 +8,10 @@
 
 ## ⚡️ Quick start
 
-Let's create a new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Preact](https://github.com/preactjs/preact) as frontend:
+Let's create a new app into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Nginx](https://nginx.org/) as web server:
 
 ```console
-cgapp create -p ./app -b fiber -f preact
+cgapp create -p ./app -b fiber -w nginx
 ```
 
 That's all you need to start! 😉
