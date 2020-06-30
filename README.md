@@ -83,11 +83,13 @@ cgapp deploy [command options] [arguments...]
 
 ```console
 --playbook value, -p value  name of Ansible playbook, ex. my-play.yml (default: "deploy-playbook.yml")
---username value, -u value  username of remote's server user or your local machine, ex. root
---host value, -s value      host name of remote's server or local machine (from Ansible inventory), ex. do_server_1
+--username value, -u value  username of remote's server user or your local machine, ex. root (default: "none")
+--host value, -s value      host name of remote's server or local machine (from Ansible inventory), ex. do_server_1 (default: "none")
 --network value, -n value   network for Docker containers, ex. my_net (default: "cgapp_network")
---help, -h                  show help (default: false)
+--help, -h                  show help
 ```
+
+> 🔔 Please note: you should only run `cgapp deploy` from the root folder of your project, which created with `cgapp create`!
 
 ## 📝 Available production-ready app templates
 
