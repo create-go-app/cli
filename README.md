@@ -158,18 +158,18 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
    - Generate a new SSH key by command `ssh-keygen` on your local machine;
    - Add a **public** key part (_with `*.pub` extension_) into a bottom of `~/.ssh/authorized_keys` file (_with "one line" format_) on your remote server;
    - Save a **private** key part on your local machine;
-4. Run the Ansible playbook by this command (_from the root folder of your project_):
+4. Run the built-in `cgapp deploy` command (_from the root folder of your project_):
 
-```bash
-ansible-playbook \
-                  deploy-playbook.yml \
-                  -u <USER> \
-                  --extra-vars "host=<HOST> network_name=<NETWORK_NAME>"
+```console
+cgapp deploy -p <PLAYBOOK_NAME> -u <USER> -s <HOST> -n <NETWORK_NAME>
 ```
 
-- `<USER>` is an username of remote's server user (for example, `root`)
-- `<HOST>` is a host name from your inventory file
-- `<NETWORK_NAME>` is a network name for your Docker containers
+- `<PLAYBOOK_NAME>` (_optional_) is the Ansible playbook name (by default, `deploy-playbook.yml`)
+- `<USER>` (**required**) is an username of remote's server user (for example, `root`)
+- `<HOST>` (**required**) is a host name from your inventory file (for example, `localhost`)
+- `<NETWORK_NAME>` (_optional_) is a network name for your Docker containers (by default, `cgapp_network`)
+
+> 👌 If you need to deploy with entering password for user, you can add `--ask-become-password` (or `-a`) option. _This is a standard Ansible argument to ask for privilege escalation password (see [docs](https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options))._
 
 **— Are there any video examples of working with the Create Go App CLI?**
 
