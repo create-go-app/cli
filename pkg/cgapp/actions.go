@@ -5,6 +5,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/create-go-app/cli/internal/embed"
 	"github.com/urfave/cli/v2"
@@ -12,9 +13,12 @@ import (
 
 // CreateCLIAction actions for `create` CLI command
 func CreateCLIAction(c *cli.Context) error {
+	// Start Timer
+	startTimer := time.Now()
+
 	// START message
-	SendMessage("[*] Create Go App v"+version, "yellow")
-	SendMessage("\n[START] Creating a new app...", "green")
+	SendMessage("\n[*] Create Go App v"+version, "yellow")
+	SendMessage("\n[START] Creating a new app in `"+appPath+"` folder...", "green")
 
 	// Create main folder for app
 	SendMessage("\n[PROCESS] App folder and config files", "cyan")
@@ -66,40 +70,48 @@ func CreateCLIAction(c *cli.Context) error {
 	}
 
 	// Docker containers
-	SendMessage("\n[START] Configuring Docker containers...", "green")
+	if appWebServer != "none" || appDatabase != "none" {
 
-	// Create container files
-	if appWebServer != "none" {
-		SendMessage("\n[PROCESS] Web/proxy server", "cyan")
-		ErrChecker(
-			Create(&Config{
-				name:   strings.ToLower(appWebServer),
-				match:  "^(nginx)$",
-				view:   "webserver",
-				folder: appPath,
-			},
-				registry,
-			),
-		)
+		SendMessage("\n[START] Docker containers...", "green")
+
+		// Create container files
+		if appWebServer != "none" {
+			SendMessage("\n[PROCESS] Web/proxy server", "cyan")
+			ErrChecker(
+				Create(&Config{
+					name:   strings.ToLower(appWebServer),
+					match:  "^(nginx)$",
+					view:   "webserver",
+					folder: appPath,
+				},
+					registry,
+				),
+			)
+		}
+
+		// Create container files
+		if appDatabase != "none" {
+			SendMessage("\n[PROCESS] Database", "cyan")
+			ErrChecker(
+				Create(&Config{
+					name:   strings.ToLower(appDatabase),
+					match:  "^(postgres)$",
+					view:   "database",
+					folder: appPath,
+				},
+					registry,
+				),
+			)
+		}
 	}
 
-	// Create container files
-	if appDatabase != "none" {
-		SendMessage("\n[PROCESS] Database", "cyan")
-		ErrChecker(
-			Create(&Config{
-				name:   strings.ToLower(appDatabase),
-				match:  "^(postgres)$",
-				view:   "database",
-				folder: appPath,
-			},
-				registry,
-			),
-		)
-	}
+	// Stop timer
+	stopTimer := time.Since(startTimer).String()
 
 	// END message
-	SendMessage("\n[DONE] Run `make` from `"+appPath+"` folder!", "yellow")
+	SendMessage("\n[DONE] Completed in "+stopTimer+".", "cyan")
+	SendMessage("\n[!] Next steps & helpful instructions here → https://shrts.website/cgapp/faq", "yellow")
+	SendMessage("[!] Go to the `"+appPath+"` folder and make something beautiful! :)\n", "yellow")
 
 	return nil
 }
