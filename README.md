@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://github.com/create-go-app/cli/blob/master/.github/images/cgapp_logo.svg?v2" width="224px"/><br/>
+  <img src="https://github.com/create-go-app/cli/blob/master/.github/images/cgapp_logo.png" width="224px"/><br/>
   Create Go App CLI
 </h1>
 <p align="center">Create a new production-ready project with backend (Golang), frontend (JavaScript, TypeScript)<br/>and deploy automation (Ansible, Docker) by running one CLI command!</p>
@@ -187,7 +187,7 @@ cgapp deploy -p <PLAYBOOK_NAME> -u <USER> -s <HOST> -n <NETWORK_NAME> [EXTRA_VAR
 - `<HOST>` (_optional_, default: `localhost`) is a host name from your inventory file
 - `<NETWORK_NAME>` (_optional_, default: `cgapp_network`) is a network name for your Docker containers
 
-> 👌 If you need to deploy (_or run_) project with entering password for user, you can add `--ask-become-pass` variable in `[EXTRA_VARS...]` section. You will be prompted to enter `<USER>`'s password at the beginning. _This is an alias of the standard Ansible argument to ask for a privilege escalation password (see [docs](https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options))._
+> 👌 If you need to deploy (_or run_) project with entering password for `<USER>`, you can add `--ask-become-pass` variable in `[EXTRA_VARS...]` section. You will be prompted to enter `<USER>`'s password at the beginning. _This is an alias of the standard Ansible argument to ask for a privilege escalation password (see [docs](https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options))._
 
 **— Are there any video examples of working with the Create Go App CLI?**
 
@@ -206,16 +206,16 @@ If you want to say **thank you** or/and support active development `create-go-ap
 2. Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=Set%20up%20a%20new%20Go%20%28Golang%29%20full%20stack%20app%20by%20running%20one%20CLI%20command%21%26url%3Dhttps%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
 3. Donate some money to project author via PayPal: [@paypal.me/koddr](https://paypal.me/koddr?locale.x=en_EN).
 4. Join DigitalOcean at our [referral link](https://shrts.website/do/server) (your profit is **\$100** and we get \$25).
-5. Buy awesome [domain name with **5%** discount](https://shrts.website/reg/domain) at REG.COM.
+5. Buy awesome domain name with **5%** discount by our [referral link](https://shrts.website/reg/domain) at REG.COM.
 
 Thanks for your support! 😘 Together, we make this project better every day.
 
 ### ~ Sponsors
 
-| Logo                                                                                                           | Description                                                                                                                                         | URL                              |
-| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Logo                                                                                                                                                            | Description                                                                                                                                         | URL                              |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | <img align="center" width="100px" src="https://github.com/create-go-app/cli/blob/master/.github/images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — Team who making UX efficiency review, friendly UI design, smart backend microservices, high-quality web apps and many more. | [https://1wa.co](https://1wa.co) |
-|                                                                                                                | <div align="center">💡 <a href="mailto:truewebartisans@gmail.com">Want to become a sponsor too?</a></div>                                           |                                  |
+|                                                                                                                                                                 | <div align="center">💡 <a href="mailto:truewebartisans@gmail.com">Want to become a sponsor too?</a></div>                                           |                                  |
 
 ## ⚠️ License
 
