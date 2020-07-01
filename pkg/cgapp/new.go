@@ -4,7 +4,6 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// Options
 var (
 	// For `create` command
 	appPath      string
@@ -21,7 +20,7 @@ var (
 	deployAskBecomePass bool
 )
 
-// New function for start new CLI
+// New function for starting a new CLI
 func New() (*cli.App, error) {
 	// Init CLI
 	app := &cli.App{}
@@ -32,7 +31,7 @@ func New() (*cli.App, error) {
 	app.Version = version
 	app.EnableBashCompletion = true
 
-	// CLI commands
+	// Setting CLI commands
 	app.Commands = []*cli.Command{
 		{
 			Name:  "create",
@@ -42,7 +41,7 @@ func New() (*cli.App, error) {
 					Name:        "path",
 					Aliases:     []string{"p"},
 					Value:       ".",
-					Usage:       "path to create app, ex. ~/projects/my-app",
+					Usage:       "path to create project, ex. ~/projects/my-app",
 					Required:    false,
 					Destination: &appPath,
 				},
@@ -50,7 +49,7 @@ func New() (*cli.App, error) {
 					Name:        "backend",
 					Aliases:     []string{"b"},
 					Value:       "net/http",
-					Usage:       "backend for your app, ex. Fiber, Echo",
+					Usage:       "backend for your project, ex. Fiber, Echo",
 					Required:    false,
 					Destination: &appBackend,
 				},
@@ -58,7 +57,7 @@ func New() (*cli.App, error) {
 					Name:        "frontend",
 					Aliases:     []string{"f"},
 					Value:       "none",
-					Usage:       "frontend for your app, ex. Preact, React.js, React.ts",
+					Usage:       "frontend for your project, ex. Preact, React.js, React.ts",
 					Required:    false,
 					Destination: &appFrontend,
 				},
@@ -66,7 +65,7 @@ func New() (*cli.App, error) {
 					Name:        "webserver",
 					Aliases:     []string{"w"},
 					Value:       "none",
-					Usage:       "web/proxy server for your app, ex. Nginx",
+					Usage:       "web/proxy server for your project, ex. Nginx",
 					Required:    false,
 					Destination: &appWebServer,
 				},
@@ -74,7 +73,7 @@ func New() (*cli.App, error) {
 					Name:        "database",
 					Aliases:     []string{"d"},
 					Value:       "none",
-					Usage:       "database for your app, ex. Postgres",
+					Usage:       "database for your project, ex. Postgres",
 					Required:    false,
 					Destination: &appDatabase,
 				},

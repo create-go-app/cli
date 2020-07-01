@@ -66,11 +66,11 @@ cgapp create [command options] [arguments...]
 #### Options
 
 ```console
---path value, -p value       path to create app, ex. ~/projects/my-app (default: ".")
---backend value, -b value    backend for your app, ex. Fiber, Echo (default: "net/http")
---frontend value, -f value   frontend for your app, ex. Preact, React.js, React.ts (default: "none")
---webserver value, -w value  web/proxy server for your app, ex. Nginx (default: "none")
---database value, -d value   database for your app, ex. Postgres (default: "none")
+--path value, -p value       path to create project, ex. ~/projects/my-app (default: ".")
+--backend value, -b value    backend for your project, ex. Fiber, Echo (default: "net/http")
+--frontend value, -f value   frontend for your project, ex. Preact, React.js, React.ts (default: "none")
+--webserver value, -w value  web/proxy server for your project, ex. Nginx (default: "none")
+--database value, -d value   database for your project, ex. Postgres (default: "none")
 --help, -h                   show help
 ```
 
@@ -175,7 +175,7 @@ In the root folder of the project you will find [`deploy-playbook.yml`](https://
 3. Be sure, you're working with a SSH key correctly:
    - Generate a new SSH key by command `ssh-keygen` on your local machine;
    - Add a **public** key part (_with `*.pub` extension_) into a bottom of `~/.ssh/authorized_keys` file (_with "one line" format_) on your remote server;
-   - Save a **private** key part on your local machine;
+   - Save a **private** key part on your local machine (_usually, at `~/.ssh` folder_);
 4. Run the built-in `cgapp deploy` command (_from the root folder of your project_):
 
 ```console
@@ -183,7 +183,7 @@ cgapp deploy -p <PLAYBOOK_NAME> -u <USER> -s <HOST> -n <NETWORK_NAME> [EXTRA_VAR
 ```
 
 - `<PLAYBOOK_NAME>` (_optional_, default: `deploy-playbook.yml`) is the Ansible playbook name
-- `<USER>` (**required**) is an username of remote's server user (for example, `root`)
+- `<USER>` (**required**) is an username of remote's server or local's user (for example, `root`)
 - `<HOST>` (_optional_, default: `localhost`) is a host name from your inventory file
 - `<NETWORK_NAME>` (_optional_, default: `cgapp_network`) is a network name for your Docker containers
 

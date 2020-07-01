@@ -2,7 +2,7 @@ package cgapp
 
 import "fmt"
 
-// SendMessage function for send message (colored or common)
+// SendMessage function for send (colored or common) message to output
 func SendMessage(text, color string) {
 	// Check, if color is selected
 	if color == "" {

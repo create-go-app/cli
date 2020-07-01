@@ -20,10 +20,10 @@ func TestCreate(t *testing.T) {
 			"success create backend",
 			args{
 				&Config{
-					name:   "echo",
-					match:  "^(echo)$",
-					view:   "backend",
-					folder: "./tmp",
+					Name:   "echo",
+					Match:  "^(echo)$",
+					View:   "backend",
+					Folder: "./tmp",
 				},
 				map[string]string{
 					"echo": "create-go-app/echo-go-template",
@@ -35,10 +35,10 @@ func TestCreate(t *testing.T) {
 			"success create frontend",
 			args{
 				&Config{
-					name:   "github.com/create-go-app/react-js-template",
-					match:  "^(react)$",
-					view:   "frontend",
-					folder: "./tmp",
+					Name:   "github.com/create-go-app/react-js-template",
+					Match:  "^(react)$",
+					View:   "frontend",
+					Folder: "./tmp",
 				},
 				map[string]string{
 					"react": "create-go-app/react-js-template",
@@ -50,10 +50,10 @@ func TestCreate(t *testing.T) {
 			"success create frontend from user template",
 			args{
 				&Config{
-					name:   "github.com/create-go-app/echo-go-template",
-					match:  "^(echo)$",
-					view:   "backend",
-					folder: "./tmp",
+					Name:   "github.com/create-go-app/echo-go-template",
+					Match:  "^(echo)$",
+					View:   "backend",
+					Folder: "./tmp",
 				},
 				map[string]string{
 					"echo": "create-go-app/echo-go-template",
@@ -69,7 +69,7 @@ func TestCreate(t *testing.T) {
 			}
 
 			// Clean
-			os.RemoveAll(tt.args.c.folder)
+			os.RemoveAll(tt.args.c.Folder)
 		})
 	}
 }

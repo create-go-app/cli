@@ -1,6 +1,7 @@
 package cgapp
 
-// ErrChecker function for check error
+// ErrChecker function for easily checking error,
+// instead of err != nil {...}
 func ErrChecker(err error) {
 	if err != nil {
 		// Show error report

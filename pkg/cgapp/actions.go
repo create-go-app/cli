@@ -13,7 +13,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// CreateCLIAction actions for `create` CLI command
+// CreateCLIAction action for `create` CLI command
 func CreateCLIAction(c *cli.Context) error {
 	// Start timer
 	startTimer := time.Now()
@@ -36,10 +36,10 @@ func CreateCLIAction(c *cli.Context) error {
 	SendMessage("\n[PROCESS] App backend", "cyan")
 	ErrChecker(
 		Create(&Config{
-			name:   strings.ToLower(appBackend),
-			match:  "^(net/http|fiber|echo)$",
-			view:   "backend",
-			folder: appPath,
+			Name:   strings.ToLower(appBackend),
+			Match:  "^(net/http|fiber|echo)$",
+			View:   "backend",
+			Folder: appPath,
 		},
 			registry,
 		),
@@ -50,10 +50,10 @@ func CreateCLIAction(c *cli.Context) error {
 		SendMessage("\n[PROCESS] App frontend", "cyan")
 		ErrChecker(
 			Create(&Config{
-				name:   strings.ToLower(appFrontend),
-				match:  "^(preact|react-js|react-ts)$",
-				view:   "frontend",
-				folder: appPath,
+				Name:   strings.ToLower(appFrontend),
+				Match:  "^(preact|react-js|react-ts)$",
+				View:   "frontend",
+				Folder: appPath,
 			},
 				registry,
 			),
@@ -81,10 +81,10 @@ func CreateCLIAction(c *cli.Context) error {
 			SendMessage("\n[PROCESS] Web/proxy server container", "cyan")
 			ErrChecker(
 				Create(&Config{
-					name:   strings.ToLower(appWebServer),
-					match:  "^(nginx)$",
-					view:   "webserver",
-					folder: appPath,
+					Name:   strings.ToLower(appWebServer),
+					Match:  "^(nginx)$",
+					View:   "webserver",
+					Folder: appPath,
 				},
 					registry,
 				),
@@ -96,10 +96,10 @@ func CreateCLIAction(c *cli.Context) error {
 			SendMessage("\n[PROCESS] Database container", "cyan")
 			ErrChecker(
 				Create(&Config{
-					name:   strings.ToLower(appDatabase),
-					match:  "^(postgres)$",
-					view:   "database",
-					folder: appPath,
+					Name:   strings.ToLower(appDatabase),
+					Match:  "^(postgres)$",
+					View:   "database",
+					Folder: appPath,
 				},
 					registry,
 				),
@@ -118,7 +118,7 @@ func CreateCLIAction(c *cli.Context) error {
 	return nil
 }
 
-// DeployCLIAction actions for `deploy` CLI command
+// DeployCLIAction action for `deploy` CLI command
 func DeployCLIAction(c *cli.Context) error {
 	// Start timer
 	startTimer := time.Now()

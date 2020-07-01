@@ -11,46 +11,46 @@ import (
 
 // Config struct for app configuration
 type Config struct {
-	name   string
-	match  string
-	view   string
-	folder string
+	Name   string
+	Match  string
+	View   string
+	Folder string
 }
 
 // Create function for create app
 func Create(c *Config, registry map[string]string) error {
 	// Create path to folder
-	folder := filepath.Join(c.folder, c.view)
+	folder := filepath.Join(c.Folder, c.View)
 
 	// Create match expration for frameworks/containers
-	match, err := regexp.MatchString(c.match, c.name)
+	match, err := regexp.MatchString(c.Match, c.Name)
 	ErrChecker(err)
 
 	// Check for regexp
 	if match {
 		// If match, create from default template
 		_, err := git.PlainClone(folder, false, &git.CloneOptions{
-			URL:      "https://github.com/" + registry[c.name],
+			URL:      "https://github.com/" + registry[c.Name],
 			Progress: os.Stdout,
 		})
 		ErrChecker(err)
 
 		// Show success report
 		SendMessage(
-			"[OK] "+strings.Title(c.view)+" was created with default template `"+registry[c.name]+"`!",
+			"[OK] "+strings.Title(c.View)+" was created with default template `"+registry[c.Name]+"`!",
 			"green",
 		)
 	} else {
 		// Else create from user template (from GitHub, etc)
 		_, err := git.PlainClone(folder, false, &git.CloneOptions{
-			URL:      "https://" + c.name,
+			URL:      "https://" + c.Name,
 			Progress: os.Stdout,
 		})
 		ErrChecker(err)
 
 		// Show success report
 		SendMessage(
-			"[OK] "+strings.Title(c.view)+" was created with user template `"+c.name+"`!",
+			"[OK] "+strings.Title(c.View)+" was created with user template `"+c.Name+"`!",
 			"green",
 		)
 	}
