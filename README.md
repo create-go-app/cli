@@ -4,7 +4,7 @@
 </h1>
 <p align="center">Create a new production-ready project with backend (Golang), frontend (JavaScript, TypeScript)<br/>and deploy automation (Ansible, Docker) by running one CLI command!</p>
 
-<p align="center"><img src="https://img.shields.io/badge/version-v1.2.0-blue?style=for-the-badge&logo=none" alt="cli version" />&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli/pkg/cgapp?tab=doc"><img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-98%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="license" /></p>
+<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.2.0-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli/pkg/cgapp?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-98%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-mit-red?style=for-the-badge&logo=none" alt="license" /></p>
 
 ## ⚡️ Quick start
 
@@ -193,7 +193,7 @@ cgapp deploy -p <PLAYBOOK_NAME> -u <USER> -s <HOST> -n <NETWORK_NAME> [EXTRA_VAR
 
 <p align="center">
    <a href="https://youtu.be/e9443CCqxio">
-      <img src=".github/images/youtube-preview.png" alt="cgapp youtube example"/><br/>
+      <img src="https://github.com/create-go-app/cli/blob/master/.github/images/youtube-preview.png" alt="cgapp youtube example"/><br/>
       🔗 youtu.be/e9443CCqxio
    </a>
 </p>
@@ -214,7 +214,7 @@ Thanks for your support! 😘 Together, we make this project better every day.
 
 | Logo                                                                                                           | Description                                                                                                                                         | URL                              |
 | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| <img align="center" width="100px" src=".github/images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — Team who making UX efficiency review, friendly UI design, smart backend microservices, high-quality web apps and many more. | [https://1wa.co](https://1wa.co) |
+| <img align="center" width="100px" src="https://github.com/create-go-app/cli/blob/master/.github/images/sponsors/1wa.co_logo.png" alt="True web artisans logo"/> | **True web artisans** — Team who making UX efficiency review, friendly UI design, smart backend microservices, high-quality web apps and many more. | [https://1wa.co](https://1wa.co) |
 |                                                                                                                | <div align="center">💡 <a href="mailto:truewebartisans@gmail.com">Want to become a sponsor too?</a></div>                                           |                                  |
 
 ## ⚠️ License
