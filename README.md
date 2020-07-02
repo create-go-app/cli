@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://github.com/create-go-app/cli/blob/master/.github/images/cgapp_logo.png" width="224px"/><br/>
+  <img src="https://github.com/create-go-app/cli/blob/master/.github/images/cgapp_logo@2x.png" width="224px"/><br/>
   Create Go App CLI
 </h1>
 <p align="center">Create a new production-ready project with backend (Golang), frontend (JavaScript, TypeScript)<br/>and deploy automation (Ansible, Docker) by running one CLI command!</p>
@@ -219,4 +219,4 @@ Thanks for your support! 😘 Together, we make this project better every day.
 
 ## ⚠️ License
 
-`Create Go App CLI` is free and open-source software licensed under the [Apache 2.0 License](https://github.com/create-go-app/cli/blob/master/LICENSE). Official logo was created by [Vic Shóstak](https://github.com/koddr) and distributed under [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/) license (CC BY-SA 4.0 International). 
+`Create Go App CLI` is free and open-source software licensed under the [Apache 2.0 License](https://github.com/create-go-app/cli/blob/master/LICENSE). Official logo was created by [Vic Shóstak](https://github.com/koddr) and distributed under [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/) license (CC BY-SA 4.0 International).
