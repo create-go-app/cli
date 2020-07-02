@@ -219,4 +219,4 @@ Thanks for your support! 😘 Together, we make this project better every day.
 
 ## ⚠️ License
 
-Apache 2.0 &copy; [Vic Shóstak](https://github.com/koddr) & [True web artisans](https://1wa.co/).
+`Create Go App CLI` is free and open-source software licensed under the [Apache 2.0 License](https://github.com/create-go-app/cli/blob/master/LICENSE). Official logo was created by [Vic Shóstak](https://github.com/koddr) and distributed under [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/) license (CC BY-SA 4.0 International). 
