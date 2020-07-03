@@ -44,7 +44,7 @@ tasks:
     cmds:
       - task: security
       - task: test
-      - git tag -a {{.TAG}} -m "Bump {{.TAG}}"
+      - git tag -a {{.TAG}} -m "{{.TAG}}"
       - git push origin {{.TAG}}
       - goreleaser --rm-dist
 
