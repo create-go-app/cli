@@ -12,19 +12,19 @@ First of all, [download](https://golang.org/dl/) and install Go. Version `1.11` 
 
 Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with `$GOPATH/bin`:
 
-```console
+```bash
 go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
 ```
 
 Let's create a new project into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Nginx](https://nginx.org/) as web server:
 
-```console
+```bash
 cgapp create -p ./app -b fiber -w nginx
 ```
 
 Okay, it works! Now, you can deploy this project to a remote server or run on your local machine in isolated Docker containers. Go to the root project folder and type command:
 
-```console
+```bash
 cgapp deploy -u john_doe --ask-become-pass
 ```
 
