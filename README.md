@@ -22,10 +22,9 @@ Let's create a new project into `./app` folder with [Fiber](https://github.com/g
 cgapp create -p ./app -b fiber -w nginx
 ```
 
-Okay, it works! Now, you can deploy this project to a remote server or run on your local machine in isolated Docker containers (one for `Fiber` and one for `Nginx`):
+Okay, it works! Now, you can deploy this project to a remote server or run on your local machine in isolated Docker containers. Go to the root project folder and type command:
 
 ```console
-cd ./app
 cgapp deploy -u john_doe --ask-become-pass
 ```
 
@@ -91,7 +90,7 @@ If you need to deploy (or run) a project asking for a password for the `USER`, s
 
 **Golang:**
 
-- [x] [`net/http`](https://create-go.app/production-templates/net-http-go/) — Backend template with Golang built-in net/http package.
+- [x] [`net/http`](https://create-go.app/production-templates/net-http-go/) — Backend template with Golang built-in [net/http](https://golang.org/pkg/net/http/) package.
 - [x] [`fiber`](https://create-go.app/production-templates/fiber-go/) — Backend template with [Fiber](https://github.com/gofiber/fiber).
 - [ ] [`echo`](https://create-go.app/production-templates/echo-go/) _WIP_ — Backend template with [Echo](https://github.com/labstack/echo).
 
