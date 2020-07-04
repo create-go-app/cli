@@ -1,0 +1,32 @@
+# Taskfile.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+
+version: "2"
+
+tasks:
+  # Backend tasks
+  backend-test:
+    dir: ./backend
+    cmds:
+      - task test
+  backend-run:
+    dir: ./backend
+    cmds:
+      - task run
+  backend-build:
+    dir: ./backend
+    cmds:
+      - task build
+
+  # Frontend tasks
+  frontend-test:
+    dir: ./frontend
+    cmds:
+      - task test
+  frontend-run:
+    dir: ./frontend
+    cmds:
+      - task run
+  frontend-build:
+    dir: ./frontend
+    cmds:
+      - task build
