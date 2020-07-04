@@ -21,12 +21,12 @@ tasks:
   frontend-test:
     dir: ./frontend
     cmds:
-      - task test
+      - npm run test
   frontend-run:
     dir: ./frontend
     cmds:
-      - task run
+      - npm start
   frontend-build:
     dir: ./frontend
     cmds:
-      - task build
+      - npm run build
