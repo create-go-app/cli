@@ -9,7 +9,7 @@ import (
 	"github.com/go-git/go-git/v5"
 )
 
-// Config struct for app configuration
+// Config struct for project configuration
 type Config struct {
 	Name   string
 	Match  string

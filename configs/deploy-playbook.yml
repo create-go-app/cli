@@ -4,96 +4,15 @@
 - hosts: "{{ host }}"
   become: yes
 
-  tasks:
-    # Network
-    - name: Create a new Docker network
-      docker_network:
-        name: "{{ network_name }}"
+  roles:
+    # Build & run project's frontend
+    - deploy/cgapp_frontend
 
-    # Frontend block
-    - name: Check ./frontend directory exists
-      stat:
-        path: ./frontend
-      register: frontend_folder
+    # Build & run project's backend
+    - deploy/cgapp_backend
 
-    - name: Build & run frontend
-      block:
-        - name: Build Docker image from Dockerfile for frontend
-          docker_image:
-            name: app_frontend
-            build:
-              path: ./frontend
-              pull: yes
-            source: build
+    # Configure and run project's webserver
+    - deploy/cgapp_webserver
 
-        - name: Running frontend Docker container
-          docker_container:
-            name: static
-            image: app_frontend:latest
-            recreate: yes
-            networks:
-              - name: "{{ network_name }}"
-            ports:
-              - "3000:3000"
-            state: started
-      when: frontend_folder.stat.exists and frontend_folder.stat.isdir
-
-    # Backend block
-    - name: Check ./backend directory exists
-      stat:
-        path: ./backend
-      register: backend_folder
-
-    - name: Build & run backend
-      block:
-        - name: Build Docker image from Dockerfile for backend
-          docker_image:
-            name: app_backend
-            build:
-              path: ./backend
-              pull: yes
-            source: build
-
-        - name: Running backend Docker container
-          docker_container:
-            name: apiserver
-            image: app_backend:latest
-            recreate: yes
-            networks:
-              - name: "{{ network_name }}"
-            env:
-              CONFIG_PATH: /backend/apiserver.yml
-            ports:
-              - "8080"
-            state: started
-      when: backend_folder.stat.exists and backend_folder.stat.isdir
-
-    # Web server block
-    - name: Check ./webserver directory exists
-      stat:
-        path: ./webserver
-      register: webserver_folder
-
-    - name: Build & run webserver
-      block:
-        - name: Build Docker image from Dockerfile for webserver
-          docker_image:
-            name: app_webserver
-            build:
-              path: ./webserver
-              pull: yes
-            source: build
-
-        - name: Running webserver Docker container
-          docker_container:
-            name: nginx
-            image: app_webserver:latest
-            recreate: yes
-            networks:
-              - name: "{{ network_name }}"
-            env:
-              APP_DOMAIN: "{{ host }}"
-            ports:
-              - "80:80"
-            state: started
-      when: webserver_folder.stat.exists and webserver_folder.stat.isdir
+    # Configure and run project's database
+    - deploy/cgapp_database

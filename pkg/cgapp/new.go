@@ -6,11 +6,12 @@ import (
 
 var (
 	// For `create` command
-	appPath      string
-	appBackend   string
-	appFrontend  string
-	appWebServer string
-	appDatabase  string
+	appPath             string
+	appBackend          string
+	appFrontend         string
+	appWebServer        string
+	appDatabase         string
+	appSkipAnsibleRoles bool
 
 	// For `deploy` command
 	deployPlaybook      string
@@ -76,6 +77,11 @@ func New() (*cli.App, error) {
 					Usage:       "database for your project, ex. Postgres",
 					Required:    false,
 					Destination: &appDatabase,
+				},
+				&cli.BoolFlag{
+					Name:        "skip-ansible-roles",
+					Usage:       "skip installing Ansible playbook and roles for your project",
+					Destination: &appSkipAnsibleRoles,
 				},
 			},
 			Action: CreateCLIAction,

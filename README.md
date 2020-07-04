@@ -58,7 +58,7 @@ Unfortunately, we are unable to include all helpful documentation to the `README
 CLI command to create a new project with the selected configuration.
 
 ```bash
-cgapp create -p <PATH> -b <BACKEND> -f <FRONTEND> -w <WEBSERVER> -d <DB>
+cgapp create -p <PATH> -b <BACKEND> -f <FRONTEND> -w <WEBSERVER> -d <DB> [ARGS...]
 ```
 
 | Option | Argument    | Required? | Description                       | Default value        |
@@ -68,6 +68,8 @@ cgapp create -p <PATH> -b <BACKEND> -f <FRONTEND> -w <WEBSERVER> -d <DB>
 | `-f`   | `FRONTEND`  | no        | frontend for your project         |                      |
 | `-w`   | `WEBSERVER` | no        | web/proxy server for your project |                      |
 | `-d`   | `DB`        | no        | database for your project         |                      |
+
+If you not need to install Ansible playbook and roles for your project, you can skip this by adding an `--skip-ansible-roles` argument in `[ARGS...]` section.
 
 ### `deploy`
 

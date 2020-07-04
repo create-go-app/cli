@@ -23,7 +23,7 @@ func TestCreate(t *testing.T) {
 					Name:   "echo",
 					Match:  "^(echo)$",
 					View:   "backend",
-					Folder: "./tmp",
+					Folder: "../../tmp",
 				},
 				map[string]string{
 					"echo": "create-go-app/echo-go-template",
@@ -36,12 +36,27 @@ func TestCreate(t *testing.T) {
 			args{
 				&Config{
 					Name:   "github.com/create-go-app/react-js-template",
-					Match:  "^(react)$",
+					Match:  "^(react-js)$",
 					View:   "frontend",
-					Folder: "./tmp",
+					Folder: "../../tmp",
 				},
 				map[string]string{
-					"react": "create-go-app/react-js-template",
+					"react-js": "create-go-app/react-js-template",
+				},
+			},
+			false,
+		},
+		{
+			"success create webserver",
+			args{
+				&Config{
+					Name:   "nginx",
+					Match:  "^(nginx)$",
+					View:   "webserver",
+					Folder: "../../tmp",
+				},
+				map[string]string{
+					"nginx": "create-go-app/nginx-docker",
 				},
 			},
 			false,
@@ -53,7 +68,7 @@ func TestCreate(t *testing.T) {
 					Name:   "github.com/create-go-app/echo-go-template",
 					Match:  "^(echo)$",
 					View:   "backend",
-					Folder: "./tmp",
+					Folder: "../../tmp",
 				},
 				map[string]string{
 					"echo": "create-go-app/echo-go-template",

@@ -20,20 +20,40 @@ func CreateCLIAction(c *cli.Context) error {
 
 	// START message
 	SendMessage("\n[*] Create Go App v"+version, "yellow")
-	SendMessage("\n[START] Creating a new app in `"+appPath+"` folder...", "green")
+	SendMessage("\n[START] Creating a new project in `"+appPath+"` folder...", "green")
 
 	// Create main folder for app
-	SendMessage("\n[PROCESS] App folder and config files", "cyan")
+	SendMessage("\n[PROCESS] Project folder and config files", "cyan")
 	ErrChecker(os.Mkdir(appPath, 0750))
-	SendMessage("[OK] App folder was created!", "")
+	SendMessage("[OK] Project folder was created!", "")
 
 	// Create config files for app
 	ErrChecker(File(".gitignore", embed.Get("/.gitignore")))
 	ErrChecker(File(".editorconfig", embed.Get("/.editorconfig")))
-	ErrChecker(File("deploy-playbook.yml", embed.Get("/deploy-playbook.yml")))
+	ErrChecker(File("Taskfile.yml", embed.Get("/Taskfile.yml")))
+
+	// Create Ansible playbook and download roles, if not skipped
+	if !c.Bool("skip-ansible-roles") {
+		SendMessage("\n[PROCESS] Ansible playbook and roles for deploy", "cyan")
+
+		// Playbook
+		ErrChecker(File("deploy-playbook.yml", embed.Get("/deploy-playbook.yml")))
+
+		// Roles
+		ErrChecker(
+			Create(&Config{
+				Name:   "roles",
+				Match:  "^(roles)$",
+				View:   "roles",
+				Folder: appPath,
+			},
+				registry,
+			),
+		)
+	}
 
 	// Create backend files
-	SendMessage("\n[PROCESS] App backend", "cyan")
+	SendMessage("\n[PROCESS] Project backend", "cyan")
 	ErrChecker(
 		Create(&Config{
 			Name:   strings.ToLower(appBackend),
@@ -47,7 +67,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 	// Create frontend files
 	if appFrontend != "none" {
-		SendMessage("\n[PROCESS] App frontend", "cyan")
+		SendMessage("\n[PROCESS] Project frontend", "cyan")
 		ErrChecker(
 			Create(&Config{
 				Name:   strings.ToLower(appFrontend),
@@ -112,7 +132,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 	// END message
 	SendMessage("\n[DONE] Completed in "+stopTimer+".", "cyan")
-	SendMessage("\n[!] Next steps & helpful instructions here → https://shrts.website/cgapp/faq", "yellow")
+	SendMessage("\n[!] Helpful instructions here → https://create-go.app/detailed-guides/", "yellow")
 	SendMessage("[!] Go to the `"+appPath+"` folder and make something beautiful! :)\n", "yellow")
 
 	return nil
@@ -176,7 +196,7 @@ func DeployCLIAction(c *cli.Context) error {
 
 	// END message
 	SendMessage("[DONE] Completed in "+stopTimer+".", "cyan")
-	SendMessage("\n[!] Next steps & helpful instructions here → https://shrts.website/cgapp/faq", "yellow")
+	SendMessage("\n[!] Helpful instructions here → https://create-go.app/detailed-guides/", "yellow")
 	SendMessage("[!] Go to the `"+deployHost+"` to see your deployed project! :)\n", "yellow")
 
 	return nil

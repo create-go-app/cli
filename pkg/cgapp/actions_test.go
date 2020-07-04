@@ -30,9 +30,9 @@ func TestCreateCLIAction(t *testing.T) {
 		})
 	}
 
-	files := []string{".editorconfig", ".gitignore", "deploy-playbook.yml"}
+	files := []string{".editorconfig", ".gitignore", "deploy-playbook.yml", "Taskfile.yml", "roles"}
 	for _, name := range files {
-		os.Remove(name)
+		os.RemoveAll(name)
 	}
 }
 

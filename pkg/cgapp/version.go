@@ -6,6 +6,9 @@ var (
 
 	// Templates registry
 	registry = map[string]string{
+		// Ansible roles
+		"roles": "create-go-app/ansible-roles",
+
 		// Backend templates
 		"net/http": "create-go-app/net_http-go-template",
 		"fiber":    "create-go-app/fiber-go-template",
