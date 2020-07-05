@@ -173,10 +173,10 @@ func RemoveFolders(rootFolder string, foldersToRemove []string) error {
 }
 
 // GitClone ...
-func GitClone(folder, mode, templateName string) error {
+func GitClone(folder, templateName string) error {
 	//
 	_, err := git.PlainClone(folder, false, &git.CloneOptions{
-		URL: mode + templateName,
+		URL: "https://" + templateName,
 	})
 	if err != nil {
 		return ThrowError("Repository was not cloned!")

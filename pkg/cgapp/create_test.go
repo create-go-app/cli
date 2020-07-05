@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-func TestCreate(t *testing.T) {
+func TestCreateProjectFromRegistry(t *testing.T) {
 	type args struct {
-		c        *Config
+		p        *Project
 		registry map[string]string
 	}
 	tests := []struct {
@@ -15,33 +15,16 @@ func TestCreate(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		// TODO: Add test cases.
 		{
 			"success create backend",
 			args{
-				&Config{
-					Name:   "echo",
-					Match:  "^(echo)$",
-					View:   "backend",
-					Folder: "../../tmp",
+				p: &Project{
+					Name:       "echo",
+					Type:       "backend",
+					RootFolder: "../../tmp",
 				},
-				map[string]string{
+				registry: map[string]string{
 					"echo": "create-go-app/echo-go-template",
-				},
-			},
-			false,
-		},
-		{
-			"success create frontend",
-			args{
-				&Config{
-					Name:   "github.com/create-go-app/react-js-template",
-					Match:  "^(react-js)$",
-					View:   "frontend",
-					Folder: "../../tmp",
-				},
-				map[string]string{
-					"react-js": "create-go-app/react-js-template",
 				},
 			},
 			false,
@@ -49,42 +32,38 @@ func TestCreate(t *testing.T) {
 		{
 			"success create webserver",
 			args{
-				&Config{
-					Name:   "nginx",
-					Match:  "^(nginx)$",
-					View:   "webserver",
-					Folder: "../../tmp",
+				p: &Project{
+					Name:       "nginx",
+					Type:       "webserver",
+					RootFolder: "../../tmp",
 				},
-				map[string]string{
+				registry: map[string]string{
 					"nginx": "create-go-app/nginx-docker",
 				},
 			},
 			false,
 		},
 		{
-			"success create frontend from user template",
+			"success create backend from user template",
 			args{
-				&Config{
-					Name:   "github.com/create-go-app/echo-go-template",
-					Match:  "^(echo)$",
-					View:   "backend",
-					Folder: "../../tmp",
+				p: &Project{
+					Name:       "github.com/create-go-app/echo-go-template",
+					Type:       "backend",
+					RootFolder: "../../tmp",
 				},
-				map[string]string{
-					"echo": "create-go-app/echo-go-template",
-				},
+				registry: map[string]string{},
 			},
 			false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := Create(tt.args.c, tt.args.registry); (err != nil) != tt.wantErr {
+			if err := CreateProjectFromRegistry(tt.args.p, tt.args.registry); (err != nil) != tt.wantErr {
 				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
 			// Clean
-			os.RemoveAll(tt.args.c.Folder)
+			os.RemoveAll(tt.args.p.RootFolder)
 		})
 	}
 }

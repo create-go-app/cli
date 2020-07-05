@@ -1,7 +1,6 @@
 package cgapp
 
 import (
-	"strings"
 	"time"
 
 	"github.com/create-go-app/cli/internal/embed"
@@ -45,45 +44,30 @@ func CreateCLIAction(c *cli.Context) error {
 			return ThrowError(err.Error())
 		}
 
-		// Roles
-		ErrChecker(
-			Create(&Config{
-				Name:   "roles",
-				Match:  "^(roles)$",
-				View:   "roles",
-				Folder: appPath,
-			},
-				registry,
-			),
-		)
+		// Create Ansible roles
+		if err := CreateProjectFromRegistry(
+			&Project{Name: "roles", Type: "roles", RootFolder: appPath}, registry,
+		); err != nil {
+			return ThrowError(err.Error())
+		}
 	}
 
 	// Create backend files
 	SendMsg(true, "WAIT", "Create project backend:", "cyan", false)
-	ErrChecker(
-		Create(&Config{
-			Name:   strings.ToLower(appBackend),
-			Match:  "^(net/http|fiber|echo)$",
-			View:   "backend",
-			Folder: appPath,
-		},
-			registry,
-		),
-	)
+	if err := CreateProjectFromRegistry(
+		&Project{Name: appBackend, Type: "backend", RootFolder: appPath}, registry,
+	); err != nil {
+		return ThrowError(err.Error())
+	}
 
-	// Create frontend files
 	if appFrontend != "none" {
+		// Create frontend files
 		SendMsg(true, "WAIT", "Create project frontend:", "cyan", false)
-		ErrChecker(
-			Create(&Config{
-				Name:   strings.ToLower(appFrontend),
-				Match:  "^(preact|react-js|react-ts)$",
-				View:   "frontend",
-				Folder: appPath,
-			},
-				registry,
-			),
-		)
+		if err := CreateProjectFromRegistry(
+			&Project{Name: appFrontend, Type: "frontend", RootFolder: appPath}, registry,
+		); err != nil {
+			return ThrowError(err.Error())
+		}
 	}
 
 	// Docker containers
@@ -91,34 +75,24 @@ func CreateCLIAction(c *cli.Context) error {
 
 		SendMsg(true, "NEXT", "Configuring Docker containers...", "yellow", false)
 
-		// Create container files
 		if appWebServer != "none" {
+			// Create container with web/proxy server
 			SendMsg(true, "WAIT", "Create container with web/proxy server:", "cyan", false)
-			ErrChecker(
-				Create(&Config{
-					Name:   strings.ToLower(appWebServer),
-					Match:  "^(nginx)$",
-					View:   "webserver",
-					Folder: appPath,
-				},
-					registry,
-				),
-			)
+			if err := CreateProjectFromRegistry(
+				&Project{Name: appWebServer, Type: "webserver", RootFolder: appPath}, registry,
+			); err != nil {
+				return ThrowError(err.Error())
+			}
 		}
 
-		// Create container files
 		if appDatabase != "none" {
+			// Create container with database
 			SendMsg(true, "WAIT", "Create container with database:", "cyan", false)
-			ErrChecker(
-				Create(&Config{
-					Name:   strings.ToLower(appDatabase),
-					Match:  "^(postgres)$",
-					View:   "database",
-					Folder: appPath,
-				},
-					registry,
-				),
-			)
+			if err := CreateProjectFromRegistry(
+				&Project{Name: appWebServer, Type: "webserver", RootFolder: appPath}, registry,
+			); err != nil {
+				return ThrowError(err.Error())
+			}
 		}
 	}
 

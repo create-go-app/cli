@@ -41,7 +41,7 @@ func New() (*cli.App, error) {
 				&cli.StringFlag{
 					Name:        "path",
 					Aliases:     []string{"p"},
-					Value:       ".",
+					Value:       "./cgapp-project",
 					Usage:       "path to create project, ex. ~/projects/my-app",
 					Required:    false,
 					Destination: &appPath,

@@ -1,26 +1,29 @@
 package cgapp
 
-var (
-	// cgapp CLI version
-	version = "1.2.1"
+const (
+	// Create Go App CLI version
+	version = "1.3.0"
 
+	// Regexp patterns
+	regexpAnsiblePattern   = "^(roles)$"
+	regexpBackendPattern   = "^(net/http|fiber|echo)$"
+	regexpWebServerPattern = "^(nginx)$"
+	regexpDatabasePattern  = "^(postgres)$"
+)
+
+var (
 	// Templates registry
 	registry = map[string]string{
 		// Ansible roles
-		"roles": "create-go-app/ansible-roles",
+		"roles": "github.com/create-go-app/ansible-roles",
 
 		// Backend templates
-		"net/http": "create-go-app/net_http-go-template",
-		"fiber":    "create-go-app/fiber-go-template",
-		"echo":     "create-go-app/echo-go-template",
-
-		// Frontend templates
-		"react-js": "create-go-app/react-js-template",
-		"preact":   "create-go-app/preact-js-template",
-		"react-ts": "create-go-app/react-ts-template",
+		"net/http": "github.com/create-go-app/net_http-go-template",
+		"fiber":    "github.com/create-go-app/fiber-go-template",
+		"echo":     "github.com/create-go-app/echo-go-template",
 
 		// Docker containers
-		"nginx":    "create-go-app/nginx-docker",
-		"postgres": "create-go-app/postgres-docker",
+		"nginx":    "github.com/create-go-app/nginx-docker",
+		"postgres": "github.com/create-go-app/postgres-docker",
 	}
 )
