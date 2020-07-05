@@ -3,7 +3,6 @@ package cgapp
 import (
 	"bufio"
 	"bytes"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -19,25 +18,36 @@ func CreateCLIAction(c *cli.Context) error {
 	startTimer := time.Now()
 
 	// START message
-	SendMessage("\n[*] Create Go App v"+version, "yellow")
-	SendMessage("\n[START] Creating a new project in `"+appPath+"` folder...", "green")
+	SendMsg(true, "*", "Create Go App v"+version, "yellow", false)
+	SendMsg(true, "START", "Creating a new project in `"+appPath+"` folder...", "green", false)
 
 	// Create main folder for app
-	SendMessage("\n[PROCESS] Project folder and config files", "cyan")
-	ErrChecker(os.Mkdir(appPath, 0750))
-	SendMessage("[OK] Project folder was created!", "")
+	SendMsg(true, "WAIT", "Create project folder and config files:", "cyan", false)
+	if err := MakeFolder(appPath, 0750); err != nil {
+		return ThrowError(err.Error())
+	}
 
 	// Create config files for app
-	ErrChecker(File(".gitignore", embed.Get("/.gitignore")))
-	ErrChecker(File(".editorconfig", embed.Get("/.editorconfig")))
-	ErrChecker(File("Taskfile.yml", embed.Get("/Taskfile.yml")))
+	filesToMake := map[string][]byte{
+		".gitignore":    embed.Get("/.gitignore"),
+		".editorconfig": embed.Get("/.editorconfig"),
+		"Taskfile.yml":  embed.Get("/Taskfile.yml"),
+	}
+	if err := MakeFiles(appPath, filesToMake); err != nil {
+		return ThrowError(err.Error())
+	}
 
 	// Create Ansible playbook and download roles, if not skipped
 	if !c.Bool("skip-ansible-roles") {
-		SendMessage("\n[PROCESS] Ansible playbook and roles for deploy", "cyan")
+		SendMsg(true, "WAIT", "Create Ansible playbook and roles for deploy", "cyan", false)
 
-		// Playbook
-		ErrChecker(File("deploy-playbook.yml", embed.Get("/deploy-playbook.yml")))
+		// Create playbook
+		filesToMake := map[string][]byte{
+			"deploy-playbook.yml": embed.Get("/deploy-playbook.yml"),
+		}
+		if err := MakeFiles(appPath, filesToMake); err != nil {
+			return ThrowError(err.Error())
+		}
 
 		// Roles
 		ErrChecker(
