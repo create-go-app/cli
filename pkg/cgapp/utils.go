@@ -126,7 +126,6 @@ func StringSplit(pattern, match string) []string {
 
 // MakeFiles function for massively create folders
 func MakeFiles(rootFolder string, filesToMake map[string][]byte) error {
-	// Define folder
 	for file, data := range filesToMake {
 		folder := filepath.Join(rootFolder, file)
 
@@ -162,7 +161,6 @@ func MakeFolder(folderName string, chmod os.FileMode) error {
 
 // RemoveFolders ...
 func RemoveFolders(rootFolder string, foldersToRemove []string) error {
-	//
 	for _, folder := range foldersToRemove {
 		if err := os.RemoveAll(filepath.Join(rootFolder, folder)); err != nil {
 			return ThrowError(err.Error())
@@ -172,10 +170,9 @@ func RemoveFolders(rootFolder string, foldersToRemove []string) error {
 	return nil
 }
 
-// GitClone ...
-func GitClone(folder, templateName string) error {
-	//
-	_, err := git.PlainClone(folder, false, &git.CloneOptions{
+// GitClone function for `git clone` defined project template
+func GitClone(rootFolder, templateName string) error {
+	_, err := git.PlainClone(rootFolder, false, &git.CloneOptions{
 		URL: "https://" + templateName,
 	})
 	if err != nil {
