@@ -16,23 +16,18 @@ package cgapp
 // 		},
 // 	}
 
-// 	files := []string{
-// 		".editorconfig", ".gitignore",
-// 		"deploy-playbook.yml", "Taskfile.yml",
-// 		"roles", "backend", "frontend", "webserver", "database",
-// 	}
-
-// 	// Clean before testing
-// 	for _, name := range files {
-// 		os.RemoveAll(name)
-// 	}
-
 // 	for _, tt := range tests {
 // 		t.Run(tt.name, func(t *testing.T) {
 // 			if err := CreateCLIAction(tt.args.c); (err != nil) != tt.wantErr {
 // 				t.Errorf("CreateCLIAction() error = %v, wantErr %v", err, tt.wantErr)
 // 			}
 // 		})
+// 	}
+
+// 	files := []string{
+// 		".editorconfig", ".gitignore",
+// 		"deploy-playbook.yml", "Taskfile.yml",
+// 		"roles", "backend", "frontend", "webserver", "database",
 // 	}
 
 // 	// Clean after testing

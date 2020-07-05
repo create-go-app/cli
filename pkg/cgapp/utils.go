@@ -65,7 +65,7 @@ func SendMsg(startWithNewLine bool, caption, text, color string, endWithNewLine 
 
 // ThrowError ...
 func ThrowError(text string) error {
-	return fmt.Errorf(BeautifyText("[ERROR] "+text, "red"))
+	return fmt.Errorf(BeautifyText(text, "red"))
 }
 
 // ExecCommand ...

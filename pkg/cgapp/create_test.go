@@ -16,7 +16,7 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"success create backend",
+			"successfully create default backend",
 			args{
 				p: &Project{
 					Name:       "echo",
@@ -24,13 +24,13 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 					RootFolder: "../../tmp",
 				},
 				registry: map[string]string{
-					"echo": "create-go-app/echo-go-template",
+					"echo": "github.com/create-go-app/echo-go-template",
 				},
 			},
 			false,
 		},
 		{
-			"success create webserver",
+			"successfully create default webserver",
 			args{
 				p: &Project{
 					Name:       "nginx",
@@ -38,13 +38,13 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 					RootFolder: "../../tmp",
 				},
 				registry: map[string]string{
-					"nginx": "create-go-app/nginx-docker",
+					"nginx": "github.com/create-go-app/nginx-docker",
 				},
 			},
 			false,
 		},
 		{
-			"success create backend from user template",
+			"successfully create backend from user template",
 			args{
 				p: &Project{
 					Name:       "github.com/create-go-app/echo-go-template",
@@ -59,7 +59,7 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := CreateProjectFromRegistry(tt.args.p, tt.args.registry); (err != nil) != tt.wantErr {
-				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("CreateProjectFromRegistry() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
 			// Clean
