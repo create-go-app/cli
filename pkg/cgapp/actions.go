@@ -1,10 +1,6 @@
 package cgapp
 
 import (
-	"bufio"
-	"bytes"
-	"os/exec"
-	"path/filepath"
 	"strings"
 	"time"
 
@@ -63,7 +59,7 @@ func CreateCLIAction(c *cli.Context) error {
 	}
 
 	// Create backend files
-	SendMessage("\n[PROCESS] Project backend", "cyan")
+	SendMsg(true, "WAIT", "Create project backend:", "cyan", false)
 	ErrChecker(
 		Create(&Config{
 			Name:   strings.ToLower(appBackend),
@@ -77,7 +73,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 	// Create frontend files
 	if appFrontend != "none" {
-		SendMessage("\n[PROCESS] Project frontend", "cyan")
+		SendMsg(true, "WAIT", "Create project frontend:", "cyan", false)
 		ErrChecker(
 			Create(&Config{
 				Name:   strings.ToLower(appFrontend),
@@ -88,27 +84,16 @@ func CreateCLIAction(c *cli.Context) error {
 				registry,
 			),
 		)
-
-		// Install dependencies
-		SendMessage("\n[PROCESS] Frontend dependencies", "cyan")
-		SendMessage("[WAIT] Installing frontend dependencies (may take some time)!", "yellow")
-
-		// Go to ./frontend folder and run npm install
-		cmd := exec.Command("npm", "install")
-		cmd.Dir = filepath.Join(appPath, "frontend")
-		ErrChecker(cmd.Run())
-
-		SendMessage("[OK] Frontend dependencies was installed!", "green")
 	}
 
 	// Docker containers
 	if appWebServer != "none" || appDatabase != "none" {
 
-		SendMessage("\n[NEXT] Docker containers...", "green")
+		SendMsg(true, "NEXT", "Configuring Docker containers...", "yellow", false)
 
 		// Create container files
 		if appWebServer != "none" {
-			SendMessage("\n[PROCESS] Web/proxy server container", "cyan")
+			SendMsg(true, "WAIT", "Create container with web/proxy server:", "cyan", false)
 			ErrChecker(
 				Create(&Config{
 					Name:   strings.ToLower(appWebServer),
@@ -123,7 +108,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 		// Create container files
 		if appDatabase != "none" {
-			SendMessage("\n[PROCESS] Database container", "cyan")
+			SendMsg(true, "WAIT", "Create container with database:", "cyan", false)
 			ErrChecker(
 				Create(&Config{
 					Name:   strings.ToLower(appDatabase),
@@ -141,9 +126,9 @@ func CreateCLIAction(c *cli.Context) error {
 	stopTimer := time.Since(startTimer).String()
 
 	// END message
-	SendMessage("\n[DONE] Completed in "+stopTimer+".", "cyan")
-	SendMessage("\n[!] Helpful instructions here → https://create-go.app/detailed-guides/", "yellow")
-	SendMessage("[!] Go to the `"+appPath+"` folder and make something beautiful! :)\n", "yellow")
+	SendMsg(true, "FINISH", "Completed in "+stopTimer+".", "green", true)
+	SendMsg(true, "DOCS", "A helpful documentation here → https://create-go.app", "yellow", false)
+	SendMsg(false, "!", "Go to the `"+appPath+"` folder and make something beautiful! :)", "yellow", true)
 
 	return nil
 }
@@ -154,60 +139,42 @@ func DeployCLIAction(c *cli.Context) error {
 	startTimer := time.Now()
 
 	// START message
-	SendMessage("\n[*] Create Go App v"+version, "yellow")
-	SendMessage("\n[START] Deploying project to the `"+deployHost+"`...", "green")
+	SendMsg(true, "*", "Create Go App v"+version, "yellow", false)
+	SendMsg(true, "START", "Deploying project to the `"+deployHost+"`...", "green", false)
 
 	// Create main folder for app
-	SendMessage("\n[PROCESS] Run Ansible playbook `"+deployPlaybook+"`\n", "cyan")
+	SendMsg(true, "WAIT", "Run Ansible playbook `"+deployPlaybook+"`", "cyan", true)
+
+	// Collect options
+	options := []string{
+		deployPlaybook,
+		"-u", deployUsername,
+		"-e", "host=" + deployHost + " network_name=" + deployDockerNetwork,
+	}
 
 	// Check, if need to ask password for user
 	// See: https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options
-	askBecomePass := ""
 	if c.Bool("ask-become-pass") {
-		askBecomePass = "--ask-become-pass" // #nosec G101
+		options = []string{
+			deployPlaybook,
+			"-u", deployUsername,
+			"-e", "host=" + deployHost + " network_name=" + deployDockerNetwork,
+			"--ask-become-pass",
+		}
 	}
 
-	// Create buffer for stderr
-	stderr := &bytes.Buffer{}
-
 	// Collect command line
-	cmd := exec.Command(
-		"ansible-playbook",
-		deployPlaybook,
-		"-u",
-		deployUsername,
-		"-e",
-		"host="+deployHost+" network_name="+deployDockerNetwork,
-		askBecomePass,
-	)
-
-	// Set buffer for stderr from cmd
-	cmd.Stderr = stderr
-
-	// Create a new reader
-	cmdReader, err := cmd.StdoutPipe()
-	ErrChecker(err)
-
-	// Create a new scanner and run goroutine func with output
-	scanner := bufio.NewScanner(cmdReader)
-	go func() {
-		for scanner.Scan() {
-			SendMessage(scanner.Text(), "")
-		}
-	}()
-
-	// Run executing command
-	if err := cmd.Run(); err != nil {
-		SendMessage(stderr.String(), "red")
+	if err := ExecCommand("ansible-playbook", options); err != nil {
+		return ThrowError(err.Error())
 	}
 
 	// Stop timer
 	stopTimer := time.Since(startTimer).String()
 
 	// END message
-	SendMessage("[DONE] Completed in "+stopTimer+".", "cyan")
-	SendMessage("\n[!] Helpful instructions here → https://create-go.app/detailed-guides/", "yellow")
-	SendMessage("[!] Go to the `"+deployHost+"` to see your deployed project! :)\n", "yellow")
+	SendMsg(true, "FINISH", "Completed in "+stopTimer+".", "green", true)
+	SendMsg(true, "DOCS", "A helpful documentation here → https://create-go.app", "yellow", false)
+	SendMsg(false, "!", "Go to the `"+deployHost+"` to see your deployed project! :)", "yellow", true)
 
 	return nil
 }
