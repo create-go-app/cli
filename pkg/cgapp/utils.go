@@ -177,11 +177,18 @@ func RemoveFolders(rootFolder string, foldersToRemove []string) error {
 
 // GitClone function for `git clone` defined project template
 func GitClone(rootFolder, templateName string) error {
+	// Clone project template
 	_, err := git.PlainClone(rootFolder, false, &git.CloneOptions{
 		URL: "https://" + templateName,
 	})
 	if err != nil {
 		return ThrowError("Repository was not cloned!")
+	}
+
+	// Cleanup project
+	foldersToRemove := []string{".git", ".github"}
+	if err := RemoveFolders(rootFolder, foldersToRemove); err != nil {
+		return ThrowError(err.Error())
 	}
 
 	return nil

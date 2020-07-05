@@ -62,10 +62,5 @@ func CreateProjectFromRegistry(p *Project, registry map[string]string) error {
 		SendMsg(false, "OK", strings.Title(p.Type)+": created with user template `"+p.Name+"`!", "", false)
 	}
 
-	// Clean
-	if err := RemoveFolders(folder, []string{".git", ".github"}); err != nil {
-		return ThrowError(err.Error())
-	}
-
 	return nil
 }

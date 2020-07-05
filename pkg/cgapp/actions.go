@@ -22,7 +22,7 @@ func CreateCLIAction(c *cli.Context) error {
 		return ThrowError(err.Error())
 	}
 
-	// Create config files for app
+	// Create configuration files
 	filesToMake := map[string][]byte{
 		".gitignore":    embed.Get("/.gitignore"),
 		".editorconfig": embed.Get("/.editorconfig"),
@@ -37,10 +37,10 @@ func CreateCLIAction(c *cli.Context) error {
 		SendMsg(true, "WAIT", "Create Ansible playbook and roles", "cyan", false)
 
 		// Create playbook
-		filesToMake := map[string][]byte{
+		fileToMake := map[string][]byte{
 			"deploy-playbook.yml": embed.Get("/deploy-playbook.yml"),
 		}
-		if err := MakeFiles(appPath, filesToMake); err != nil {
+		if err := MakeFiles(appPath, fileToMake); err != nil {
 			return ThrowError(err.Error())
 		}
 
@@ -146,7 +146,7 @@ func DeployCLIAction(c *cli.Context) error {
 	stopTimer := time.Since(startTimer).String()
 
 	// END message
-	SendMsg(true, "FINISH", "Completed in "+stopTimer+".", "green", true)
+	SendMsg(true, "FINISH", "Completed in "+stopTimer+".", "green", false)
 	SendMsg(true, "DOCS", "A helpful documentation here → https://create-go.app", "yellow", false)
 	SendMsg(false, "!", "Go to the `"+deployHost+"` to see your deployed project! :)", "yellow", true)
 
