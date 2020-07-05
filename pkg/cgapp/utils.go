@@ -149,7 +149,7 @@ func MakeFiles(rootFolder string, filesToMake map[string][]byte) error {
 // MakeFolder function for create folder
 func MakeFolder(folderName string, chmod os.FileMode) error {
 	// Check if folder exists, fail if it does
-	if _, err := os.Stat(folderName); os.IsExist(err) {
+	if _, err := os.Stat(folderName); !os.IsNotExist(err) {
 		return ThrowError("Folder `" + folderName + "` exists!")
 	}
 

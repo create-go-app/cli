@@ -2,6 +2,7 @@ package cgapp
 
 import (
 	"os"
+	"reflect"
 	"testing"
 )
 
@@ -16,7 +17,7 @@ func TestExecCommand(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"success",
+			"successfully executing command",
 			args{
 				command: "echo",
 				options: []string{"ping"},
@@ -24,7 +25,7 @@ func TestExecCommand(t *testing.T) {
 			false,
 		},
 		{
-			"fail",
+			"failed executing command",
 			args{},
 			true,
 		},
@@ -101,7 +102,7 @@ func TestMakeFolder(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"success",
+			"successfully created folder",
 			args{
 				folderName: "../../tmp",
 				chmod:      0750,
@@ -109,7 +110,7 @@ func TestMakeFolder(t *testing.T) {
 			false,
 		},
 		{
-			"fail, folder is exists",
+			"failed, folder is exists",
 			args{
 				folderName: "",
 				chmod:      0750,
@@ -117,7 +118,7 @@ func TestMakeFolder(t *testing.T) {
 			true,
 		},
 		{
-			"fail, folder is exists",
+			"failed, folder is exists",
 			args{
 				folderName: "cgapp-project",
 				chmod:      0750,
@@ -151,9 +152,9 @@ func TestMakeFiles(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"success",
+			"successfully created files",
 			args{
-				rootFolder: "./",
+				rootFolder: "../../tmp",
 				filesToMake: map[string][]byte{
 					"test.txt": []byte("test"),
 				},
@@ -161,7 +162,7 @@ func TestMakeFiles(t *testing.T) {
 			false,
 		},
 		{
-			"fail",
+			"failed created files",
 			args{
 				rootFolder: "./does/not-exists",
 				filesToMake: map[string][]byte{
@@ -171,6 +172,9 @@ func TestMakeFiles(t *testing.T) {
 			true,
 		},
 	}
+
+	_ = os.Mkdir("../../tmp", 0750)
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := MakeFiles(tt.args.rootFolder, tt.args.filesToMake); (err != nil) != tt.wantErr {
@@ -179,7 +183,7 @@ func TestMakeFiles(t *testing.T) {
 		})
 
 		// Clean
-		os.RemoveAll("test.txt")
+		os.RemoveAll("../../tmp")
 	}
 }
 
@@ -196,17 +200,128 @@ func TestSendMsg(t *testing.T) {
 		args args
 	}{
 		{
-			"success without args",
+			"successfully send message without args",
 			args{},
 		},
 		{
-			"success with args",
+			"successfully send message with args",
 			args{true, "!", "Test", "", true},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			SendMsg(tt.args.startWithNewLine, tt.args.caption, tt.args.text, tt.args.color, tt.args.endWithNewLine)
+		})
+	}
+}
+
+func TestGitClone(t *testing.T) {
+	type args struct {
+		rootFolder   string
+		templateName string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully cloned project",
+			args{
+				rootFolder:   "../../tmp",
+				templateName: "github.com/create-go-app/postgres-docker",
+			},
+			false,
+		},
+		{
+			"failed clone project (empty template)",
+			args{
+				rootFolder:   "../../tmp",
+				templateName: "",
+			},
+			true,
+		},
+		{
+			"failed clone project (empty args)",
+			args{},
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := GitClone(tt.args.rootFolder, tt.args.templateName); (err != nil) != tt.wantErr {
+				t.Errorf("GitClone() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+
+		// Clean
+		os.RemoveAll("../../tmp")
+	}
+}
+
+func TestRemoveFolders(t *testing.T) {
+	type args struct {
+		rootFolder      string
+		foldersToRemove []string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully removed",
+			args{
+				rootFolder:      "../../tmp",
+				foldersToRemove: []string{"folder-1"},
+			},
+			false,
+		},
+	}
+
+	_ = os.MkdirAll("../../tmp/folder-1", 0750)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := RemoveFolders(tt.args.rootFolder, tt.args.foldersToRemove); (err != nil) != tt.wantErr {
+				t.Errorf("RemoveFolders() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestStringSplit(t *testing.T) {
+	type args struct {
+		pattern string
+		match   string
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			"successfully matched",
+			args{
+				pattern: ":",
+				match:   "react:redux",
+			},
+			[]string{"react", "redux"},
+		},
+		{
+			"failed match",
+			args{
+				pattern: "=",
+				match:   "react:redux",
+			},
+			[]string{"react:redux"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := StringSplit(tt.args.pattern, tt.args.match); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("StringSplit() = %v, want %v", got, tt.want)
+			}
 		})
 	}
 }

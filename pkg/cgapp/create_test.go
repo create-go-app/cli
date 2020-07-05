@@ -16,6 +16,20 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 		wantErr bool
 	}{
 		{
+			"successfully create default Ansible roles",
+			args{
+				p: &Project{
+					Name:       "roles",
+					Type:       "roles",
+					RootFolder: "../../tmp",
+				},
+				registry: map[string]string{
+					"roles": "github.com/create-go-app/ansible-roles",
+				},
+			},
+			false,
+		},
+		{
 			"successfully create default backend",
 			args{
 				p: &Project{
@@ -44,6 +58,20 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			false,
 		},
 		{
+			"successfully create default database",
+			args{
+				p: &Project{
+					Name:       "postgres",
+					Type:       "database",
+					RootFolder: "../../tmp",
+				},
+				registry: map[string]string{
+					"postgres": "github.com/create-go-app/postgres-docker",
+				},
+			},
+			false,
+		},
+		{
 			"successfully create backend from user template",
 			args{
 				p: &Project{
@@ -54,6 +82,30 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 				registry: map[string]string{},
 			},
 			false,
+		},
+		{
+			"failed create default database",
+			args{
+				p: &Project{
+					Name:       "",
+					Type:       "",
+					RootFolder: "../../tmp",
+				},
+				registry: map[string]string{},
+			},
+			true,
+		},
+		{
+			"failed create default database",
+			args{
+				p: &Project{
+					Name:       "",
+					Type:       "fff",
+					RootFolder: "../../tmp",
+				},
+				registry: map[string]string{},
+			},
+			true,
 		},
 	}
 	for _, tt := range tests {
