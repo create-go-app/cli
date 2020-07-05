@@ -51,7 +51,7 @@ func CreateProjectFromRegistry(p *Project, registry map[string]string) error {
 		}
 
 		// Show success report
-		SendMsg(false, "OK", strings.Title(p.Type)+" was created with default template `"+registry[p.Name]+"`!", "", false)
+		SendMsg(false, "OK", strings.Title(p.Type)+": created with default template `"+registry[p.Name]+"`!", "", false)
 	} else {
 		// Else create from user template (from GitHub, etc)
 		if err := GitClone(folder, p.Name); err != nil {
@@ -59,7 +59,7 @@ func CreateProjectFromRegistry(p *Project, registry map[string]string) error {
 		}
 
 		// Show success report
-		SendMsg(false, "OK", strings.Title(p.Type)+" was created with user template `"+p.Name+"`!", "", false)
+		SendMsg(false, "OK", strings.Title(p.Type)+": created with user template `"+p.Name+"`!", "", false)
 	}
 
 	// Clean

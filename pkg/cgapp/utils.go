@@ -90,6 +90,11 @@ func ExecCommand(command string, options []string) error {
 		return ThrowError(err.Error())
 	}
 
+	// Start executing command
+	if err := cmd.Start(); err != nil {
+		return ThrowError(stderr.String())
+	}
+
 	// Create a new scanner and run goroutine func with output
 	scanner := bufio.NewScanner(cmdReader)
 	go func() {
@@ -98,8 +103,8 @@ func ExecCommand(command string, options []string) error {
 		}
 	}()
 
-	// Run executing command
-	if err := cmd.Run(); err != nil {
+	// Wait for executing command
+	if err := cmd.Wait(); err != nil {
 		return ThrowError(stderr.String())
 	}
 

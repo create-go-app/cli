@@ -17,7 +17,7 @@ func CreateCLIAction(c *cli.Context) error {
 	SendMsg(true, "START", "Creating a new project in `"+appPath+"` folder...", "green", false)
 
 	// Create main folder for app
-	SendMsg(true, "WAIT", "Create project folder and config files:", "cyan", false)
+	SendMsg(true, "WAIT", "Create project folder and config files", "cyan", false)
 	if err := MakeFolder(appPath, 0750); err != nil {
 		return ThrowError(err.Error())
 	}
@@ -34,7 +34,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 	// Create Ansible playbook and download roles, if not skipped
 	if !c.Bool("skip-ansible-roles") {
-		SendMsg(true, "WAIT", "Create Ansible playbook and roles for deploy", "cyan", false)
+		SendMsg(true, "WAIT", "Create Ansible playbook and roles", "cyan", false)
 
 		// Create playbook
 		filesToMake := map[string][]byte{
@@ -53,7 +53,7 @@ func CreateCLIAction(c *cli.Context) error {
 	}
 
 	// Create backend files
-	SendMsg(true, "WAIT", "Create project backend:", "cyan", false)
+	SendMsg(true, "WAIT", "Create project backend", "cyan", false)
 	if err := CreateProjectFromRegistry(
 		&Project{Name: appBackend, Type: "backend", RootFolder: appPath}, registry,
 	); err != nil {
@@ -62,7 +62,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 	if appFrontend != "none" {
 		// Create frontend files
-		SendMsg(true, "WAIT", "Create project frontend:", "cyan", false)
+		SendMsg(true, "WAIT", "Create project frontend", "cyan", false)
 		if err := CreateProjectFromRegistry(
 			&Project{Name: appFrontend, Type: "frontend", RootFolder: appPath}, registry,
 		); err != nil {
@@ -77,7 +77,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 		if appWebServer != "none" {
 			// Create container with web/proxy server
-			SendMsg(true, "WAIT", "Create container with web/proxy server:", "cyan", false)
+			SendMsg(true, "WAIT", "Create container with web/proxy server", "cyan", false)
 			if err := CreateProjectFromRegistry(
 				&Project{Name: appWebServer, Type: "webserver", RootFolder: appPath}, registry,
 			); err != nil {
@@ -87,7 +87,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 		if appDatabase != "none" {
 			// Create container with database
-			SendMsg(true, "WAIT", "Create container with database:", "cyan", false)
+			SendMsg(true, "WAIT", "Create container with database", "cyan", false)
 			if err := CreateProjectFromRegistry(
 				&Project{Name: appWebServer, Type: "webserver", RootFolder: appPath}, registry,
 			); err != nil {
@@ -100,7 +100,7 @@ func CreateCLIAction(c *cli.Context) error {
 	stopTimer := time.Since(startTimer).String()
 
 	// END message
-	SendMsg(true, "FINISH", "Completed in "+stopTimer+".", "green", true)
+	SendMsg(true, "FINISH", "Completed in "+stopTimer+".", "green", false)
 	SendMsg(true, "DOCS", "A helpful documentation here → https://create-go.app", "yellow", false)
 	SendMsg(false, "!", "Go to the `"+appPath+"` folder and make something beautiful! :)", "yellow", true)
 
