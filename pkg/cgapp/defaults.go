@@ -67,10 +67,15 @@ var (
 			Runner: "preact",
 			Create: "create",
 			Args: map[string]string{
-				"cwd":          "--cwd",
-				"name":         "--name",
-				"skip-git":     "--git",
-				"skip-install": "--install",
+				"cwd":  "--cwd",
+				"name": "--name",
+			},
+		},
+		"svelte": {
+			Runner: "npx",
+			Create: "degit",
+			Args: map[string]string{
+				"template": "sveltejs/template",
 			},
 		},
 	}

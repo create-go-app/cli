@@ -106,7 +106,7 @@ func CreateCLIAction(c *cli.Context) error {
 	stopTimer := time.Since(startTimer).String()
 
 	// END message
-	SendMsg(true, "FINISH", "Completed in "+stopTimer+".", "green", false)
+	SendMsg(true, "FINISH", "Completed in "+stopTimer+"!", "green", false)
 	SendMsg(true, "DOCS", "A helpful documentation here → https://create-go.app", "yellow", false)
 	SendMsg(false, "!", "Go to the `"+appPath+"` folder and make something beautiful! :)", "yellow", true)
 

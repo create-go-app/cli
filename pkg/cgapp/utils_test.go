@@ -296,9 +296,10 @@ func TestStringSplit(t *testing.T) {
 		match   string
 	}
 	tests := []struct {
-		name string
-		args args
-		want []string
+		name    string
+		args    args
+		want    []string
+		wantErr bool
 	}{
 		{
 			"successfully matched",
@@ -307,19 +308,32 @@ func TestStringSplit(t *testing.T) {
 				match:   "react:redux",
 			},
 			[]string{"react", "redux"},
+			false,
 		},
 		{
-			"failed match",
+			"successfully not matched",
 			args{
 				pattern: "=",
 				match:   "react:redux",
 			},
 			[]string{"react:redux"},
+			false,
+		},
+		{
+			"failed wrong pattern and match",
+			args{},
+			nil,
+			true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := StringSplit(tt.args.pattern, tt.args.match); !reflect.DeepEqual(got, tt.want) {
+			got, err := StringSplit(tt.args.pattern, tt.args.match)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("StringSplit() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("StringSplit() = %v, want %v", got, tt.want)
 			}
 		})

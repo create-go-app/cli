@@ -20,7 +20,7 @@ func CreateProjectFromRegistry(project *Project, registry map[string]*Registry) 
 
 	// Checking for nil
 	if project == nil || registry == nil {
-		return ThrowError("Registry not found!")
+		return ThrowError("Project template or registry not found!")
 	}
 
 	// Create path in project root folder
@@ -71,6 +71,12 @@ func CreateProjectFromRegistry(project *Project, registry map[string]*Registry) 
 		SendMsg(false, "OK", strings.Title(project.Type)+": created with user template `"+project.Name+"`!", "", false)
 	}
 
+	// Cleanup project
+	foldersToRemove := []string{".git", ".github"}
+	if err := RemoveFolders(folder, foldersToRemove); err != nil {
+		return ThrowError(err.Error())
+	}
+
 	return nil
 }
 
@@ -79,15 +85,18 @@ func CreateProjectFromCMD(p *Project, cmd map[string]*Command) error {
 	// Define vars
 	var options []string
 
+	// Checking for nil
+	if p == nil || cmd == nil {
+		return ThrowError("Project template or commands not found!")
+	}
+
 	// Create path in project root folder
 	folder := filepath.Join(p.RootFolder, p.Type)
 
 	// Split framework name and template
-	project := StringSplit(":", p.Name)
-
-	// Error, when empty
-	if len(project) == 0 {
-		return ThrowError("Frontend template not set!")
+	project, err := StringSplit(":", p.Name)
+	if err != nil {
+		return ThrowError(err.Error())
 	}
 
 	// Re-define vars for more beauty view
@@ -106,19 +115,32 @@ func CreateProjectFromCMD(p *Project, cmd map[string]*Command) error {
 		break
 	case "preact":
 		// preact create [template] [dest] [args...]
-		options = []string{create, folder}
+		options = []string{create, "default", p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
 		if len(project) > 1 {
 			options = []string{create, project[1], p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
 		}
+		break
+	case "svelte":
+		// npx degit [template] [dest]
+		options = []string{create, args["template"], folder}
 		break
 	default:
 		return ThrowError("Frontend template" + p.Name + " not found!")
 	}
 
-	//
+	// Run execution command
 	if err := ExecCommand(runner, options); err != nil {
 		return ThrowError(err.Error())
 	}
+
+	// Cleanup project
+	folderToRemove := []string{".git"}
+	if err := RemoveFolders(folder, folderToRemove); err != nil {
+		return ThrowError(err.Error())
+	}
+
+	// Show success report
+	SendMsg(false, "OK", "Frontend: created with template `"+p.Name+"`!", "", false)
 
 	return nil
 }

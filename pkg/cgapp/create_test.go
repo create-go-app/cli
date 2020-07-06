@@ -76,6 +76,18 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			false,
 		},
 		{
+			"failed wrong template name",
+			args{
+				project: &Project{
+					Type:       "backend",
+					Name:       "...wrong...",
+					RootFolder: "../../tmp",
+				},
+				registry: registry,
+			},
+			true,
+		},
+		{
 			"failed create (empty Project struct)",
 			args{
 				project:  nil,
@@ -111,6 +123,68 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 		// Clean
 		if tt.args.project != nil {
 			os.RemoveAll(tt.args.project.RootFolder)
+		}
+	}
+}
+
+func TestCreateProjectFromCMD(t *testing.T) {
+	type args struct {
+		p   *Project
+		cmd map[string]*Command
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully create svelte",
+			args{
+				p: &Project{
+					Type:       "frontend",
+					Name:       "svelte",
+					RootFolder: "../../tmp",
+				},
+				cmd: cmds,
+			},
+			false,
+		},
+		{
+			"failed create (empty Project struct)",
+			args{
+				p:   nil,
+				cmd: cmds,
+			},
+			true,
+		},
+		{
+			"failed create (empty Command struct)",
+			args{
+				p: &Project{
+					Type:       "frontend",
+					Name:       "svelte",
+					RootFolder: "../../tmp",
+				},
+				cmd: nil,
+			},
+			true,
+		},
+		{
+			"failed create (empty Project and Command struct)",
+			args{},
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := CreateProjectFromCMD(tt.args.p, tt.args.cmd); (err != nil) != tt.wantErr {
+				t.Errorf("CreateProjectFromCMD() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+
+		// Clean
+		if tt.args.p != nil {
+			os.RemoveAll(tt.args.p.RootFolder)
 		}
 	}
 }

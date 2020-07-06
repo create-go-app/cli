@@ -112,7 +112,12 @@ func ExecCommand(command string, options []string) error {
 }
 
 // StringSplit ...
-func StringSplit(pattern, match string) []string {
+func StringSplit(pattern, match string) ([]string, error) {
+	// Error, when empty or nil
+	if pattern == "" || match == "" {
+		return nil, ThrowError("Frontend template not set!")
+	}
+
 	// Define empty []string{} for splitted strings
 	splittedStrings := []string{}
 
@@ -126,7 +131,7 @@ func StringSplit(pattern, match string) []string {
 		splittedStrings = append(splittedStrings, split[str])
 	}
 
-	return splittedStrings
+	return splittedStrings, nil
 }
 
 // MakeFiles function for massively create folders
@@ -183,12 +188,6 @@ func GitClone(rootFolder, templateName string) error {
 	})
 	if err != nil {
 		return ThrowError("Repository was not cloned!")
-	}
-
-	// Cleanup project
-	foldersToRemove := []string{".git", ".github"}
-	if err := RemoveFolders(rootFolder, foldersToRemove); err != nil {
-		return ThrowError(err.Error())
 	}
 
 	return nil

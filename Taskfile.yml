@@ -11,7 +11,7 @@ tasks:
   test:
     desc: Test project
     cmds:
-      - go test -timeout 600s -cover ./...
+      - go test -timeout 60s -cover ./...
 
   security:
     desc: Run gosec for project
