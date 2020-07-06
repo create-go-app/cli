@@ -8,6 +8,11 @@ const (
 	regexpDatabasePattern  = "^(postgres)$"
 )
 
+// Registry ...
+type Registry struct {
+	Repositories map[string]string
+}
+
 // Command ...
 type Command struct {
 	Runner string
@@ -16,19 +21,37 @@ type Command struct {
 }
 
 var (
-	// Templates registry
-	registry = map[string]string{
+	// Registry
+	registry = map[string]*Registry{
 		// Ansible roles
-		"roles": "github.com/create-go-app/ansible-roles",
+		"ansible": {
+			Repositories: map[string]string{
+				"roles": "github.com/create-go-app/ansible-roles",
+			},
+		},
 
 		// Backend templates
-		"net/http": "github.com/create-go-app/net_http-go-template",
-		"fiber":    "github.com/create-go-app/fiber-go-template",
-		"echo":     "github.com/create-go-app/echo-go-template",
+		"backend": {
+			Repositories: map[string]string{
+				"net/http": "github.com/create-go-app/net_http-go-template",
+				"fiber":    "github.com/create-go-app/fiber-go-template",
+				"echo":     "github.com/create-go-app/echo-go-template",
+			},
+		},
 
-		// Docker containers
-		"nginx":    "github.com/create-go-app/nginx-docker",
-		"postgres": "github.com/create-go-app/postgres-docker",
+		// Docker containers with web/proxy servers
+		"webserver": {
+			Repositories: map[string]string{
+				"nginx": "github.com/create-go-app/nginx-docker",
+			},
+		},
+
+		// Docker containers with databases
+		"database": {
+			Repositories: map[string]string{
+				"postgres": "github.com/create-go-app/postgres-docker",
+			},
+		},
 	}
 
 	// CMD commands collection

@@ -8,22 +8,27 @@ import (
 
 // Project struct for describe project
 type Project struct {
-	Name       string
 	Type       string
+	Name       string
 	RootFolder string
 }
 
 // CreateProjectFromRegistry function for create a new project from repository
-func CreateProjectFromRegistry(p *Project, registry map[string]string) error {
+func CreateProjectFromRegistry(project *Project, registry map[string]*Registry) error {
 	// Define vars
 	var pattern string
 
+	// Checking for nil
+	if project == nil || registry == nil {
+		return ThrowError("Registry not found!")
+	}
+
 	// Create path in project root folder
-	folder := filepath.Join(p.RootFolder, p.Type)
+	folder := filepath.Join(project.RootFolder, project.Type)
 
 	// Switch project type
-	switch p.Type {
-	case "roles":
+	switch project.Type {
+	case "ansible":
 		pattern = regexpAnsiblePattern
 		break
 	case "backend":
@@ -38,28 +43,31 @@ func CreateProjectFromRegistry(p *Project, registry map[string]string) error {
 	}
 
 	// Create match expration
-	match, err := regexp.MatchString(pattern, p.Name)
+	match, err := regexp.MatchString(pattern, project.Name)
 	if err != nil {
 		return ThrowError(err.Error())
 	}
 
+	// Re-define vars
+	template := registry[project.Type].Repositories[project.Name]
+
 	// Check for regexp
 	if match {
 		// If match, create from default template
-		if err := GitClone(folder, registry[p.Name]); err != nil {
+		if err := GitClone(folder, template); err != nil {
 			return ThrowError(err.Error())
 		}
 
 		// Show success report
-		SendMsg(false, "OK", strings.Title(p.Type)+": created with default template `"+registry[p.Name]+"`!", "", false)
+		SendMsg(false, "OK", strings.Title(project.Type)+": created with default template `"+template+"`!", "", false)
 	} else {
 		// Else create from user template (from GitHub, etc)
-		if err := GitClone(folder, p.Name); err != nil {
+		if err := GitClone(folder, project.Name); err != nil {
 			return ThrowError(err.Error())
 		}
 
 		// Show success report
-		SendMsg(false, "OK", strings.Title(p.Type)+": created with user template `"+p.Name+"`!", "", false)
+		SendMsg(false, "OK", strings.Title(project.Type)+": created with user template `"+project.Name+"`!", "", false)
 	}
 
 	return nil
