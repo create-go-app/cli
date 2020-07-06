@@ -64,3 +64,39 @@ func CreateProjectFromRegistry(p *Project, registry map[string]string) error {
 
 	return nil
 }
+
+// CreateProjectFromCMD ...
+func CreateProjectFromCMD(p *Project, cmd map[string]map[string]string) error {
+	// Define vars
+	var options []string
+
+	// Create path in project root folder
+	folder := filepath.Join(p.RootFolder, p.Type)
+
+	// Split framework name and template
+	project := StringSplit(":", p.Name)
+
+	// Error, when empty
+	if len(project) == 0 {
+		return ThrowError("Frontend template not set!")
+	}
+
+	// Collect project runner and options
+	switch project[0] {
+	case "react":
+		options = []string{cmd["react"]["create"], folder}
+		if len(project) > 1 {
+			options = []string{cmd["react"]["create"], folder, cmd["react"]["template"], "cra-template-" + project[1]}
+		}
+		break
+	default:
+		return ThrowError("Frontend template" + p.Name + " not found!")
+	}
+
+	//
+	if err := ExecCommand(cmd[project[0]]["runner"], options); err != nil {
+		return ThrowError(err.Error())
+	}
+
+	return nil
+}

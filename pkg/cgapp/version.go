@@ -26,4 +26,13 @@ var (
 		"nginx":    "github.com/create-go-app/nginx-docker",
 		"postgres": "github.com/create-go-app/postgres-docker",
 	}
+
+	// CMD commands collection
+	commands = map[string]map[string]string{
+		"react": {
+			"runner":   "npx",
+			"create":   "create-react-app",
+			"template": "--template",
+		},
+	}
 )

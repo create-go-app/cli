@@ -63,8 +63,8 @@ func CreateCLIAction(c *cli.Context) error {
 	if appFrontend != "none" {
 		// Create frontend files
 		SendMsg(true, "WAIT", "Create project frontend", "cyan", false)
-		if err := CreateProjectFromRegistry(
-			&Project{Name: appFrontend, Type: "frontend", RootFolder: appPath}, registry,
+		if err := CreateProjectFromCMD(
+			&Project{Name: appFrontend, Type: "frontend", RootFolder: appPath}, commands,
 		); err != nil {
 			return ThrowError(err.Error())
 		}
