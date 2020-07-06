@@ -2,7 +2,7 @@ package cgapp
 
 const (
 	// Regexp patterns
-	regexpAnsiblePattern   = "^(roles)$"
+	regexpAnsiblePattern   = "^(deploy)$"
 	regexpBackendPattern   = "^(net/http|fiber|echo)$"
 	regexpWebServerPattern = "^(nginx)$"
 	regexpDatabasePattern  = "^(postgres)$"
@@ -24,9 +24,9 @@ var (
 	// Registry
 	registry = map[string]*Registry{
 		// Ansible roles
-		"ansible": {
+		"roles": {
 			Repositories: map[string]string{
-				"roles": "github.com/create-go-app/ansible-roles",
+				"deploy": "github.com/create-go-app/ansible-roles-deploy",
 			},
 		},
 

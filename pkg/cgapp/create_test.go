@@ -19,8 +19,8 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			"successfully create default Ansible roles",
 			args{
 				project: &Project{
-					Type:       "ansible",
-					Name:       "roles",
+					Type:       "roles",
+					Name:       "deploy",
 					RootFolder: "../../tmp",
 				},
 				registry: registry,

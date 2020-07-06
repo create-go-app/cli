@@ -1,6 +1,7 @@
 package cgapp
 
 import (
+	"strings"
 	"time"
 
 	"github.com/create-go-app/cli/internal/embed"
@@ -46,7 +47,7 @@ func CreateCLIAction(c *cli.Context) error {
 
 		// Create Ansible roles
 		if err := CreateProjectFromRegistry(
-			&Project{Type: "ansible", Name: "roles", RootFolder: appPath},
+			&Project{Type: "roles", Name: "deploy", RootFolder: appPath},
 			registry,
 		); err != nil {
 			return ThrowError(err.Error())
@@ -56,7 +57,7 @@ func CreateCLIAction(c *cli.Context) error {
 	// Create backend files
 	SendMsg(true, "WAIT", "Create project backend", "cyan", false)
 	if err := CreateProjectFromRegistry(
-		&Project{Type: "backend", Name: appBackend, RootFolder: appPath},
+		&Project{Type: "backend", Name: strings.ToLower(appBackend), RootFolder: appPath},
 		registry,
 	); err != nil {
 		return ThrowError(err.Error())
@@ -66,7 +67,7 @@ func CreateCLIAction(c *cli.Context) error {
 		// Create frontend files
 		SendMsg(true, "WAIT", "Create project frontend", "cyan", false)
 		if err := CreateProjectFromCMD(
-			&Project{Type: "frontend", Name: appFrontend, RootFolder: appPath},
+			&Project{Type: "frontend", Name: strings.ToLower(appFrontend), RootFolder: appPath},
 			cmds,
 		); err != nil {
 			return ThrowError(err.Error())
@@ -82,7 +83,7 @@ func CreateCLIAction(c *cli.Context) error {
 			// Create container with web/proxy server
 			SendMsg(true, "WAIT", "Create container with web/proxy server", "cyan", false)
 			if err := CreateProjectFromRegistry(
-				&Project{Type: "webserver", Name: appWebServer, RootFolder: appPath},
+				&Project{Type: "webserver", Name: strings.ToLower(appWebServer), RootFolder: appPath},
 				registry,
 			); err != nil {
 				return ThrowError(err.Error())
@@ -93,7 +94,7 @@ func CreateCLIAction(c *cli.Context) error {
 			// Create container with database
 			SendMsg(true, "WAIT", "Create container with database", "cyan", false)
 			if err := CreateProjectFromRegistry(
-				&Project{Type: "webserver", Name: appWebServer, RootFolder: appPath},
+				&Project{Type: "database", Name: strings.ToLower(appDatabase), RootFolder: appPath},
 				registry,
 			); err != nil {
 				return ThrowError(err.Error())

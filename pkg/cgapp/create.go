@@ -28,8 +28,9 @@ func CreateProjectFromRegistry(project *Project, registry map[string]*Registry) 
 
 	// Switch project type
 	switch project.Type {
-	case "ansible":
+	case "roles":
 		pattern = regexpAnsiblePattern
+		folder = filepath.Join(project.RootFolder, project.Type, project.Name) // re-define folder
 		break
 	case "backend":
 		pattern = regexpBackendPattern
@@ -48,11 +49,11 @@ func CreateProjectFromRegistry(project *Project, registry map[string]*Registry) 
 		return ThrowError(err.Error())
 	}
 
-	// Re-define vars
-	template := registry[project.Type].Repositories[project.Name]
-
 	// Check for regexp
 	if match {
+		// Re-define vars
+		template := registry[project.Type].Repositories[project.Name]
+
 		// If match, create from default template
 		if err := GitClone(folder, template); err != nil {
 			return ThrowError(err.Error())
