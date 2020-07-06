@@ -46,7 +46,8 @@ func CreateCLIAction(c *cli.Context) error {
 
 		// Create Ansible roles
 		if err := CreateProjectFromRegistry(
-			&Project{Name: "roles", Type: "roles", RootFolder: appPath}, registry,
+			&Project{Name: "roles", Type: "roles", RootFolder: appPath},
+			registry,
 		); err != nil {
 			return ThrowError(err.Error())
 		}
@@ -55,7 +56,8 @@ func CreateCLIAction(c *cli.Context) error {
 	// Create backend files
 	SendMsg(true, "WAIT", "Create project backend", "cyan", false)
 	if err := CreateProjectFromRegistry(
-		&Project{Name: appBackend, Type: "backend", RootFolder: appPath}, registry,
+		&Project{Name: appBackend, Type: "backend", RootFolder: appPath},
+		registry,
 	); err != nil {
 		return ThrowError(err.Error())
 	}
@@ -64,7 +66,8 @@ func CreateCLIAction(c *cli.Context) error {
 		// Create frontend files
 		SendMsg(true, "WAIT", "Create project frontend", "cyan", false)
 		if err := CreateProjectFromCMD(
-			&Project{Name: appFrontend, Type: "frontend", RootFolder: appPath}, commands,
+			&Project{Name: appFrontend, Type: "frontend", RootFolder: appPath},
+			cmds,
 		); err != nil {
 			return ThrowError(err.Error())
 		}
@@ -79,7 +82,8 @@ func CreateCLIAction(c *cli.Context) error {
 			// Create container with web/proxy server
 			SendMsg(true, "WAIT", "Create container with web/proxy server", "cyan", false)
 			if err := CreateProjectFromRegistry(
-				&Project{Name: appWebServer, Type: "webserver", RootFolder: appPath}, registry,
+				&Project{Name: appWebServer, Type: "webserver", RootFolder: appPath},
+				registry,
 			); err != nil {
 				return ThrowError(err.Error())
 			}
@@ -89,7 +93,8 @@ func CreateCLIAction(c *cli.Context) error {
 			// Create container with database
 			SendMsg(true, "WAIT", "Create container with database", "cyan", false)
 			if err := CreateProjectFromRegistry(
-				&Project{Name: appWebServer, Type: "webserver", RootFolder: appPath}, registry,
+				&Project{Name: appWebServer, Type: "webserver", RootFolder: appPath},
+				registry,
 			); err != nil {
 				return ThrowError(err.Error())
 			}

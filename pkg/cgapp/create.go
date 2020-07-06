@@ -66,7 +66,7 @@ func CreateProjectFromRegistry(p *Project, registry map[string]string) error {
 }
 
 // CreateProjectFromCMD ...
-func CreateProjectFromCMD(p *Project, cmd map[string]map[string]string) error {
+func CreateProjectFromCMD(p *Project, cmd map[string]*Command) error {
 	// Define vars
 	var options []string
 
@@ -81,12 +81,25 @@ func CreateProjectFromCMD(p *Project, cmd map[string]map[string]string) error {
 		return ThrowError("Frontend template not set!")
 	}
 
+	// Re-define vars for more beauty view
+	runner := cmd[project[0]].Runner
+	create := cmd[project[0]].Create
+	args := cmd[project[0]].Args
+
 	// Collect project runner and options
 	switch project[0] {
 	case "react":
-		options = []string{cmd["react"]["create"], folder}
+		// npx create-react-app [template]
+		options = []string{create, folder}
 		if len(project) > 1 {
-			options = []string{cmd["react"]["create"], folder, cmd["react"]["template"], "cra-template-" + project[1]}
+			options = []string{create, folder, args["template"], "cra-template-" + project[1]}
+		}
+		break
+	case "preact":
+		// preact create [template] [dest] [args...]
+		options = []string{create, folder}
+		if len(project) > 1 {
+			options = []string{create, project[1], p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
 		}
 		break
 	default:
@@ -94,7 +107,7 @@ func CreateProjectFromCMD(p *Project, cmd map[string]map[string]string) error {
 	}
 
 	//
-	if err := ExecCommand(cmd[project[0]]["runner"], options); err != nil {
+	if err := ExecCommand(runner, options); err != nil {
 		return ThrowError(err.Error())
 	}
 
