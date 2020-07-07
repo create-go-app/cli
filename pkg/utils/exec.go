@@ -27,7 +27,7 @@ import (
 func ExecCommand(command string, options []string) error {
 	//
 	if command == "" {
-		return ThrowError("No command to execute!")
+		return throwError("No command to execute!")
 	}
 
 	// Create buffer for stderr
@@ -42,12 +42,12 @@ func ExecCommand(command string, options []string) error {
 	// Create a new reader
 	cmdReader, err := cmd.StdoutPipe()
 	if err != nil {
-		return ThrowError(err.Error())
+		return throwError(err.Error())
 	}
 
 	// Start executing command
 	if err := cmd.Start(); err != nil {
-		return ThrowError(stderr.String())
+		return throwError(stderr.String())
 	}
 
 	// Create a new scanner and run goroutine func with output
@@ -60,7 +60,7 @@ func ExecCommand(command string, options []string) error {
 
 	// Wait for executing command
 	if err := cmd.Wait(); err != nil {
-		return ThrowError(stderr.String())
+		return throwError(stderr.String())
 	}
 
 	return nil

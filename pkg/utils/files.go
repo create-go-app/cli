@@ -30,7 +30,7 @@ func MakeFiles(rootFolder string, filesToMake map[string][]byte) error {
 
 		// Write to created file
 		if err := ioutil.WriteFile(folder, data, 0755); err != nil {
-			return ThrowError("File `" + file + "` was not created!")
+			return throwError("File `" + file + "` was not created!")
 		}
 
 		// Show report for file
@@ -44,12 +44,12 @@ func MakeFiles(rootFolder string, filesToMake map[string][]byte) error {
 func MakeFolder(folderName string, chmod os.FileMode) error {
 	// Check if folder exists, fail if it does
 	if _, err := os.Stat(folderName); !os.IsNotExist(err) {
-		return ThrowError("Folder `" + folderName + "` exists!")
+		return throwError("Folder `" + folderName + "` exists!")
 	}
 
 	// Create folder
 	if err := os.Mkdir(folderName, chmod); err != nil {
-		return ThrowError("Folder `" + folderName + "` was not created!")
+		return throwError("Folder `" + folderName + "` was not created!")
 	}
 
 	// Show report for folder
@@ -62,7 +62,7 @@ func MakeFolder(folderName string, chmod os.FileMode) error {
 func RemoveFolders(rootFolder string, foldersToRemove []string) error {
 	for _, folder := range foldersToRemove {
 		if err := os.RemoveAll(filepath.Join(rootFolder, folder)); err != nil {
-			return ThrowError(err.Error())
+			return throwError(err.Error())
 		}
 	}
 

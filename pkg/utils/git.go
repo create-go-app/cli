@@ -26,7 +26,7 @@ func GitClone(rootFolder, templateName string) error {
 		URL: "https://" + templateName,
 	})
 	if err != nil {
-		return ThrowError("Repository was not cloned!")
+		return throwError("Repository was not cloned!")
 	}
 
 	return nil

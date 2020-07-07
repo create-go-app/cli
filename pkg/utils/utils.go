@@ -76,8 +76,8 @@ func SendMsg(startWithNewLine bool, caption, text, color string, endWithNewLine 
 	}
 }
 
-// ThrowError ...
-func ThrowError(text string) error {
+// throwError ...
+func throwError(text string) error {
 	return fmt.Errorf(BeautifyText(text, "red"))
 }
 
@@ -85,7 +85,7 @@ func ThrowError(text string) error {
 func StringSplit(pattern, match string) ([]string, error) {
 	// Error, when empty or nil
 	if pattern == "" || match == "" {
-		return nil, ThrowError("Frontend template not set!")
+		return nil, throwError("Frontend template not set!")
 	}
 
 	// Define empty []string{} for splitted strings
