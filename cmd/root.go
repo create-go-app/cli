@@ -29,11 +29,16 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "cgapp",
 	Version: registry.CLIVersion,
-	Short:   "A powerful CLI for the Create Go App project.",
-	Long: `Create a new production-ready project with backend (Golang), frontend (JavaScript, TypeScript)
-and deploy automation (Ansible, Docker) by running one CLI command.
+	Short:   "A powerful CLI for the Create Go App project",
+	Long: `
+A powerful CLI for the Create Go App project.
 
-Focus on writing code! The CLI will take care of the rest.`,
+Create a new production-ready project with backend (Golang), 
+frontend (JavaScript, TypeScript) and deploy automation 
+(Ansible, Docker) by running one CLI command.
+
+-> Focus on writing code and thinking of business logic!
+<- The Create Go App CLI will take care of the rest.`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

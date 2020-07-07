@@ -39,6 +39,7 @@ var (
 var createCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create a new project via interactive UI or configuration file",
+	Long:  "\nCreate a new project via interactive UI or configuration file.",
 	Run:   runCreateCommand,
 }
 

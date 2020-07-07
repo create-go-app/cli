@@ -29,6 +29,7 @@ import (
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Init a configuration file for the Create Go App project",
+	Long:  "\nInit a configuration file for the Create Go App project.",
 	Run:   runInitCommand,
 }
 
