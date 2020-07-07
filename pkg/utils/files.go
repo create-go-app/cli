@@ -34,7 +34,7 @@ func MakeFiles(rootFolder string, filesToMake map[string][]byte) error {
 		}
 
 		// Show report for file
-		SendMsg(false, "[OK]", "File `"+file+"` was created!", "green", false)
+		SendMsg(false, "[OK]", "File `"+file+"` was created!", "cyan", false)
 	}
 
 	return nil
