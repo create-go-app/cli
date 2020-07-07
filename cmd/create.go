@@ -54,7 +54,8 @@ func initConfig() {
 		// Get current directory
 		currentDir, err := os.Getwd()
 		if err != nil {
-			fmt.Println(err)
+			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
 		}
 
 		viper.AddConfigPath(currentDir) // add config path
@@ -185,6 +186,7 @@ func runCreateCommand(cmd *cobra.Command, args []string) {
 
 	} else {
 
+		// Exit, if config is invalid.
 		if projectConfig == nil {
 			utils.SendMsg(false, "[ERROR]", "Config file invalid or empty!", "red", true)
 			os.Exit(1)
@@ -203,5 +205,5 @@ func runCreateCommand(cmd *cobra.Command, args []string) {
 
 	// End message.
 	utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	utils.SendMsg(false, "(i)", "Run `cgapp create -c` to create a new project by this configuration file.", "green", true)
+	utils.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server.", "green", true)
 }

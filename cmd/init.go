@@ -18,10 +18,9 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"os"
 
-	"github.com/create-go-app/cli/internal/embed"
+	"github.com/create-go-app/cli/pkg/embed"
 	"github.com/create-go-app/cli/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -41,7 +40,8 @@ func runInitCommand(cmd *cobra.Command, args []string) {
 	// Get current directory.
 	currentDir, err := os.Getwd()
 	if err != nil {
-		fmt.Println(err)
+		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		os.Exit(1)
 	}
 
 	// Start message.
@@ -51,7 +51,10 @@ func runInitCommand(cmd *cobra.Command, args []string) {
 	fileToMake := map[string][]byte{
 		".cgapp.yml": embed.Get("/.cgapp.yml"),
 	}
-	utils.MakeFiles(currentDir, fileToMake)
+	if err = utils.MakeFiles(currentDir, fileToMake); err != nil {
+		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		os.Exit(1)
+	}
 
 	// End message.
 	utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
