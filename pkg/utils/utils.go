@@ -69,7 +69,11 @@ func SendMsg(startWithNewLine bool, caption, text, color string, endWithNewLine 
 		endNewLine = "\n"
 	}
 
-	fmt.Println(BeautifyText(startNewLine+"["+caption+"] "+text+endNewLine, color))
+	if caption == "" {
+		fmt.Println(startNewLine + text + endNewLine) // common text
+	} else {
+		fmt.Println(startNewLine + BeautifyText(caption, color) + " " + text + endNewLine) // colorized text
+	}
 }
 
 // ThrowError ...

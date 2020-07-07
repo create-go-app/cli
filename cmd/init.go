@@ -19,9 +19,11 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/create-go-app/cli/internal/embed"
+	"github.com/create-go-app/cli/pkg/utils"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // initCmd represents the init command
@@ -36,10 +38,22 @@ func init() {
 }
 
 func runInitCommand(cmd *cobra.Command, args []string) {
-	// Parse config
-	config := map[string]interface{}{}
-	_ = viper.UnmarshalKey("project", &config)
+	// Get current directory.
+	currentDir, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	//
-	fmt.Println(config["backend"])
+	// Start message.
+	utils.SendMsg(true, "[~]", "Init a configuration file in `"+currentDir+"` folder...", "yellow", true)
+
+	// Create configuration file.
+	fileToMake := map[string][]byte{
+		".cgapp.yml": embed.Get("/.cgapp.yml"),
+	}
+	utils.MakeFiles(currentDir, fileToMake)
+
+	// End message.
+	utils.SendMsg(true, "[?]", "A helpful documentation and next steps -> https://create-go.app/", "cyan", false)
+	utils.SendMsg(false, "[!]", "Run `cgapp create -c` to create a new project by this configuration file.", "cyan", true)
 }
