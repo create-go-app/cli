@@ -1,4 +1,5 @@
-# .editorconfig by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+# A default .editorconfig for Create Go App project.
+# Author: Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 root = true
 

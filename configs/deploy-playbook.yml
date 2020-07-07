@@ -1,4 +1,6 @@
-# deploy-playbook.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+# Ansible playbook for deploy the Create Go App project.
+# Author: Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+# For more information, please visit https://create-go.app
 
 ---
 - hosts: "{{ host }}"
