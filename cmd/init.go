@@ -45,7 +45,7 @@ func runInitCommand(cmd *cobra.Command, args []string) {
 	}
 
 	// Start message.
-	utils.SendMsg(true, "[~]", "Init a configuration file in `"+currentDir+"` folder...", "yellow", true)
+	utils.SendMsg(true, "* * *", "Init a configuration file in `"+currentDir+"` folder...", "yellow", true)
 
 	// Create configuration file.
 	fileToMake := map[string][]byte{
@@ -54,6 +54,6 @@ func runInitCommand(cmd *cobra.Command, args []string) {
 	utils.MakeFiles(currentDir, fileToMake)
 
 	// End message.
-	utils.SendMsg(true, "[?]", "A helpful documentation and next steps -> https://create-go.app/", "cyan", false)
-	utils.SendMsg(false, "[!]", "Run `cgapp create -c` to create a new project by this configuration file.", "cyan", true)
+	utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
+	utils.SendMsg(false, "(i)", "Run `cgapp create -c` to create a new project by this configuration file.", "green", true)
 }

@@ -4,20 +4,29 @@
 # Define your project config
 project:
   # Backend for your project.
+  # (Required)
   # String: `net/http`, `fiber`, `echo`, `gin`
+  # User template: supported, set to URL (without protocol), like `github.com/user/template`
   - backend: fiber
   # Frontend for your project.
+  # (Optional, to skip set to `none`)
   # String: `react`, `react:<template>` `preact`, `preact:<template>`, `svelte`
+  # User template: NOT supported
   - frontend: svelte
   # Web/proxy server for your project.
+  # (Optional, to skip set to `none`)
   # String: `nginx`
+  # User template: supported, set to URL (without protocol), like `github.com/user/template`
   - webserver: nginx
   # Web/proxy server for your project.
+  # (Optional, to skip set to `none`)
   # String: `postgres`
+  # User template: supported, set to URL (without protocol), like `github.com/user/template`
   - database: postgres
 
 # Define your automation config
 roles:
   # Ansible roles for deploy your project.
-  # Boolean: true|false
-  - deploy: true
+  # (Optional, to skip set to empty or comment)
+  # String list: `deploy`
+  - deploy
