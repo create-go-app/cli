@@ -1,6 +1,26 @@
-package cgapp
+/*
+Package registry includes available repositories & commands for the Create Go App CLI.
+
+Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+package registry
 
 const (
+	// CLI version
+	version = "1.3.0"
+
 	// Regexp patterns
 	regexpAnsiblePattern   = "^(deploy)$"
 	regexpBackendPattern   = "^(net/http|fiber|echo)$"
@@ -21,8 +41,8 @@ type Command struct {
 }
 
 var (
-	// Registry
-	registry = map[string]*Registry{
+	// Repositories collection
+	repositories = map[string]*Registry{
 		// Ansible roles
 		"roles": {
 			Repositories: map[string]string{
@@ -54,8 +74,8 @@ var (
 		},
 	}
 
-	// CMD commands collection
-	cmds = map[string]*Command{
+	// Commands collection
+	commands = map[string]*Command{
 		"react": {
 			Runner: "npx",
 			Create: "create-react-app",

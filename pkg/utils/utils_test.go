@@ -1,4 +1,4 @@
-package cgapp
+package utils
 
 import (
 	"os"

@@ -1,4 +1,6 @@
 /*
+Package cmd includes all of the Create Go App CLI commands.
+
 Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +15,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package main
+package cmd
 
-import "github.com/create-go-app/cli/cmd"
+import (
+	"fmt"
 
-func main() {
-	cmd.Execute()
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+)
+
+// initCmd represents the init command
+var initCmd = &cobra.Command{
+	Use:   "init",
+	Short: "Init a configuration file for the Create Go App project",
+	Run:   runInitCommand,
+}
+
+func init() {
+	rootCmd.AddCommand(initCmd)
+}
+
+func runInitCommand(cmd *cobra.Command, args []string) {
+	// Parse config
+	config := map[string]interface{}{}
+	_ = viper.UnmarshalKey("project", &config)
+
+	//
+	fmt.Println(config["backend"])
 }

@@ -1,0 +1,23 @@
+# A default configuration for Create Go App project.
+# For more information, please visit https://create-go.app
+
+# Define your project config
+project:
+  # Backend for your project.
+  # String: `net/http`, `fiber`, `echo`, `gin`
+  - backend: fiber
+  # Frontend for your project.
+  # String: `react`, `react:<template>` `preact`, `preact:<template>`, `svelte`
+  - frontend: svelte
+  # Web/proxy server for your project.
+  # String: `nginx`
+  - webserver: nginx
+  # Web/proxy server for your project.
+  # String: `postgres`
+  - database: postgres
+
+# Define your automation config
+roles:
+  # Ansible roles for deploy your project.
+  # Boolean: true|false
+  - deploy: true

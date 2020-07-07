@@ -1,4 +1,6 @@
 /*
+Package cmd includes all of the Create Go App CLI commands.
+
 Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +15,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package main
+package cmd
 
-import "github.com/create-go-app/cli/cmd"
+import (
+	"fmt"
 
-func main() {
-	cmd.Execute()
+	"github.com/spf13/cobra"
+)
+
+// createCmd represents the create command
+var createCmd = &cobra.Command{
+	Use:   "create",
+	Short: "Create a new project via interactive UI",
+	Run:   runCreateCommand,
+}
+
+func init() {
+	rootCmd.AddCommand(createCmd)
+}
+
+// runInitCommand ...
+func runCreateCommand(cmd *cobra.Command, args []string) {
+	fmt.Println("create called")
 }
