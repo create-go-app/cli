@@ -18,19 +18,21 @@ limitations under the License.
 package registry
 
 const (
-	// CLI version
-	version = "1.3.0"
-
-	// Regexp patterns
-	regexpAnsiblePattern   = "^(deploy)$"
-	regexpBackendPattern   = "^(net/http|fiber|echo)$"
-	regexpWebServerPattern = "^(nginx)$"
-	regexpDatabasePattern  = "^(postgres)$"
+	// CLIVersion version of Create Go App CLI.
+	CLIVersion = "1.3.0"
+	// RegexpAnsiblePattern pattern for Ansible roles.
+	RegexpAnsiblePattern = "^(deploy)$"
+	// RegexpBackendPattern pattern for backend.
+	RegexpBackendPattern = "^(net/http|fiber|echo)$"
+	// RegexpWebServerPattern pattern for web/proxy servers.
+	RegexpWebServerPattern = "^(nginx)$"
+	// RegexpDatabasePattern pattern for databases.
+	RegexpDatabasePattern = "^(postgres)$"
 )
 
-// Registry ...
-type Registry struct {
-	Repositories map[string]string
+// Repository ...
+type Repository struct {
+	List map[string]string
 }
 
 // Command ...
@@ -41,41 +43,41 @@ type Command struct {
 }
 
 var (
-	// Repositories collection
-	repositories = map[string]*Registry{
-		// Ansible roles
+	// Repositories collection.
+	Repositories = map[string]*Repository{
+		// Ansible roles.
 		"roles": {
-			Repositories: map[string]string{
+			List: map[string]string{
 				"deploy": "github.com/create-go-app/ansible-roles-deploy",
 			},
 		},
 
-		// Backend templates
+		// Backend templates.
 		"backend": {
-			Repositories: map[string]string{
+			List: map[string]string{
 				"net/http": "github.com/create-go-app/net_http-go-template",
 				"fiber":    "github.com/create-go-app/fiber-go-template",
 				"echo":     "github.com/create-go-app/echo-go-template",
 			},
 		},
 
-		// Docker containers with web/proxy servers
+		// Docker containers with web/proxy servers.
 		"webserver": {
-			Repositories: map[string]string{
+			List: map[string]string{
 				"nginx": "github.com/create-go-app/nginx-docker",
 			},
 		},
 
-		// Docker containers with databases
+		// Docker containers with databases.
 		"database": {
-			Repositories: map[string]string{
+			List: map[string]string{
 				"postgres": "github.com/create-go-app/postgres-docker",
 			},
 		},
 	}
 
-	// Commands collection
-	commands = map[string]*Command{
+	// Commands collection.
+	Commands = map[string]*Command{
 		"react": {
 			Runner: "npx",
 			Create: "create-react-app",

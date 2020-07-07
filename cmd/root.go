@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -29,8 +30,9 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "cgapp",
-	Short: "A powerful CLI for the Create Go App project.",
+	Use:     "cgapp",
+	Version: registry.CLIVersion,
+	Short:   "A powerful CLI for the Create Go App project.",
 	Long: `Create a new production-ready project with backend (Golang), frontend (JavaScript, TypeScript)
 and deploy automation (Ansible, Docker) by running one CLI command.
 
