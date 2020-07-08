@@ -68,7 +68,7 @@ frontend (JavaScript, TypeScript) and deploy automation
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	createCmd.PersistentFlags().BoolVarP(
+	rootCmd.PersistentFlags().BoolVarP(
 		&useConfigFile,
 		"use-config", "", false,
 		"use config file to create a new project (default is $PWD/.cgapp.yml)",
