@@ -42,56 +42,55 @@ var createCmd = &cobra.Command{
 	Aliases: []string{"new"},
 	Short:   "Create a new project via interactive UI or configuration file",
 	Long:    "\nCreate a new project via interactive UI or configuration file.",
-	Run: func(cmd *cobra.Command, args []string) {
-		// Start message.
-		utils.SendMsg(true, "* * *", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
+	Run:     runCreateCmd,
+}
 
-		// If config is set and correct, skip survey and use it.
-		if useConfigFile && projectConfig != nil {
-			// Re-define variables from config file ($PWD/.cgapp.yml).
-			backend = strings.ToLower(projectConfig["backend"].(string))
-			frontend = strings.ToLower(projectConfig["frontend"].(string))
-			webserver = strings.ToLower(projectConfig["webserver"].(string))
-			database = strings.ToLower(projectConfig["database"].(string))
-			roles = rolesConfig
-		} else {
-			// Start survey.
-			if err := survey.Ask(
-				registry.Questions,
-				&answers,
-				// See: https://github.com/mgutz/ansi#style-format
-				survey.WithIcons(func(icons *survey.IconSet) {
-					icons.Question.Format = "cyan"
-					icons.Question.Text = "[?]"
-					icons.Help.Format = "blue"
-					icons.Help.Text = "Help ->"
-					icons.Error.Format = "yellow"
-					icons.Error.Text = "Warning ->"
-				}),
-			); err != nil {
-				utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-				os.Exit(1)
-			}
+var runCreateCmd = func(cmd *cobra.Command, args []string) {
+	// Start message.
+	utils.SendMsg(true, "* * *", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
 
-			// If something went wrong, cancel and exit.
-			if !answers.Agree {
-				utils.SendMsg(true, "[!]", "You're stopped creation of a new project.", "red", false)
-				utils.SendMsg(false, "[!]", "Run `cgapp create` once again!", "red", true)
-				os.Exit(1)
-			}
+	// If config is set and correct, skip survey and use it.
+	if useConfigFile && projectConfig != nil {
+		// Re-define variables from config file ($PWD/.cgapp.yml).
+		backend = strings.ToLower(projectConfig["backend"].(string))
+		frontend = strings.ToLower(projectConfig["frontend"].(string))
+		webserver = strings.ToLower(projectConfig["webserver"].(string))
+		database = strings.ToLower(projectConfig["database"].(string))
+		roles = rolesConfig
+	} else {
+		// Start survey.
+		_ = survey.Ask(
+			registry.Questions,
+			&answers,
+			// See: https://github.com/mgutz/ansi#style-format
+			survey.WithIcons(func(icons *survey.IconSet) {
+				icons.Question.Format = "cyan"
+				icons.Question.Text = "[?]"
+				icons.Help.Format = "blue"
+				icons.Help.Text = "Help ->"
+				icons.Error.Format = "yellow"
+				icons.Error.Text = "Note ->"
+			}),
+		)
 
-			// Define variables for better display.
-			backend = strings.ToLower(answers.Backend)
-			frontend = strings.ToLower(answers.Frontend)
-			webserver = strings.ToLower(answers.Webserver)
-			database = strings.ToLower(answers.Database)
-			roles = answers.Roles
+		// If something went wrong, cancel and exit.
+		if !answers.Agree {
+			utils.SendMsg(true, "[!]", "You're stopped creation of a new project.", "red", false)
+			utils.SendMsg(false, "[!]", "Run `cgapp create` once again!", "red", true)
+			os.Exit(1)
 		}
 
-		// End message.
-		utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-		utils.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server.", "green", true)
-	},
+		// Define variables for better display.
+		backend = strings.ToLower(answers.Backend)
+		frontend = strings.ToLower(answers.Frontend)
+		webserver = strings.ToLower(answers.Webserver)
+		database = strings.ToLower(answers.Database)
+		roles = answers.Roles
+	}
+
+	// End message.
+	utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
+	utils.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server.", "green", true)
 }
 
 func init() {
