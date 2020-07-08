@@ -60,7 +60,7 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 		}
 
 		// Show success report.
-		utils.SendMsg(false, "OK", strings.Title(p.Type)+": created with default template `"+template+"`!", "", false)
+		utils.SendMsg(false, "[OK]", strings.Title(p.Type)+": created with default template `"+template+"`!", "cyan", false)
 	} else {
 		// Else create from user template (from GitHub, etc).
 		if err := utils.GitClone(folder, p.Name); err != nil {
@@ -69,7 +69,7 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 		}
 
 		// Show success report.
-		utils.SendMsg(false, "OK", strings.Title(p.Type)+": created with user template `"+p.Name+"`!", "", false)
+		utils.SendMsg(false, "[OK]", strings.Title(p.Type)+": created with user template `"+p.Name+"`!", "cyan", false)
 	}
 
 	// Cleanup project.

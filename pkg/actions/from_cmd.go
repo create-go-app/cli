@@ -70,5 +70,5 @@ func CreateProjectFromCMD(p *registry.Project, c map[string]*registry.Command) {
 	utils.RemoveFolders(folder, folderToRemove)
 
 	// Show success report.
-	utils.SendMsg(false, "OK", "Frontend: created with template `"+p.Name+"`!", "", false)
+	utils.SendMsg(false, "[OK]", "Frontend: created with template `"+p.Name+"`!", "cyan", false)
 }

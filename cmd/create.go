@@ -133,7 +133,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	}
 
 	// Create backend files.
-	utils.SendMsg(true, "*", "Create project backend...", "cyan", false)
+	utils.SendMsg(true, "*", "Create project backend...", "cyan", true)
 	actions.CreateProjectFromRegistry(
 		&registry.Project{
 			Type:       "backend",
@@ -145,7 +145,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 	if frontend != "none" {
 		// Create frontend files.
-		utils.SendMsg(true, "*", "Create project frontend...", "cyan", false)
+		utils.SendMsg(true, "*", "Create project frontend...", "cyan", true)
 		actions.CreateProjectFromCMD(
 			&registry.Project{
 				Type:       "frontend",
@@ -163,7 +163,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 		if webserver != "none" {
 			// Create container with a web/proxy server.
-			utils.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", false)
+			utils.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", true)
 			actions.CreateProjectFromRegistry(
 				&registry.Project{
 					Type:       "webserver",
@@ -176,7 +176,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 		if database != "none" {
 			// Create container with a database.
-			utils.SendMsg(true, "*", "Create container with database...", "cyan", false)
+			utils.SendMsg(true, "*", "Create container with database...", "cyan", true)
 			actions.CreateProjectFromRegistry(
 				&registry.Project{
 					Type:       "database",
