@@ -32,6 +32,13 @@ const (
 	RegexpDatabasePattern = "^(postgres)$"
 )
 
+// Project struct for describe project.
+type Project struct {
+	Type       string
+	Name       string
+	RootFolder string
+}
+
 // Repository ...
 type Repository struct {
 	List map[string]string

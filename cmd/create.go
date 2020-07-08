@@ -23,6 +23,7 @@ import (
 	"time"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/create-go-app/cli/pkg/actions"
 	"github.com/create-go-app/cli/pkg/embed"
 	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/create-go-app/cli/pkg/utils"
@@ -121,35 +122,38 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		}
 
 		// Create Ansible roles.
-		// if err := actions.CreateProjectFromRegistry(
-		// 	&actions.Project{Type: "roles", Name: "deploy", RootFolder: currentDir},
-		// 	registry.Repositories,
-		// ); err != nil {
-		// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		// 	os.Exit(1)
-		// }
+		actions.CreateProjectFromRegistry(
+			&registry.Project{
+				Type:       "roles",
+				Name:       "deploy",
+				RootFolder: currentDir,
+			},
+			registry.Repositories,
+		)
 	}
 
 	// Create backend files.
 	utils.SendMsg(true, "*", "Create project backend...", "cyan", false)
-	// if err := CreateProjectFromRegistry(
-	// 	&Project{Type: "backend", Name: strings.ToLower(appBackend), RootFolder: appPath},
-	// 	registry,
-	// ); err != nil {
-	// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-	// 	os.Exit(1)
-	// }
+	actions.CreateProjectFromRegistry(
+		&registry.Project{
+			Type:       "backend",
+			Name:       backend,
+			RootFolder: currentDir,
+		},
+		registry.Repositories,
+	)
 
 	if frontend != "none" {
 		// Create frontend files.
 		utils.SendMsg(true, "*", "Create project frontend...", "cyan", false)
-		// if err := CreateProjectFromCMD(
-		// 	&Project{Type: "frontend", Name: answers.Frontend, RootFolder: currentDir},
-		// 	cmds,
-		// ); err != nil {
-		// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		// 	os.Exit(1)
-		// }
+		actions.CreateProjectFromRegistry(
+			&registry.Project{
+				Type:       "frontend",
+				Name:       frontend,
+				RootFolder: currentDir,
+			},
+			registry.Repositories,
+		)
 	}
 
 	// Docker containers.
@@ -160,25 +164,27 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		if webserver != "none" {
 			// Create container with a web/proxy server.
 			utils.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", false)
-			// if err := CreateProjectFromRegistry(
-			// 	&Project{Type: "webserver", Name: answers.Webserver, RootFolder: currentDir},
-			// 	registry,
-			// ); err != nil {
-			// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			// 	os.Exit(1)
-			// }
+			actions.CreateProjectFromRegistry(
+				&registry.Project{
+					Type:       "webserver",
+					Name:       webserver,
+					RootFolder: currentDir,
+				},
+				registry.Repositories,
+			)
 		}
 
 		if database != "none" {
 			// Create container with a database.
 			utils.SendMsg(true, "*", "Create container with database...", "cyan", false)
-			// if err := CreateProjectFromRegistry(
-			// 	&Project{Type: "database", Name: answers.Database, RootFolder: currentDir},
-			// 	registry,
-			// ); err != nil {
-			// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			// 	os.Exit(1)
-			// }
+			actions.CreateProjectFromRegistry(
+				&registry.Project{
+					Type:       "database",
+					Name:       database,
+					RootFolder: currentDir,
+				},
+				registry.Repositories,
+			)
 		}
 	}
 
