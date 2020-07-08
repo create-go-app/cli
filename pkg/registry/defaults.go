@@ -46,12 +46,12 @@ type Command struct {
 
 // CreateAnswers struct for a survey's answers for `create` command.
 type CreateAnswers struct {
-	Backend       string
-	Frontend      string
-	Webserver     string
-	Database      string
-	Roles         bool
-	AgreeCreation bool `survey:"agree"`
+	Backend             string
+	Frontend            string
+	Webserver           string
+	Database            string
+	InstallAnsibleRoles bool `survey:"roles"`
+	AgreeCreation       bool `survey:"agree"`
 }
 
 // DeployAnswers struct for a survey's answers for `deploy` command.

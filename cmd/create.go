@@ -79,7 +79,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		frontend = strings.ToLower(createAnswers.Frontend)
 		webserver = strings.ToLower(createAnswers.Webserver)
 		database = strings.ToLower(createAnswers.Database)
-		installAnsibleRoles = createAnswers.Roles
+		installAnsibleRoles = createAnswers.InstallAnsibleRoles
 	}
 
 	// Start timer.
