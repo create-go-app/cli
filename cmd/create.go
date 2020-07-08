@@ -90,75 +90,30 @@ func runCreateCommand(cmd *cobra.Command, args []string) {
 	// Start message.
 	utils.SendMsg(true, "* * *", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
 
-	// If config not set, go to survey.
-	if !useConfigFile {
+	// If config is set, skip survey.
+	if useConfigFile {
 
-		// Define survey's questions.
-		questions := []*survey.Question{
-			{
-				Name: "backend",
-				Prompt: &survey.Select{
-					Message: "Choose a backend framework:",
-					Options: []string{"net/http", "Fiber", "Echo", "Gin"},
-					Default: "Fiber",
-				},
-				Validate: survey.Required,
-			},
-			{
-				Name: "frontend",
-				Prompt: &survey.Select{
-					Message: "Choose a frontend UI library:",
-					Options: []string{"none", "React", "Preact", "Svelte"},
-					Default: "none",
-				},
-			},
-			{
-				Name: "webserver",
-				Prompt: &survey.Select{
-					Message: "Choose a web/proxy server:",
-					Options: []string{"none", "Nginx"},
-					Default: "none",
-				},
-			},
-			{
-				Name: "database",
-				Prompt: &survey.Select{
-					Message: "Choose a database:",
-					Options: []string{"none", "Postgres"},
-					Default: "none",
-				},
-			},
-			{
-				Name: "roles",
-				Prompt: &survey.MultiSelect{
-					Message: "Choose an Ansible roles:",
-					Options: []string{"deploy"},
-					Default: []string{"deploy"},
-					Help:    "These are fully configured Ansible roles, that will help you automate a deployment process.",
-				},
-			},
-			{
-				Name: "agree",
-				Prompt: &survey.Confirm{
-					Message: "If all is well, can I create this project?",
-					Default: true,
-				},
-			},
+		// Exit, if config is invalid.
+		if projectConfig == nil {
+			utils.SendMsg(false, "[ERROR]", "Config file invalid or empty!", "red", true)
+			os.Exit(1)
 		}
 
-		// Define survey's answers.
-		answers := struct {
-			Backend   string
-			Frontend  string
-			Webserver string
-			Database  string
-			Roles     []string
-			Agree     bool
-		}{}
+		// Re-define variables, if using config file.
+		backend = strings.ToLower(projectConfig["backend"].(string))
+		frontend = strings.ToLower(projectConfig["frontend"].(string))
+		webserver = strings.ToLower(projectConfig["webserver"].(string))
+		database = strings.ToLower(projectConfig["database"].(string))
+		roles = rolesConfig
+
+	} else {
+
+		// Re-define answers variable.
+		answers := registry.Answers{}
 
 		// Start survey.
 		if err := survey.Ask(
-			questions,
+			registry.Questions,
 			&answers,
 			// See: https://github.com/mgutz/ansi#style-format
 			survey.WithIcons(func(icons *survey.IconSet) {
@@ -185,21 +140,6 @@ func runCreateCommand(cmd *cobra.Command, args []string) {
 		webserver = strings.ToLower(answers.Webserver)
 		database = strings.ToLower(answers.Database)
 		roles = answers.Roles
-
-	} else {
-
-		// Exit, if config is invalid.
-		if projectConfig == nil {
-			utils.SendMsg(false, "[ERROR]", "Config file invalid or empty!", "red", true)
-			os.Exit(1)
-		}
-
-		// Re-define variables, if using config file
-		backend = strings.ToLower(projectConfig["backend"].(string))
-		frontend = strings.ToLower(projectConfig["frontend"].(string))
-		webserver = strings.ToLower(projectConfig["webserver"].(string))
-		database = strings.ToLower(projectConfig["database"].(string))
-		roles = rolesConfig
 
 	}
 

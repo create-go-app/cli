@@ -17,6 +17,8 @@ limitations under the License.
 */
 package registry
 
+import "github.com/AlecAivazis/survey/v2"
+
 const (
 	// CLIVersion version of Create Go App CLI.
 	CLIVersion = "1.3.0"
@@ -40,6 +42,16 @@ type Command struct {
 	Runner string
 	Create string
 	Args   map[string]string
+}
+
+// Answers struct for a survey's answers.
+type Answers struct {
+	Backend   string
+	Frontend  string
+	Webserver string
+	Database  string
+	Roles     []string
+	Agree     bool
 }
 
 var (
@@ -98,6 +110,59 @@ var (
 			Create: "degit",
 			Args: map[string]string{
 				"template": "sveltejs/template",
+			},
+		},
+	}
+
+	// Questions survey's questions.
+	Questions = []*survey.Question{
+		{
+			Name: "backend",
+			Prompt: &survey.Select{
+				Message: "Choose a backend framework:",
+				Options: []string{"net/http", "Fiber", "Echo", "Gin"},
+				Default: "Fiber",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "frontend",
+			Prompt: &survey.Select{
+				Message: "Choose a frontend UI library:",
+				Options: []string{"none", "React", "Preact", "Svelte"},
+				Default: "none",
+			},
+		},
+		{
+			Name: "webserver",
+			Prompt: &survey.Select{
+				Message: "Choose a web/proxy server:",
+				Options: []string{"none", "Nginx"},
+				Default: "none",
+			},
+		},
+		{
+			Name: "database",
+			Prompt: &survey.Select{
+				Message: "Choose a database:",
+				Options: []string{"none", "Postgres"},
+				Default: "none",
+			},
+		},
+		{
+			Name: "roles",
+			Prompt: &survey.MultiSelect{
+				Message: "Choose an Ansible roles:",
+				Options: []string{"deploy"},
+				Default: []string{"deploy"},
+				Help:    "These are fully configured Ansible roles, that will help you automate a deployment process.",
+			},
+		},
+		{
+			Name: "agree",
+			Prompt: &survey.Confirm{
+				Message: "If all is well, can I create this project?",
+				Default: true,
 			},
 		},
 	}
