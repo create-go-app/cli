@@ -59,6 +59,7 @@ type DeployAnswers struct {
 	Username        string
 	Host            string
 	Network         string
+	AskBecomePass   bool `survey:"become"`
 	AgreeDeployment bool `survey:"agree"`
 }
 
@@ -182,6 +183,13 @@ var (
 				Default: "root",
 			},
 			Validate: survey.Required,
+		},
+		{
+			Name: "become",
+			Prompt: &survey.Confirm{
+				Message: "Do you need to enter password for this username?",
+				Default: true,
+			},
 		},
 		{
 			Name: "host",

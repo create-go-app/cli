@@ -49,6 +49,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		username = strings.ToLower(rolesConfig["username"].(string))
 		host = strings.ToLower(rolesConfig["host"].(string))
 		network = strings.ToLower(rolesConfig["network"].(string))
+		askBecomePass = rolesConfig["become"].(bool)
 	} else {
 		// Start survey.
 		if err := survey.Ask(
@@ -72,6 +73,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		username = deployAnswers.Username
 		host = deployAnswers.Host
 		network = deployAnswers.Network
+		askBecomePass = deployAnswers.AskBecomePass
 	}
 
 	// Start timer.
@@ -80,7 +82,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	// Create config files for your project.
 	utils.SendMsg(false, "*", "Run Ansible playbook `"+playbook+"`...", "cyan", true)
 
-	fmt.Println(username, host, network, playbook)
+	fmt.Println(username, host, network, playbook, askBecomePass)
 
 	// Stop timer
 	stopTimer := time.Since(startTimer).String()

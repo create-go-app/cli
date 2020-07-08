@@ -32,7 +32,7 @@ var (
 	projectConfig                          map[string]interface{}                         // parse project config
 	rolesConfig                            map[string]interface{}                         // parse Ansible roles config
 	backend, frontend, webserver, database string                                         // define project variables
-	installAnsibleRoles                    bool                                           // install Ansible roles
+	installAnsibleRoles, askBecomePass     bool                                           // install Ansible roles, ask become pass
 	username, host, network                string                                         // define deploy variables
 	playbook                               string                 = "deploy-playbook.yml" // default Ansible playbook
 	createAnswers                          registry.CreateAnswers                         // define answers variable for `create` command
