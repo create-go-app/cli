@@ -70,7 +70,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().BoolVarP(
 		&useConfigFile,
-		"use-config", "", false,
+		"use-config", "c", false,
 		"use config file to create a new project (default is $PWD/.cgapp.yml)",
 	)
 }
