@@ -161,7 +161,7 @@ var (
 		{
 			Name: "agree",
 			Prompt: &survey.Confirm{
-				Message: "If all is well, can I create this project?",
+				Message: "If everything is okay, can I create this project? ;)",
 				Default: true,
 			},
 		},

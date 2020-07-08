@@ -18,7 +18,6 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
@@ -30,9 +29,11 @@ import (
 )
 
 var (
-	useConfigFile bool                   // indicate using config
-	projectConfig map[string]interface{} // parse project config
-	rolesConfig   []string               // parse Ansible roles config
+	useConfigFile                          bool                   // indicate using config
+	projectConfig                          map[string]interface{} // parse project config
+	rolesConfig, roles                     []string               // parse Ansible roles config
+	backend, frontend, webserver, database string                 // define project variables
+	answers                                registry.Answers       // define answers variable
 )
 
 // createCmd represents the create command
@@ -47,70 +48,44 @@ var createCmd = &cobra.Command{
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.AddCommand(createCmd)
-	createCmd.Flags().BoolVarP(&useConfigFile, "use-config", "", false, "config file (default is $PWD/.cgapp.yml)")
+	createCmd.Flags().BoolVarP(&useConfigFile, "use-config", "", false, "use config file to create a new project (default is $PWD/.cgapp.yml)")
 }
 
 // initConfig reads in config file, if set.
 func initConfig() {
 	if useConfigFile {
-		// Get current directory
-		currentDir, err := os.Getwd()
-		if err != nil {
-			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
+		// Get current directory.
+		currentDir, _ := os.Getwd()
 
 		viper.AddConfigPath(currentDir) // add config path
 		viper.SetConfigName(".cgapp")   // set config name
 
 		// If a config file is found, read it in.
-		if err = viper.ReadInConfig(); err != nil {
+		if err := viper.ReadInConfig(); err != nil {
 			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 			os.Exit(1)
 		}
 
 		// Parse configs
-		if err = viper.UnmarshalKey("project", &projectConfig); err != nil {
-			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
-		if err = viper.UnmarshalKey("roles", &rolesConfig); err != nil {
-			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
+		_ = viper.UnmarshalKey("project", &projectConfig)
+		_ = viper.UnmarshalKey("roles", &rolesConfig)
 	}
 }
 
 // runInitCommand ...
 func runCreateCommand(cmd *cobra.Command, args []string) {
-	// Init variables.
-	var backend, frontend, webserver, database string
-	var roles []string
-
 	// Start message.
 	utils.SendMsg(true, "* * *", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
 
 	// If config is set, skip survey.
-	if useConfigFile {
-
-		// Exit, if config is invalid.
-		if projectConfig == nil {
-			utils.SendMsg(false, "[ERROR]", "Config file invalid or empty!", "red", true)
-			os.Exit(1)
-		}
-
-		// Re-define variables, if using config file.
+	if useConfigFile && projectConfig != nil {
+		// Re-define variables from config file ($PWD/.cgapp.yml).
 		backend = strings.ToLower(projectConfig["backend"].(string))
 		frontend = strings.ToLower(projectConfig["frontend"].(string))
 		webserver = strings.ToLower(projectConfig["webserver"].(string))
 		database = strings.ToLower(projectConfig["database"].(string))
 		roles = rolesConfig
-
 	} else {
-
-		// Re-define answers variable.
-		answers := registry.Answers{}
-
 		// Start survey.
 		if err := survey.Ask(
 			registry.Questions,
@@ -121,6 +96,8 @@ func runCreateCommand(cmd *cobra.Command, args []string) {
 				icons.Question.Text = "[?]"
 				icons.Help.Format = "blue"
 				icons.Help.Text = "Help ->"
+				icons.Error.Format = "yellow"
+				icons.Error.Text = "Warning ->"
 			}),
 		); err != nil {
 			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
@@ -129,7 +106,7 @@ func runCreateCommand(cmd *cobra.Command, args []string) {
 
 		// If something went wrong, cancel and exit.
 		if !answers.Agree {
-			utils.SendMsg(true, "[!]", "You're stopped a project creation.", "red", false)
+			utils.SendMsg(true, "[!]", "You're stopped creation of a new project.", "red", false)
 			utils.SendMsg(false, "[!]", "Run `cgapp create` once again!", "red", true)
 			os.Exit(1)
 		}
@@ -140,10 +117,7 @@ func runCreateCommand(cmd *cobra.Command, args []string) {
 		webserver = strings.ToLower(answers.Webserver)
 		database = strings.ToLower(answers.Database)
 		roles = answers.Roles
-
 	}
-
-	fmt.Println(backend, frontend, webserver, database, roles)
 
 	// End message.
 	utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)

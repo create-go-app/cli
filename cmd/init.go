@@ -40,11 +40,7 @@ func init() {
 
 func runInitCommand(cmd *cobra.Command, args []string) {
 	// Get current directory.
-	currentDir, err := os.Getwd()
-	if err != nil {
-		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
-	}
+	currentDir, _ := os.Getwd()
 
 	// Start message.
 	utils.SendMsg(true, "* * *", "Init a configuration file in `"+currentDir+"` folder...", "yellow", true)
@@ -53,7 +49,7 @@ func runInitCommand(cmd *cobra.Command, args []string) {
 	fileToMake := map[string][]byte{
 		".cgapp.yml": embed.Get("/.cgapp.yml"),
 	}
-	if err = utils.MakeFiles(currentDir, fileToMake); err != nil {
+	if err := utils.MakeFiles(currentDir, fileToMake); err != nil {
 		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 		os.Exit(1)
 	}
