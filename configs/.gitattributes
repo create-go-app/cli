@@ -1,0 +1,4 @@
+# A default .gitattributes for Create Go App project.
+# Author: Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+
+go.sum merge=union

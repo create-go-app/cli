@@ -25,7 +25,7 @@ project:
   # User template: supported, set to URL (without protocol), like `github.com/user/template`
   - database: postgres
 
-# Define your automation config
+# Define your automation config with Ansible roles.
 roles:
   # Ansible roles for deploy your project.
   # (Optional, to skip set to empty or comment)

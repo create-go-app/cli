@@ -20,8 +20,10 @@ package cmd
 import (
 	"os"
 	"strings"
+	"time"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/create-go-app/cli/pkg/embed"
 	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/create-go-app/cli/pkg/utils"
 	"github.com/spf13/cobra"
@@ -80,6 +82,9 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			os.Exit(1)
 		}
 
+		// Insert empty line.
+		utils.SendMsg(false, "", "", "", false)
+
 		// Define variables for better display.
 		backend = strings.ToLower(answers.Backend)
 		frontend = strings.ToLower(answers.Frontend)
@@ -88,8 +93,107 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		roles = answers.Roles
 	}
 
+	// Start timer.
+	startTimer := time.Now()
+
+	// Get current directory.
+	currentDir, _ := os.Getwd()
+
+	// Create config files for your project.
+	utils.SendMsg(false, "*", "Create config files for your project...", "cyan", true)
+
+	// Create configuration files.
+	filesToMake := map[string][]byte{
+		".gitignore":     embed.Get("/.gitignore"),
+		".gitattributes": embed.Get("/.gitattributes"),
+		".editorconfig":  embed.Get("/.editorconfig"),
+		"Taskfile.yml":   embed.Get("/Taskfile.yml"),
+	}
+	if err := utils.MakeFiles(currentDir, filesToMake); err != nil {
+		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		os.Exit(1)
+	}
+
+	// Create Ansible playbook and download roles, if not skipped.
+	if roles != nil {
+		utils.SendMsg(true, "*", "Create Ansible playbook and roles...", "cyan", true)
+
+		// Create playbook.
+		fileToMake := map[string][]byte{
+			"deploy-playbook.yml": embed.Get("/deploy-playbook.yml"),
+		}
+		if err := utils.MakeFiles(currentDir, fileToMake); err != nil {
+			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
+		}
+
+		// Create Ansible roles.
+		// if err := CreateProjectFromRegistry(
+		// 	&Project{Type: "roles", Name: "deploy", RootFolder: appPath},
+		// 	registry.Repositories,
+		// ); err != nil {
+		// 	return ThrowError(err.Error())
+		// }
+	}
+
+	// Create backend files.
+	utils.SendMsg(true, "*", "Create project backend...", "cyan", false)
+	// if err := CreateProjectFromRegistry(
+	// 	&Project{Type: "backend", Name: strings.ToLower(appBackend), RootFolder: appPath},
+	// 	registry,
+	// ); err != nil {
+	// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+	// 	os.Exit(1)
+	// }
+
+	if frontend != "none" {
+		// Create frontend files.
+		utils.SendMsg(true, "*", "Create project frontend...", "cyan", false)
+		// if err := CreateProjectFromCMD(
+		// 	&Project{Type: "frontend", Name: answers.Frontend, RootFolder: currentDir},
+		// 	cmds,
+		// ); err != nil {
+		// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		// 	os.Exit(1)
+		// }
+	}
+
+	// Docker containers.
+	if webserver != "none" || database != "none" {
+
+		utils.SendMsg(true, "* * *", "Configuring Docker containers...", "yellow", false)
+
+		if webserver != "none" {
+			// Create container with a web/proxy server.
+			utils.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", false)
+			// if err := CreateProjectFromRegistry(
+			// 	&Project{Type: "webserver", Name: answers.Webserver, RootFolder: currentDir},
+			// 	registry,
+			// ); err != nil {
+			// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			// 	os.Exit(1)
+			// }
+		}
+
+		if database != "none" {
+			// Create container with a database.
+			utils.SendMsg(true, "*", "Create container with database...", "cyan", false)
+			// if err := CreateProjectFromRegistry(
+			// 	&Project{Type: "database", Name: answers.Database, RootFolder: currentDir},
+			// 	registry,
+			// ); err != nil {
+			// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			// 	os.Exit(1)
+			// }
+		}
+	}
+
+	// Stop timer
+	stopTimer := time.Since(startTimer).String()
+
 	// End message.
-	utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
+	utils.SendMsg(true, "* * *", "Completed in "+stopTimer+"!", "yellow", true)
+	utils.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
 	utils.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server.", "green", true)
 }
 
