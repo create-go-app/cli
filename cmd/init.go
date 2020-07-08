@@ -31,30 +31,28 @@ var initCmd = &cobra.Command{
 	Aliases: []string{"i"},
 	Short:   "Init a configuration file for the Create Go App project",
 	Long:    "\nInit a configuration file for the Create Go App project.",
-	Run:     runInitCommand,
+	Run: func(cmd *cobra.Command, args []string) {
+		// Get current directory.
+		currentDir, _ := os.Getwd()
+
+		// Start message.
+		utils.SendMsg(true, "* * *", "Init a configuration file in `"+currentDir+"` folder...", "yellow", true)
+
+		// Create configuration file.
+		fileToMake := map[string][]byte{
+			".cgapp.yml": embed.Get("/.cgapp.yml"),
+		}
+		if err := utils.MakeFiles(currentDir, fileToMake); err != nil {
+			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
+		}
+
+		// End message.
+		utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
+		utils.SendMsg(false, "(i)", "Run `cgapp create --use-config` to create a new project by this configuration file.", "green", true)
+	},
 }
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-}
-
-func runInitCommand(cmd *cobra.Command, args []string) {
-	// Get current directory.
-	currentDir, _ := os.Getwd()
-
-	// Start message.
-	utils.SendMsg(true, "* * *", "Init a configuration file in `"+currentDir+"` folder...", "yellow", true)
-
-	// Create configuration file.
-	fileToMake := map[string][]byte{
-		".cgapp.yml": embed.Get("/.cgapp.yml"),
-	}
-	if err := utils.MakeFiles(currentDir, fileToMake); err != nil {
-		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
-	}
-
-	// End message.
-	utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	utils.SendMsg(false, "(i)", "Run `cgapp create --use-config` to create a new project by this configuration file.", "green", true)
 }

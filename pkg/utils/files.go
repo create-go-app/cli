@@ -59,12 +59,8 @@ func MakeFolder(folderName string, chmod os.FileMode) error {
 }
 
 // RemoveFolders ...
-func RemoveFolders(rootFolder string, foldersToRemove []string) error {
+func RemoveFolders(rootFolder string, foldersToRemove []string) {
 	for _, folder := range foldersToRemove {
-		if err := os.RemoveAll(filepath.Join(rootFolder, folder)); err != nil {
-			return throwError(err.Error())
-		}
+		_ = os.RemoveAll(filepath.Join(rootFolder, folder))
 	}
-
-	return nil
 }

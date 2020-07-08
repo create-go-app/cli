@@ -50,15 +50,15 @@ func TestMakeFiles(t *testing.T) {
 		os.RemoveAll("../../tmp")
 	}
 }
+
 func TestRemoveFolders(t *testing.T) {
 	type args struct {
 		rootFolder      string
 		foldersToRemove []string
 	}
 	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
+		name string
+		args args
 	}{
 		{
 			"successfully removed",
@@ -66,7 +66,6 @@ func TestRemoveFolders(t *testing.T) {
 				rootFolder:      "../../tmp",
 				foldersToRemove: []string{"folder-1"},
 			},
-			false,
 		},
 	}
 
@@ -74,9 +73,7 @@ func TestRemoveFolders(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := RemoveFolders(tt.args.rootFolder, tt.args.foldersToRemove); (err != nil) != tt.wantErr {
-				t.Errorf("RemoveFolders() error = %v, wantErr %v", err, tt.wantErr)
-			}
+			RemoveFolders(tt.args.rootFolder, tt.args.foldersToRemove)
 		})
 	}
 }
