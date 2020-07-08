@@ -146,13 +146,13 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	if frontend != "none" {
 		// Create frontend files.
 		utils.SendMsg(true, "*", "Create project frontend...", "cyan", false)
-		actions.CreateProjectFromRegistry(
+		actions.CreateProjectFromCMD(
 			&registry.Project{
 				Type:       "frontend",
 				Name:       frontend,
 				RootFolder: currentDir,
 			},
-			registry.Repositories,
+			registry.Commands,
 		)
 	}
 
