@@ -44,14 +44,22 @@ type Command struct {
 	Args   map[string]string
 }
 
-// Answers struct for a survey's answers.
-type Answers struct {
-	Backend   string
-	Frontend  string
-	Webserver string
-	Database  string
-	Roles     []string
-	Agree     bool
+// CreateAnswers struct for a survey's answers for `create` command.
+type CreateAnswers struct {
+	Backend       string
+	Frontend      string
+	Webserver     string
+	Database      string
+	Roles         bool
+	AgreeCreation bool `survey:"agree"`
+}
+
+// DeployAnswers struct for a survey's answers for `deploy` command.
+type DeployAnswers struct {
+	Username        string
+	Host            string
+	Network         string
+	AgreeDeployment bool `survey:"agree"`
 }
 
 var (
@@ -114,8 +122,8 @@ var (
 		},
 	}
 
-	// Questions survey's questions.
-	Questions = []*survey.Question{
+	// CreateQuestions survey's questions for `create` command.
+	CreateQuestions = []*survey.Question{
 		{
 			Name: "backend",
 			Prompt: &survey.Select{
@@ -151,17 +159,50 @@ var (
 		},
 		{
 			Name: "roles",
-			Prompt: &survey.MultiSelect{
-				Message: "Choose an Ansible roles:",
-				Options: []string{"deploy"},
-				Default: []string{"deploy"},
-				Help:    "These are fully configured Ansible roles, that will help you automate a deployment process.",
+			Prompt: &survey.Confirm{
+				Message: "Do you want to install Ansible roles for deploy your project?",
+				Default: true,
 			},
 		},
 		{
 			Name: "agree",
 			Prompt: &survey.Confirm{
 				Message: "If everything is okay, can I create this project? ;)",
+				Default: true,
+			},
+		},
+	}
+
+	// DeployQuestions survey's questions for `deploy` command.
+	DeployQuestions = []*survey.Question{
+		{
+			Name: "username",
+			Prompt: &survey.Input{
+				Message: "Enter username:",
+				Default: "root",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "host",
+			Prompt: &survey.Input{
+				Message: "Enter host name to deploy:",
+				Default: "localhost",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "network",
+			Prompt: &survey.Input{
+				Message: "Enter name of Docker network:",
+				Default: "cgapp_network",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "agree",
+			Prompt: &survey.Confirm{
+				Message: "If everything is okay, can I deploy this project? ;)",
 				Default: true,
 			},
 		},

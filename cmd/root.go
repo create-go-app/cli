@@ -20,9 +20,34 @@ package cmd
 import (
 	"os"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/create-go-app/cli/pkg/utils"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+)
+
+var (
+	useConfigFile                          bool                                           // indicate using config (from $PWD/.cgapp.yml)
+	projectConfig                          map[string]interface{}                         // parse project config
+	rolesConfig                            map[string]interface{}                         // parse Ansible roles config
+	backend, frontend, webserver, database string                                         // define project variables
+	installAnsibleRoles                    bool                                           // install Ansible roles
+	username, host, network                string                                         // define deploy variables
+	playbook                               string                 = "deploy-playbook.yml" // default Ansible playbook
+	createAnswers                          registry.CreateAnswers                         // define answers variable for `create` command
+	deployAnswers                          registry.DeployAnswers                         // define answers variable for `deploy` command
+
+	// Config for survey icons and colors.
+	// See: https://github.com/mgutz/ansi#style-format
+	surveyIconsConfig = func(icons *survey.IconSet) {
+		icons.Question.Format = "cyan"
+		icons.Question.Text = "[?]"
+		icons.Help.Format = "blue"
+		icons.Help.Text = "Help ->"
+		icons.Error.Format = "yellow"
+		icons.Error.Text = "Note ->"
+	}
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -39,6 +64,36 @@ frontend (JavaScript, TypeScript) and deploy automation
 
 -> Focus on writing code and thinking of business logic!
 <- The Create Go App CLI will take care of the rest.`,
+}
+
+func init() {
+	cobra.OnInitialize(initConfig)
+	createCmd.PersistentFlags().BoolVarP(
+		&useConfigFile,
+		"use-config", "", false,
+		"use config file to create a new project (default is $PWD/.cgapp.yml)",
+	)
+}
+
+// initConfig reads in config file, if set.
+func initConfig() {
+	if useConfigFile {
+		// Get current directory.
+		currentDir, _ := os.Getwd()
+
+		viper.AddConfigPath(currentDir) // add config path
+		viper.SetConfigName(".cgapp")   // set config name
+
+		// If a config file is found, read it in.
+		if err := viper.ReadInConfig(); err != nil {
+			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
+		}
+
+		// Parse configs
+		_ = viper.UnmarshalKey("project", &projectConfig)
+		_ = viper.UnmarshalKey("roles", &rolesConfig)
+	}
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

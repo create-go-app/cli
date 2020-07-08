@@ -30,4 +30,7 @@ roles:
   # Ansible roles for deploy your project.
   # (Optional, to skip set to empty or comment)
   # String list: `deploy`
-  - deploy
+  - deploy:
+    user: root
+    host: localhost
+    network: cgapp_network

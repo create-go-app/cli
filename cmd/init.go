@@ -27,11 +27,10 @@ import (
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
-	Use:     "init",
-	Aliases: []string{"i"},
-	Short:   "Init a configuration file for the Create Go App project",
-	Long:    "\nInit a configuration file for the Create Go App project.",
-	Run:     runInitCmd,
+	Use:   "init",
+	Short: "Init a configuration file for the Create Go App project",
+	Long:  "\nInit a configuration file for the Create Go App project.",
+	Run:   runInitCmd,
 }
 
 var runInitCmd = func(cmd *cobra.Command, args []string) {
