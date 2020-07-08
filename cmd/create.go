@@ -37,16 +37,17 @@ var (
 
 // createCmd represents the create command
 var createCmd = &cobra.Command{
-	Use:   "create",
-	Short: "Create a new project via interactive UI or configuration file",
-	Long:  "\nCreate a new project via interactive UI or configuration file.",
-	Run:   runCreateCommand,
+	Use:     "create",
+	Aliases: []string{"new"},
+	Short:   "Create a new project via interactive UI or configuration file",
+	Long:    "\nCreate a new project via interactive UI or configuration file.",
+	Run:     runCreateCommand,
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.AddCommand(createCmd)
-	createCmd.Flags().BoolVarP(&useConfigFile, "config", "c", false, "config file (default is $PWD/.cgapp.yml)")
+	createCmd.Flags().BoolVarP(&useConfigFile, "use-config", "", false, "config file (default is $PWD/.cgapp.yml)")
 }
 
 // initConfig reads in config file, if set.

@@ -18,10 +18,10 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/create-go-app/cli/pkg/registry"
+	"github.com/create-go-app/cli/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -45,7 +45,7 @@ frontend (JavaScript, TypeScript) and deploy automation
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 		os.Exit(1)
 	}
 }

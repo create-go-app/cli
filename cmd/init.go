@@ -27,10 +27,11 @@ import (
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
-	Use:   "init",
-	Short: "Init a configuration file for the Create Go App project",
-	Long:  "\nInit a configuration file for the Create Go App project.",
-	Run:   runInitCommand,
+	Use:     "init",
+	Aliases: []string{"i"},
+	Short:   "Init a configuration file for the Create Go App project",
+	Long:    "\nInit a configuration file for the Create Go App project.",
+	Run:     runInitCommand,
 }
 
 func init() {
@@ -59,5 +60,5 @@ func runInitCommand(cmd *cobra.Command, args []string) {
 
 	// End message.
 	utils.SendMsg(true, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	utils.SendMsg(false, "(i)", "Run `cgapp create -c` to create a new project by this configuration file.", "green", true)
+	utils.SendMsg(false, "(i)", "Run `cgapp create --use-config` to create a new project by this configuration file.", "green", true)
 }
