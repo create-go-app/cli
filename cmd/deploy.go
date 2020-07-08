@@ -18,7 +18,6 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -82,7 +81,29 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	// Create config files for your project.
 	utils.SendMsg(false, "*", "Run Ansible playbook `"+playbook+"`...", "cyan", true)
 
-	fmt.Println(username, host, network, playbook, askBecomePass)
+	// Define Ansible options.
+	options := []string{
+		playbook,
+		"-u", username,
+		"-e", "host=" + host + " network_name=" + network,
+	}
+
+	// Check, if need to ask password for username.
+	// See: https://docs.ansible.com/ansible/latest/user_guide/become.html#become-command-line-options
+	if askBecomePass {
+		options = []string{
+			playbook,
+			"-u", username,
+			"-e", "host=" + host + " network_name=" + network,
+			"--ask-become-pass",
+		}
+	}
+
+	// Run execution for Ansible playbook.
+	if err := utils.ExecCommand("ansible-playbook", options); err != nil {
+		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		os.Exit(1)
+	}
 
 	// Stop timer
 	stopTimer := time.Since(startTimer).String()

@@ -54,7 +54,7 @@ func ExecCommand(command string, options []string) error {
 	scanner := bufio.NewScanner(cmdReader)
 	go func() {
 		for scanner.Scan() {
-			SendMsg(false, "*", scanner.Text(), "yellow", false)
+			SendMsg(false, "*", scanner.Text(), "cyan", false)
 		}
 	}()
 

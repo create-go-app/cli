@@ -86,7 +86,11 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	startTimer := time.Now()
 
 	// Get current directory.
-	currentDir, _ := os.Getwd()
+	currentDir, err := os.Getwd()
+	if err != nil {
+		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		os.Exit(1)
+	}
 
 	// Create config files for your project.
 	utils.SendMsg(false, "*", "Create config files for your project...", "cyan", true)
@@ -117,11 +121,12 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		}
 
 		// Create Ansible roles.
-		// if err := CreateProjectFromRegistry(
-		// 	&Project{Type: "roles", Name: "deploy", RootFolder: appPath},
+		// if err := actions.CreateProjectFromRegistry(
+		// 	&actions.Project{Type: "roles", Name: "deploy", RootFolder: currentDir},
 		// 	registry.Repositories,
 		// ); err != nil {
-		// 	return ThrowError(err.Error())
+		// 	utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		// 	os.Exit(1)
 		// }
 	}
 
