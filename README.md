@@ -16,16 +16,16 @@ Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Co
 go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
 ```
 
-Let's create a new project into `./app` folder with [Fiber](https://github.com/gofiber/fiber) as backend and [Nginx](https://nginx.org/) as web server:
+Let's create a new project into current folder via interactive console UI (or CUI):
 
 ```bash
-cgapp create -p ./app -b fiber -w nginx
+cgapp create
 ```
 
 Okay, it works! Now, you can deploy this project to a remote server or run on your local machine in isolated Docker containers. Go to the root project folder and type command:
 
 ```bash
-cgapp deploy -u john_doe --ask-become-pass
+cgapp deploy
 ```
 
 That's all you need to start! 🎉
@@ -40,6 +40,7 @@ Unfortunately, we are unable to include all helpful documentation to the `README
   - [CLI Installation](https://create-go.app/detailed-guides/installation/)
     - [Alternative installations](https://create-go.app/detailed-guides/installation/#alternative-installations)
   - [Understanding CLI commands and options](https://create-go.app/detailed-guides/commands-and-options/)
+    - [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
     - [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
     - [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy)
   - [Run project on your local machine](https://create-go.app/detailed-guides/run-on-local/)
@@ -53,67 +54,153 @@ Unfortunately, we are unable to include all helpful documentation to the `README
 
 ## ⚙️ [Commands & Options](https://create-go.app/detailed-guides/commands-and-options/)
 
-### `create`
+### [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
+
+CLI command for generate a default `.cgapp.yml` config file in current folder:
+
+```bash
+cgapp init
+```
+
+<details>
+<summary>Generated config file</summary>
+
+<br/>
+
+```yaml
+# Project config.
+project:
+  # Backend for your project.
+  # (Required)
+  # String: `net/http`, `fiber`, `echo`, `gin`
+  # User template: supported, set to URL (without protocol),
+  # like `github.com/user/template`
+  - backend: fiber
+  # Frontend for your project.
+  # (Optional, to skip set to `none`)
+  # String: `react`, `react:<template>` `preact`, `preact:<template>`, `svelte`
+  # User template: NOT supported!
+  - frontend: svelte
+  # Web/proxy server for your project.
+  # (Optional, to skip set to `none`)
+  # String: `nginx`
+  # User template: supported, set to URL (without protocol),
+  # like `github.com/user/template`
+  - webserver: nginx
+  # Web/proxy server for your project.
+  # (Optional, to skip set to `none`)
+  # String: `postgres`
+  # User template: supported, set to URL (without protocol),
+  # like `github.com/user/template`
+  - database: postgres
+
+# Automation config.
+roles:
+  # Ansible roles for deploy your project.
+  # (Optional, to skip set to empty or comment)
+  # Objects list: `deploy`
+  - deploy:
+      # Username of remote's server or local's user.
+      # (Required)
+      username: root
+      # If you need to deploy (or run) a project asking for a password
+      # for the user, set `become` to `true`. This is equivalent of
+      # `--ask-become-pass`, a standard Ansible argument to ask
+      # for a privilege escalation password.
+      # (Optional)
+      become: true
+      # Host name from your inventory file (usually, at /etc/ansible/hosts).
+      # (Required)
+      host: localhost
+      # Name of Docker network
+      # (Required)
+      network: cgapp_network
+      # Filename of Ansible playbook in the root of the Create Go App project.
+      # If you want to rename it, do it, but not to change destination of file!
+      # (Required)
+      playbook: deploy-playbook.yml
+```
+
+</details>
+
+### [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
 
 CLI command to create a new project with the selected configuration.
 
-```bash
-cgapp create -p <PATH> -b <BACKEND> -f <FRONTEND> -w <WEBSERVER> -d <DB> [ARGS...]
-```
+There's two ways to create a new project:
 
-| Option | Argument    | Required? | Description                       | Default value        |
-| ------ | ----------- | --------- | --------------------------------- | -------------------- |
-| `-p`   | `PATH`      | no        | path to create project            | current folder, `./` |
-| `-b`   | `BACKEND`   | no        | backend for your project          | `net/http`           |
-| `-f`   | `FRONTEND`  | no        | frontend for your project         |                      |
-| `-w`   | `WEBSERVER` | no        | web/proxy server for your project |                      |
-| `-d`   | `DB`        | no        | database for your project         |                      |
+- [x] With an interactive console UI (or CUI).
+- [x] From configuration file (by default, in `$PWD/.cgapp.yml`).
 
-If you not need to install Ansible playbook and roles for your project, you can skip this by adding an `--skip-ansible-roles` argument in `[ARGS...]` section.
+#### Create with the interactive console UI
 
-### `deploy`
-
-CLI command for deploy Docker containers with your project to a remote server or run on your local machine.
+Run `create` command **without** any arguments:
 
 ```bash
-cgapp deploy -p <PLAYBOOK> -u <USER> -s <HOST> -n <NETWORK> [ARGS...]
+cgapp create
 ```
 
-| Option | Argument   | Required? | Description                                    | Default value         |
-| ------ | ---------- | --------- | ---------------------------------------------- | --------------------- |
-| `-p`   | `PLAYBOOK` | no        | the Ansible playbook name                      | `deploy-playbook.yml` |
-| `-u`   | `USER`     | yes       | an username of remote's server or local's user |                       |
-| `-s`   | `HOST`     | no        | a host name from your inventory file           | `localhost`           |
-| `-n`   | `NETWORK`  | no        | a network name for your Docker containers      | `cgapp_network`       |
+#### Create from the config file
 
-If you need to deploy (or run) a project asking for a password for the `USER`, simply add an `--ask-become-pass` argument in `[ARGS...]` section.
+Run `create` command **with** `--use-config` (or `-c`) argument:
+
+```bash
+cgapp create --use-config
+```
+
+### [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy)
+
+CLI command for deploy Docker containers with your project to a remote server.
+
+> You should only run this command from the **root folder** of your project, which created with the `cgapp create` command! It's a necessary condition for everything to work perfectly.
+
+There's, also, two ways to deploy your project:
+
+- [x] With an interactive console UI (or CUI).
+- [x] From configuration file (by default, in `$PWD/.cgapp.yml`).
+
+#### Deploy with the interactive console UI
+
+Run `deploy` command **without** any arguments:
+
+```bash
+cgapp deploy
+```
+
+#### Deploy from the config file
+
+Run `deploy` command **with** `--use-config` (or `-c`) argument:
+
+```bash
+cgapp deploy --use-config
+```
 
 ## 📝 [Production-ready project templates](https://create-go.app/production-templates/)
 
-**Golang:**
+**Backend:**
 
 - [x] [`net/http`](https://create-go.app/production-templates/net-http-go/) — Backend template with Golang built-in [net/http](https://golang.org/pkg/net/http/) package.
 - [x] [`fiber`](https://create-go.app/production-templates/fiber-go/) — Backend template with [Fiber](https://github.com/gofiber/fiber).
 - [ ] [`echo`](https://create-go.app/production-templates/echo-go/) _WIP_ — Backend template with [Echo](https://github.com/labstack/echo).
+- [ ] [`gin`](https://create-go.app/production-templates/gin-go/) _WIP_ — Backend template with [Gin](https://github.com/gin-gonic/gin).
 
-**JavaScript:**
+**Frontend:**
 
-- [x] [`react-js`](https://create-go.app/production-templates/react-js/) — Frontend template with [React.js](https://github.com/facebook/react).
-- [x] [`preact`](https://create-go.app/production-templates/preact-js/) — Frontend template with [Preact](https://github.com/preactjs/preact).
-
-**TypeScript:**
-
-- [x] [`react-ts`](https://create-go.app/production-templates/react-ts/) — Frontend template with [React.js](https://github.com/facebook/react) TypeScript.
+- [x] [`react`](https://create-go.app/production-templates/react-js/) — Frontend app with [React.js](https://reactjs.org).
+- [x] [`preact`](https://create-go.app/production-templates/preact-js/) — Frontend app with [Preact](https://preactjs.com).
+- [ ] [`vue`](https://create-go.app/production-templates/vue-js/) _WIP_ — Frontend app with [Vue.js](https://vuejs.org).
+- [x] [`svelte`](https://create-go.app/production-templates/svelte-js/) — Frontend app with [Svelte](https://svelte.dev).
+- [ ] [`angular`](https://create-go.app/production-templates/angular-js/) _WIP_ — Frontend app with [Angular](https://angular.io).
 
 ## 🐳 [Configured Docker containers](https://create-go.app/docker-containers/)
 
 **Web/Proxy server:**
 
-- [x] [`nginx`](https://create-go.app/docker-containers/nginx/) — Docker container with Nginx.
+- [x] [`nginx`](https://create-go.app/docker-containers/nginx/) — Docker container with [Nginx](https://nginx.org).
 
 **Database:**
 
-- [ ] [`postgres`](https://create-go.app/docker-containers/postgres/) _WIP_ — Docker container with PostgreSQL.
+- [ ] [`postgres`](https://create-go.app/docker-containers/postgres/) _WIP_ — Docker container with [PostgreSQL](https://postgresql.org).
 
 ## ⭐️ Project assistance
 
