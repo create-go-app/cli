@@ -40,15 +40,9 @@ tasks:
       - task: generate
       - go build -i -o $GOPATH/bin/cgapp ./*.go
 
-  linters:
-    desc: Linters
-    cmds:
-      - ansible-lint ./configs/deploy-playbook.yml
-
   release:
     desc: GitHub release for CLI
     cmds:
-      - task: linters
       - task: security
       - task: test
       - git tag -a {{.TAG}} -m "{{.TAG}}"
