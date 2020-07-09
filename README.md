@@ -152,7 +152,7 @@ cgapp create --use-config
 
 CLI command for deploy Docker containers with your project to a remote server.
 
-> You should only run this command from the **root folder** of your project, which created with the `cgapp create` command! It's a necessary condition for everything to work perfectly.
+> ☝️ You should only run this command from the **root folder** of your project, which created with the `cgapp create` command! It's a necessary condition for everything to work perfectly.
 
 There's, also, two ways to deploy your project:
 
