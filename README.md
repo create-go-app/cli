@@ -8,7 +8,7 @@
 
 ## ⚡️ [Quick start](https://create-go.app/quick-start/)
 
-First of all, [download](https://golang.org/dl/) and install Go. Version `1.11` or higher is required.
+First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.11` or higher is required.
 
 Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with `$GOPATH/bin`:
 
@@ -16,13 +16,13 @@ Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Co
 go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
 ```
 
-Let's create a new project into current folder via interactive console UI (or CUI):
+Let's create a new project via **interactive console UI** (or **CUI**) into current folder:
 
 ```bash
 cgapp create
 ```
 
-Okay, it works! Now, you can deploy this project to a remote server or run on your local machine in isolated Docker containers. Go to the root project folder and type command:
+Okay, it works! Now, you can run this project on your **local machine** or deploy to a **remote server**. Project works in isolated Docker containers and automates via Ansible playbook:
 
 ```bash
 cgapp deploy
