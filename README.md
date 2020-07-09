@@ -202,6 +202,12 @@ cgapp deploy --use-config
 
 - [ ] [`postgres`](https://create-go.app/docker-containers/postgres/) _WIP_ — Docker container with [PostgreSQL](https://postgresql.org).
 
+## 🤔 Why another CLI?
+
+Yes, when we started this project, we asked ourselves this question too and... came to the conclusion, that about **8-10** routine steps in each project can be automated with a smart CLI. 
+
+The Create Go App project allow you to prepare and deploy your project **without** any unnecessary headaches.
+
 ## ⭐️ Project assistance
 
 If you want to say **thank you** or/and support active development of `Create Go App CLI`:
