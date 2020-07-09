@@ -1,4 +1,6 @@
-# deploy-playbook.yml by Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+# Ansible playbook for deploy the Create Go App project.
+# Author: Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+# For more information, please visit https://create-go.app
 
 ---
 - hosts: "{{ host }}"
@@ -7,12 +9,9 @@
   roles:
     # Build & run project's frontend
     - deploy/cgapp_frontend
-
     # Build & run project's backend
     - deploy/cgapp_backend
-
     # Configure and run project's webserver
     - deploy/cgapp_webserver
-
     # Configure and run project's database
     - deploy/cgapp_database

@@ -5,8 +5,10 @@
 **/app/
 **/build/
 **/dist/
+**/cgapp-project/
 
 # Tests
+*.out
 **/tmp/
 
 # Embed file

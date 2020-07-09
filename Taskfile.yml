@@ -11,7 +11,8 @@ tasks:
   test:
     desc: Test project
     cmds:
-      - go test -cover ./...
+      - go test -coverprofile=coverage.out ./...
+      - go tool cover -func=coverage.out
 
   security:
     desc: Run gosec for project

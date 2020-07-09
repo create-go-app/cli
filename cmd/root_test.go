@@ -1,4 +1,6 @@
 /*
+Package cmd includes all of the Create Go App CLI commands.
+
 Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +15,38 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package main
+package cmd
 
-import "github.com/create-go-app/cli/cmd"
+import (
+	"testing"
+)
 
-func main() {
-	cmd.Execute()
+func Test_initConfig(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{
+			"successfully init",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			initConfig()
+		})
+	}
+}
+
+func TestExecute(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{
+			"successfully",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			Execute()
+		})
+	}
 }

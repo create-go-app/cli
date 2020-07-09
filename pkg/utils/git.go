@@ -1,4 +1,6 @@
 /*
+Package utils includes helpful utilities for the Create Go App CLI.
+
 Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +15,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package main
+package utils
 
-import "github.com/create-go-app/cli/cmd"
+import "github.com/go-git/go-git/v5"
 
-func main() {
-	cmd.Execute()
+// GitClone function for `git clone` defined project template
+func GitClone(rootFolder, templateName string) error {
+	// Clone project template
+	_, err := git.PlainClone(rootFolder, false, &git.CloneOptions{
+		URL: "https://" + templateName,
+	})
+	if err != nil {
+		return throwError("Repository was not cloned!")
+	}
+
+	return nil
 }
