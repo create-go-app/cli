@@ -31,9 +31,9 @@ import (
 	"regexp"
 )
 
-// BeautifyText function for send (colored or common) message to output
+// BeautifyText function for send (colored or common) message to output.
 func BeautifyText(text, color string) string {
-	// Define variables
+	// Define variables.
 	var (
 		red       string = "\033[0;31m"
 		green     string = "\033[0;32m"
@@ -43,7 +43,7 @@ func BeautifyText(text, color string) string {
 		textColor string
 	)
 
-	// Switch color
+	// Switch color.
 	switch color {
 	case "":
 		textColor = noColor
@@ -62,20 +62,21 @@ func BeautifyText(text, color string) string {
 		break
 	}
 
-	// Send common or colored text
+	// Send common or colored text.
 	return textColor + text + noColor
 }
 
-// SendMsg ...
+// SendMsg function forsend message to output.
 func SendMsg(startWithNewLine bool, caption, text, color string, endWithNewLine bool) {
+	// Define variables.
 	var startNewLine, endNewLine string
 
 	if startWithNewLine {
-		startNewLine = "\n"
+		startNewLine = "\n" // set new line
 	}
 
 	if endWithNewLine {
-		endNewLine = "\n"
+		endNewLine = "\n" // set new line
 	}
 
 	if caption == "" {
@@ -85,30 +86,30 @@ func SendMsg(startWithNewLine bool, caption, text, color string, endWithNewLine 
 	}
 }
 
-// throwError ...
-func throwError(text string) error {
-	return fmt.Errorf(BeautifyText(text, "red"))
-}
-
-// StringSplit ...
-func StringSplit(pattern, match string) ([]string, error) {
-	// Error, when empty or nil
+// stringSplit function for split string by pattern.
+func stringSplit(pattern, match string) ([]string, error) {
+	// Error, when empty or nil.
 	if pattern == "" || match == "" {
 		return nil, throwError("Frontend template not set!")
 	}
 
-	// Define empty []string{} for splitted strings
+	// Define empty []string{} for splitted strings.
 	splittedStrings := []string{}
 
-	// Create regexp
+	// Create regexp.
 	re := regexp.MustCompile(pattern)
 
-	// Split match string
+	// Split match string.
 	split := re.Split(match, -1)
 	for str := range split {
-		// Append all matched strings to set
+		// Append all matched strings to set.
 		splittedStrings = append(splittedStrings, split[str])
 	}
 
 	return splittedStrings, nil
+}
+
+// throwError function for throw an error.
+func throwError(text string) error {
+	return fmt.Errorf(BeautifyText(text, "red"))
 }

@@ -28,9 +28,9 @@ package cgapp
 
 import "github.com/go-git/go-git/v5"
 
-// GitClone function for `git clone` defined project template
+// GitClone function for `git clone` defined project template.
 func GitClone(rootFolder, templateName string) error {
-	// Clone project template
+	// Clone project template.
 	_, err := git.PlainClone(rootFolder, false, &git.CloneOptions{
 		URL: "https://" + templateName,
 	})

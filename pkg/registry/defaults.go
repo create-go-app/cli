@@ -35,6 +35,8 @@ const (
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
 	RegexpBackendPattern = "^(net/http|fiber|echo)$"
+	// RegexpFrontendPattern pattern for backend.
+	RegexpFrontendPattern = "^(p?react:?|vue|angular|svelte)"
 	// RegexpWebServerPattern pattern for web/proxy servers.
 	RegexpWebServerPattern = "^(nginx)$"
 	// RegexpDatabasePattern pattern for databases.

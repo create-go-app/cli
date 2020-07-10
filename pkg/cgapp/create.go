@@ -35,37 +35,25 @@ import (
 )
 
 // CreateProjectFromRegistry function for create a new project from repository.
-func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repository) error {
+func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repository, m string) error {
 	// Define vars.
-	var pattern, template string
+	var template string
 
 	// Checking for nil.
-	if p == nil || r == nil {
-		return throwError("Project template or registry not found!")
+	if p == nil || r == nil || m == "" {
+		return throwError("Project template, registry or pattern not found!")
 	}
 
 	// Create path in project root folder.
 	folder := filepath.Join(p.RootFolder, p.Type)
 
-	// Switch project type.
-	switch p.Type {
-	case "roles":
-		pattern = registry.RegexpAnsiblePattern
-		folder = filepath.Join(p.RootFolder, p.Type, p.Name) // re-define folder
-		break
-	case "backend":
-		pattern = registry.RegexpBackendPattern
-		break
-	case "webserver":
-		pattern = registry.RegexpWebServerPattern
-		break
-	case "database":
-		pattern = registry.RegexpDatabasePattern
-		break
+	// Re-define folder for Ansible roles
+	if p.Type == "roles" {
+		folder = filepath.Join(p.RootFolder, p.Type, p.Name)
 	}
 
 	// Create match expration.
-	match, err := regexp.MatchString(pattern, p.Name)
+	match, err := regexp.MatchString(m, p.Name)
 	if err != nil {
 		return throwError(err.Error())
 	}
@@ -100,64 +88,65 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 }
 
 // CreateProjectFromCmd function for create a new project from a comand line.
-func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command) error {
+func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m string) error {
 	// Define vars.
 	var options []string
-	var fromRepository bool
 
 	// Checking for nil.
-	if p == nil || c == nil {
-		return throwError("Project template or commands not found!")
+	if p == nil || c == nil || m == "" {
+		return throwError("Project template, commands or pattern not found!")
 	}
 
 	// Create path in project root folder.
 	folder := filepath.Join(p.RootFolder, p.Type)
 
-	// Split framework name and template.
-	project, err := StringSplit(":", p.Name)
+	// Create match expration for name.
+	match, err := regexp.MatchString(m, p.Name)
 	if err != nil {
 		return throwError(err.Error())
 	}
 
-	// Re-define vars for more beauty view.
-	runner := c[project[0]].Runner
-	create := c[project[0]].Create
-	args := c[project[0]].Args
-
-	// Collect project runner and options.
-	switch project[0] {
-	case "react":
-		// npx create-react-app [template]
-		options = []string{create, folder}
-		if len(project) > 1 {
-			options = []string{create, folder, args["template"], "cra-template-" + project[1]}
+	if match {
+		// Split frontend library/framework name and template.
+		project, err := stringSplit(":", p.Name)
+		if err != nil {
+			return throwError(err.Error())
 		}
-		break
-	case "preact":
-		// preact create [template] [dest] [args...]
-		options = []string{create, "default", p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
-		if len(project) > 1 {
-			options = []string{create, project[1], p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
-		}
-		break
-	case "svelte":
-		// npx degit [template] [dest]
-		options = []string{create, args["template"], folder}
-		break
-	default:
-		// If not in list, try to create from repository.
-		fromRepository = true
-		break
-	}
 
-	if fromRepository {
-		// Create frontend from repository (GitHub, etc).
-		if err := GitClone(folder, project[0]); err != nil {
+		// Re-define vars for more beauty view.
+		runner := c[project[0]].Runner
+		create := c[project[0]].Create
+		args := c[project[0]].Args
+
+		// Collect project runner and options.
+		switch project[0] {
+		case "react":
+			// npx create-react-app [template]
+			options = []string{create, folder}
+			if len(project) > 1 {
+				options = []string{create, folder, args["template"], "cra-template-" + project[1]}
+			}
+			break
+		case "preact":
+			// preact create [template] [dest] [args...]
+			options = []string{create, "default", p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
+			if len(project) > 1 {
+				options = []string{create, project[1], p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
+			}
+			break
+		case "svelte":
+			// npx degit [template] [dest]
+			options = []string{create, args["template"], folder}
+			break
+		}
+
+		// Run execution command.
+		if err := ExecCommand(runner, options); err != nil {
 			return throwError(err.Error())
 		}
 	} else {
-		// Or run execution command.
-		if err := ExecCommand(runner, options); err != nil {
+		// Create frontend from given repository (GitHub, etc).
+		if err := GitClone(folder, p.Name); err != nil {
 			return throwError(err.Error())
 		}
 	}

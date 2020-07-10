@@ -135,6 +135,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 				RootFolder: currentDir,
 			},
 			registry.Repositories,
+			registry.RegexpAnsiblePattern,
 		)
 	}
 
@@ -147,6 +148,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			RootFolder: currentDir,
 		},
 		registry.Repositories,
+		registry.RegexpBackendPattern,
 	)
 
 	if frontend != "none" {
@@ -159,6 +161,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 				RootFolder: currentDir,
 			},
 			registry.Commands,
+			registry.RegexpFrontendPattern,
 		)
 	}
 
@@ -177,6 +180,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 					RootFolder: currentDir,
 				},
 				registry.Repositories,
+				registry.RegexpWebServerPattern,
 			)
 		}
 
@@ -190,6 +194,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 					RootFolder: currentDir,
 				},
 				registry.Repositories,
+				registry.RegexpDatabasePattern,
 			)
 		}
 	}
