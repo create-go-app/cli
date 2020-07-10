@@ -152,7 +152,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	if frontend != "none" {
 		// Create frontend files.
 		cgapp.SendMsg(true, "*", "Create project frontend...", "cyan", true)
-		cgapp.CreateProjectFromCMD(
+		cgapp.CreateProjectFromCmd(
 			&registry.Project{
 				Type:       "frontend",
 				Name:       frontend,

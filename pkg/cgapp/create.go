@@ -102,8 +102,8 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 	RemoveFolders(folder, foldersToRemove)
 }
 
-// CreateProjectFromCMD function for create a new project from a comand line.
-func CreateProjectFromCMD(p *registry.Project, c map[string]*registry.Command) {
+// CreateProjectFromCmd function for create a new project from a comand line.
+func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command) {
 	// Define vars.
 	var options []string
 
