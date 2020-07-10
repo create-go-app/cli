@@ -128,7 +128,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		}
 
 		// Create Ansible roles.
-		cgapp.CreateProjectFromRegistry(
+		if err := cgapp.CreateProjectFromRegistry(
 			&registry.Project{
 				Type:       "roles",
 				Name:       "deploy",
@@ -136,12 +136,15 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			},
 			registry.Repositories,
 			registry.RegexpAnsiblePattern,
-		)
+		); err != nil {
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
+		}
 	}
 
 	// Create backend files.
 	cgapp.SendMsg(true, "*", "Create project backend...", "cyan", true)
-	cgapp.CreateProjectFromRegistry(
+	if err := cgapp.CreateProjectFromRegistry(
 		&registry.Project{
 			Type:       "backend",
 			Name:       backend,
@@ -149,12 +152,15 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		},
 		registry.Repositories,
 		registry.RegexpBackendPattern,
-	)
+	); err != nil {
+		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		os.Exit(1)
+	}
 
 	if frontend != "none" {
 		// Create frontend files.
-		cgapp.SendMsg(true, "*", "Create project frontend...", "cyan", true)
-		cgapp.CreateProjectFromCmd(
+		cgapp.SendMsg(true, "*", "Create project frontend...", "cyan", false)
+		if err := cgapp.CreateProjectFromCmd(
 			&registry.Project{
 				Type:       "frontend",
 				Name:       frontend,
@@ -162,7 +168,10 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			},
 			registry.Commands,
 			registry.RegexpFrontendPattern,
-		)
+		); err != nil {
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
+		}
 	}
 
 	// Docker containers.
@@ -173,7 +182,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		if webserver != "none" {
 			// Create container with a web/proxy server.
 			cgapp.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", true)
-			cgapp.CreateProjectFromRegistry(
+			if err := cgapp.CreateProjectFromRegistry(
 				&registry.Project{
 					Type:       "webserver",
 					Name:       webserver,
@@ -181,13 +190,16 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 				},
 				registry.Repositories,
 				registry.RegexpWebServerPattern,
-			)
+			); err != nil {
+				cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+				os.Exit(1)
+			}
 		}
 
 		if database != "none" {
 			// Create container with a database.
 			cgapp.SendMsg(true, "*", "Create container with database...", "cyan", true)
-			cgapp.CreateProjectFromRegistry(
+			if err := cgapp.CreateProjectFromRegistry(
 				&registry.Project{
 					Type:       "database",
 					Name:       database,
@@ -195,7 +207,10 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 				},
 				registry.Repositories,
 				registry.RegexpDatabasePattern,
-			)
+			); err != nil {
+				cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+				os.Exit(1)
+			}
 		}
 	}
 
