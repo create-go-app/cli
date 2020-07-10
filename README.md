@@ -76,17 +76,26 @@ project:
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - backend: fiber
+
   # Frontend for your project.
   # (Optional, to skip set to `none`)
-  # String: `react`, `react:<template>` `preact`, `preact:<template>`, `svelte`
-  # User template: NOT supported!
+  # String:
+  #   - `react`, `react:<template>`
+  #   - `preact`, `preact:<template>`
+  #   - `vue`
+  #   - `svelte`
+  #   - `angular`
+  # User template: supported, set to URL (without protocol),
+  # like `github.com/user/template`
   - frontend: svelte
-  # Web/proxy server for your project.
+
+  # Web/Proxy server for your project.
   # (Optional, to skip set to `none`)
   # String: `nginx`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - webserver: nginx
+
   # Web/proxy server for your project.
   # (Optional, to skip set to `none`)
   # String: `postgres`
@@ -100,25 +109,29 @@ roles:
   # (Optional, to skip set to empty or comment)
   # Objects list: `deploy`
   - deploy:
-      # Username of remote's server or local's user.
-      # (Required)
-      username: root
-      # If you need to deploy (or run) a project asking for a password
-      # for the user, set `become` to `true`. This is equivalent of
-      # `--ask-become-pass`, a standard Ansible argument to ask
-      # for a privilege escalation password.
-      # (Optional)
-      become: true
-      # Host name from your inventory file (usually, at /etc/ansible/hosts).
-      # (Required)
-      host: localhost
-      # Name of Docker network
-      # (Required)
-      network: cgapp_network
-      # Filename of Ansible playbook in the root of the Create Go App project.
-      # If you want to rename it, do it, but not to change destination of file!
-      # (Required)
-      playbook: deploy-playbook.yml
+    # Username of remote's server or local's user.
+    # (Required)
+    username: root
+
+    # If you need to deploy (or run) a project asking for a password
+    # for the user, set `become` to `true`. This is equivalent of
+    # `--ask-become-pass`, a standard Ansible argument
+    # to ask for a privilege escalation password.
+    # (Optional)
+    become: true
+
+    # Host name from your inventory file (usually, at /etc/ansible/hosts).
+    # (Required)
+    host: localhost
+
+    # Name of Docker network
+    # (Required)
+    network: cgapp_network
+
+    # Filename of Ansible playbook in the root of the Create Go App project.
+    # If you want to rename it, do it, but not to change destination of file!
+    # (Required)
+    playbook: deploy-playbook.yml
 ```
 
 </details>

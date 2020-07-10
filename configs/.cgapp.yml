@@ -2,7 +2,7 @@
 # Author: Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 # For more information, please visit https://create-go.app/
 
-# Define your project config
+# Project config.
 project:
   # Backend for your project.
   # (Required)
@@ -13,10 +13,12 @@ project:
 
   # Frontend for your project.
   # (Optional, to skip set to `none`)
-  # String: `react`, `react:<template>`, `preact`, `preact:<template>`, `svelte`
-  # Available <template>s:
-  #   - react -> https://create-go.app/production-templates/react-js/
-  #   - preact -> https://create-go.app/production-templates/preact-js/
+  # String:
+  #   - `react`, `react:<template>`
+  #   - `preact`, `preact:<template>`
+  #   - `vue`
+  #   - `svelte`
+  #   - `angular`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - frontend: svelte
@@ -35,7 +37,7 @@ project:
   # like `github.com/user/template`
   - database: postgres
 
-# Define your automation config.
+# Automation config.
 roles:
   # Ansible roles for deploy your project.
   # (Optional, to skip set to empty or comment)
