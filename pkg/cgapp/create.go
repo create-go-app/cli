@@ -27,7 +27,6 @@ limitations under the License.
 package cgapp
 
 import (
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -36,14 +35,13 @@ import (
 )
 
 // CreateProjectFromRegistry function for create a new project from repository.
-func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repository) {
+func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repository) error {
 	// Define vars.
-	var pattern string
+	var pattern, template string
 
 	// Checking for nil.
 	if p == nil || r == nil {
-		SendMsg(true, "[ERROR]", "Project template or registry not found!", "red", true)
-		os.Exit(1)
+		return throwError("Project template or registry not found!")
 	}
 
 	// Create path in project root folder.
@@ -69,48 +67,47 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 	// Create match expration.
 	match, err := regexp.MatchString(pattern, p.Name)
 	if err != nil {
-		SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
+		return throwError(err.Error())
 	}
 
 	// Check for regexp.
 	if match {
 		// Re-define vars.
-		template := r[p.Type].List[p.Name]
+		template = r[p.Type].List[p.Name]
 
 		// If match, create from default template.
 		if err := GitClone(folder, template); err != nil {
-			SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
+			return throwError(err.Error())
 		}
-
-		// Show success report.
-		SendMsg(false, "[OK]", strings.Title(p.Type)+": created with default template `"+template+"`!", "cyan", false)
 	} else {
-		// Else create from user template (from GitHub, etc).
-		if err := GitClone(folder, p.Name); err != nil {
-			SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
+		// Re-define vars.
+		template = p.Name
 
-		// Show success report.
-		SendMsg(false, "[OK]", strings.Title(p.Type)+": created with user template `"+p.Name+"`!", "cyan", false)
+		// Else create from user template (from GitHub, etc).
+		if err := GitClone(folder, template); err != nil {
+			return throwError(err.Error())
+		}
 	}
+
+	// Show success report.
+	SendMsg(false, "[OK]", strings.Title(p.Type)+": created with the `"+template+"` template!", "cyan", false)
 
 	// Cleanup project.
 	foldersToRemove := []string{".git", ".github"}
 	RemoveFolders(folder, foldersToRemove)
+
+	return nil
 }
 
 // CreateProjectFromCmd function for create a new project from a comand line.
-func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command) {
+func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command) error {
 	// Define vars.
 	var options []string
+	var fromRepository bool
 
 	// Checking for nil.
 	if p == nil || c == nil {
-		SendMsg(true, "[ERROR]", "Project template or commands not found!", "red", true)
-		os.Exit(1)
+		return throwError("Project template or commands not found!")
 	}
 
 	// Create path in project root folder.
@@ -119,8 +116,7 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command) {
 	// Split framework name and template.
 	project, err := StringSplit(":", p.Name)
 	if err != nil {
-		SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
+		return throwError(err.Error())
 	}
 
 	// Re-define vars for more beauty view.
@@ -149,14 +145,21 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command) {
 		options = []string{create, args["template"], folder}
 		break
 	default:
-		SendMsg(true, "[ERROR]", "Frontend template"+p.Name+" not found!", "red", true)
-		os.Exit(1)
+		// If not in list, try to create from repository.
+		fromRepository = true
+		break
 	}
 
-	// Run execution command.
-	if err := ExecCommand(runner, options); err != nil {
-		SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
+	if fromRepository {
+		// Create frontend from repository (GitHub, etc).
+		if err := GitClone(folder, project[0]); err != nil {
+			return throwError(err.Error())
+		}
+	} else {
+		// Or run execution command.
+		if err := ExecCommand(runner, options); err != nil {
+			return throwError(err.Error())
+		}
 	}
 
 	// Cleanup project.
@@ -165,4 +168,6 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command) {
 
 	// Show success report.
 	SendMsg(false, "[OK]", "Frontend: created with template `"+p.Name+"`!", "cyan", false)
+
+	return nil
 }
