@@ -1,6 +1,6 @@
 # Ansible playbook for deploy the Create Go App project.
 # Author: Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
-# For more information, please visit https://create-go.app
+# For more information, please visit https://create-go.app/
 
 ---
 - hosts: "{{ host }}"

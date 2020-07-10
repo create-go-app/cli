@@ -1,7 +1,14 @@
 /*
 Package cmd includes all of the Create Go App CLI commands.
 
-Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+Create a new production-ready project with backend (Golang),
+frontend (JavaScript, TypeScript) and deploy automation
+(Ansible, Docker) by running one CLI command.
+
+-> Focus on writing code and thinking of business logic!
+<- The Create Go App CLI will take care of the rest.
+
+Copyright © 2019-present Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,8 +30,8 @@ import (
 	"time"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/create-go-app/cli/pkg/cgapp"
 	"github.com/create-go-app/cli/pkg/registry"
-	"github.com/create-go-app/cli/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -40,7 +47,7 @@ var deployCmd = &cobra.Command{
 // runDeployCmd represents runner for the `deploy` command
 var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	// Start message.
-	utils.SendMsg(true, "* * *", "Deploying project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
+	cgapp.SendMsg(true, "* * *", "Deploying project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
 
 	// If config is set and correct, skip survey and use it.
 	if useConfigFile && rolesConfig != nil {
@@ -54,19 +61,19 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		if err := survey.Ask(
 			registry.DeployQuestions, &deployAnswers, survey.WithIcons(surveyIconsConfig),
 		); err != nil {
-			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 			os.Exit(1)
 		}
 
 		// If something went wrong, cancel and exit.
 		if !deployAnswers.AgreeDeployment {
-			utils.SendMsg(true, "[!]", "You're stopped deployment process of your project.", "red", false)
-			utils.SendMsg(false, "[!]", "Run `cgapp deploy` once again!", "red", true)
+			cgapp.SendMsg(true, "[!]", "You're stopped deployment process of your project.", "red", false)
+			cgapp.SendMsg(false, "[!]", "Run `cgapp deploy` once again!", "red", true)
 			os.Exit(1)
 		}
 
 		// Insert empty line.
-		utils.SendMsg(false, "", "", "", false)
+		cgapp.SendMsg(false, "", "", "", false)
 
 		// Define variables for better display.
 		username = deployAnswers.Username
@@ -79,7 +86,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	startTimer := time.Now()
 
 	// Create config files for your project.
-	utils.SendMsg(false, "*", "Run Ansible playbook `"+playbook+"`...", "cyan", true)
+	cgapp.SendMsg(false, "*", "Run Ansible playbook `"+playbook+"`...", "cyan", true)
 
 	// Define Ansible options.
 	options := []string{
@@ -100,8 +107,8 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	}
 
 	// Run execution for Ansible playbook.
-	if err := utils.ExecCommand("ansible-playbook", options); err != nil {
-		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+	if err := cgapp.ExecCommand("ansible-playbook", options); err != nil {
+		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 		os.Exit(1)
 	}
 
@@ -109,9 +116,9 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	stopTimer := time.Since(startTimer).String()
 
 	// End message.
-	utils.SendMsg(true, "* * *", "Completed in "+stopTimer+"!", "yellow", true)
-	utils.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	utils.SendMsg(false, "(i)", "Go to the `"+host+"` to see your deployed project! :)", "green", true)
+	cgapp.SendMsg(true, "* * *", "Completed in "+stopTimer+"!", "yellow", true)
+	cgapp.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
+	cgapp.SendMsg(false, "(i)", "Go to the `"+host+"` to see your deployed project! :)", "green", true)
 }
 
 func init() {

@@ -3,7 +3,16 @@
 /*
 Package embed embed to binary all config files.
 
-Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+Create a new production-ready project with backend (Golang),
+frontend (JavaScript, TypeScript) and deploy automation
+(Ansible, Docker) by running one CLI command.
+
+-> Focus on writing code and thinking of business logic!
+<- The Create Go App CLI will take care of the rest.
+
+A helpful documentation and next steps -> https://create-go.app/
+
+Copyright © 2019-present Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
