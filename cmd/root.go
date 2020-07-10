@@ -70,16 +70,13 @@ frontend (JavaScript, TypeScript) and deploy automation
 (Ansible, Docker) by running one CLI command.
 
 -> Focus on writing code and thinking of business logic!
-<- The Create Go App CLI will take care of the rest.`,
+<- The Create Go App CLI will take care of the rest.
+
+A helpful documentation and next steps -> https://create-go.app/`,
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().BoolVarP(
-		&useConfigFile,
-		"use-config", "c", false,
-		"use config file to create a new project or deploy to a remote server (default is $PWD/.cgapp.yml)",
-	)
 }
 
 // initConfig reads in config file, if set.

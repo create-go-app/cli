@@ -1,5 +1,5 @@
 /*
-Package cgapp includes a powerful CLI for the Create Go App project.
+Package main includes call for the Create Go App CLI.
 
 Create a new production-ready project with backend (Golang),
 frontend (JavaScript, TypeScript) and deploy automation
@@ -24,7 +24,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package cgapp
+package main
 
 import "github.com/create-go-app/cli/cmd"
 

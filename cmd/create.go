@@ -205,4 +205,9 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 func init() {
 	rootCmd.AddCommand(createCmd)
+	createCmd.PersistentFlags().BoolVarP(
+		&useConfigFile,
+		"use-config", "c", false,
+		"use config file to create a new project or deploy to a remote server (default is $PWD/.cgapp.yml)",
+	)
 }
