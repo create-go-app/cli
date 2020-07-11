@@ -1,7 +1,16 @@
 /*
-Package utils includes helpful utilities for the Create Go App CLI.
+Package cgapp includes a powerful CLI for the Create Go App project.
 
-Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+Create a new production-ready project with backend (Golang),
+frontend (JavaScript, TypeScript) and deploy automation
+(Ansible, Docker) by running one CLI command.
+
+-> Focus on writing code and thinking of business logic!
+<- The Create Go App CLI will take care of the rest.
+
+A helpful documentation and next steps -> https://create-go.app/
+
+Copyright © 2019-present Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +24,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package utils
+package cgapp
 
 import (
 	"bufio"
@@ -23,14 +32,14 @@ import (
 	"os/exec"
 )
 
-// ExecCommand ...
+// ExecCommand function to execute a given command.
 func ExecCommand(command string, options []string) error {
 	//
 	if command == "" {
 		return throwError("No command to execute!")
 	}
 
-	// Create buffer for stderr
+	// Create buffer for stderr.
 	stderr := &bytes.Buffer{}
 
 	// Collect command line
@@ -45,12 +54,12 @@ func ExecCommand(command string, options []string) error {
 		return throwError(err.Error())
 	}
 
-	// Start executing command
+	// Start executing command.
 	if err := cmd.Start(); err != nil {
 		return throwError(stderr.String())
 	}
 
-	// Create a new scanner and run goroutine func with output
+	// Create a new scanner and run goroutine func with output.
 	scanner := bufio.NewScanner(cmdReader)
 	go func() {
 		for scanner.Scan() {
@@ -58,7 +67,7 @@ func ExecCommand(command string, options []string) error {
 		}
 	}()
 
-	// Wait for executing command
+	// Wait for executing command.
 	if err := cmd.Wait(); err != nil {
 		return throwError(stderr.String())
 	}

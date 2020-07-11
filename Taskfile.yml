@@ -40,15 +40,9 @@ tasks:
       - task: generate
       - go build -i -o $GOPATH/bin/cgapp ./*.go
 
-  linters:
-    desc: Linters
-    cmds:
-      - ansible-lint ./configs/deploy-playbook.yml
-
   release:
     desc: GitHub release for CLI
     cmds:
-      - task: linters
       - task: security
       - task: test
       - git tag -a {{.TAG}} -m "{{.TAG}}"
@@ -59,3 +53,8 @@ tasks:
     desc: Delete git tag
     cmds:
       - git tag --delete {{.TAG}}
+
+  update-pkg-cache:
+    desc: Update pkg.go.dev cache for a new version
+    cmds:
+      - GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/create-go-app/cli@{{.VERSION}}

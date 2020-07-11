@@ -1,7 +1,14 @@
 /*
 Package cmd includes all of the Create Go App CLI commands.
 
-Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+Create a new production-ready project with backend (Golang),
+frontend (JavaScript, TypeScript) and deploy automation
+(Ansible, Docker) by running one CLI command.
+
+-> Focus on writing code and thinking of business logic!
+<- The Create Go App CLI will take care of the rest.
+
+Copyright © 2019-present Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,10 +30,9 @@ import (
 	"time"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/create-go-app/cli/pkg/actions"
+	"github.com/create-go-app/cli/pkg/cgapp"
 	"github.com/create-go-app/cli/pkg/embed"
 	"github.com/create-go-app/cli/pkg/registry"
-	"github.com/create-go-app/cli/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -42,7 +48,7 @@ var createCmd = &cobra.Command{
 // runCreateCmd represents runner for the `create` command.
 var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	// Start message.
-	utils.SendMsg(true, "* * *", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
+	cgapp.SendMsg(true, "* * *", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
 
 	// If config is set and correct, skip survey and use it.
 	if useConfigFile && projectConfig != nil {
@@ -61,19 +67,19 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		if err := survey.Ask(
 			registry.CreateQuestions, &createAnswers, survey.WithIcons(surveyIconsConfig),
 		); err != nil {
-			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 			os.Exit(1)
 		}
 
 		// If something went wrong, cancel and exit.
 		if !createAnswers.AgreeCreation {
-			utils.SendMsg(true, "[!]", "You're stopped creation of a new project.", "red", false)
-			utils.SendMsg(false, "[!]", "Run `cgapp create` once again!", "red", true)
+			cgapp.SendMsg(true, "[!]", "You're stopped creation of a new project.", "red", false)
+			cgapp.SendMsg(false, "[!]", "Run `cgapp create` once again!", "red", true)
 			os.Exit(1)
 		}
 
 		// Insert empty line.
-		utils.SendMsg(false, "", "", "", false)
+		cgapp.SendMsg(false, "", "", "", false)
 
 		// Define variables for better display.
 		backend = strings.ToLower(createAnswers.Backend)
@@ -89,12 +95,12 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	// Get current directory.
 	currentDir, err := os.Getwd()
 	if err != nil {
-		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 		os.Exit(1)
 	}
 
 	// Create config files for your project.
-	utils.SendMsg(false, "*", "Create config files for your project...", "cyan", true)
+	cgapp.SendMsg(false, "*", "Create config files for your project...", "cyan", true)
 
 	// Create configuration files.
 	filesToMake := map[string][]byte{
@@ -103,88 +109,108 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		".editorconfig":  embed.Get("/.editorconfig"),
 		"Taskfile.yml":   embed.Get("/Taskfile.yml"),
 	}
-	if err := utils.MakeFiles(currentDir, filesToMake); err != nil {
-		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+	if err := cgapp.MakeFiles(currentDir, filesToMake); err != nil {
+		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 		os.Exit(1)
 	}
 
 	// Create Ansible playbook and download roles, if not skipped.
 	if installAnsibleRoles {
-		utils.SendMsg(true, "*", "Create Ansible playbook and roles...", "cyan", true)
+		cgapp.SendMsg(true, "*", "Create Ansible playbook and roles...", "cyan", true)
 
 		// Create playbook.
 		fileToMake := map[string][]byte{
 			"deploy-playbook.yml": embed.Get("/deploy-playbook.yml"),
 		}
-		if err := utils.MakeFiles(currentDir, fileToMake); err != nil {
-			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		if err := cgapp.MakeFiles(currentDir, fileToMake); err != nil {
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 			os.Exit(1)
 		}
 
 		// Create Ansible roles.
-		actions.CreateProjectFromRegistry(
+		if err := cgapp.CreateProjectFromRegistry(
 			&registry.Project{
 				Type:       "roles",
 				Name:       "deploy",
 				RootFolder: currentDir,
 			},
 			registry.Repositories,
-		)
+			registry.RegexpAnsiblePattern,
+		); err != nil {
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
+		}
 	}
 
 	// Create backend files.
-	utils.SendMsg(true, "*", "Create project backend...", "cyan", true)
-	actions.CreateProjectFromRegistry(
+	cgapp.SendMsg(true, "*", "Create project backend...", "cyan", true)
+	if err := cgapp.CreateProjectFromRegistry(
 		&registry.Project{
 			Type:       "backend",
 			Name:       backend,
 			RootFolder: currentDir,
 		},
 		registry.Repositories,
-	)
+		registry.RegexpBackendPattern,
+	); err != nil {
+		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		os.Exit(1)
+	}
 
 	if frontend != "none" {
 		// Create frontend files.
-		utils.SendMsg(true, "*", "Create project frontend...", "cyan", true)
-		actions.CreateProjectFromCMD(
+		cgapp.SendMsg(true, "*", "Create project frontend...", "cyan", false)
+		if err := cgapp.CreateProjectFromCmd(
 			&registry.Project{
 				Type:       "frontend",
 				Name:       frontend,
 				RootFolder: currentDir,
 			},
 			registry.Commands,
-		)
+			registry.RegexpFrontendPattern,
+		); err != nil {
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
+		}
 	}
 
 	// Docker containers.
 	if webserver != "none" || database != "none" {
 
-		utils.SendMsg(true, "* * *", "Configuring Docker containers...", "yellow", false)
+		cgapp.SendMsg(true, "* * *", "Configuring Docker containers...", "yellow", false)
 
 		if webserver != "none" {
 			// Create container with a web/proxy server.
-			utils.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", true)
-			actions.CreateProjectFromRegistry(
+			cgapp.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", true)
+			if err := cgapp.CreateProjectFromRegistry(
 				&registry.Project{
 					Type:       "webserver",
 					Name:       webserver,
 					RootFolder: currentDir,
 				},
 				registry.Repositories,
-			)
+				registry.RegexpWebServerPattern,
+			); err != nil {
+				cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+				os.Exit(1)
+			}
 		}
 
 		if database != "none" {
 			// Create container with a database.
-			utils.SendMsg(true, "*", "Create container with database...", "cyan", true)
-			actions.CreateProjectFromRegistry(
+			cgapp.SendMsg(true, "*", "Create container with database...", "cyan", true)
+			if err := cgapp.CreateProjectFromRegistry(
 				&registry.Project{
 					Type:       "database",
 					Name:       database,
 					RootFolder: currentDir,
 				},
 				registry.Repositories,
-			)
+				registry.RegexpDatabasePattern,
+			); err != nil {
+				cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+				os.Exit(1)
+			}
 		}
 	}
 
@@ -192,11 +218,16 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	stopTimer := time.Since(startTimer).String()
 
 	// End message.
-	utils.SendMsg(true, "* * *", "Completed in "+stopTimer+"!", "yellow", true)
-	utils.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	utils.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server.", "green", true)
+	cgapp.SendMsg(true, "* * *", "Completed in "+stopTimer+"!", "yellow", true)
+	cgapp.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
+	cgapp.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server.", "green", true)
 }
 
 func init() {
 	rootCmd.AddCommand(createCmd)
+	createCmd.PersistentFlags().BoolVarP(
+		&useConfigFile,
+		"use-config", "c", false,
+		"use config file to create a new project or deploy to a remote server (default is $PWD/.cgapp.yml)",
+	)
 }

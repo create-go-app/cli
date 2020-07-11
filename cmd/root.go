@@ -1,7 +1,14 @@
 /*
 Package cmd includes all of the Create Go App CLI commands.
 
-Copyright © 2020 Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+Create a new production-ready project with backend (Golang),
+frontend (JavaScript, TypeScript) and deploy automation
+(Ansible, Docker) by running one CLI command.
+
+-> Focus on writing code and thinking of business logic!
+<- The Create Go App CLI will take care of the rest.
+
+Copyright © 2019-present Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,8 +28,8 @@ import (
 	"os"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/create-go-app/cli/pkg/cgapp"
 	"github.com/create-go-app/cli/pkg/registry"
-	"github.com/create-go-app/cli/pkg/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -63,16 +70,13 @@ frontend (JavaScript, TypeScript) and deploy automation
 (Ansible, Docker) by running one CLI command.
 
 -> Focus on writing code and thinking of business logic!
-<- The Create Go App CLI will take care of the rest.`,
+<- The Create Go App CLI will take care of the rest.
+
+A helpful documentation and next steps -> https://create-go.app/`,
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().BoolVarP(
-		&useConfigFile,
-		"use-config", "c", false,
-		"use config file to create a new project or deploy to a remote server (default is $PWD/.cgapp.yml)",
-	)
 }
 
 // initConfig reads in config file, if set.
@@ -86,7 +90,7 @@ func initConfig() {
 
 		// If a config file is found, read it in.
 		if err := viper.ReadInConfig(); err != nil {
-			utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 			os.Exit(1)
 		}
 
@@ -100,7 +104,7 @@ func initConfig() {
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		utils.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 		os.Exit(1)
 	}
 }

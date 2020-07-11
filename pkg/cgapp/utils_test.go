@@ -1,4 +1,4 @@
-package utils
+package cgapp
 
 import (
 	"os"
@@ -136,7 +136,7 @@ func TestMakeFolder(t *testing.T) {
 	}
 }
 
-func TestStringSplit(t *testing.T) {
+func Test_stringSplit(t *testing.T) {
 	type args struct {
 		pattern string
 		match   string
@@ -174,7 +174,7 @@ func TestStringSplit(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := StringSplit(tt.args.pattern, tt.args.match)
+			got, err := stringSplit(tt.args.pattern, tt.args.match)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("StringSplit() error = %v, wantErr %v", err, tt.wantErr)
 				return

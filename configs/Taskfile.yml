@@ -4,6 +4,12 @@
 version: "2"
 
 tasks:
+  # Default task
+  default:
+    cmds:
+      - task: frontend-run
+      - task: backend-run
+
   # Backend tasks
   backend-test:
     dir: ./backend
