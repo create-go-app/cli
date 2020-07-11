@@ -57,4 +57,4 @@ tasks:
   update-pkg-cache:
     desc: Update pkg.go.dev cache for a new version
     cmds:
-      - GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/create-go-app/cli@{{.VERSION}}
+      - curl -i https://proxy.golang.org/github.com/create-go-app/cli/@v/{{.VERSION}}.info
