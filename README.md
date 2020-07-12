@@ -28,7 +28,7 @@ Okay, it works! Now, you can run this project on your **local machine** or deplo
 cgapp deploy
 ```
 
-### ~ Docker-way to quick start
+### ~ [Docker-way to quick start](https://create-go.app/detailed-guides/official-docker-image/)
 
 If you don't want to install Create Go App CLI to your system, you feel free to using our official [Docker image](https://hub.docker.com/r/koddr/cgapp) and run CLI from isolated container:
 
@@ -53,6 +53,7 @@ Unfortunately, we are unable to include all helpful documentation to the `README
     - [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
     - [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
     - [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy)
+  - [Working with the official Docker image](https://create-go.app/detailed-guides/official-docker-image/)
   - [Run project on your local machine](https://create-go.app/detailed-guides/run-on-local/)
   - [Deploy project to a production server](https://create-go.app/detailed-guides/deploy-to-server/)
   - [Make your own template](https://create-go.app/detailed-guides/make-custom-template/)
