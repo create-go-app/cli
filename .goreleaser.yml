@@ -28,19 +28,22 @@ dockers:
     goos: linux
     goarch: amd64
 
+    # Name templates of the built binaries that should be used.
+    binaries:
+      - cgapp
+
     # Templates of the Docker image names.
     image_templates:
-      - "koddr/cgapp:latest"
-      - "koddr/cgapp:{{ .Tag }}"
-      - "koddr/cgapp:{{ .Tag }}-{{ .Env.GO_VERSION }}"
       - "koddr/cgapp:v{{ .Major }}"
+      - "koddr/cgapp:{{ .Tag }}"
+      - "koddr/cgapp:latest"
 
     skip_push: true
 
     # Path to the Dockerfile (from the project root).
     dockerfile: Dockerfile
-    extra_files:
-      - dist/cgapp_linux_amd64/cgapp
+    # extra_files:
+    #   - dist/cgapp_linux_amd64/cgapp
 
 archives:
   - # Replacements for GOOS and GOARCH in the archive name.
@@ -50,7 +53,7 @@ archives:
       windows: Windows
       amd64: x86_64
 
-    # Can be used to change the archive formats for specific GOOSs.
+    # Can be used to change the archive formats for specific GOOS.
     format_overrides:
       - goos: windows
         format: zip
