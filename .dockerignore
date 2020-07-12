@@ -1,0 +1,19 @@
+# Files
+**/.DS_Store
+.dockerignore
+.editorconfig
+.gitattributes
+.gitignore
+Dockerfile
+LICENSE
+**/*_test.go
+*.yml
+*.md
+*.out
+
+# Folders
+.git/
+.github/
+.task/
+app/
+tmp/

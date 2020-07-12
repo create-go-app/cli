@@ -10,6 +10,3 @@
 # Tests
 *.out
 **/tmp/
-
-# Embed file
-**/blob.go

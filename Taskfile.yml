@@ -40,6 +40,12 @@ tasks:
       - task: generate
       - go build -i -o $GOPATH/bin/cgapp ./*.go
 
+  docker-image:
+    desc: Build Docker image with full features
+    cmds:
+      - task: build
+      - docker build . -t koddr/cgapp
+
   release:
     desc: GitHub release for CLI
     cmds:
@@ -57,4 +63,4 @@ tasks:
   update-pkg-cache:
     desc: Update pkg.go.dev cache for a new version
     cmds:
-      - GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/create-go-app/cli@{{.VERSION}}
+      - curl -i https://proxy.golang.org/github.com/create-go-app/cli/@v/{{.VERSION}}.info
