@@ -10,7 +10,7 @@
 
 First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.11` or higher is required.
 
-Next, download a **latest version** of the Create Go App CLI to your computer:
+Next, download the **latest** version of the Create Go App CLI to your computer:
 
 ```bash
 go get -u github.com/create-go-app/cli
