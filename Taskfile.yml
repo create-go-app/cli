@@ -40,6 +40,12 @@ tasks:
       - task: generate
       - go build -i -o $GOPATH/bin/cgapp ./*.go
 
+  docker-image:
+    desc: Build Docker image with full features
+    cmds:
+      - task: build
+      - docker build . -t koddr/cgapp
+
   release:
     desc: GitHub release for CLI
     cmds:

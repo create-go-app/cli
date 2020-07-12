@@ -1,10 +1,12 @@
 project_name: cgapp
 env_files:
   github_token: ~/.goreleaser/github_token
+
 before:
   hooks:
     - go mod download
     - go generate ./...
+
 builds:
   - # Build macOS, Linux and Windows versions
     goos:
@@ -19,6 +21,27 @@ builds:
       - windows_amd64
     env:
       - CGO_ENABLED=0
+
+dockers:
+  # You can have multiple Docker images.
+  - # GOOS of the built binary that should be used.
+    goos: linux
+    goarch: amd64
+
+    # Templates of the Docker image names.
+    image_templates:
+      - "koddr/cgapp:latest"
+      - "koddr/cgapp:{{ .Tag }}"
+      - "koddr/cgapp:{{ .Tag }}-{{ .Env.GO_VERSION }}"
+      - "koddr/cgapp:v{{ .Major }}"
+
+    skip_push: true
+
+    # Path to the Dockerfile (from the project root).
+    dockerfile: Dockerfile
+    extra_files:
+      - dist/cgapp_linux_amd64/cgapp
+
 archives:
   - # Replacements for GOOS and GOARCH in the archive name.
     replacements:
@@ -36,10 +59,13 @@ archives:
     files:
       - LICENSE
       - README.md
+
 checksum:
   name_template: "checksums.txt"
+
 snapshot:
   name_template: "{{.Tag}}"
+
 changelog:
   sort: asc
   filters:
