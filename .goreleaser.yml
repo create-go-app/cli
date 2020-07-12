@@ -38,12 +38,8 @@ dockers:
       - "koddr/cgapp:{{ .Tag }}"
       - "koddr/cgapp:latest"
 
-    skip_push: true
-
     # Path to the Dockerfile (from the project root).
     dockerfile: Dockerfile
-    # extra_files:
-    #   - dist/cgapp_linux_amd64/cgapp
 
 archives:
   - # Replacements for GOOS and GOARCH in the archive name.
