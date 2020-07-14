@@ -173,7 +173,7 @@ func TestCreateProjectFromCmd(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"successfully create react",
+			"successfully create react:redux",
 			args{
 				p: &registry.Project{
 					Type:       "frontend",
@@ -203,6 +203,63 @@ func TestCreateProjectFromCmd(t *testing.T) {
 					"preact": {
 						Runner: "echo",
 						Create: "preact",
+						Args:   map[string]string{},
+					},
+				},
+				m: registry.RegexpFrontendPattern,
+			},
+			false,
+		},
+		{
+			"successfully create vue (with mock for GitHub)",
+			args{
+				p: &registry.Project{
+					Type:       "frontend",
+					Name:       "vue:mock",
+					RootFolder: "../../tmp",
+				},
+				c: map[string]*registry.Command{
+					"vue": {
+						Runner: "echo",
+						Create: "vue",
+						Args:   map[string]string{},
+					},
+				},
+				m: registry.RegexpFrontendPattern,
+			},
+			false,
+		},
+		{
+			"successfully create vue (with mock for others)",
+			args{
+				p: &registry.Project{
+					Type:       "frontend",
+					Name:       "vue:mock:mock",
+					RootFolder: "../../tmp",
+				},
+				c: map[string]*registry.Command{
+					"vue": {
+						Runner: "echo",
+						Create: "vue",
+						Args:   map[string]string{},
+					},
+				},
+				m: registry.RegexpFrontendPattern,
+			},
+			false,
+		},
+		{
+			"successfully create angular",
+			args{
+				p: &registry.Project{
+					Type:       "frontend",
+					Name:       "angular",
+					RootFolder: "../../tmp",
+				},
+				c: map[string]*registry.Command{
+					"angular": {
+						Runner: "echo",
+						Create: "angular",
 						Args:   map[string]string{},
 					},
 				},

@@ -6,7 +6,11 @@
 project:
   # Backend for your project.
   # (Required)
-  # String: `net/http`, `fiber`, `echo`, `gin`
+  # String:
+  #   - `net/http`
+  #   - `fiber`
+  #   - `echo`
+  #   - `gin`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - backend: fiber
@@ -14,11 +18,15 @@ project:
   # Frontend for your project.
   # (Optional, to skip set to `none`)
   # String:
-  #   - `react`, `react:<template>`
-  #   - `preact`, `preact:<template>`
+  #   - `react`
+  #     - `react:<template>`
+  #   - `preact`
+  #     - `preact:<template>`
   #   - `vue`
-  #   - `svelte`
+  #     - `vue:<user/repo>` (for preset from GitHub)
+  #     - `vue:<gitlab|bitbucket>:<user/repo>` (for presets from others)
   #   - `angular`
+  #   - `svelte`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - frontend: svelte
@@ -41,7 +49,7 @@ project:
 roles:
   # Ansible roles for deploy your project.
   # (Optional, to skip set to empty or comment)
-  # Objects list: `deploy`
+  # Objects list.
   - deploy:
     # Username of remote's server or local's user.
     # (Required)

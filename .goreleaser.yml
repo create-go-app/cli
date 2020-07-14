@@ -23,7 +23,6 @@ builds:
       - CGO_ENABLED=0
 
 dockers:
-  # You can have multiple Docker images.
   - # GOOS of the built binary that should be used.
     goos: linux
     goarch: amd64
@@ -42,10 +41,10 @@ dockers:
       - "koddr/cgapp:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
       - "koddr/cgapp:{{ .Major }}.{{ .Minor }}"
       - "koddr/cgapp:{{ .Major }}"
-      - "koddr/cgapp-deploy:latest"
+      - "koddr/cgapp:latest"
 
     # Path to the Dockerfile (from the project root).
-    dockerfile: Dockerfile.deploy
+    dockerfile: Dockerfile
 
 archives:
   - # Replacements for GOOS and GOARCH in the archive name.

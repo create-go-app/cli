@@ -30,13 +30,13 @@ import "github.com/AlecAivazis/survey/v2"
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.4.1"
+	CLIVersion = "1.5.0"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
 	RegexpBackendPattern = "^(net/http|fiber|echo)$"
 	// RegexpFrontendPattern pattern for backend.
-	RegexpFrontendPattern = "^(p?react:?|vue|angular|svelte)"
+	RegexpFrontendPattern = "^(p?react:?|vue(:?[\\w]+)?(:?[\\w-_0-9\\/]+)?|angular|svelte)"
 	// RegexpWebServerPattern pattern for web/proxy servers.
 	RegexpWebServerPattern = "^(nginx)$"
 	// RegexpDatabasePattern pattern for databases.
@@ -132,6 +132,16 @@ var (
 				"name": "--name",
 			},
 		},
+		"vue": {
+			Runner: "vue",
+			Create: "create",
+			Args:   map[string]string{},
+		},
+		"angular": {
+			Runner: "ng",
+			Create: "new",
+			Args:   map[string]string{},
+		},
 		"svelte": {
 			Runner: "npx",
 			Create: "degit",
@@ -156,7 +166,7 @@ var (
 			Name: "frontend",
 			Prompt: &survey.Select{
 				Message: "Choose a frontend UI library:",
-				Options: []string{"none", "React", "Preact", "Svelte"},
+				Options: []string{"none", "React", "Preact", "Vue", "Angular", "Svelte"},
 				Default: "none",
 			},
 		},
