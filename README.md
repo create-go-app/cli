@@ -46,12 +46,12 @@ docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest
 
 > ☝️ Also, with this Docker image, you do **not** have to worry about installing tools/CLI of frontend UI libraries/frameworks. Everything is **already included** to this Docker image: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit` (for Svelte).
 
-**Available commands for official Docker image:**
+Available commands for official Docker image:
 
 - [x] [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
 - [x] [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
 
-> 🔔 Please note: the [`deploy`](/detailed-guides/commands-and-options/#deploy) command is currently unavailable.
+> 🔔 Please note: a [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently unavailable in this image.
 
 ## 📖 [Official Documentation](https://create-go.app/)
 
