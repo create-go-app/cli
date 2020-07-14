@@ -232,20 +232,20 @@ cgapp deploy --use-config
 **Frontend:**
 
 - [x] `react` — [React](https://reactjs.org/) frontend app.
-  - [x] `react:<template>` — CRA generated template for React app.
+  - `react:<template>` — CRA generated template for React app.
 - [x] `preact` — [Preact](https://preactjs.com/) frontend app.
-  - [x] `preact:<template>` — Preact CLI generated template for Preact app.
+  - `preact:<template>` — Preact CLI generated template for Preact app.
 - [x] `vue` — [Vue.js](https://vuejs.org/) frontend app.
-  - [x] `vue:<user/repo>` — Preset for generating Vue.js app from GitHub.
-  - [x] `vue:<gitlab|bitbucket>:<user/repo>` — Preset for generating Vue.js app from GitLab/BitBucket/etc.
+  - `vue:<user/repo>` — Preset for generating Vue.js app from GitHub.
+  - `vue:<gitlab|bitbucket>:<user/repo>` — Preset for generating Vue.js app from GitLab/BitBucket/etc.
 - [x] `angular` — [Angular](https://angular.io/) frontend app.
 - [x] `svelte` — [Svelte](https://svelte.dev/) frontend app.
 - [x] `sapper` — [Sapper](https://sapper.svelte.dev/) frontend app for static websites.
-  - [x] `sapper:<webpack>` — Preset for generating Sapper with Webpack bundler.
+  - `sapper:<webpack>` — Preset for generating Sapper with Webpack bundler.
 
 > ☝️ Please note, that since version `v1.3.0`, frontend templates (_in the classical sense_) are **not** supported by the Create Go App CLI. Those templates, that we created ([`react-js`](https://github.com/create-go-app/react-js-template), [`react-ts`](https://github.com/create-go-app/react-ts-template) and [`preact-js`](https://github.com/create-go-app/preact-js-template)), are still available, but only for use as **user's custom templates**.
 >
-> Now, the frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular` or `Svelte` for your project from their authors!
+> Now, the frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
 
 ## 🐳 [Configured Docker containers](https://create-go.app/docker-containers/)
 
