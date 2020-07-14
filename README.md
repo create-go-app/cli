@@ -231,11 +231,15 @@ cgapp deploy --use-config
 
 **Frontend:**
 
-- [x] [`react`](https://create-go.app/production-templates/react-js/) — Frontend app with [React.js](https://reactjs.org).
-- [x] [`preact`](https://create-go.app/production-templates/preact-js/) — Frontend app with [Preact](https://preactjs.com).
-- [ ] [`vue`](https://create-go.app/production-templates/vue-js/) _WIP_ — Frontend app with [Vue.js](https://vuejs.org).
+> Please note, that since version `v1.3.0`, frontend templates (_in the classical sense_) are **not** supported by the Create Go App CLI. Those templates, that we created ([`react-js`](https://github.com/create-go-app/react-js-template), [`react-ts`](https://github.com/create-go-app/react-ts-template) and [`preact-js`](https://github.com/create-go-app/preact-js-template)), are still available, but only for use as **user's custom templates**.
+>
+> Now, the frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Svelte` or `Angular` for your project from their authors!
+
+- [x] [`react`](https://create-go.app/production-templates/react-js/), `react:<template>` — Frontend app with [React.js](https://reactjs.org).
+- [x] [`preact`](https://create-go.app/production-templates/preact-js/), `preact:<template>` — Frontend app with [Preact](https://preactjs.com).
+- [x] [`vue`](https://create-go.app/production-templates/vue-js/), `vue:<user/preset-repo>`, `vue:<gitlab|bitbucket>:<user/preset-repo>` — Frontend app with [Vue.js](https://vuejs.org).
+- [x] [`angular`](https://create-go.app/production-templates/angular-js/) — Frontend app with [Angular](https://angular.io).
 - [x] [`svelte`](https://create-go.app/production-templates/svelte-js/) — Frontend app with [Svelte](https://svelte.dev).
-- [ ] [`angular`](https://create-go.app/production-templates/angular-js/) _WIP_ — Frontend app with [Angular](https://angular.io).
 
 ## 🐳 [Configured Docker containers](https://create-go.app/docker-containers/)
 
