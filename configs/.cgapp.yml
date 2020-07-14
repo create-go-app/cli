@@ -27,6 +27,8 @@ project:
   #     - `vue:<gitlab|bitbucket>:<user/repo>` (for presets from others)
   #   - `angular`
   #   - `svelte`
+  #   - `sapper`
+  #     - `sapper:<webpack>`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - frontend: svelte
