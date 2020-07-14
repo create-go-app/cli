@@ -34,6 +34,8 @@ Okay, it works! Now, you can run this project on your **local machine** or deplo
 cgapp deploy
 ```
 
+That's all you need to start! 🎉
+
 ### ~ [Docker-way to quick start](https://create-go.app/detailed-guides/official-docker-image/)
 
 If you don't want to install Create Go App CLI to your system, you feel free to using our official [Docker image](https://hub.docker.com/r/koddr/cgapp) and run CLI from isolated container:
@@ -44,7 +46,12 @@ docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest
 
 > ☝️ Also, with this Docker image, you do **not** have to worry about installing tools/CLI of frontend UI libraries/frameworks. Everything is **already included** to this Docker image: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit` (for Svelte).
 
-That's all you need to start! 🎉
+**Available commands for official Docker image:**
+
+- [x] [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
+- [x] [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
+
+> 🔔 Please note: the [`deploy`](/detailed-guides/commands-and-options/#deploy) command is currently unavailable.
 
 ## 📖 [Official Documentation](https://create-go.app/)
 
