@@ -2,9 +2,15 @@ name: Testing CLI
 
 on:
   push:
-    branches: [master]
+    branches: [dev]
+    paths:
+      - "configs/**"
+      - "**.go"
   pull_request:
     branches: [master]
+    paths:
+      - "configs/**"
+      - "**.go"
 
 jobs:
   build:
