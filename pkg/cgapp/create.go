@@ -152,6 +152,13 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 			// npx degit [template] [dest]
 			options = []string{create, args["template"], folder}
 			break
+		case "sapper":
+			// npx degit [template] [dest]
+			options = []string{create, args["template"] + "#rollup", folder}
+			if len(project) > 1 {
+				options = []string{create, args["template"] + "#" + project[1], folder}
+			}
+			break
 		}
 
 		// Run execution command.

@@ -287,11 +287,30 @@ func TestCreateProjectFromCmd(t *testing.T) {
 			false,
 		},
 		{
+			"successfully create sapper:webpack",
+			args{
+				p: &registry.Project{
+					Type:       "frontend",
+					Name:       "sapper:webpack",
+					RootFolder: "../../tmp",
+				},
+				c: map[string]*registry.Command{
+					"sapper": {
+						Runner: "echo",
+						Create: "sapper",
+						Args:   map[string]string{},
+					},
+				},
+				m: registry.RegexpFrontendPattern,
+			},
+			false,
+		},
+		{
 			"successfully create from user repository",
 			args{
 				p: &registry.Project{
 					Type:       "frontend",
-					Name:       "github.com/create-go-app/preact-js-template",
+					Name:       "github.com/create-go-app/gin-go-template",
 					RootFolder: "../../tmp",
 				},
 				c: registry.Commands,

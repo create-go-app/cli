@@ -36,7 +36,7 @@ const (
 	// RegexpBackendPattern pattern for backend.
 	RegexpBackendPattern = "^(net/http|fiber|echo)$"
 	// RegexpFrontendPattern pattern for backend.
-	RegexpFrontendPattern = "^(p?react:?|vue(:?[\\w]+)?(:?[\\w-_0-9\\/]+)?|angular|svelte)"
+	RegexpFrontendPattern = "^(p?react:?|vue(:?[\\w]+)?(:?[\\w-_0-9\\/]+)?|angular|svelte|sapper:?)"
 	// RegexpWebServerPattern pattern for web/proxy servers.
 	RegexpWebServerPattern = "^(nginx)$"
 	// RegexpDatabasePattern pattern for databases.
@@ -149,6 +149,13 @@ var (
 				"template": "sveltejs/template",
 			},
 		},
+		"sapper": {
+			Runner: "npx",
+			Create: "degit",
+			Args: map[string]string{
+				"template": "sveltejs/sapper-template",
+			},
+		},
 	}
 
 	// CreateQuestions survey's questions for `create` command.
@@ -166,7 +173,7 @@ var (
 			Name: "frontend",
 			Prompt: &survey.Select{
 				Message: "Choose a frontend UI library:",
-				Options: []string{"none", "React", "Preact", "Vue", "Angular", "Svelte"},
+				Options: []string{"none", "React", "Preact", "Vue", "Angular", "Svelte", "Sapper"},
 				Default: "none",
 			},
 		},
