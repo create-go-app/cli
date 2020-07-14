@@ -10,7 +10,7 @@
 
 First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.11` or higher is required.
 
-Next, download the **latest** version of the Create Go App CLI to your computer:
+Next, download the **latest** version of the Create Go App CLI to your system:
 
 ```bash
 go get -u github.com/create-go-app/cli
@@ -22,7 +22,7 @@ Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Co
 go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
 ```
 
-Let's create a new project via **interactive console UI** (or **CUI**) into current folder:
+Let's create a new project via **interactive console UI** (or **CUI** for short) into current folder:
 
 ```bash
 cgapp create
