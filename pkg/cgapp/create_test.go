@@ -173,7 +173,7 @@ func TestCreateProjectFromCmd(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"successfully create react",
+			"successfully create react:redux",
 			args{
 				p: &registry.Project{
 					Type:       "frontend",
@@ -211,6 +211,63 @@ func TestCreateProjectFromCmd(t *testing.T) {
 			false,
 		},
 		{
+			"successfully create vue (with mock for GitHub)",
+			args{
+				p: &registry.Project{
+					Type:       "frontend",
+					Name:       "vue:mock",
+					RootFolder: "../../tmp",
+				},
+				c: map[string]*registry.Command{
+					"vue": {
+						Runner: "echo",
+						Create: "vue",
+						Args:   map[string]string{},
+					},
+				},
+				m: registry.RegexpFrontendPattern,
+			},
+			false,
+		},
+		{
+			"successfully create vue (with mock for others)",
+			args{
+				p: &registry.Project{
+					Type:       "frontend",
+					Name:       "vue:mock:mock",
+					RootFolder: "../../tmp",
+				},
+				c: map[string]*registry.Command{
+					"vue": {
+						Runner: "echo",
+						Create: "vue",
+						Args:   map[string]string{},
+					},
+				},
+				m: registry.RegexpFrontendPattern,
+			},
+			false,
+		},
+		{
+			"successfully create angular",
+			args{
+				p: &registry.Project{
+					Type:       "frontend",
+					Name:       "angular",
+					RootFolder: "../../tmp",
+				},
+				c: map[string]*registry.Command{
+					"angular": {
+						Runner: "echo",
+						Create: "angular",
+						Args:   map[string]string{},
+					},
+				},
+				m: registry.RegexpFrontendPattern,
+			},
+			false,
+		},
+		{
 			"successfully create svelte",
 			args{
 				p: &registry.Project{
@@ -230,11 +287,30 @@ func TestCreateProjectFromCmd(t *testing.T) {
 			false,
 		},
 		{
+			"successfully create sapper:webpack",
+			args{
+				p: &registry.Project{
+					Type:       "frontend",
+					Name:       "sapper:webpack",
+					RootFolder: "../../tmp",
+				},
+				c: map[string]*registry.Command{
+					"sapper": {
+						Runner: "echo",
+						Create: "sapper",
+						Args:   map[string]string{},
+					},
+				},
+				m: registry.RegexpFrontendPattern,
+			},
+			false,
+		},
+		{
 			"successfully create from user repository",
 			args{
 				p: &registry.Project{
 					Type:       "frontend",
-					Name:       "github.com/create-go-app/preact-js-template",
+					Name:       "github.com/create-go-app/gin-go-template",
 					RootFolder: "../../tmp",
 				},
 				c: registry.Commands,

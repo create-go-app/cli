@@ -134,9 +134,30 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 				options = []string{create, project[1], p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
 			}
 			break
+		case "vue":
+			// vue create [options] <app-name>
+			options = []string{create, "--default", "--bare", p.Type}
+			if len(project) == 2 {
+				options = []string{create, "--preset", project[1], "--bare", p.Type}
+			}
+			if len(project) == 3 {
+				options = []string{create, "--preset", project[1] + ":" + project[2], "--bare", "--clone", p.Type}
+			}
+			break
+		case "angular":
+			// ng new <app-name> [options]
+			options = []string{create, "cgapp", "--defaults", "--routing", "--directory", p.Type}
+			break
 		case "svelte":
 			// npx degit [template] [dest]
 			options = []string{create, args["template"], folder}
+			break
+		case "sapper":
+			// npx degit [template] [dest]
+			options = []string{create, args["template"] + "#rollup", folder}
+			if len(project) > 1 {
+				options = []string{create, args["template"] + "#" + project[1], folder}
+			}
 			break
 		}
 

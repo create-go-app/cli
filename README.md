@@ -4,7 +4,7 @@
 </h1>
 <p align="center">Create a new production-ready project with <b>backend</b> (Golang), <b>frontend</b> (JavaScript, TypeScript)<br/>and <b>deploy automation</b> (Ansible, Docker) by running one CLI command.<br/><br/>Focus on <b>writing</b> code and <b>thinking</b> of business-logic! The CLI will take care of the rest.</p>
 
-<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.4.1-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
+<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.5.0-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
 
 ## ⚡️ [Quick start](https://create-go.app/quick-start/)
 
@@ -96,7 +96,11 @@ cgapp init
 project:
   # Backend for your project.
   # (Required)
-  # String: `net/http`, `fiber`, `echo`, `gin`
+  # String:
+  #   - `net/http`
+  #   - `fiber`
+  #   - `echo`
+  #   - `gin`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - backend: fiber
@@ -104,11 +108,15 @@ project:
   # Frontend for your project.
   # (Optional, to skip set to `none`)
   # String:
-  #   - `react`, `react:<template>`
-  #   - `preact`, `preact:<template>`
+  #   - `react`
+  #     - `react:<template>`
+  #   - `preact`
+  #     - `preact:<template>`
   #   - `vue`
-  #   - `svelte`
+  #     - `vue:<user/repo>` (for preset from GitHub)
+  #     - `vue:<gitlab|bitbucket>:<user/repo>` (for presets from others)
   #   - `angular`
+  #   - `svelte`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - frontend: svelte
@@ -131,7 +139,7 @@ project:
 roles:
   # Ansible roles for deploy your project.
   # (Optional, to skip set to empty or comment)
-  # Objects list: `deploy`
+  # Objects list.
   - deploy:
     # Username of remote's server or local's user.
     # (Required)
@@ -223,11 +231,21 @@ cgapp deploy --use-config
 
 **Frontend:**
 
-- [x] [`react`](https://create-go.app/production-templates/react-js/) — Frontend app with [React.js](https://reactjs.org).
-- [x] [`preact`](https://create-go.app/production-templates/preact-js/) — Frontend app with [Preact](https://preactjs.com).
-- [ ] [`vue`](https://create-go.app/production-templates/vue-js/) _WIP_ — Frontend app with [Vue.js](https://vuejs.org).
-- [x] [`svelte`](https://create-go.app/production-templates/svelte-js/) — Frontend app with [Svelte](https://svelte.dev).
-- [ ] [`angular`](https://create-go.app/production-templates/angular-js/) _WIP_ — Frontend app with [Angular](https://angular.io).
+- [x] `react` — [React](https://reactjs.org/) frontend app.
+  - `react:<template>` — CRA generated template for React app.
+- [x] `preact` — [Preact](https://preactjs.com/) frontend app.
+  - `preact:<template>` — Preact CLI generated template for Preact app.
+- [x] `vue` — [Vue.js](https://vuejs.org/) frontend app.
+  - `vue:<user/repo>` — Preset for generating Vue.js app from GitHub.
+  - `vue:<gitlab|bitbucket>:<user/repo>` — Preset for generating Vue.js app from GitLab/BitBucket/etc.
+- [x] `angular` — [Angular](https://angular.io/) frontend app.
+- [x] `svelte` — [Svelte](https://svelte.dev/) frontend app.
+- [x] `sapper` — [Sapper](https://sapper.svelte.dev/) frontend app for static websites.
+  - `sapper:<webpack>` — Preset for generating Sapper with Webpack bundler.
+
+> ☝️ Please note, that since version `v1.3.0`, frontend templates (_in the classical sense_) are **not** supported by the Create Go App CLI. Those templates, that we created ([`react-js`](https://github.com/create-go-app/react-js-template), [`react-ts`](https://github.com/create-go-app/react-ts-template) and [`preact-js`](https://github.com/create-go-app/preact-js-template)), are still available, but only for use as **user's custom templates**.
+>
+> Now, the frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
 
 ## 🐳 [Configured Docker containers](https://create-go.app/docker-containers/)
 
