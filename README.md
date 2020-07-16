@@ -44,7 +44,7 @@ If you don't want to install Create Go App CLI to your system, you feel free to 
 docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest
 ```
 
-> ☝️ Also, with this Docker image, you do **not** have to worry about installing tools/CLI of frontend UI libraries/frameworks. Everything is **already included** to this Docker image: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit` (for Svelte).
+With this Docker image, you do **not** have to worry about installing tools/CLI of frontend UI libraries/frameworks. Everything is **already included** to this Docker image: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit` (for Svelte and Sapper).
 
 Available commands for official Docker image:
 
