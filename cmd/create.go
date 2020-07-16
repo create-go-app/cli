@@ -172,15 +172,6 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 			os.Exit(1)
 		}
-
-		// Create Dockerfile for frontend.
-		filesToMake := map[string][]byte{
-			"frontend/Dockerfile": embed.Get("/Dockerfile.frontend"),
-		}
-		if err := cgapp.MakeFiles(currentDir, filesToMake); err != nil {
-			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
 	}
 
 	// Docker containers.

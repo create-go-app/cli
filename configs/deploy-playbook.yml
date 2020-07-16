@@ -7,8 +7,6 @@
   become: yes
 
   roles:
-    # Build & run project's frontend
-    - deploy/cgapp_frontend
     # Build & run project's backend
     - deploy/cgapp_backend
     # Configure and run project's webserver
