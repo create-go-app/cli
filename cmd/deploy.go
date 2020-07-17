@@ -35,7 +35,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// deployCmd represents the `deploy` command
+// deployCmd represents the `deploy` command.
 var deployCmd = &cobra.Command{
 	Use:     "deploy",
 	Aliases: []string{"serve"},
@@ -44,7 +44,7 @@ var deployCmd = &cobra.Command{
 	Run:     runDeployCmd,
 }
 
-// runDeployCmd represents runner for the `deploy` command
+// runDeployCmd represents runner for the `deploy` command.
 var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	// Start message.
 	cgapp.SendMsg(true, "* * *", "Deploying project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
@@ -112,7 +112,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	// Stop timer
+	// Stop timer.
 	stopTimer := time.Since(startTimer).String()
 
 	// End message.

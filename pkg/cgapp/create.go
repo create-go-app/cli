@@ -47,11 +47,6 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 	// Create path in project root folder.
 	folder := filepath.Join(p.RootFolder, p.Type)
 
-	// Re-define folder for Ansible roles
-	if p.Type == "roles" {
-		folder = filepath.Join(p.RootFolder, p.Type, p.Name)
-	}
-
 	// Create match expration.
 	match, err := regexp.MatchString(m, p.Name)
 	if err != nil {

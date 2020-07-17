@@ -32,7 +32,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// initCmd represents the init command
+// initCmd represents the init command.
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Init a configuration file for the Create Go App project",
@@ -40,6 +40,7 @@ var initCmd = &cobra.Command{
 	Run:   runInitCmd,
 }
 
+// runInitCmd represents runner for the `init` command.
 var runInitCmd = func(cmd *cobra.Command, args []string) {
 	// Get current directory.
 	currentDir, _ := os.Getwd()

@@ -58,28 +58,15 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			false,
 		},
 		{
-			"successfully created Ansible deploy roles",
-			args{
-				p: &registry.Project{
-					Type:       "roles",
-					Name:       "deploy",
-					RootFolder: "../../tmp",
-				},
-				r: registry.Repositories,
-				m: registry.RegexpAnsiblePattern,
-			},
-			false,
-		},
-		{
 			"failed to create (not valid repository)",
 			args{
 				p: &registry.Project{
-					Type:       "roles",
-					Name:       "deploy",
+					Type:       "backend",
+					Name:       "echo",
 					RootFolder: "../../tmp",
 				},
 				r: map[string]*registry.Repository{
-					"roles": {
+					"backend": {
 						List: map[string]string{},
 					},
 				},
@@ -91,12 +78,12 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			"failed to create (not valid repository with wrong name)",
 			args{
 				p: &registry.Project{
-					Type:       "roles",
+					Type:       "backend",
 					Name:       "wrong-name",
 					RootFolder: "../../tmp",
 				},
 				r: map[string]*registry.Repository{
-					"roles": {
+					"backend": {
 						List: map[string]string{},
 					},
 				},
@@ -108,8 +95,8 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			"failed to create (repositories is nil)",
 			args{
 				p: &registry.Project{
-					Type:       "roles",
-					Name:       "deploy",
+					Type:       "backend",
+					Name:       "echo",
 					RootFolder: "../../tmp",
 				},
 				r: nil,
@@ -130,8 +117,8 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			"failed to create (pattern is nil)",
 			args{
 				p: &registry.Project{
-					Type:       "roles",
-					Name:       "deploy",
+					Type:       "backend",
+					Name:       "echo",
 					RootFolder: "../../tmp",
 				},
 				r: registry.Repositories,

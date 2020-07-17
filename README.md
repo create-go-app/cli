@@ -4,7 +4,7 @@
 </h1>
 <p align="center">Create a new production-ready project with <b>backend</b> (Golang), <b>frontend</b> (JavaScript, TypeScript)<br/>and <b>deploy automation</b> (Ansible, Docker) by running one CLI command.<br/><br/>Focus on <b>writing</b> code and <b>thinking</b> of business-logic! The CLI will take care of the rest.</p>
 
-<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.5.1-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
+<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.5.2-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
 
 ## ⚡️ [Quick start](https://create-go.app/quick-start/)
 
@@ -13,7 +13,7 @@ First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.
 Next, download the **latest** version of the Create Go App CLI to your system:
 
 ```bash
-go get -u github.com/create-go-app/cli
+go get github.com/create-go-app/cli
 ```
 
 Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with `$GOPATH/bin`:
@@ -44,7 +44,7 @@ If you don't want to install Create Go App CLI to your system, you feel free to 
 docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest
 ```
 
-With this Docker image, you do **not** have to worry about installing tools/CLI of frontend UI libraries/frameworks. Everything is **already included** to this Docker image: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit` (for Svelte and Sapper).
+With this Docker image, you do **not** have to worry about installing tools/CLI of frontend UI libraries/frameworks. Everything is **already included**: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit` (for Svelte and Sapper).
 
 Available commands for official Docker image:
 
@@ -261,9 +261,9 @@ cgapp deploy --use-config
 
 ## 🤔 Why another CLI?
 
-Yes, when we started this project, we asked ourselves this question too and... came to the conclusion, that about **8-10** routine steps in each project can be automated with a smart CLI.
+When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project and/or the deployment of an existing one **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
 
-The Create Go App project allow you to prepare and deploy your project **without** any unnecessary headaches.
+So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React.js ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
 
 ## ⭐️ Project assistance
 
