@@ -6,10 +6,117 @@
 - hosts: "{{ host }}"
   become: yes
 
-  roles:
-    # Build & run project's backend
-    - deploy/cgapp_backend
-    # Configure and run project's webserver
-    - deploy/cgapp_webserver
-    # Configure and run project's database
-    - deploy/cgapp_database
+  tasks:
+    #
+    # Create a new Docker network for connect all project elements into one network.
+    #
+    - name: Create a new Docker network ({{ network_name }})
+      docker_network:
+        name: "{{ network_name }}"
+
+    #
+    # Check all necessary project folders for future use.
+    #
+    - name: Check, if ./backend directory is exists
+      stat:
+        path: ./backend
+      register: backend_folder
+
+    - name: Check, if ./frontend directory is exists (for static files)
+      stat:
+        path: ./frontend
+      register: frontend_folder
+
+    - name: Check, if ./webserver directory is exists
+      stat:
+        path: ./webserver
+      register: webserver_folder
+
+    - name: Check, if ./database directory is exists
+      stat:
+        path: ./database
+      register: database_folder
+
+    #
+    # The block that builds and runs the backend part of the project.
+    #
+    - name: Backend block
+      block:
+        - name: Builds Docker image for backend
+          docker_image:
+            name: cgapp_backend # name of the backend image
+            build:
+              path: ./backend # folder with Dockerfile
+              pull: yes
+            source: build
+
+        - name: Runs Docker container with backend
+          docker_container:
+            name: cgapp-backend # name of the backend container
+            image: cgapp_backend:latest
+            recreate: yes
+            networks:
+              - name: "{{ network_name }}"
+            volumes:
+              # If ./frontend folder is exists, playbook will include a `dist` folder to container,
+              # or include a default placeholder webpage (to sure, what everything is working).
+              - "{{ './frontend/dist:/static:ro' if frontend_folder.stat.exists else './backend/static:/static:ro' }}"
+            ports:
+              - "5000:5000"
+            state: started
+      # Run block only if ./backend is a folder and exists.
+      when: backend_folder.stat.exists and backend_folder.stat.isdir
+
+    #
+    # The block that builds and runs the webserver part of the project.
+    #
+    - name: Webserver block
+      block:
+        - name: Builds Docker image for webserver
+          docker_image:
+            name: cgapp_webserver # name of the webserver image
+            build:
+              path: ./webserver
+              pull: yes
+            source: build
+
+        - name: Runs Docker container with webserver
+          docker_container:
+            name: cgapp-webserver # name of the webserver container
+            image: cgapp_webserver:latest
+            recreate: yes
+            networks:
+              - name: "{{ network_name }}"
+            env:
+              APP_DOMAIN: "{{ host }}"
+            ports:
+              - "80:80"
+            state: started
+      # Run block only if ./webserver is a folder and exists.
+      when: webserver_folder.stat.exists and webserver_folder.stat.isdir
+
+    #
+    # The block that builds and runs the database part of the project.
+    #
+    - name: Database block
+      block:
+        - name: Builds Docker image for database
+          docker_image:
+            name: cgapp_database # name of the database image
+            build:
+              path: ./database # folder with Dockerfile
+              pull: yes
+            source: build
+
+        - name: Runs Docker container with database
+          docker_container:
+            name: cgapp-database # name of the database container
+            image: cgapp_database:latest
+            recreate: yes
+            networks:
+              - name: "{{ network_name }}"
+            ports:
+              - "5432:5432"
+            state: started
+      # Run block only if ./database is a folder and exists.
+      when: database_folder.stat.exists and database_folder.stat.isdir
