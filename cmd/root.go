@@ -57,7 +57,7 @@ var (
 	}
 )
 
-// rootCmd represents the base command when called without any subcommands
+// rootCmd represents the base command when called without any subcommands.
 var rootCmd = &cobra.Command{
 	Use:     "cgapp",
 	Version: registry.CLIVersion,
@@ -94,7 +94,7 @@ func initConfig() {
 			os.Exit(1)
 		}
 
-		// Parse configs
+		// Parse configs.
 		_ = viper.UnmarshalKey("project", &projectConfig)
 		_ = viper.UnmarshalKey("roles", &rolesConfig)
 	}

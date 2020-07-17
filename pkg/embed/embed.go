@@ -1,7 +1,7 @@
 //go:generate go run generator.go
 
 /*
-Package embed embed to binary all config files.
+Package embed includes function for embed to binary all config files.
 
 Create a new production-ready project with backend (Golang),
 frontend (JavaScript, TypeScript) and deploy automation
@@ -32,20 +32,20 @@ type embedBox struct {
 	storage map[string][]byte
 }
 
-// Create new box for embed files
+// Create new box for embed files.
 func newEmbedBox() *embedBox {
 	return &embedBox{
 		storage: make(map[string][]byte),
 	}
 }
 
-// Add a file to box
+// Add a file to box.
 func (e *embedBox) Add(file string, content []byte) {
 	e.storage[file] = content
 }
 
-// Get file's content
-// Always use / for looking up
+// Get file's content.
+// Always use / for looking up.
 // For example: /init/README.md is actually configs/init/README.md
 func (e *embedBox) Get(file string) []byte {
 	if f, ok := e.storage[file]; ok {
@@ -54,7 +54,7 @@ func (e *embedBox) Get(file string) []byte {
 	return nil
 }
 
-// Find for a file
+// Find for a file.
 func (e *embedBox) Has(file string) bool {
 	if _, ok := e.storage[file]; ok {
 		return true
@@ -62,20 +62,20 @@ func (e *embedBox) Has(file string) bool {
 	return false
 }
 
-// Embed box expose
+// Embed box expose.
 var box = newEmbedBox()
 
-// Add a file content to box
+// Add a file content to box.
 func Add(file string, content []byte) {
 	box.Add(file, content)
 }
 
-// Get a file from box
+// Get a file from box.
 func Get(file string) []byte {
 	return box.Get(file)
 }
 
-// Has a file in box
+// Has a file in box.
 func Has(file string) bool {
 	return box.Has(file)
 }

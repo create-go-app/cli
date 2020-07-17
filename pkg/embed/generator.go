@@ -42,65 +42,64 @@ func fmtByteSlice(s []byte) string {
 }
 
 func main() {
-	// Checking directory with files
+	// Checking directory with files.
 	if _, err := os.Stat(embedFolder); os.IsNotExist(err) {
 		log.Fatal("Configs directory does not exists!")
 	}
 
-	// Create map for filenames
+	// Create map for filenames.
 	configs := make(map[string][]byte)
 
-	// Walking through embed directory
-	err := filepath.Walk(embedFolder, func(path string, info os.FileInfo, err error) error {
+	// Walking through embed directory.
+	if err := filepath.Walk(embedFolder, func(path string, info os.FileInfo, err error) error {
 		relativePath := filepath.ToSlash(strings.TrimPrefix(path, embedFolder))
 
 		if info.IsDir() {
-			// Skip directories
+			// Skip directories.
 			log.Println(path, "is a directory, skipping...")
 			return nil
 		} else {
-			// If element is a simple file, embed
+			// If element is a simple file, embed.
 			log.Println(path, "is a file, packing in... \U0001F4E6")
 
 			b, err := ioutil.ReadFile(path)
 			if err != nil {
-				// If file not reading
+				// If file not reading.
 				log.Printf("Error reading %s: %s", path, err)
 				return err
 			}
 
-			// Add file name to map
+			// Add file name to map.
 			configs[relativePath] = b
 		}
 
 		return nil
-	})
-	if err != nil {
+	}); err != nil {
 		log.Fatal("Error walking through embed directory:", err)
 	}
 
-	// Create blob file
+	// Create blob file.
 	f, err := os.Create(blobFileName)
 	if err != nil {
 		log.Fatal("Error creating blob file:", err)
 	}
 	defer f.Close()
 
-	// Create buffer
+	// Create buffer.
 	builder := &bytes.Buffer{}
 
-	// Execute template
+	// Execute template.
 	if err = tmpl.Execute(builder, configs); err != nil {
 		log.Fatal("Error executing template", err)
 	}
 
-	// Formatting generated code
+	// Formatting generated code.
 	data, err := format.Source(builder.Bytes())
 	if err != nil {
 		log.Fatal("Error formatting generated code", err)
 	}
 
-	// Writing blob file
+	// Writing blob file.
 	if err = ioutil.WriteFile(blobFileName, data, os.ModePerm); err != nil {
 		log.Fatal("Error writing blob file", err)
 	}

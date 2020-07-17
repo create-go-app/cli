@@ -114,29 +114,15 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	// Create Ansible playbook and download roles, if not skipped.
+	// Create Ansible playbook with tasks, if not skipped.
 	if installAnsibleRoles {
-		cgapp.SendMsg(true, "*", "Create Ansible playbook and roles...", "cyan", true)
+		cgapp.SendMsg(true, "*", "Create Ansible playbook with tasks...", "cyan", true)
 
 		// Create playbook.
 		fileToMake := map[string][]byte{
 			"deploy-playbook.yml": embed.Get("/deploy-playbook.yml"),
 		}
 		if err := cgapp.MakeFiles(currentDir, fileToMake); err != nil {
-			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
-
-		// Create Ansible roles.
-		if err := cgapp.CreateProjectFromRegistry(
-			&registry.Project{
-				Type:       "roles",
-				Name:       "deploy",
-				RootFolder: currentDir,
-			},
-			registry.Repositories,
-			registry.RegexpAnsiblePattern,
-		); err != nil {
 			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 			os.Exit(1)
 		}

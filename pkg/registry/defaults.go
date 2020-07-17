@@ -30,7 +30,7 @@ import "github.com/AlecAivazis/survey/v2"
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.5.1"
+	CLIVersion = "1.5.2"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
@@ -84,13 +84,6 @@ type DeployAnswers struct {
 var (
 	// Repositories collection.
 	Repositories = map[string]*Repository{
-		// Ansible roles.
-		"roles": {
-			List: map[string]string{
-				"deploy": "github.com/create-go-app/ansible-roles-deploy",
-			},
-		},
-
 		// Backend templates.
 		"backend": {
 			List: map[string]string{
