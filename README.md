@@ -13,7 +13,7 @@ First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.
 Next, download the **latest** version of the Create Go App CLI to your system:
 
 ```bash
-go get -u github.com/create-go-app/cli
+go get github.com/create-go-app/cli
 ```
 
 Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with `$GOPATH/bin`:
