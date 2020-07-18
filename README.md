@@ -86,6 +86,8 @@ CLI command for generate a default `.cgapp.yml` config file in current folder:
 cgapp init
 ```
 
+📺 Preview: https://recordit.co/yvlnIu8Lyp
+
 <details>
 <summary>Generated config file</summary>
 
@@ -187,6 +189,8 @@ Run `create` command **without** any arguments:
 cgapp create
 ```
 
+📺 Preview: https://recordit.co/LTxFQloedn
+
 #### Create from the config file
 
 Run `create` command **with** `--use-config` (or `-c`) argument:
@@ -213,6 +217,8 @@ Run `deploy` command **without** any arguments:
 ```bash
 cgapp deploy
 ```
+
+📺 Preview: https://recordit.co/ewjG9dgMPX
 
 #### Deploy from the config file
 
