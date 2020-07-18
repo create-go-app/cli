@@ -53,6 +53,15 @@ Available commands for official Docker image:
 
 > 🔔 Please note: a [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently unavailable in this image.
 
+## 📺 Video screencast
+
+A short video screencast to introduce main features of the Create Go App CLI.
+
+<a align="center" href="https://youtu.be/5-DNZFU9TOQ" target="_blank">
+    <img src="https://create-go.app/assets/images/youtube-preview.jpg" alt="youtube preview"/><br/>
+    🔗 https://youtu.be/5-DNZFU9TOQ
+</a>
+
 ## 📖 [Official Documentation](https://create-go.app/)
 
 Unfortunately, we are unable to include all helpful documentation to the `README` file. That's why, the best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/).
