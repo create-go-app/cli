@@ -6,11 +6,17 @@ on:
     paths:
       - "configs/**"
       - "**.go"
+    paths-ignore:
+      - ".github/**"
+      - "**.md"
   pull_request:
     branches: [master]
     paths:
       - "configs/**"
       - "**.go"
+    paths-ignore:
+      - ".github/**"
+      - "**.md"
 
 jobs:
   build:
