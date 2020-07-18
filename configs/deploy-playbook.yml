@@ -115,6 +115,13 @@
             recreate: yes
             networks:
               - name: "{{ network_name }}"
+            volumes:
+              - ./database/backup:/var/lib/postgresql/data
+            env:
+              POSTGRES_USER: "{{ db_user }}"
+              POSTGRES_PASSWORD: "{{ db_password }}"
+              POSTGRES_DB: "{{ db_name }}"
+              PGDATA: /var/lib/postgresql/data/pgdata
             ports:
               - "5432:5432"
             state: started
