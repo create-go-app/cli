@@ -189,7 +189,7 @@ var (
 		{
 			Name: "roles",
 			Prompt: &survey.Confirm{
-				Message: "Do you want to install Ansible roles for deploy your project?",
+				Message: "Do you want to create Ansible playbook for deploy your project?",
 				Default: true,
 			},
 		},
