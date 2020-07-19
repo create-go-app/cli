@@ -270,10 +270,6 @@ cgapp deploy --use-config
 
 - [x] [`nginx`](https://create-go.app/docker-containers/nginx/) — Docker container with [Nginx](https://nginx.org).
 
-**Database:**
-
-- [ ] [`postgres`](https://create-go.app/docker-containers/postgres/) _WIP_ — Docker container with [PostgreSQL](https://postgresql.org).
-
 ## 🤔 Why another CLI?
 
 When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project and/or the deployment of an existing one **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
