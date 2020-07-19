@@ -32,11 +32,6 @@
         path: ./webserver
       register: webserver_folder
 
-    - name: Check, if ./database directory is exists
-      stat:
-        path: ./database
-      register: database_folder
-
     #
     # The block that builds and runs the backend part of the project.
     #
@@ -94,29 +89,3 @@
             state: started
       # Run block only if ./webserver is a folder and exists.
       when: webserver_folder.stat.exists and webserver_folder.stat.isdir
-
-    #
-    # The block that builds and runs the database part of the project.
-    #
-    - name: Database block
-      block:
-        - name: Builds Docker image for database
-          docker_image:
-            name: cgapp_database # name of the database image
-            build:
-              path: ./database # folder with Dockerfile
-              pull: yes
-            source: build
-
-        - name: Runs Docker container with database
-          docker_container:
-            name: cgapp-database # name of the database container
-            image: cgapp_database:latest
-            recreate: yes
-            networks:
-              - name: "{{ network_name }}"
-            ports:
-              - "5432:5432"
-            state: started
-      # Run block only if ./database is a folder and exists.
-      when: database_folder.stat.exists and database_folder.stat.isdir

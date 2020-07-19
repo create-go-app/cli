@@ -40,13 +40,6 @@ project:
   # like `github.com/user/template`
   - webserver: nginx
 
-  # Web/proxy server for your project.
-  # (Optional, to skip set to `none`)
-  # String: `postgres`
-  # User template: supported, set to URL (without protocol),
-  # like `github.com/user/template`
-  - database: postgres
-
 # Automation config.
 roles:
   # Ansible roles for deploy your project.

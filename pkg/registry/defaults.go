@@ -30,7 +30,7 @@ import "github.com/AlecAivazis/survey/v2"
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.5.2"
+	CLIVersion = "1.6.0"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
@@ -39,8 +39,6 @@ const (
 	RegexpFrontendPattern = "^(p?react:?|vue(:?[\\w]+)?(:?[\\w-_0-9\\/]+)?|angular|svelte|sapper:?)"
 	// RegexpWebServerPattern pattern for web/proxy servers.
 	RegexpWebServerPattern = "^(nginx)$"
-	// RegexpDatabasePattern pattern for databases.
-	RegexpDatabasePattern = "^(postgres)$"
 )
 
 // Project struct for describe project.
@@ -67,7 +65,6 @@ type CreateAnswers struct {
 	Backend             string
 	Frontend            string
 	Webserver           string
-	Database            string
 	InstallAnsibleRoles bool `survey:"roles"`
 	AgreeCreation       bool `survey:"agree"`
 }
@@ -97,13 +94,6 @@ var (
 		"webserver": {
 			List: map[string]string{
 				"nginx": "github.com/create-go-app/nginx-docker",
-			},
-		},
-
-		// Docker containers with databases.
-		"database": {
-			List: map[string]string{
-				"postgres": "github.com/create-go-app/postgres-docker",
 			},
 		},
 	}
@@ -175,14 +165,6 @@ var (
 			Prompt: &survey.Select{
 				Message: "Choose a web/proxy server:",
 				Options: []string{"none", "Nginx"},
-				Default: "none",
-			},
-		},
-		{
-			Name: "database",
-			Prompt: &survey.Select{
-				Message: "Choose a database:",
-				Options: []string{"none", "Postgres"},
 				Default: "none",
 			},
 		},
