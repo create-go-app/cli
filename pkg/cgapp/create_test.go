@@ -45,19 +45,6 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			false,
 		},
 		{
-			"successfully created database",
-			args{
-				p: &registry.Project{
-					Type:       "database",
-					Name:       "postgres",
-					RootFolder: "../../tmp",
-				},
-				r: registry.Repositories,
-				m: registry.RegexpDatabasePattern,
-			},
-			false,
-		},
-		{
 			"failed to create (not valid repository)",
 			args{
 				p: &registry.Project{

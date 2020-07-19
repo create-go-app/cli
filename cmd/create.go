@@ -56,7 +56,6 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		backend = strings.ToLower(projectConfig["backend"].(string))
 		frontend = strings.ToLower(projectConfig["frontend"].(string))
 		webserver = strings.ToLower(projectConfig["webserver"].(string))
-		database = strings.ToLower(projectConfig["database"].(string))
 
 		// Check, if config file contains `roles` section
 		if rolesConfig != nil {
@@ -85,7 +84,6 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		backend = strings.ToLower(createAnswers.Backend)
 		frontend = strings.ToLower(createAnswers.Frontend)
 		webserver = strings.ToLower(createAnswers.Webserver)
-		database = strings.ToLower(createAnswers.Database)
 		installAnsibleRoles = createAnswers.InstallAnsibleRoles
 	}
 
@@ -161,7 +159,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	}
 
 	// Docker containers.
-	if webserver != "none" || database != "none" {
+	if webserver != "none" {
 
 		cgapp.SendMsg(true, "* * *", "Configuring Docker containers...", "yellow", false)
 
@@ -176,23 +174,6 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 				},
 				registry.Repositories,
 				registry.RegexpWebServerPattern,
-			); err != nil {
-				cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-				os.Exit(1)
-			}
-		}
-
-		if database != "none" {
-			// Create container with a database.
-			cgapp.SendMsg(true, "*", "Create container with database...", "cyan", true)
-			if err := cgapp.CreateProjectFromRegistry(
-				&registry.Project{
-					Type:       "database",
-					Name:       database,
-					RootFolder: currentDir,
-				},
-				registry.Repositories,
-				registry.RegexpDatabasePattern,
 			); err != nil {
 				cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
 				os.Exit(1)
