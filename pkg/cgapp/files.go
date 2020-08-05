@@ -38,7 +38,7 @@ func MakeFiles(rootFolder string, filesToMake map[string][]byte) error {
 		folder := filepath.Join(rootFolder, file)
 
 		// Write to created file.
-		if err := ioutil.WriteFile(folder, data, 0755); err != nil {
+		if err := ioutil.WriteFile(folder, data, 0600); err != nil {
 			return throwError("File `" + file + "` was not created!")
 		}
 
