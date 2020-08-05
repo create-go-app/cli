@@ -34,7 +34,7 @@ dockers:
     # Skips the docker push. Could be useful if you also do draft releases.
     # If set to auto, the release will not be pushed to the docker repository
     # in case there is an indicator for prerelease in the tag e.g. v1.0.0-rc1
-    # skip_push: true
+    skip_push: true
 
     # Templates of the Docker image names.
     image_templates:
