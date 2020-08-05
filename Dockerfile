@@ -12,7 +12,7 @@ COPY cgapp /cgapp
 RUN apk add --no-cache git npm
 
 # Install frontend CLIs (globally and in silent mode).
-RUN npm i -g -s \
+RUN npm i -g -s --unsafe-perm \
     create-react-app \
     preact-cli \
     @vue/cli \

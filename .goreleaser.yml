@@ -1,6 +1,6 @@
 project_name: cgapp
 env_files:
-  github_token: ~/.goreleaser/github_token
+  github_token: /home/koddr/.goreleaser/github_token
 
 before:
   hooks:
