@@ -187,7 +187,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	// End message.
 	cgapp.SendMsg(true, "* * *", "Completed in "+stopTimer+"!", "yellow", true)
 	cgapp.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	cgapp.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server.", "green", true)
+	cgapp.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server or run on localhost.", "green", true)
 }
 
 func init() {
@@ -195,6 +195,6 @@ func init() {
 	createCmd.PersistentFlags().BoolVarP(
 		&useConfigFile,
 		"use-config", "c", false,
-		"use config file to create a new project or deploy to a remote server (default is $PWD/.cgapp.yml)",
+		"use config file to create a new project or deploy to a remote server (by default, in $PWD/.cgapp.yml)",
 	)
 }
