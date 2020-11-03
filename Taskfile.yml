@@ -53,7 +53,7 @@ tasks:
       - task: test
       - git tag -a {{.TAG}} -m "{{.TAG}}"
       - git push origin {{.TAG}}
-      - sudo goreleaser --rm-dist
+      - goreleaser --snapshot --skip-publish --rm-dist
 
   delete-tag:
     desc: Delete git tag
