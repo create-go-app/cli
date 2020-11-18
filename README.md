@@ -230,6 +230,12 @@ Run `deploy` command **with** `--use-config` (or `-c`) argument:
 cgapp deploy --use-config
 ```
 
+## 🤔 Why another CLI?
+
+When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project and/or the deployment of an existing one **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
+
+So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React.js ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
+
 ## 📝 [Production-ready project templates](https://create-go.app/production-templates/)
 
 **Backend:**
@@ -262,12 +268,6 @@ cgapp deploy --use-config
 **Web/Proxy server:**
 
 - [x] [`nginx`](https://create-go.app/docker-containers/nginx/) — Docker container with [Nginx](https://nginx.org).
-
-## 🤔 Why another CLI?
-
-When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project and/or the deployment of an existing one **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
-
-So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React.js ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
 
 ## ⭐️ Project assistance
 
