@@ -269,6 +269,21 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 
 - [x] [`nginx`](https://create-go.app/docker-containers/nginx/) — Docker container with [Nginx](https://nginx.org).
 
+## 👤 Custom templates & containers?
+
+Create Go App CLI provide works with **your own** custom templates, instead of those prepared by authors. Just specify backend, frontend and webserver with addresses to repositories in configuration file (`.cgapp.yml`):
+
+```yaml
+project:
+    - backend: github.com/user1/my-template-1
+    - frontend: gitlab.com/user2/my-template-2
+    - webserver: bitbucket.org/user3/my-template-3
+
+# ...
+```
+
+> ☝️ The `https://` protocol will be added automatically!
+
 ## ⭐️ Project assistance
 
 If you want to say **thank you** or/and support active development of `Create Go App CLI`:
