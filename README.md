@@ -64,7 +64,7 @@ A short video screencast to introduce main features of the Create Go App CLI.
 
 ## 📖 [Official Documentation](https://create-go.app/)
 
-Unfortunately, we are unable to include all helpful documentation to the `README` file. That's why, the best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/).
+Unfortunately, we are unable to include all helpful documentation to the `README` file. That's why, the best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/) and explore [Discussions](https://github.com/create-go-app/cli/discussions).
 
 > 🔥 We've put together a subject index specifically for you, so you can find any answer you want in seconds!
 
