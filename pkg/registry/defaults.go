@@ -30,7 +30,7 @@ import "github.com/AlecAivazis/survey/v2"
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.6.8"
+	CLIVersion = "1.6.10"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
