@@ -95,8 +95,8 @@ CLI command for generate a default `.cgapp.yml` config file in current folder:
 cgapp init
 ```
 
-📺 Preview: https://recordit.co/yvlnIu8Lyp
-📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#init
+- 📺 Preview: https://recordit.co/yvlnIu8Lyp
+- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#init
 
 <details>
 <summary>Generated config file</summary>
@@ -192,8 +192,8 @@ Run `create` command **without** any arguments:
 cgapp create
 ```
 
-📺 Preview: https://recordit.co/LTxFQloedn
-📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
+- 📺 Preview: https://recordit.co/LTxFQloedn
+- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
 
 #### Create from the config file
 
@@ -222,8 +222,8 @@ Run `deploy` command **without** any arguments:
 cgapp deploy
 ```
 
-📺 Preview: https://recordit.co/ewjG9dgMPX
-📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
+- 📺 Preview: https://recordit.co/ewjG9dgMPX
+- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
 
 #### Deploy from the config file
 
