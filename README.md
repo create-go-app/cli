@@ -6,7 +6,7 @@
 
 <p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.6.12-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
 
-## ⚡️ [Quick start](https://create-go.app/quick-start/)
+## ⚡️ Quick start
 
 First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.11` or higher is required.
 
@@ -36,7 +36,7 @@ cgapp deploy
 
 That's all you need to start! 🎉
 
-### ~ [Docker-way to quick start](https://create-go.app/detailed-guides/official-docker-image/)
+### ~ Docker-way to quick start
 
 If you don't want to install Create Go App CLI to your system, you feel free to using our official [Docker image](https://hub.docker.com/r/koddr/cgapp) and run CLI from isolated container:
 
@@ -46,7 +46,7 @@ docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest
 
 With this Docker image, you do **not** have to worry about installing tools/CLI of frontend UI libraries/frameworks. Everything is **already included**: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit` (for Svelte and Sapper).
 
-Available commands for official Docker image:
+Available commands for [official Docker image](https://create-go.app/detailed-guides/official-docker-image/):
 
 - [x] [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
 - [x] [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
@@ -62,7 +62,7 @@ A short video screencast to introduce main features of the Create Go App CLI.
     🔗 https://youtu.be/5-DNZFU9TOQ
 </a>
 
-## 📖 [Official Documentation](https://create-go.app/)
+## 📖 Official Documentation
 
 Unfortunately, we are unable to include all helpful documentation to the `README` file. That's why, the best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/) and explore [Discussions](https://github.com/create-go-app/cli/discussions).
 
@@ -85,9 +85,9 @@ Unfortunately, we are unable to include all helpful documentation to the `README
   - [How do I ask the right question?](https://create-go.app/ask-question/#how-do-i-ask-the-right-question)
 - [Official logo](https://create-go.app/logo/)
 
-## ⚙️ [Commands & Options](https://create-go.app/detailed-guides/commands-and-options/)
+## ⚙️ Commands & Options
 
-### [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
+### `init`
 
 CLI command for generate a default `.cgapp.yml` config file in current folder:
 
@@ -96,6 +96,7 @@ cgapp init
 ```
 
 📺 Preview: https://recordit.co/yvlnIu8Lyp
+📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#init
 
 <details>
 <summary>Generated config file</summary>
@@ -174,7 +175,7 @@ roles:
 
 </details>
 
-### [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
+### `create`
 
 CLI command to create a new project with the selected configuration.
 
@@ -192,6 +193,7 @@ cgapp create
 ```
 
 📺 Preview: https://recordit.co/LTxFQloedn
+📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
 
 #### Create from the config file
 
@@ -201,7 +203,7 @@ Run `create` command **with** `--use-config` (or `-c`) argument:
 cgapp create --use-config
 ```
 
-### [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy)
+### `deploy`
 
 CLI command for deploy Docker containers with your project to a remote server.
 
@@ -221,6 +223,7 @@ cgapp deploy
 ```
 
 📺 Preview: https://recordit.co/ewjG9dgMPX
+📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
 
 #### Deploy from the config file
 
@@ -236,7 +239,7 @@ When we started this project, we asked ourselves this question too and... came t
 
 So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React.js ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
 
-## 📝 [Production-ready project templates](https://create-go.app/production-templates/)
+## 📝 Production-ready project templates
 
 **Backend:**
 
@@ -263,7 +266,7 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 >
 > Now, the frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
 
-## 🐳 [Configured Docker containers](https://create-go.app/docker-containers/)
+## 🐳 Configured Docker containers
 
 **Web/Proxy server:**
 
