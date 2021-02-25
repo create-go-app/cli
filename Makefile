@@ -8,7 +8,7 @@ security:
 	gosec -quiet ./...
 
 install: security test
-	CGO_ENABLED=0 GOARCH=amd64 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp main.go
+	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp main.go
 
 build: security test
 	goreleaser --snapshot --skip-publish --rm-dist

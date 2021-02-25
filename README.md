@@ -19,7 +19,7 @@ go get github.com/create-go-app/cli
 Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with `$GOPATH/bin`:
 
 ```bash
-go build -i -o $GOPATH/bin/cgapp github.com/create-go-app/cli
+go build -ldflags="-s -w" -o $GOPATH/bin/cgapp github.com/create-go-app/cli
 ```
 
 Let's create a new project via **interactive console UI** (or **CUI** for short) into current folder:
