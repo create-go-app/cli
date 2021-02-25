@@ -5,6 +5,7 @@
 .gitattributes
 .gitignore
 Dockerfile
+Makefile
 LICENSE
 **/*_test.go
 *.yml
@@ -14,6 +15,5 @@ LICENSE
 # Folders
 .git/
 .github/
-.task/
 app/
 tmp/

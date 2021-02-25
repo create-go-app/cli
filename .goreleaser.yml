@@ -5,7 +5,6 @@ env_files:
 before:
   hooks:
     - go mod download
-    - go generate ./...
 
 builds:
   - # Build macOS, Linux and Windows versions
@@ -15,12 +14,16 @@ builds:
       - windows
     goarch:
       - amd64
+      - arm64
     targets:
       - linux_amd64
       - darwin_amd64
+      - darwin_arm64
       - windows_amd64
     env:
       - CGO_ENABLED=0
+    ldflags:
+      - -s -w
 
 dockers:
   - # GOOS of the built binary that should be used.
@@ -28,13 +31,7 @@ dockers:
     goarch: amd64
 
     # Name templates of the built binaries that should be used.
-    binaries:
-      - cgapp
-
-    # Skips the docker push. Could be useful if you also do draft releases.
-    # If set to auto, the release will not be pushed to the docker repository
-    # in case there is an indicator for prerelease in the tag e.g. v1.0.0-rc1
-    skip_push: true
+    ids: ["cgapp"]
 
     # Templates of the Docker image names.
     image_templates:
