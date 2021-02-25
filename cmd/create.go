@@ -31,7 +31,6 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/create-go-app/cli/pkg/cgapp"
-	"github.com/create-go-app/cli/pkg/embed"
 	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/spf13/cobra"
 )
@@ -102,10 +101,10 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 	// Create configuration files.
 	filesToMake := map[string][]byte{
-		".gitignore":     embed.Get("/.gitignore"),
-		".gitattributes": embed.Get("/.gitattributes"),
-		".editorconfig":  embed.Get("/.editorconfig"),
-		"Taskfile.yml":   embed.Get("/Taskfile.yml"),
+		".gitignore":     registry.EmbedGitIgnore,
+		".gitattributes": registry.EmbedGitAttributes,
+		".editorconfig":  registry.EmbedEditorConfig,
+		"Makefile":       registry.EmbedMakefile,
 	}
 	if err := cgapp.MakeFiles(currentDir, filesToMake); err != nil {
 		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
@@ -118,7 +117,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 		// Create playbook.
 		fileToMake := map[string][]byte{
-			"deploy-playbook.yml": embed.Get("/deploy-playbook.yml"),
+			"deploy-playbook.yml": registry.EmbedDeployPlaybook,
 		}
 		if err := cgapp.MakeFiles(currentDir, fileToMake); err != nil {
 			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)

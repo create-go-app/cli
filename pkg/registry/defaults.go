@@ -26,11 +26,15 @@ limitations under the License.
 */
 package registry
 
-import "github.com/AlecAivazis/survey/v2"
+import (
+	_ "embed" // for embed config files
+
+	"github.com/AlecAivazis/survey/v2"
+)
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.6.12"
+	CLIVersion = "1.7.0"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
@@ -79,6 +83,30 @@ type DeployAnswers struct {
 }
 
 var (
+	// EmbedCGAPPConfig main config file for Create Go App.
+	//go:embed configs/.cgapp.yml
+	EmbedCGAPPConfig []byte
+
+	// EmbedEditorConfig config for auto configuration IDE.
+	//go:embed configs/.editorconfig
+	EmbedEditorConfig []byte
+
+	// EmbedGitAttributes config for git attributes.
+	//go:embed configs/.gitattributes
+	EmbedGitAttributes []byte
+
+	// EmbedGitIgnore config for git ignore files.
+	//go:embed configs/.gitignore
+	EmbedGitIgnore []byte
+
+	// EmbedMakefile file for rapid manipulation with a new app.
+	//go:embed configs/Makefile
+	EmbedMakefile []byte
+
+	// EmbedDeployPlaybook Ansible playbook for deployment.
+	//go:embed configs/deploy-playbook.yml
+	EmbedDeployPlaybook []byte
+
 	// Repositories collection.
 	Repositories = map[string]*Repository{
 		// Backend templates.

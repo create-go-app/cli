@@ -4,11 +4,11 @@
 </h1>
 <p align="center">Create a new production-ready project with <b>backend</b> (Golang), <b>frontend</b> (JavaScript, TypeScript)<br/>and <b>deploy automation</b> (Ansible, Docker) by running one CLI command.<br/><br/>Focus on <b>writing</b> code and <b>thinking</b> of business-logic! The CLI will take care of the rest.</p>
 
-<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.6.12-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.11+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
+<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.7.0-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.16+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
 
 ## ⚡️ Quick start
 
-First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.11` or higher is required.
+First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.16` or higher is required.
 
 Next, download the **latest** version of the Create Go App CLI to your system:
 
@@ -245,8 +245,8 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 
 - [x] [`net/http`](https://create-go.app/production-templates/net-http-go/) — Backend template with Golang built-in [net/http](https://golang.org/pkg/net/http/) package.
 - [x] [`fiber`](https://create-go.app/production-templates/fiber-go/) — Backend template with [Fiber](https://github.com/gofiber/fiber).
-- [ ] [`echo`](https://create-go.app/production-templates/echo-go/) _WIP_ — Backend template with [Echo](https://github.com/labstack/echo).
-- [ ] [`gin`](https://create-go.app/production-templates/gin-go/) _WIP_ — Backend template with [Gin](https://github.com/gin-gonic/gin).
+- [ ] [`echo`](https://create-go.app/production-templates/echo-go/) (_WIP_) — Backend template with [Echo](https://github.com/labstack/echo).
+- [ ] [`gin`](https://create-go.app/production-templates/gin-go/) (_WIP_) — Backend template with [Gin](https://github.com/gin-gonic/gin).
 
 **Frontend:**
 

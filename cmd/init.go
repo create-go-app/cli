@@ -28,7 +28,7 @@ import (
 	"os"
 
 	"github.com/create-go-app/cli/pkg/cgapp"
-	"github.com/create-go-app/cli/pkg/embed"
+	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/spf13/cobra"
 )
 
@@ -50,7 +50,7 @@ var runInitCmd = func(cmd *cobra.Command, args []string) {
 
 	// Create configuration file.
 	fileToMake := map[string][]byte{
-		".cgapp.yml": embed.Get("/.cgapp.yml"),
+		".cgapp.yml": registry.EmbedCGAPPConfig,
 	}
 	if err := cgapp.MakeFiles(currentDir, fileToMake); err != nil {
 		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
