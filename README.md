@@ -297,7 +297,7 @@ go install github.com/create-go-app/cli@1.6.0
 
 > ☝️ Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
 >
-> For example: `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v1_6_0`
+> For example: `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v1_6_0` and run it by `cgapp_v1_6_0`.
 
 Found all available CLI versions on our [pkg.go.dev page](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions).
 
