@@ -286,6 +286,21 @@ project:
 
 > ☝️ The `https://` protocol will be added automatically!
 
+## 👵 How to install older version?
+
+You can do it by using a version suffix in `go install` command:
+
+```bash
+# With an indication of the exact versions:
+go install github.com/create-go-app/cli@1.6.0
+```
+
+> ☝️ Don't forget to rename binary after installation! For example, according to the version you've installed:
+> 
+> `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v1_6_0`
+
+You can found all available Create Go App CLI versions on our [pkg.go.dev page](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions).
+
 ## ⭐️ Project assistance
 
 If you want to say **thank you** or/and support active development of `Create Go App CLI`:
