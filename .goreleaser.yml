@@ -25,6 +25,48 @@ builds:
     ldflags:
       - -s -w
 
+# .goreleaser.yml
+brews:
+  - # GitHub/GitLab repository to push the formula to
+    tap:
+      owner: create-go-app
+      name: homebrew-cli
+
+    # Template for the url which is determined by the given Token (github or gitlab)
+    # Default for github is "https://github.com/<repo_owner>/<repo_name>/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    url_template: "https://github.com/create-go-app/cli/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+
+    # Git author used to commit to the repository.
+    # Defaults are shown.
+    commit_author:
+      name: create-go-app
+      email: truewebartisans@gmail.com
+
+    # Folder inside the repository to put the formula.
+    # Default is the root folder.
+    folder: Formula
+
+    # Caveats for the user of your binary.
+    # Default is empty.
+    caveats: "Create a new project via interactive console UI into current folder by using `cgapp create` command."
+
+    # Your app's homepage.
+    # Default is empty.
+    homepage: "https://create-go.app/"
+
+    # Your app's description.
+    # Default is empty.
+    description: "A powerful CLI for the Create Go App project. Create a new production-ready project with backend, frontend and deploy automation by running one CLI command!"
+
+    # SPDX identifier of your app's license.
+    # Default is empty.
+    license: "Apache-2.0"
+
+    # Packages your package depends on.
+    dependencies:
+      - name: git
+      - name: go
+
 dockers:
   - # GOOS of the built binary that should be used.
     goos: linux
