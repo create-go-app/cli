@@ -16,10 +16,10 @@ Next, download the **latest** version of the Create Go App CLI to your system:
 go get -u github.com/create-go-app/cli
 ```
 
-Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command with `$GOPATH/bin`:
+Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command and rename installed binary in `$GOPATH/bin`:
 
 ```bash
-go install -ldflags="-s -w" github.com/create-go-app/cli@latest && mv $GOPATH/bin/cli $GOPATH/bin/cgapp
+go install -ldflags="-s -w" github.com/create-go-app/cli && mv $GOPATH/bin/cli $GOPATH/bin/cgapp
 ```
 
 Let's create a new project via **interactive console UI** (or **CUI** for short) into current folder:
