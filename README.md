@@ -13,13 +13,13 @@ First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.
 Next, download the **latest** version of the Create Go App CLI to your system:
 
 ```bash
-go get github.com/create-go-app/cli
+go get -u github.com/create-go-app/cli
 ```
 
-Installation is done by using the [`go build`](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies) command with `$GOPATH/bin`:
+Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command and rename installed binary in `$GOPATH/bin`:
 
 ```bash
-go build -ldflags="-s -w" -o $GOPATH/bin/cgapp github.com/create-go-app/cli
+go install -ldflags="-s -w" github.com/create-go-app/cli && mv $GOPATH/bin/cli $GOPATH/bin/cgapp
 ```
 
 Let's create a new project via **interactive console UI** (or **CUI** for short) into current folder:
@@ -285,6 +285,21 @@ project:
 ```
 
 > ☝️ The `https://` protocol will be added automatically!
+
+## 👵 How to install older version?
+
+You can do it by using a version suffix in `go install` command:
+
+```bash
+# With an indication of the exact versions:
+go install github.com/create-go-app/cli@1.6.0
+```
+
+> ☝️ Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
+>
+> For example: `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v1_6_0` and run it by `cgapp_v1_6_0`.
+
+Found all available CLI versions on our [pkg.go.dev page](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions).
 
 ## ⭐️ Project assistance
 
