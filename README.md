@@ -10,16 +10,20 @@
 
 First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.16` or higher is required.
 
-Next, download the **latest** version of the Create Go App CLI to your system:
-
-```bash
-go get -u github.com/create-go-app/cli
-```
-
 Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command and rename installed binary in `$GOPATH/bin`:
 
 ```bash
 go install -ldflags="-s -w" github.com/create-go-app/cli && mv $GOPATH/bin/cli $GOPATH/bin/cgapp
+```
+
+Also, macOS and GNU/Linux users available way to install via [Homebrew](https://brew.sh/):
+
+```bash
+# Tap a new formula:
+brew tap create-go-app/cli
+
+# Installation:
+brew install create-go-app/cli/cgapp
 ```
 
 Let's create a new project via **interactive console UI** (or **CUI** for short) into current folder:
@@ -291,7 +295,6 @@ project:
 You can do it by using a version suffix in `go install` command:
 
 ```bash
-# With an indication of the exact versions:
 go install github.com/create-go-app/cli@1.6.0
 ```
 
