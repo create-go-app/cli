@@ -295,9 +295,9 @@ You can do it by using a version suffix in `go install` command:
 go install github.com/create-go-app/cli@1.6.0
 ```
 
-> ☝️ Don't forget to rename binary after installation! For example, according to the version you've installed:
+> ☝️ Don't forget to rename binary after installation!
 > 
-> `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v1_6_0`
+> For example, according to the version you've installed: `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v1_6_0`
 
 You can found all available Create Go App CLI versions on our [pkg.go.dev page](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions).
 
