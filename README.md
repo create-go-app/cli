@@ -302,7 +302,7 @@ go install github.com/create-go-app/cli@1.6.0
 >
 > For example: `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v1_6_0` and run it by `cgapp_v1_6_0`.
 
-Found all available CLI versions on our [pkg.go.dev page](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions).
+Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
 
 ## ⭐️ Project assistance
 
@@ -311,7 +311,7 @@ If you want to say **thank you** or/and support active development of `Create Go
 - Add a [GitHub Star](https://github.com/create-go-app/cli) to the project.
 - Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=Create%20a%20new%20production-ready%20project%20with%20backend%20%28Golang%29%2C%20frontend%20%28JavaScript%2C%20TypeScript%29%20%26%20deploy%20automation%20%28Ansible%2C%20Docker%29%20by%20running%20one%20CLI%20command%21%20%F0%9F%9A%80%20https%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
 - Write interesting articles about project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or personal blog.
-- Donate some money to the project's author via PayPal: [@paypal.me/koddr](https://paypal.me/koddr?locale.x=en_EN).
+- Join DigitalOcean at our [referral link](https://m.do.co/c/b41859fa9b6e) (your profit is **$100** and we get $25).
 
 Together, we can make this project **better** every day! 😘
 
