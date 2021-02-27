@@ -8,12 +8,10 @@ Dockerfile
 Makefile
 LICENSE
 **/*_test.go
-*.yml
 *.md
 *.out
 
 # Folders
 .git/
 .github/
-app/
 tmp/

@@ -34,11 +34,11 @@ import (
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.7.0"
+	CLIVersion = "1.7.1"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
-	RegexpBackendPattern = "^(net/http|fiber|echo)$"
+	RegexpBackendPattern = "^(net/http|fiber)$"
 	// RegexpFrontendPattern pattern for backend.
 	RegexpFrontendPattern = "^(p?react:?|vue(:?[\\w]+)?(:?[\\w-_0-9\\/]+)?|angular|svelte|sapper:?)"
 	// RegexpWebServerPattern pattern for web/proxy servers.
@@ -52,12 +52,12 @@ type Project struct {
 	RootFolder string
 }
 
-// Repository ...
+// Repository struct for describe repositories collection.
 type Repository struct {
 	List map[string]string
 }
 
-// Command ...
+// Command struct for describe commands collection.
 type Command struct {
 	Runner string
 	Create string
@@ -114,7 +114,6 @@ var (
 			List: map[string]string{
 				"net/http": "github.com/create-go-app/net_http-go-template",
 				"fiber":    "github.com/create-go-app/fiber-go-template",
-				"echo":     "github.com/create-go-app/echo-go-template",
 			},
 		},
 
@@ -175,7 +174,7 @@ var (
 			Name: "backend",
 			Prompt: &survey.Select{
 				Message: "Choose a backend framework:",
-				Options: []string{"net/http", "Fiber", "Echo", "Gin"},
+				Options: []string{"net/http", "Fiber"},
 				Default: "Fiber",
 			},
 			Validate: survey.Required,
