@@ -23,7 +23,7 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			args{
 				p: &registry.Project{
 					Type:       "backend",
-					Name:       "echo",
+					Name:       "fiber",
 					RootFolder: "../../tmp",
 				},
 				r: registry.Repositories,
@@ -49,7 +49,7 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			args{
 				p: &registry.Project{
 					Type:       "backend",
-					Name:       "echo",
+					Name:       "fiber",
 					RootFolder: "../../tmp",
 				},
 				r: map[string]*registry.Repository{
@@ -83,7 +83,7 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			args{
 				p: &registry.Project{
 					Type:       "backend",
-					Name:       "echo",
+					Name:       "fiber",
 					RootFolder: "../../tmp",
 				},
 				r: nil,
@@ -105,7 +105,7 @@ func TestCreateProjectFromRegistry(t *testing.T) {
 			args{
 				p: &registry.Project{
 					Type:       "backend",
-					Name:       "echo",
+					Name:       "fiber",
 					RootFolder: "../../tmp",
 				},
 				r: registry.Repositories,

@@ -1,6 +1,9 @@
-.PHONY: test security install build release
+.PHONY: clean test security install build release
 
-test:
+clean:
+	rm -rf ./tmp coverage.out
+
+test: clean
 	go test -coverprofile=coverage.out ./...
 	go tool cover -func=coverage.out
 
