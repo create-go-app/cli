@@ -9,8 +9,6 @@ project:
   # String:
   #   - `net/http`
   #   - `fiber`
-  #   - `echo`
-  #   - `gin`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - backend: fiber
@@ -64,6 +62,10 @@ roles:
     # Name of Docker network
     # (Required)
     network: cgapp_network
+
+    # Port for backend Docker container (both in and out).
+    # (Required)
+    backend_port: 5000
 
     # Filename of Ansible playbook in the root of the Create Go App project.
     # If you want to rename it, do it, but not to change destination of file!

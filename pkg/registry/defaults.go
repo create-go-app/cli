@@ -34,7 +34,7 @@ import (
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.7.1"
+	CLIVersion = "1.7.2"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
@@ -78,6 +78,7 @@ type DeployAnswers struct {
 	Username        string
 	Host            string
 	Network         string
+	BackendPort     string
 	AskBecomePass   bool `survey:"become"`
 	AgreeDeployment bool `survey:"agree"`
 }
@@ -241,6 +242,14 @@ var (
 			Prompt: &survey.Input{
 				Message: "Enter name of Docker network:",
 				Default: "cgapp_network",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "port",
+			Prompt: &survey.Input{
+				Message: "Enter port of backend Docker container:",
+				Default: "5000",
 			},
 			Validate: survey.Required,
 		},
