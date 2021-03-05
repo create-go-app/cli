@@ -55,6 +55,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		username = strings.ToLower(rolesConfig["username"].(string))
 		host = strings.ToLower(rolesConfig["host"].(string))
 		network = strings.ToLower(rolesConfig["network"].(string))
+		port = strings.ToLower(rolesConfig["port"].(string))
 		askBecomePass = rolesConfig["become"].(bool)
 	} else {
 		// Start survey.
@@ -79,6 +80,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		username = deployAnswers.Username
 		host = deployAnswers.Host
 		network = deployAnswers.Network
+		port = deployAnswers.BackendPort
 		askBecomePass = deployAnswers.AskBecomePass
 	}
 
@@ -92,7 +94,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	options := []string{
 		playbook,
 		"-u", username,
-		"-e", "host=" + host + " network_name=" + network,
+		"-e", "host=" + host + " network_name=" + network + " backend_port=" + port,
 	}
 
 	// Check, if need to ask password for username.
@@ -101,7 +103,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		options = []string{
 			playbook,
 			"-u", username,
-			"-e", "host=" + host + " network_name=" + network,
+			"-e", "host=" + host + " network_name=" + network + " backend_port=" + port,
 			"--ask-become-pass",
 		}
 	}

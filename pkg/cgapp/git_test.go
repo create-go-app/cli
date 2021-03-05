@@ -19,7 +19,7 @@ func TestGitClone(t *testing.T) {
 			"successfully cloned project",
 			args{
 				rootFolder:   "../../tmp",
-				templateName: "github.com/create-go-app/postgres-docker",
+				templateName: "github.com/create-go-app/fiber-go-template",
 			},
 			false,
 		},

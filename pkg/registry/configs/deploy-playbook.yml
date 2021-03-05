@@ -22,11 +22,6 @@
         path: ./backend
       register: backend_folder
 
-    - name: Check, if ./frontend directory is exists (for static files)
-      stat:
-        path: ./frontend
-      register: frontend_folder
-
     - name: Check, if ./webserver directory is exists
       stat:
         path: ./webserver
@@ -52,12 +47,8 @@
             recreate: yes
             networks:
               - name: "{{ network_name }}"
-            volumes:
-              # If ./frontend folder is exists, playbook will include a `dist` folder to container,
-              # or include a default placeholder webpage (to sure, what everything is working).
-              - "{{ './frontend/dist:/static:ro' if frontend_folder.stat.exists else './backend/static:/static:ro' }}"
             ports:
-              - "5000:5000"
+              - "{{ backend_port }}:{{ backend_port }}"
             state: started
       # Run block only if ./backend is a folder and exists.
       when: backend_folder.stat.exists and backend_folder.stat.isdir
