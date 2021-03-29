@@ -34,7 +34,7 @@ import (
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.7.3"
+	CLIVersion = "1.7.4"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
