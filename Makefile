@@ -7,10 +7,13 @@ test: clean
 	go test -coverprofile=coverage.out ./...
 	go tool cover -func=coverage.out
 
+lint:
+	golangci-lint run
+
 security:
 	gosec -quiet ./...
 
-install: security test
+install: security lint test
 	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp main.go
 
 build: security test

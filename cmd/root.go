@@ -1,27 +1,7 @@
-/*
-Package cmd includes all of the Create Go App CLI commands.
+// Copyright 2019-present Vic Shóstak. All rights reserved.
+// Use of this source code is governed by Apache 2.0 license
+// that can be found in the LICENSE file.
 
-Create a new production-ready project with backend (Golang),
-frontend (JavaScript, TypeScript) and deploy automation
-(Ansible, Docker) by running one CLI command.
-
--> Focus on writing code and thinking of business logic!
-<- The Create Go App CLI will take care of the rest.
-
-Copyright © 2019-present Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
 package cmd
 
 import (
@@ -35,15 +15,15 @@ import (
 )
 
 var (
-	useConfigFile                          bool                                           // indicate using config (from $PWD/.cgapp.yml)
-	projectConfig                          map[string]interface{}                         // parse project config
-	rolesConfig                            map[string]interface{}                         // parse Ansible roles config
-	backend, frontend, webserver, database string                                         // define project variables
-	installAnsibleRoles, askBecomePass     bool                                           // install Ansible roles, ask become pass
-	username, host, network, port          string                                         // define deploy variables
-	playbook                               string                 = "deploy-playbook.yml" // default Ansible playbook
-	createAnswers                          registry.CreateAnswers                         // define answers variable for `create` command
-	deployAnswers                          registry.DeployAnswers                         // define answers variable for `deploy` command
+	useConfigFile                      bool                                           // indicate using config (from $PWD/.cgapp.yml)
+	projectConfig                      map[string]interface{}                         // parse project config
+	rolesConfig                        map[string]interface{}                         // parse Ansible roles config
+	backend, frontend, webserver       string                                         // define project variables
+	installAnsibleRoles, askBecomePass bool                                           // install Ansible roles, ask become pass
+	username, host, network, port      string                                         // define deploy variables
+	playbook                           string                 = "deploy-playbook.yml" // default Ansible playbook
+	createAnswers                      registry.CreateAnswers                         // define answers variable for `create` command
+	deployAnswers                      registry.DeployAnswers                         // define answers variable for `deploy` command
 
 	// Config for survey icons and colors.
 	// See: https://github.com/mgutz/ansi#style-format
