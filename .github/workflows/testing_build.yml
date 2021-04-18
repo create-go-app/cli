@@ -1,13 +1,14 @@
-name: Testing CLI
+name: Testing
 
 on:
   push:
-    branches: [dev]
+    branches:
+      - dev
     paths:
       - "**.go"
 
 jobs:
-  build:
+  testing:
     name: Testing build
 
     strategy:

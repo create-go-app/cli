@@ -1,29 +1,7 @@
-/*
-Package cgapp includes a powerful CLI for the Create Go App project.
+// Copyright 2019-present Vic Shóstak. All rights reserved.
+// Use of this source code is governed by Apache 2.0 license
+// that can be found in the LICENSE file.
 
-Create a new production-ready project with backend (Golang),
-frontend (JavaScript, TypeScript) and deploy automation
-(Ansible, Docker) by running one CLI command.
-
--> Focus on writing code and thinking of business logic!
-<- The Create Go App CLI will take care of the rest.
-
-A helpful documentation and next steps -> https://create-go.app/
-
-Copyright © 2019-present Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
 package cgapp
 
 import (
@@ -121,14 +99,12 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 			if len(project) > 1 {
 				options = []string{create, folder, args["template"], "cra-template-" + project[1]}
 			}
-			break
 		case "preact":
 			// preact create [template] [dest] [args...]
 			options = []string{create, "default", p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
 			if len(project) > 1 {
 				options = []string{create, project[1], p.Type, args["cwd"], p.RootFolder, args["name"], "cgapp"}
 			}
-			break
 		case "vue":
 			// vue create [options] <app-name>
 			options = []string{create, "--default", "--bare", p.Type}
@@ -138,22 +114,18 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 			if len(project) == 3 {
 				options = []string{create, "--preset", project[1] + ":" + project[2], "--bare", "--clone", p.Type}
 			}
-			break
 		case "angular":
 			// ng new <app-name> [options]
 			options = []string{create, "cgapp", "--defaults", "--routing", "--directory", p.Type}
-			break
 		case "svelte":
 			// npx degit [template] [dest]
 			options = []string{create, args["template"], folder}
-			break
 		case "sapper":
 			// npx degit [template] [dest]
 			options = []string{create, args["template"] + "#rollup", folder}
 			if len(project) > 1 {
 				options = []string{create, args["template"] + "#" + project[1], folder}
 			}
-			break
 		}
 
 		// Run execution command.
