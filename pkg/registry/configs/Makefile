@@ -1,5 +1,5 @@
 # A default Makefile for Create Go App project.
-# Author: Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
 # For more information, please visit https://create-go.app/
 
 .PHONY: test run build
