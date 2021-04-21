@@ -277,6 +277,7 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 **Web/Proxy server:**
 
 - [x] [`nginx`](https://create-go.app/docker-containers/nginx/) — Docker container with [Nginx](https://nginx.org).
+- [x] [`traefik`](https://create-go.app/docker-containers/traefik/) — Docker container with [Traefik Proxy](https://traefik.io/traefik/).
 
 ## 👤 Custom templates & containers?
 
