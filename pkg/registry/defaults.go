@@ -12,7 +12,7 @@ import (
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.7.5"
+	CLIVersion = "1.8.0"
 	// RegexpAnsiblePattern pattern for Ansible roles.
 	RegexpAnsiblePattern = "^(deploy)$"
 	// RegexpBackendPattern pattern for backend.
@@ -20,7 +20,7 @@ const (
 	// RegexpFrontendPattern pattern for backend.
 	RegexpFrontendPattern = "^(p?react:?|vue(:?[\\w]+)?(:?[\\w-_0-9\\/]+)?|angular|svelte|sapper:?)"
 	// RegexpWebServerPattern pattern for web/proxy servers.
-	RegexpWebServerPattern = "^(nginx)$"
+	RegexpWebServerPattern = "^(nginx|traefik)$"
 )
 
 // Project struct for describe project.
@@ -99,7 +99,8 @@ var (
 		// Docker containers with web/proxy servers.
 		"webserver": {
 			List: map[string]string{
-				"nginx": "github.com/create-go-app/nginx-docker",
+				"nginx":   "github.com/create-go-app/nginx-docker",
+				"traefik": "github.com/create-go-app/traefik-docker",
 			},
 		},
 	}
@@ -170,7 +171,7 @@ var (
 			Name: "webserver",
 			Prompt: &survey.Select{
 				Message: "Choose a web/proxy server:",
-				Options: []string{"none", "Nginx"},
+				Options: []string{"none", "Nginx", "Traefik"},
 				Default: "none",
 			},
 		},

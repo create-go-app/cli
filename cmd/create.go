@@ -137,26 +137,23 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	// Docker containers.
 	if webserver != "none" {
-
+		// Docker containers.
 		cgapp.SendMsg(true, "* * *", "Configuring Docker containers...", "yellow", false)
 
-		if webserver != "none" {
-			// Create container with a web/proxy server.
-			cgapp.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", true)
-			if err := cgapp.CreateProjectFromRegistry(
-				&registry.Project{
-					Type:       "webserver",
-					Name:       webserver,
-					RootFolder: currentDir,
-				},
-				registry.Repositories,
-				registry.RegexpWebServerPattern,
-			); err != nil {
-				cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-				os.Exit(1)
-			}
+		// Create container with a web/proxy server.
+		cgapp.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", true)
+		if err := cgapp.CreateProjectFromRegistry(
+			&registry.Project{
+				Type:       "webserver",
+				Name:       webserver,
+				RootFolder: currentDir,
+			},
+			registry.Repositories,
+			registry.RegexpWebServerPattern,
+		); err != nil {
+			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
+			os.Exit(1)
 		}
 	}
 
