@@ -33,7 +33,9 @@ project:
 
   # Web/Proxy server for your project.
   # (Optional, to skip set to `none`)
-  # String: `nginx`
+  # String:
+  #   - `nginx`
+  #   - `traefik`
   # User template: supported, set to URL (without protocol),
   # like `github.com/user/template`
   - webserver: nginx

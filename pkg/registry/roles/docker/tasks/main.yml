@@ -1,0 +1,57 @@
+# Ansible role for deploy the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+---
+#
+# Make `apt update`.
+#
+- name: Update system packages cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+#
+# Make `apt upgrade`.
+#
+- name: Update all system packages to their latest versions
+  apt:
+    name: "*"
+    state: latest
+
+#
+# Install `python3-pip` package for working with Docker from Ansible on the remote host.
+#
+- name: Install python3-pip package
+  apt:
+    pkg:
+      - python3-pip
+
+#
+# Install `docker` package for Python 3 from pip3.
+#
+- name: Add the Python 3 client for Docker
+  pip:
+    name: docker
+
+#
+# Create a new system group for Docker.
+#
+- name: Create a new Docker group
+  group:
+    name: "{{ system_group }}"
+
+#
+# Create a new system user for Docker.
+#
+- name: Add the default user to the Docker group
+  user:
+    name: "{{ system_user }}"
+    group: "{{ system_group }}"
+
+#
+# Create a new Docker network for connect all project elements into one network.
+#
+- name: Create a new Docker network
+  docker_network:
+    name: "{{ docker_network }}"

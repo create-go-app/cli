@@ -9,12 +9,14 @@ import "github.com/go-git/go-git/v5"
 // GitClone function for `git clone` defined project template.
 func GitClone(rootFolder, templateName string) error {
 	// Clone project template.
-	_, err := git.PlainClone(rootFolder, false, &git.CloneOptions{
-		URL: "https://" + templateName,
-	})
-	if err != nil {
-		return throwError("Repository was not cloned!")
-	}
+	_, err := git.PlainClone(
+		rootFolder,
+		false,
+		&git.CloneOptions{
+			URL: "https://" + templateName,
+		},
+	)
+	catchError("Repository was not cloned!", err)
 
 	return nil
 }

@@ -1,0 +1,59 @@
+# Ansible role for deploy the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+---
+#
+# Set local variables for this role.
+#
+- name: Set backend variables
+  set_fact:
+    # Ports config
+    port: "{{ backend_port | default(5000) }}"
+
+#
+# Delete backend files.
+#
+- name: Delete previous backend files
+  file:
+    state: absent
+    path: "{{ server_dir }}/backend"
+
+#
+# Copy `./backend` folder to the remote server.
+#
+- name: Copy a new backend files
+  synchronize:
+    src: ./backend
+    dest: "{{ server_dir }}"
+    rsync_opts:
+      - "--exclude=.git,.github,build,*.md"
+
+#
+# Build backend Docker container.
+#
+- name: Build Docker image for backend
+  docker_image:
+    name: cgapp_backend # name of the backend image
+    build:
+      path: "{{ server_dir }}/backend" # folder with Dockerfile
+      pull: yes
+    source: build
+
+#
+# Run backend container.
+#
+- name: Run Docker container with backend
+  docker_container:
+    name: cgapp-backend # name of the backend container
+    image: cgapp_backend:latest
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "{{ port }}:{{ port }}"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.backend.rule: "Host(`{{ project_domain }}`)"
+      traefik.http.routers.backend.entrypoints: "websecure"

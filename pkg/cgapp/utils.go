@@ -6,6 +6,7 @@ package cgapp
 
 import (
 	"fmt"
+	"log"
 	"regexp"
 )
 
@@ -63,7 +64,7 @@ func SendMsg(startWithNewLine bool, caption, text, color string, endWithNewLine 
 func stringSplit(pattern, match string) ([]string, error) {
 	// Error, when empty or nil.
 	if pattern == "" || match == "" {
-		return nil, throwError("Frontend template not set!")
+		return nil, fmt.Errorf("Frontend template not set!")
 	}
 
 	// Define empty []string{} for splitted strings.
@@ -82,7 +83,15 @@ func stringSplit(pattern, match string) ([]string, error) {
 	return splittedStrings, nil
 }
 
-// throwError function for throw an error.
-func throwError(text string) error {
-	return fmt.Errorf(BeautifyText(text, "red"))
+// catchError function for throw an error.
+func catchError(text string, err error) error {
+	if err != nil {
+		if text == "" {
+			text = err.Error()
+		}
+
+		log.Fatal(BeautifyText(text, "red"))
+	}
+
+	return nil
 }

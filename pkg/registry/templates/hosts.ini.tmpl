@@ -1,0 +1,28 @@
+# Ansible inventory for deploy the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+[cgapp_project]
+127.0.0.1 # CHANGE THIS TO YOUR REMOTE SERVER IP!
+
+[cgapp_project:vars]
+# Set Ansible default variables to start playbook:
+ansible_user=root       # remote sudo user name
+ansible_become=true     # ask become password for remote sudo user
+ansible_connection=ssh  # connection to remote server via SSH
+
+# Set Python 3 default path:
+ansible_python_interpreter_path=/usr/bin/python3
+
+# Set Docker network name:
+docker_network=cgapp_network
+
+# Set your project domain:
+project_domain=example.com
+
+# Set directory on your remote server for store project files:
+server_dir=/var/www/cgapp
+
+# Set user (owner) name & group name (to create files on server):
+system_user=root
+system_group=docker

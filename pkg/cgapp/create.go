@@ -5,6 +5,7 @@
 package cgapp
 
 import (
+	"fmt"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -19,7 +20,7 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 
 	// Checking for nil.
 	if p == nil || r == nil || m == "" {
-		return throwError("Project template, registry or pattern not found!")
+		return fmt.Errorf("Project template, registry or pattern not found!")
 	}
 
 	// Create path in project root folder.
@@ -27,9 +28,7 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 
 	// Create match expration.
 	match, err := regexp.MatchString(m, p.Name)
-	if err != nil {
-		return throwError(err.Error())
-	}
+	catchError("", err)
 
 	// Check for regexp.
 	if match {
@@ -37,17 +36,15 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 		template = r[p.Type].List[p.Name]
 
 		// If match, create from default template.
-		if err := GitClone(folder, template); err != nil {
-			return throwError(err.Error())
-		}
+		err := GitClone(folder, template)
+		catchError("", err)
 	} else {
 		// Re-define vars.
 		template = p.Name
 
 		// Else create from user template (from GitHub, etc).
-		if err := GitClone(folder, template); err != nil {
-			return throwError(err.Error())
-		}
+		err := GitClone(folder, template)
+		catchError("", err)
 	}
 
 	// Show success report.
@@ -67,7 +64,7 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 
 	// Checking for nil.
 	if p == nil || c == nil || m == "" {
-		return throwError("Project template, commands or pattern not found!")
+		return fmt.Errorf("Project template, commands or pattern not found!")
 	}
 
 	// Create path in project root folder.
@@ -75,16 +72,12 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 
 	// Create match expration for name.
 	match, err := regexp.MatchString(m, p.Name)
-	if err != nil {
-		return throwError(err.Error())
-	}
+	catchError("", err)
 
 	if match {
 		// Split frontend library/framework name and template.
-		project, err := stringSplit(":", p.Name)
-		if err != nil {
-			return throwError(err.Error())
-		}
+		project, errStringSplit := stringSplit(":", p.Name)
+		catchError("", errStringSplit)
 
 		// Re-define vars for more beauty view.
 		runner := c[project[0]].Runner
@@ -129,14 +122,12 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 		}
 
 		// Run execution command.
-		if err := ExecCommand(runner, options); err != nil {
-			return throwError(err.Error())
-		}
+		errExecCommand := ExecCommand(runner, options)
+		catchError("", errExecCommand)
 	} else {
 		// Create frontend from given repository (GitHub, etc).
-		if err := GitClone(folder, p.Name); err != nil {
-			return throwError(err.Error())
-		}
+		err := GitClone(folder, p.Name)
+		catchError("", err)
 	}
 
 	// Cleanup project.

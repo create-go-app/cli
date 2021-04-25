@@ -1,14 +1,24 @@
 package cgapp
 
 import (
+	"io/fs"
 	"os"
 	"testing"
+
+	"github.com/create-go-app/cli/pkg/registry"
 )
 
-func TestMakeFiles(t *testing.T) {
+func TestMakeFile(t *testing.T) {
+
+	fileData, err := fs.ReadFile(registry.EmbedConfigs, "configs/.cgapp.yml")
+	if err != nil {
+		t.Error()
+	}
+
 	type args struct {
-		rootFolder  string
-		filesToMake map[string][]byte
+		rootFolder string
+		file       string
+		data       []byte
 	}
 	tests := []struct {
 		name    string
@@ -18,36 +28,78 @@ func TestMakeFiles(t *testing.T) {
 		{
 			"successfully created files",
 			args{
-				rootFolder: "../../tmp",
-				filesToMake: map[string][]byte{
-					"test.txt": []byte("test"),
-				},
+				rootFolder: ".cgapp.yml",
+				file:       ".cgapp.yml",
+				data:       fileData,
 			},
 			false,
 		},
 		{
 			"failed created files",
 			args{
-				rootFolder: "./does/not-exists",
-				filesToMake: map[string][]byte{
-					"test.txt": []byte("test"),
-				},
+				rootFolder: "",
+				file:       "",
+				data:       fileData,
 			},
 			true,
 		},
 	}
 
-	_ = os.Mkdir("../../tmp", 0750)
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := MakeFiles(tt.args.rootFolder, tt.args.filesToMake); (err != nil) != tt.wantErr {
-				t.Errorf("MakeFiles() error = %v, wantErr %v", err, tt.wantErr)
+			if err := MakeFile(tt.args.rootFolder, tt.args.data); (err != nil) != tt.wantErr {
+				t.Errorf("MakeFile() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 
 		// Clean
-		os.RemoveAll("../../tmp")
+		os.RemoveAll(".cgapp.yml")
+	}
+}
+
+func TestMakeFolder(t *testing.T) {
+	type args struct {
+		folderName string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully created folder",
+			args{
+				folderName: "../../tmp",
+			},
+			false,
+		},
+		{
+			"failed, folder is exists",
+			args{
+				folderName: "",
+			},
+			true,
+		},
+		{
+			"failed, folder is exists",
+			args{
+				folderName: "cgapp-project",
+			},
+			true,
+		},
+	}
+
+	_ = os.Mkdir("cgapp-project", 0750)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := MakeFolder(tt.args.folderName); (err != nil) != tt.wantErr {
+				t.Errorf("MakeFolder() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+
+		// Clean
+		os.RemoveAll(tt.args.folderName)
 	}
 }
 

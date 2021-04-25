@@ -1,0 +1,89 @@
+# Ansible role for deploy the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+---
+#
+# Set local variables for this role.
+#
+- name: Set Traefik variables
+  set_fact:
+    # ACME settings
+    email: "{{ letsencript_email }}"
+    # ACME config for simple challenge (without wildcard)
+    staging: "{{ letsencript_staging | default('yes') }}"
+    # ACME config for complex challenge (with wildcard)
+    wildcard: "{{ letsencript_wildcard | default('no') }}"
+    wildcard_provider: "{{ letsencript_wildcard_provider | default('manual') }}"
+    # Logs config
+    log_level: "{{ traefik_log_level | default('ERROR') }}"
+    log_format: "{{ traefik_log_format | default('common') }}"
+    # Container config
+    version: "{{ traefik_version | default('latest') }}"
+    dashboard_domain: "{{ traefik_dashboard_url | default('dashboard.{{ project_domain }}') }}"
+    dashboard_user: "{{ traefik_dashboard_user | default('admin') }}"
+    dashboard_password: "{{ traefik_dashboard_password | password_hash('blowfish') }}"
+
+#
+# Create folder for Traefik.
+#
+- name: Ensures Traefik dir exists
+  file:
+    state: directory
+    path: "{{ server_dir }}/webserver"
+    owner: "{{ system_user }}"
+    group: "{{ system_group }}"
+
+#
+# Create file for ACME challenge.
+#
+- name: Ensures acme.json file exists
+  file:
+    state: touch
+    path: "{{ server_dir }}/webserver/acme.json"
+    mode: 0600
+
+#
+# Create Traefik config.
+#
+- name: Adding traefik.yml file
+  template:
+    src: traefik.yml.j2
+    dest: "{{ server_dir }}/webserver/traefik.yml"
+    mode: 0600
+
+#
+# Create Traefik log file.
+#
+- name: Ensures traefik.log file exists
+  file:
+    state: touch
+    path: "{{ server_dir }}/webserver/traefik.log"
+    mode: 0600
+
+#
+# Run official Traefik Docker container with specified version.
+#
+- name: Run Traefik container
+  docker_container:
+    name: traefik
+    image: "traefik:{{ version }}"
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "{{ server_dir }}/webserver/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "{{ server_dir }}/webserver/acme.json:/acme.json:rw"
+      - "{{ server_dir }}/webserver/traefik.log:/traefik.log:rw"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.traefik.rule: "Host(`{{ dashboard_domain }}`)"
+      traefik.http.routers.traefik.entrypoints: "websecure"
+      traefik.http.routers.traefik.service: "api@internal"
+      traefik.http.routers.traefik.middlewares: "auth"
+      traefik.http.middlewares.auth.basicauth.users: "{{ dashboard_user }}:{{ dashboard_password }}"

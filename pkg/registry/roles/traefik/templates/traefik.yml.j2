@@ -1,0 +1,52 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+log:
+  level: "{{ log_level|upper }}"
+  format: "{{ log_format }}"
+  filePath: traefik.log
+
+api:
+  dashboard: true
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+    http:
+      tls:
+        certResolver: le
+        domains:
+          - main: "{{ project_domain }}"
+{% if wildcard == 'yes' %}
+            sans:
+              - "*.{{ project_domain }}"
+{% endif %}
+
+certificatesResolvers:
+  le:
+    acme:
+      email: "{{ email }}"
+      storage: acme.json
+{% if wildcard == 'yes' %}
+      dnsChallenge:
+        provider: "{{ wildcard_provider }}"
+        delayBeforeCheck: 5
+        resolvers:
+          - 1.1.1.1:53
+          - 8.8.8.8:53
+{% else %}
+      caServer: https://acme-{% if staging == 'yes' %}staging-{% endif %}v02.api.letsencrypt.org/directory
+{% endif %}
+
+providers:
+  docker:
+    network: "{{ docker_network }}"
+    exposedByDefault: false

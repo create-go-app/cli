@@ -13,7 +13,7 @@ First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.
 Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command and rename installed binary in `$GOPATH/bin`:
 
 ```bash
-go install -ldflags="-s -w" github.com/create-go-app/cli && mv $GOPATH/bin/cli $GOPATH/bin/cgapp
+CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
 ```
 
 Also, macOS and GNU/Linux users available way to install via [Homebrew](https://brew.sh/):
@@ -32,10 +32,14 @@ Let's create a new project via **interactive console UI** (or **CUI** for short)
 cgapp create
 ```
 
-Okay, it works! Now, you can run this project on your **local machine** or deploy to a **remote server**. Project works in isolated Docker containers and automates via Ansible playbook:
+Okay, it works! Now, you can create deploy config for this project and then ship it to your **remote server**. Project works in isolated Docker containers and automates via Ansible playbooks and roles:
 
 ```bash
-cgapp deploy
+cgapp deploy init
+
+# ...
+
+cgapp deploy start
 ```
 
 That's all you need to start! 🎉
@@ -52,7 +56,6 @@ With this Docker image, you do **not** have to worry about installing tools/CLI 
 
 Available commands for [official Docker image](https://create-go.app/detailed-guides/official-docker-image/):
 
-- [x] [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
 - [x] [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
 
 > 🔔 Please note: a [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently unavailable in this image.
@@ -76,7 +79,6 @@ Unfortunately, we are unable to include all helpful documentation to the `README
   - [CLI Installation](https://create-go.app/detailed-guides/installation/)
     - [Alternative installations](https://create-go.app/detailed-guides/installation/#alternative-installations)
   - [Understanding CLI commands and options](https://create-go.app/detailed-guides/commands-and-options/)
-    - [`init`](https://create-go.app/detailed-guides/commands-and-options/#init)
     - [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
     - [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy)
   - [Working with the official Docker image](https://create-go.app/detailed-guides/official-docker-image/)
@@ -90,96 +92,6 @@ Unfortunately, we are unable to include all helpful documentation to the `README
 - [Official logo](https://create-go.app/logo/)
 
 ## ⚙️ Commands & Options
-
-### `init`
-
-CLI command for generate a default `.cgapp.yml` config file in current folder:
-
-```bash
-cgapp init
-```
-
-- 📺 Preview: https://recordit.co/yvlnIu8Lyp
-- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#init
-
-<details>
-<summary>Generated config file</summary>
-
-<br/>
-
-```yaml
-# Project config.
-project:
-  # Backend for your project.
-  # (Required)
-  # String:
-  #   - `net/http`
-  #   - `fiber`
-  # User template: supported, set to URL (without protocol),
-  # like `github.com/user/template`
-  - backend: fiber
-
-  # Frontend for your project.
-  # (Optional, to skip set to `none`)
-  # String:
-  #   - `react`
-  #     - `react:<template>`
-  #   - `preact`
-  #     - `preact:<template>`
-  #   - `vue`
-  #     - `vue:<user/repo>` (for preset from GitHub)
-  #     - `vue:<gitlab|bitbucket>:<user/repo>` (for presets from others)
-  #   - `angular`
-  #   - `svelte`
-  #   - `sapper`
-  #     - `sapper:<webpack>`
-  # User template: supported, set to URL (without protocol),
-  # like `github.com/user/template`
-  - frontend: svelte
-
-  # Web/Proxy server for your project.
-  # (Optional, to skip set to `none`)
-  # String: `nginx`
-  # User template: supported, set to URL (without protocol),
-  # like `github.com/user/template`
-  - webserver: nginx
-
-# Automation config.
-roles:
-  # Ansible roles for deploy your project.
-  # (Optional, to skip set to empty or comment)
-  # Objects list.
-  - deploy:
-    # Username of remote's server or local's user.
-    # (Required)
-    username: root
-
-    # If you need to deploy (or run) a project asking for a password
-    # for the user, set `become` to `true`. This is equivalent of
-    # `--ask-become-pass`, a standard Ansible argument
-    # to ask for a privilege escalation password.
-    # (Optional)
-    become: true
-
-    # Host name from your inventory file (usually, at /etc/ansible/hosts).
-    # (Required)
-    host: localhost
-
-    # Name of Docker network
-    # (Required)
-    network: cgapp_network
-
-    # Port for backend Docker container (both in and out).
-    # (Required)
-    backend_port: 5000
-
-    # Filename of Ansible playbook in the root of the Create Go App project.
-    # If you want to rename it, do it, but not to change destination of file!
-    # (Required)
-    playbook: deploy-playbook.yml
-```
-
-</details>
 
 ### `create`
 
@@ -231,13 +143,59 @@ cgapp deploy
 - 📺 Preview: https://recordit.co/ewjG9dgMPX
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
 
-#### Deploy from the config file
+#### `deploy init`
 
-Run `deploy` command **with** `--use-config` (or `-c`) argument:
+CLI command for generate a default `.cgapp.yml` config file in current folder:
 
 ```bash
-cgapp deploy --use-config
+cgapp deploy init
 ```
+
+- 📺 Preview: https://recordit.co/yvlnIu8Lyp
+- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#init
+
+<details>
+<summary>Generated config file</summary>
+
+<br/>
+
+```yaml
+# Deploy config.
+deploy:
+  # Ansible roles for deploy your project.
+  # (Optional, to skip set to empty or comment)
+  # Objects list.
+  - deploy:
+    # Username of remote's server or local's user.
+    # (Required)
+    username: root
+
+    # If you need to deploy (or run) a project asking for a password
+    # for the user, set `become` to `true`. This is equivalent of
+    # `--ask-become-pass`, a standard Ansible argument
+    # to ask for a privilege escalation password.
+    # (Optional)
+    become: true
+
+    # Host name from your inventory file (usually, at /etc/ansible/hosts).
+    # (Required)
+    host: localhost
+
+    # Name of Docker network
+    # (Required)
+    network: cgapp_network
+
+    # Port for backend Docker container (both in and out).
+    # (Required)
+    backend_port: 5000
+
+    # Filename of Ansible playbook in the root of the Create Go App project.
+    # If you want to rename it, do it, but not to change destination of file!
+    # (Required)
+    playbook: deploy-playbook.yml
+```
+
+</details>
 
 ## 🤔 Why another CLI?
 
@@ -251,8 +209,6 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 
 - [x] [`net/http`](https://create-go.app/production-templates/net-http-go/) — Backend template with Golang built-in [net/http](https://golang.org/pkg/net/http/) package.
 - [x] [`fiber`](https://create-go.app/production-templates/fiber-go/) — Backend template with [Fiber](https://github.com/gofiber/fiber).
-- [ ] [`echo`](https://create-go.app/production-templates/echo-go/) (_WIP_) — Backend template with [Echo](https://github.com/labstack/echo).
-- [ ] [`gin`](https://create-go.app/production-templates/gin-go/) (_WIP_) — Backend template with [Gin](https://github.com/gin-gonic/gin).
 
 **Frontend:**
 
@@ -268,9 +224,7 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 - [x] `sapper` — [Sapper](https://sapper.svelte.dev/) frontend app for static websites.
   - `sapper:<webpack>` — Preset for generating Sapper with Webpack bundler.
 
-> ☝️ Please note, that since version `v1.3.0`, frontend templates (_in the classical sense_) are **not** supported by the Create Go App CLI. Those templates, that we created ([`react-js`](https://github.com/create-go-app/react-js-template), [`react-ts`](https://github.com/create-go-app/react-ts-template) and [`preact-js`](https://github.com/create-go-app/preact-js-template)), are still available, but only for use as **user's custom templates**.
->
-> Now, the frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
+> ☝️ Frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
 
 ## 🐳 Configured Docker containers
 
@@ -298,12 +252,12 @@ project:
 You can do it by using a version suffix in `go install` command:
 
 ```bash
-go install github.com/create-go-app/cli@1.6.0
+go install github.com/create-go-app/cli@2.0.0
 ```
 
 > ☝️ Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
 >
-> For example: `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v1_6_0` and run it by `cgapp_v1_6_0`.
+> For example: `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v2_0_0` and run it by `cgapp_v2_0_0`.
 
 Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
 

@@ -5,42 +5,76 @@
 package cgapp
 
 import (
+	"embed"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 )
 
-// MakeFiles function for massively create folders.
-func MakeFiles(rootFolder string, filesToMake map[string][]byte) error {
-	for file, data := range filesToMake {
-		folder := filepath.Join(rootFolder, file)
+// EmbeddedFileSystems struct contains embedded file system fields.
+type EmbeddedFileSystem struct {
+	Name       embed.FS
+	RootFolder string
+	SkipDir    bool
+}
 
-		// Write to created file.
-		if err := ioutil.WriteFile(folder, data, 0600); err != nil {
-			return throwError("File `" + file + "` was not created!")
+// CopyFromEmbeddedFS function for copy files from embedded file system.
+func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
+	// Return copied folders and files.
+	fs.WalkDir(efs.Name, efs.RootFolder, func(path string, entry fs.DirEntry, err error) error {
+		// Checking embed path.
+		catchError("Can't make structure from embedded path `"+efs.RootFolder+"`!", err)
+
+		// Checking, if embedded file is a folder.
+		if entry.IsDir() && !efs.SkipDir {
+			// Create folders structure from embedded.
+			errMakeFolder := MakeFolder(path)
+			catchError("", errMakeFolder)
 		}
 
-		// Show report for file.
-		SendMsg(false, "[OK]", "File `"+file+"` was created!", "cyan", false)
-	}
+		// Checking, if embedded file is not a folder.
+		if !entry.IsDir() {
+			// Set file data.
+			fileData, errReadFile := fs.ReadFile(efs.Name, path)
+			catchError("File `"+path+"/"+entry.Name()+"` was broken!", errReadFile)
+
+			// Path to file, if skipped folders.
+			if efs.SkipDir {
+				path = entry.Name()
+			}
+
+			// Create file from embedded.
+			errMakeFile := MakeFile(path, fileData)
+			catchError("", errMakeFile)
+		}
+
+		return nil
+	})
+
+	return nil
+}
+
+// MakeFile function for single file create.
+func MakeFile(fileName string, fileData []byte) error {
+	// Write to created file.
+	err := ioutil.WriteFile(fileName, fileData, 0600)
+	catchError("File `"+fileName+"` was not created!", err)
+
+	// Show report for file.
+	SendMsg(false, "[OK]", "File `"+fileName+"` was created!", "cyan", false)
 
 	return nil
 }
 
 // MakeFolder function for create folder.
-func MakeFolder(folderName string, chmod os.FileMode) error {
+func MakeFolder(folderName string) error {
 	// Check if folder exists, fail if it does.
-	if _, err := os.Stat(folderName); !os.IsNotExist(err) {
-		return throwError("Folder `" + folderName + "` exists!")
-	}
-
-	// Create folder.
-	if err := os.Mkdir(folderName, chmod); err != nil {
-		return throwError("Folder `" + folderName + "` was not created!")
-	}
+	err := os.Mkdir(folderName, 0750)
+	catchError("Folder `"+folderName+"` is exists!", err)
 
 	// Show report for folder.
-	SendMsg(false, "OK", "Folder `"+folderName+"` was created!", "", false)
+	SendMsg(false, "[OK]", "Folder `"+folderName+"` was created!", "cyan", false)
 
 	return nil
 }

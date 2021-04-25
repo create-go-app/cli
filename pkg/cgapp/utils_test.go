@@ -1,7 +1,6 @@
 package cgapp
 
 import (
-	"os"
 	"reflect"
 	"testing"
 )
@@ -83,56 +82,6 @@ func TestSendMsg(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			SendMsg(tt.args.startWithNewLine, tt.args.caption, tt.args.text, tt.args.color, tt.args.endWithNewLine)
 		})
-	}
-}
-
-func TestMakeFolder(t *testing.T) {
-	type args struct {
-		folderName string
-		chmod      os.FileMode
-	}
-	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
-	}{
-		{
-			"successfully created folder",
-			args{
-				folderName: "../../tmp",
-				chmod:      0750,
-			},
-			false,
-		},
-		{
-			"failed, folder is exists",
-			args{
-				folderName: "",
-				chmod:      0750,
-			},
-			true,
-		},
-		{
-			"failed, folder is exists",
-			args{
-				folderName: "cgapp-project",
-				chmod:      0750,
-			},
-			true,
-		},
-	}
-
-	_ = os.Mkdir("cgapp-project", 0750)
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := MakeFolder(tt.args.folderName, tt.args.chmod); (err != nil) != tt.wantErr {
-				t.Errorf("MakeFolder() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-
-		// Clean
-		os.RemoveAll(tt.args.folderName)
 	}
 }
 

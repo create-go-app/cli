@@ -7,6 +7,7 @@ package cgapp
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"os/exec"
 )
 
@@ -14,7 +15,7 @@ import (
 func ExecCommand(command string, options []string) error {
 	//
 	if command == "" {
-		return throwError("No command to execute!")
+		return fmt.Errorf("No command to execute!")
 	}
 
 	// Create buffer for stderr.
@@ -28,14 +29,11 @@ func ExecCommand(command string, options []string) error {
 
 	// Create a new reader
 	cmdReader, err := cmd.StdoutPipe()
-	if err != nil {
-		return throwError(err.Error())
-	}
+	catchError("", err)
 
 	// Start executing command.
-	if err := cmd.Start(); err != nil {
-		return throwError(stderr.String())
-	}
+	errStart := cmd.Start()
+	catchError(stderr.String(), errStart)
 
 	// Create a new scanner and run goroutine func with output.
 	scanner := bufio.NewScanner(cmdReader)
@@ -46,9 +44,8 @@ func ExecCommand(command string, options []string) error {
 	}()
 
 	// Wait for executing command.
-	if err := cmd.Wait(); err != nil {
-		return throwError(stderr.String())
-	}
+	errWait := cmd.Wait()
+	catchError(stderr.String(), errWait)
 
 	return nil
 }

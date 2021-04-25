@@ -5,16 +5,14 @@
 package registry
 
 import (
-	_ "embed" // for embed config files
+	"embed"
 
 	"github.com/AlecAivazis/survey/v2"
 )
 
 const (
 	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.8.0"
-	// RegexpAnsiblePattern pattern for Ansible roles.
-	RegexpAnsiblePattern = "^(deploy)$"
+	CLIVersion = "2.0.0"
 	// RegexpBackendPattern pattern for backend.
 	RegexpBackendPattern = "^(net/http|fiber)$"
 	// RegexpFrontendPattern pattern for backend.
@@ -46,7 +44,6 @@ type Command struct {
 type CreateAnswers struct {
 	Backend             string
 	Frontend            string
-	Webserver           string
 	InstallAnsibleRoles bool `survey:"roles"`
 	AgreeCreation       bool `survey:"agree"`
 }
@@ -57,34 +54,22 @@ type DeployAnswers struct {
 	Host            string
 	Network         string
 	BackendPort     string
-	AskBecomePass   bool `survey:"become"`
+	AskBecomePass   bool `survey:"become_pass"`
 	AgreeDeployment bool `survey:"agree"`
 }
 
 var (
-	// EmbedCGAPPConfig main config file for Create Go App.
-	//go:embed configs/.cgapp.yml
-	EmbedCGAPPConfig []byte
+	// EmbedConfigs configs for Create Go App CLI.
+	//go:embed configs/*
+	EmbedConfigs embed.FS
 
-	// EmbedEditorConfig config for auto configuration IDE.
-	//go:embed configs/.editorconfig
-	EmbedEditorConfig []byte
+	// EmbedMiscFiles misc files and configs.
+	//go:embed misc/*
+	EmbedMiscFiles embed.FS
 
-	// EmbedGitAttributes config for git attributes.
-	//go:embed configs/.gitattributes
-	EmbedGitAttributes []byte
-
-	// EmbedGitIgnore config for git ignore files.
-	//go:embed configs/.gitignore
-	EmbedGitIgnore []byte
-
-	// EmbedMakefile file for rapid manipulation with a new app.
-	//go:embed configs/Makefile
-	EmbedMakefile []byte
-
-	// EmbedDeployPlaybook Ansible playbook for deployment.
-	//go:embed configs/deploy-playbook.yml
-	EmbedDeployPlaybook []byte
+	// EmbedRoles Ansible roles.
+	//go:embed roles/*
+	EmbedRoles embed.FS
 
 	// Repositories collection.
 	Repositories = map[string]*Repository{
@@ -93,14 +78,6 @@ var (
 			List: map[string]string{
 				"net/http": "github.com/create-go-app/net_http-go-template",
 				"fiber":    "github.com/create-go-app/fiber-go-template",
-			},
-		},
-
-		// Docker containers with web/proxy servers.
-		"webserver": {
-			List: map[string]string{
-				"nginx":   "github.com/create-go-app/nginx-docker",
-				"traefik": "github.com/create-go-app/traefik-docker",
 			},
 		},
 	}
@@ -168,17 +145,9 @@ var (
 			},
 		},
 		{
-			Name: "webserver",
-			Prompt: &survey.Select{
-				Message: "Choose a web/proxy server:",
-				Options: []string{"none", "Nginx", "Traefik"},
-				Default: "none",
-			},
-		},
-		{
 			Name: "roles",
 			Prompt: &survey.Confirm{
-				Message: "Do you want to create Ansible playbook for deploy your project?",
+				Message: "Do you want to create Ansible playbook and roles for deploy your project?",
 				Default: true,
 			},
 		},
@@ -194,40 +163,61 @@ var (
 	// DeployQuestions survey's questions for `deploy` command.
 	DeployQuestions = []*survey.Question{
 		{
-			Name: "username",
+			Name: "project_domain_url",
 			Prompt: &survey.Input{
-				Message: "Enter username:",
+				Message: "Enter domain for this project (e.g. example.com):",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "letsencript_email",
+			Prompt: &survey.Input{
+				Message: "Enter your Email address for generating Let's Encrypt SSL certificate (e.g. mail@example.com):",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "system_user_name",
+			Prompt: &survey.Input{
+				Message: "Enter system username:",
 				Default: "root",
 			},
 			Validate: survey.Required,
 		},
 		{
-			Name: "become",
+			Name: "become_pass",
 			Prompt: &survey.Confirm{
 				Message: "Do you need to enter password for this username?",
 				Default: true,
 			},
 		},
 		{
-			Name: "host",
+			Name: "host_name",
 			Prompt: &survey.Input{
-				Message: "Enter host name to deploy:",
+				Message: "Enter host name to deploy (from Ansible inventory):",
 				Default: "localhost",
 			},
 			Validate: survey.Required,
 		},
 		{
-			Name: "network",
+			Name: "docker_network",
 			Prompt: &survey.Input{
-				Message: "Enter name of Docker network:",
+				Message: "Enter name of the Docker network:",
 				Default: "cgapp_network",
 			},
 			Validate: survey.Required,
 		},
 		{
-			Name: "port",
+			Name: "traefik_dashboard_password",
+			Prompt: &survey.Password{
+				Message: "Create a new password for Traefik dashboard:",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "backend_port",
 			Prompt: &survey.Input{
-				Message: "Enter port of backend Docker container:",
+				Message: "Enter port number, using for backend Docker container:",
 				Default: "5000",
 			},
 			Validate: survey.Required,
