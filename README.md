@@ -14,11 +14,10 @@ Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-
 
 ```bash
 go install github.com/create-go-app/cli/cmd/cgapp@latest
-```
 
-> ☝️ If you want to reduce binary size, you can run this command with this options:
-> 
-> `CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest`
+# If you want to reduce binary size, you can run this command with options:
+CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
+```
 
 Also, macOS and GNU/Linux users available way to install via [Homebrew](https://brew.sh/):
 
@@ -48,7 +47,7 @@ Open the generated file and fill in the variables according to your server confi
 cgapp deploy
 ```
 
-That's all you need to start! 🎉
+That's all you need to know to start! 🎉
 
 ### ~ Docker-way to quick start
 
