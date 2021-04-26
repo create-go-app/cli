@@ -8,6 +8,7 @@ import (
 	"embed"
 	"io/fs"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -22,22 +23,27 @@ type EmbeddedFileSystem struct {
 // CopyFromEmbeddedFS function for copy files from embedded file system.
 func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 	// Return copied folders and files.
-	fs.WalkDir(efs.Name, efs.RootFolder, func(path string, entry fs.DirEntry, err error) error {
+	if err := fs.WalkDir(efs.Name, efs.RootFolder, func(path string, entry fs.DirEntry, err error) error {
 		// Checking embed path.
-		catchError("Can't make structure from embedded path `"+efs.RootFolder+"`!", err)
+		if err != nil {
+			log.Fatal(BeautifyText("Can't make structure from embedded path `"+efs.RootFolder+"`!", "red"))
+		}
 
 		// Checking, if embedded file is a folder.
 		if entry.IsDir() && !efs.SkipDir {
 			// Create folders structure from embedded.
-			errMakeFolder := MakeFolder(path)
-			catchError("", errMakeFolder)
+			if err := MakeFolder(path); err != nil {
+				log.Fatal(BeautifyText(err.Error(), "red"))
+			}
 		}
 
 		// Checking, if embedded file is not a folder.
 		if !entry.IsDir() {
 			// Set file data.
 			fileData, errReadFile := fs.ReadFile(efs.Name, path)
-			catchError("File `"+path+"/"+entry.Name()+"` was broken!", errReadFile)
+			if errReadFile != nil {
+				log.Fatal(BeautifyText("File `"+path+"/"+entry.Name()+"` was broken!", "red"))
+			}
 
 			// Path to file, if skipped folders.
 			if efs.SkipDir {
@@ -45,12 +51,15 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 			}
 
 			// Create file from embedded.
-			errMakeFile := MakeFile(path, fileData)
-			catchError("", errMakeFile)
+			if errMakeFile := MakeFile(path, fileData); errMakeFile != nil {
+				log.Fatal(BeautifyText(err.Error(), "red"))
+			}
 		}
 
 		return nil
-	})
+	}); err != nil {
+		log.Fatal(BeautifyText(err.Error(), "red"))
+	}
 
 	return nil
 }
@@ -58,8 +67,9 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 // MakeFile function for single file create.
 func MakeFile(fileName string, fileData []byte) error {
 	// Write to created file.
-	err := ioutil.WriteFile(fileName, fileData, 0600)
-	catchError("File `"+fileName+"` was not created!", err)
+	if err := ioutil.WriteFile(fileName, fileData, 0600); err != nil {
+		log.Fatal(BeautifyText("File `"+fileName+"` was not created!", "red"))
+	}
 
 	// Show report for file.
 	SendMsg(false, "[OK]", "File `"+fileName+"` was created!", "cyan", false)
@@ -70,8 +80,9 @@ func MakeFile(fileName string, fileData []byte) error {
 // MakeFolder function for create folder.
 func MakeFolder(folderName string) error {
 	// Check if folder exists, fail if it does.
-	err := os.Mkdir(folderName, 0750)
-	catchError("Folder `"+folderName+"` is exists!", err)
+	if err := os.Mkdir(folderName, 0750); err != nil {
+		log.Fatal(BeautifyText("Folder `"+folderName+"` is exists!", "red"))
+	}
 
 	// Show report for folder.
 	SendMsg(false, "[OK]", "Folder `"+folderName+"` was created!", "cyan", false)

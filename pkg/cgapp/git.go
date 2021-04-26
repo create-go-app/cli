@@ -4,7 +4,11 @@
 
 package cgapp
 
-import "github.com/go-git/go-git/v5"
+import (
+	"log"
+
+	"github.com/go-git/go-git/v5"
+)
 
 // GitClone function for `git clone` defined project template.
 func GitClone(rootFolder, templateName string) error {
@@ -16,7 +20,9 @@ func GitClone(rootFolder, templateName string) error {
 			URL: "https://" + templateName,
 		},
 	)
-	catchError("Repository was not cloned!", err)
+	if err != nil {
+		log.Fatal(BeautifyText("Repository was not cloned!", "red"))
+	}
 
 	return nil
 }

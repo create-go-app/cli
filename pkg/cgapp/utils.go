@@ -6,7 +6,6 @@ package cgapp
 
 import (
 	"fmt"
-	"log"
 	"regexp"
 )
 
@@ -81,17 +80,4 @@ func stringSplit(pattern, match string) ([]string, error) {
 	}
 
 	return splittedStrings, nil
-}
-
-// catchError function for throw an error.
-func catchError(text string, err error) error {
-	if err != nil {
-		if text == "" {
-			text = err.Error()
-		}
-
-		log.Fatal(BeautifyText(text, "red"))
-	}
-
-	return nil
 }

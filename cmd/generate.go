@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -75,5 +76,7 @@ func init() {
 		"proxy", "p", "",
 		"generate a new Ansible inventory file (`$PWD/hosts.ini`) for specified proxy",
 	)
-	rootCmd.MarkPersistentFlagRequired("proxy")
+	if err := rootCmd.MarkPersistentFlagRequired("proxy"); err != nil {
+		log.Fatal(cgapp.BeautifyText(err.Error(), "red"))
+	}
 }

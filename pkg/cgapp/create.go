@@ -6,6 +6,7 @@ package cgapp
 
 import (
 	"fmt"
+	"log"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -28,7 +29,9 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 
 	// Create match expration.
 	match, err := regexp.MatchString(m, p.Name)
-	catchError("", err)
+	if err != nil {
+		log.Fatal(BeautifyText(err.Error(), "red"))
+	}
 
 	// Check for regexp.
 	if match {
@@ -36,15 +39,17 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 		template = r[p.Type].List[p.Name]
 
 		// If match, create from default template.
-		err := GitClone(folder, template)
-		catchError("", err)
+		if err := GitClone(folder, template); err != nil {
+			log.Fatal(BeautifyText(err.Error(), "red"))
+		}
 	} else {
 		// Re-define vars.
 		template = p.Name
 
 		// Else create from user template (from GitHub, etc).
-		err := GitClone(folder, template)
-		catchError("", err)
+		if err := GitClone(folder, template); err != nil {
+			log.Fatal(BeautifyText(err.Error(), "red"))
+		}
 	}
 
 	// Show success report.
@@ -72,12 +77,16 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 
 	// Create match expration for name.
 	match, err := regexp.MatchString(m, p.Name)
-	catchError("", err)
+	if err != nil {
+		log.Fatal(BeautifyText(err.Error(), "red"))
+	}
 
 	if match {
 		// Split frontend library/framework name and template.
 		project, errStringSplit := stringSplit(":", p.Name)
-		catchError("", errStringSplit)
+		if errStringSplit != nil {
+			log.Fatal(BeautifyText(errStringSplit.Error(), "red"))
+		}
 
 		// Re-define vars for more beauty view.
 		runner := c[project[0]].Runner
@@ -122,12 +131,14 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 		}
 
 		// Run execution command.
-		errExecCommand := ExecCommand(runner, options)
-		catchError("", errExecCommand)
+		if errExecCommand := ExecCommand(runner, options); errExecCommand != nil {
+			log.Fatal(BeautifyText(errExecCommand.Error(), "red"))
+		}
 	} else {
 		// Create frontend from given repository (GitHub, etc).
-		err := GitClone(folder, p.Name)
-		catchError("", err)
+		if err := GitClone(folder, p.Name); err != nil {
+			log.Fatal(BeautifyText(err.Error(), "red"))
+		}
 	}
 
 	// Cleanup project.
