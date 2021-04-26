@@ -35,7 +35,7 @@ Let's create a new project via **interactive console UI** (or **CUI** for short)
 cgapp create
 ```
 
-Okay, it works! Now, you can create a new Ansible inventory file (in `$PWD/hosts.ini`) for the specified proxy server:
+Okay, it works! Now, you can create a new pre-configured Ansible inventory file (in current folder, called `hosts.ini`) for the specified proxy server:
 
 ```bash
 cgapp generate -p traefik
@@ -121,9 +121,9 @@ CLI command for generate a new Ansible inventory file, called `hosts.ini`, for s
 cgapp generate [OPTION]
 ```
 
-| Option | Values | Required? |
-| --- | --- | --- |
-| `-p`,&nbsp;`--proxy` | <br/><ul><li>`traefik` — a basic ACME challenge via Let's Encrypt server;</li><li>`traefik:dns` — more complex ACME challenge via choosen DNS provider, supports challenge to getting SSL certificates for you subdomains;</li></ul> | Yes |
+| Option | Values | Default | Required? |
+| --- | --- | --- | --- |
+| `-p`,&nbsp;`--proxy` | <br/><ul><li>`traefik` — a basic ACME challenge via Let's Encrypt server;</li><li>`traefik:dns` — more complex ACME challenge via choosen DNS provider, supports challenge to getting SSL certificates for you subdomains;</li></ul> | `traefik` | Yes |
 
 - 📺 Preview: https://recordit.co/yvlnIu8Lyp
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#generate
@@ -174,9 +174,9 @@ Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [An
 cgapp deploy [OPTION]
 ```
 
-| Option | Values | Required? |
-| --- | --- | --- |
-| `-K`,&nbsp;`--ask-become-pass` | <br/><ul><li>`boolean` — prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option);</li></ul> | No |
+| Option | Values | Default | Required? |
+| --- | --- | --- | --- |
+| `-K`,&nbsp;`--ask-become-pass` | <br/><ul><li>`boolean` — prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option);</li></ul> | `false` | No |
 
 - 📺 Preview: https://recordit.co/ewjG9dgMPX
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
