@@ -118,7 +118,7 @@ cgapp create [OPTIONS]
 | `-b`,&nbsp;`--backend` | <br/><ul><li>`url` — address to your custom backend git repository;</li></ul> | `""` | No |
 | `-f`,&nbsp;`--frontend` | <br/><ul><li>`url` — address to your custom frontend git repository;</li></ul> | `""` | No |
 
-> ☝️ The `https://` protocol will be added automatically! Support _public_ repositories from any git providers, like **GitHub**, **Bitbucket**, **Gitlab**, your own **Gitea**, or else.
+> ☝️ No need to specify `https://` protocol, it will be added automatically! Support **public** repositories from any `git` providers, like GitHub, Bitbucket, Gitlab, your own Gitea, or else.
 
 ### `generate`
 
@@ -209,7 +209,7 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
   - `preact:<template>` — Preact CLI generated template for Preact app.
 - [x] `vue` — [Vue.js](https://vuejs.org/) frontend app.
   - `vue:<user/repo>` — Preset for generating Vue.js app from GitHub.
-  - `vue:<gitlab|bitbucket>:<user/repo>` — Preset for generating Vue.js app from GitLab/BitBucket/etc.
+  - `vue:<gitlab|bitbucket>:<user/repo>` — Preset for generating Vue.js app from Gitlab/Bitbucket/etc.
 - [x] `angular` — [Angular](https://angular.io/) frontend app.
 - [x] `svelte` — [Svelte](https://svelte.dev/) frontend app.
 - [x] `sapper` — [Sapper](https://sapper.svelte.dev/) frontend app for static websites.
