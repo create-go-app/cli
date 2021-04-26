@@ -118,7 +118,7 @@ cgapp create [OPTIONS]
 | `-b`,&nbsp;`--backend` | <br/><ul><li>`url` — address to your custom backend git repository;</li></ul> | `""` | No |
 | `-f`,&nbsp;`--frontend` | <br/><ul><li>`url` — address to your custom frontend git repository;</li></ul> | `""` | No |
 
-> ☝️ The `https://` protocol will be added automatically! Support _public_ repositories from any git providers, like **GitHub**, **Bitbucket**, **Gitlab**, or else.
+> ☝️ The `https://` protocol will be added automatically! Support _public_ repositories from any git providers, like **GitHub**, **Bitbucket**, **Gitlab**, your own **Gitea**, or else.
 
 ### `generate`
 
