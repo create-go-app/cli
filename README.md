@@ -4,7 +4,7 @@
 </h1>
 <p align="center">Create a new production-ready project with <b>backend</b> (Golang), <b>frontend</b> (JavaScript, TypeScript)<br/>and <b>deploy automation</b> (Ansible, Docker) by running one CLI command.<br/><br/>Focus on <b>writing</b> code and <b>thinking</b> of business-logic! The CLI will take care of the rest.</p>
 
-<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v1.8.0-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.16+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
+<p align="center"><a href="https://github.com/create-go-app/cli/releases" target="_blank"><img src="https://img.shields.io/badge/version-v2.0.0-blue?style=for-the-badge&logo=none" alt="cli version" /></a>&nbsp;<a href="https://pkg.go.dev/github.com/create-go-app/cli?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.16+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<a href="https://gocover.io/github.com/create-go-app/cli/pkg/cgapp" target="_blank"><img src="https://img.shields.io/badge/Go_Cover-94%25-success?style=for-the-badge&logo=none" alt="go cover" /></a>&nbsp;<a href="https://goreportcard.com/report/github.com/create-go-app/cli" target="_blank"><img src="https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none" alt="go report" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
 
 ## ⚡️ Quick start
 
@@ -13,8 +13,12 @@ First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.
 Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command and rename installed binary in `$GOPATH/bin`:
 
 ```bash
-CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
+go install github.com/create-go-app/cli/cmd/cgapp@latest
 ```
+
+> ☝️ If you want to reduce binary size, you can run this command with this options:
+> 
+> `CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest`
 
 Also, macOS and GNU/Linux users available way to install via [Homebrew](https://brew.sh/):
 
@@ -32,14 +36,16 @@ Let's create a new project via **interactive console UI** (or **CUI** for short)
 cgapp create
 ```
 
-Okay, it works! Now, you can create deploy config for this project and then ship it to your **remote server**. Project works in isolated Docker containers and automates via Ansible playbooks and roles:
+Okay, it works! Now, you can create a new Ansible inventory file (in `$PWD/hosts.ini`) for the specified proxy server:
 
 ```bash
-cgapp deploy init
+cgapp generate -p traefik
+```
 
-# ...
+Open the generated file and fill in the variables according to your server configuration. Now you are ready to automatically deploy the project on the remote server:
 
-cgapp deploy start
+```bash
+cgapp deploy
 ```
 
 That's all you need to start! 🎉
@@ -57,6 +63,7 @@ With this Docker image, you do **not** have to worry about installing tools/CLI 
 Available commands for [official Docker image](https://create-go.app/detailed-guides/official-docker-image/):
 
 - [x] [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
+- [x] [`generate`](https://create-go.app/detailed-guides/commands-and-options/#generate)
 
 > 🔔 Please note: a [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently unavailable in this image.
 
@@ -65,8 +72,8 @@ Available commands for [official Docker image](https://create-go.app/detailed-gu
 A short video screencast to introduce main features of the Create Go App CLI.
 
 <a align="center" href="https://youtu.be/5-DNZFU9TOQ" target="_blank">
-    <img src="https://create-go.app/assets/images/youtube-preview.jpg" alt="youtube preview"/><br/>
-    🔗 https://youtu.be/5-DNZFU9TOQ
+  <img src="https://create-go.app/assets/images/youtube-preview.jpg" alt="youtube preview"/><br/>
+  🔗 https://youtu.be/5-DNZFU9TOQ
 </a>
 
 ## 📖 Official Documentation
@@ -80,12 +87,13 @@ Unfortunately, we are unable to include all helpful documentation to the `README
     - [Alternative installations](https://create-go.app/detailed-guides/installation/#alternative-installations)
   - [Understanding CLI commands and options](https://create-go.app/detailed-guides/commands-and-options/)
     - [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
+    - [`generate`](https://create-go.app/detailed-guides/commands-and-options/#generate)
     - [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy)
   - [Working with the official Docker image](https://create-go.app/detailed-guides/official-docker-image/)
   - [Run project on your local machine](https://create-go.app/detailed-guides/run-on-local/)
   - [Deploy project to a production server](https://create-go.app/detailed-guides/deploy-to-server/)
-  - [Make your own template](https://create-go.app/detailed-guides/make-custom-template/)
-  - [Make your own container](https://create-go.app/detailed-guides/make-custom-container/)
+  - [Make your own project template](https://create-go.app/detailed-guides/make-custom-template/)
+  - [Make your own Ansible role](https://create-go.app/detailed-guides/make-custom-ansible-roles/)
 - [FAQ](https://create-go.app/faq/)
   - [Automation of a deploy process](https://create-go.app/automation/)
   - [How do I ask the right question?](https://create-go.app/ask-question/#how-do-i-ask-the-right-question)
@@ -97,14 +105,7 @@ Unfortunately, we are unable to include all helpful documentation to the `README
 
 CLI command to create a new project with the selected configuration.
 
-There's two ways to create a new project:
-
-- [x] With an interactive console UI (or CUI).
-- [x] From configuration file (by default, in `$PWD/.cgapp.yml`).
-
-#### Create with the interactive console UI
-
-Run `create` command **without** any arguments:
+For create a new project with the interactive console UI, please run `create` command (_without_ any arguments):
 
 ```bash
 cgapp create
@@ -113,89 +114,69 @@ cgapp create
 - 📺 Preview: https://recordit.co/LTxFQloedn
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
 
-#### Create from the config file
+### `generate`
 
-Run `create` command **with** `--use-config` (or `-c`) argument:
+CLI command for generate a new Ansible inventory file, called `hosts.ini`, for specified proxy server in current folder:
 
 ```bash
-cgapp create --use-config
+cgapp generate [OPTION]
 ```
+
+| Option | Values |
+| --- | --- |
+| `-p`,&nbsp;`--proxy` | <br/><ul><li>`traefik` — a basic ACME challenge via Let's Encrypt server;</li><li>`traefik:dns` — more complex ACME challenge via choosen DNS provider, supports challenge to getting SSL certificates for you subdomains;</li></ul> |
+
+- 📺 Preview: https://recordit.co/yvlnIu8Lyp
+- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#generate
+
+<details>
+<summary>Example inventory file</summary>
+
+<br/>
+
+```ini
+[cgapp_project]
+127.0.0.1 # CHANGE THIS TO YOUR REMOTE SERVER IP!
+
+[cgapp_project:vars]
+# Set Ansible default variables to start playbook:
+ansible_user=root       # remote sudo user name
+ansible_become=true     # ask become password for remote sudo user
+ansible_connection=ssh  # connection to remote server via SSH
+
+# Set Python 3 default path:
+ansible_python_interpreter_path=/usr/bin/python3
+
+# Set Docker network name:
+docker_network=cgapp_network
+
+# Set your project domain:
+project_domain=example.com
+
+# Set directory on your remote server for store project files:
+server_dir=/var/www/cgapp
+
+# Set user (owner) name & group name (to create files on server):
+system_user=root
+system_group=docker
+```
+
+</details>
 
 ### `deploy`
 
-CLI command for deploy Docker containers with your project to a remote server.
+CLI command for deploy Docker containers with your project via Ansible to a remote server.
 
-> ☝️ You should only run this command from the **root folder** of your project, which created with the `cgapp create` command! It's a necessary condition for everything to work perfectly.
+> ☝️ You should only run this command from the **root folder** of your project, which created with `create` and `generate` commands! It's a necessary condition for everything to work perfectly.
 
-There's, also, two ways to deploy your project:
-
-- [x] With an interactive console UI (or CUI).
-- [x] From configuration file (by default, in `$PWD/.cgapp.yml`).
-
-#### Deploy with the interactive console UI
-
-Run `deploy` command **without** any arguments:
+Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [Ansible 2.9+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer. Run `deploy` command:
 
 ```bash
-cgapp deploy
+cgapp deploy [OPTION]
 ```
 
 - 📺 Preview: https://recordit.co/ewjG9dgMPX
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
-
-#### `deploy init`
-
-CLI command for generate a default `.cgapp.yml` config file in current folder:
-
-```bash
-cgapp deploy init
-```
-
-- 📺 Preview: https://recordit.co/yvlnIu8Lyp
-- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#init
-
-<details>
-<summary>Generated config file</summary>
-
-<br/>
-
-```yaml
-# Deploy config.
-deploy:
-  # Ansible roles for deploy your project.
-  # (Optional, to skip set to empty or comment)
-  # Objects list.
-  - deploy:
-    # Username of remote's server or local's user.
-    # (Required)
-    username: root
-
-    # If you need to deploy (or run) a project asking for a password
-    # for the user, set `become` to `true`. This is equivalent of
-    # `--ask-become-pass`, a standard Ansible argument
-    # to ask for a privilege escalation password.
-    # (Optional)
-    become: true
-
-    # Host name from your inventory file (usually, at /etc/ansible/hosts).
-    # (Required)
-    host: localhost
-
-    # Name of Docker network
-    # (Required)
-    network: cgapp_network
-
-    # Port for backend Docker container (both in and out).
-    # (Required)
-    backend_port: 5000
-
-    # Filename of Ansible playbook in the root of the Create Go App project.
-    # If you want to rename it, do it, but not to change destination of file!
-    # (Required)
-    playbook: deploy-playbook.yml
-```
-
-</details>
 
 ## 🤔 Why another CLI?
 
@@ -226,23 +207,23 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 
 > ☝️ Frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
 
-## 🐳 Configured Docker containers
+## 🚚 Configured Ansible roles
 
 **Web/Proxy server:**
 
-- [x] [`nginx`](https://create-go.app/docker-containers/nginx/) — Docker container with [Nginx](https://nginx.org).
-- [x] [`traefik`](https://create-go.app/docker-containers/traefik/) — Docker container with [Traefik Proxy](https://traefik.io/traefik/).
+- [x] `traefik` — role for run Docker container with [Traefik Proxy](https://traefik.io/traefik/).
+- [x] `nginx` — role for run Docker container with [Nginx](https://nginx.org).
 
-## 👤 Custom templates & containers?
+> ☝️ Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects.
 
-Create Go App CLI provide works with **your own** custom templates, instead of those prepared by authors. Just specify backend, frontend and webserver with addresses to repositories in configuration file (`.cgapp.yml`):
+## 👤 My own custom templates?
 
-```yaml
-project:
-  - backend: github.com/user1/my-template-1
-  - frontend: gitlab.com/user2/my-template-2
-  - webserver: bitbucket.org/user3/my-template-3
-# ...
+Create Go App CLI provide works with **your own** custom templates, instead of those prepared by authors. Just specify backend (`-b`) and frontend (`-f`) with addresses to their repositories in `create` command:
+
+```console
+cgapp create \
+  -b github.com/user1/my-template-1 \
+  -f bitbucket.org/user2/my-template-2
 ```
 
 > ☝️ The `https://` protocol will be added automatically!
@@ -252,12 +233,12 @@ project:
 You can do it by using a version suffix in `go install` command:
 
 ```bash
-go install github.com/create-go-app/cli@2.0.0
+go install github.com/create-go-app/cli/cmd/cgapp@2.0.0
 ```
 
 > ☝️ Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
 >
-> For example: `mv $GOPATH/bin/cli $GOPATH/bin/cgapp_v2_0_0` and run it by `cgapp_v2_0_0`.
+> For example: `mv $GOPATH/bin/cgapp $GOPATH/bin/cgapp_v2_0_0` and run it by `cgapp_v2_0_0 [COMMAND]`.
 
 Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
 
