@@ -35,13 +35,13 @@ Let's create a new project via **interactive console UI** (or **CUI** for short)
 cgapp create
 ```
 
-Okay, it works! Now, you can create a new pre-configured Ansible inventory file (in current folder, called `hosts.ini`) for the specified proxy server:
+Okay, it works! Now, you can create a new pre-configured Ansible inventory file in current folder:
 
 ```bash
 cgapp generate -p traefik
 ```
 
-Open the generated file and fill in the variables according to your server configuration. Now you are ready to automatically deploy the project on the remote server:
+Open the generated file (called `hosts.ini`) and fill in the variables according to your server configuration. Now you are ready to automatically deploy the project on the remote server:
 
 ```bash
 cgapp deploy
@@ -115,7 +115,7 @@ cgapp create
 
 ### `generate`
 
-CLI command for generate a new Ansible inventory file, called `hosts.ini`, for specified proxy server in current folder:
+CLI command for generate a new pre-configured Ansible inventory file, called `hosts.ini`, for specified proxy server in current folder:
 
 ```bash
 cgapp generate [OPTION]
