@@ -64,7 +64,7 @@ Available commands for [official Docker image](https://create-go.app/detailed-gu
 - [x] [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
 - [x] [`generate`](https://create-go.app/detailed-guides/commands-and-options/#generate)
 
-> 🔔 Please note: a [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently unavailable in this image.
+> 🔔 Please note: the [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently **unavailable** in this image.
 
 ## 📺 Video screencast
 
@@ -104,14 +104,21 @@ Unfortunately, we are unable to include all helpful documentation to the `README
 
 CLI command to create a new project with the selected configuration.
 
-For create a new project with the interactive console UI, please run `create` command (_without_ any arguments):
+For create a new project with the interactive console UI, please run `create` command:
 
 ```bash
-cgapp create
+cgapp create [OPTIONS]
 ```
 
 - 📺 Preview: https://recordit.co/LTxFQloedn
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
+
+| Option | Values | Default | Required? |
+| --- | --- | --- | --- |
+| `-b`,&nbsp;`--backend` | <br/><ul><li>`url` — address to your custom backend git repository;</li></ul> | `""` | No |
+| `-f`,&nbsp;`--frontend` | <br/><ul><li>`url` — address to your custom frontend git repository;</li></ul> | `""` | No |
+
+> ☝️ The `https://` protocol will be added automatically! Support _public_ repositories from any git providers, like **GitHub**, **Bitbucket**, **Gitlab**, or else.
 
 ### `generate`
 
@@ -229,13 +236,11 @@ cgapp create \
   -f bitbucket.org/user2/my-template-2
 ```
 
-> ☝️ The `https://` protocol will be added automatically!
-
 ## 👵 How to install older version?
 
 You can do it by using a version suffix in `go install` command:
 
-```bash
+```console
 go install github.com/create-go-app/cli/cmd/cgapp@2.0.0
 ```
 
