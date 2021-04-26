@@ -35,13 +35,13 @@ Let's create a new project via **interactive console UI** (or **CUI** for short)
 cgapp create
 ```
 
-Okay, it works! Now, you can create a new pre-configured Ansible inventory file in current folder:
+Okay, it works! Now, you can create a new **pre-configured** Ansible inventory file in current folder:
 
 ```bash
 cgapp generate -p traefik
 ```
 
-Open the generated file (called `hosts.ini`) and fill in the variables according to your server configuration. Now you are ready to automatically deploy the project on the remote server:
+Open the generated file (called `hosts.ini`) and fill in the variables according to your server configuration. Now you are ready to **automatically deploy** the project on the remote server:
 
 ```bash
 cgapp deploy
@@ -217,14 +217,14 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 
 > ☝️ Frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
 
-## 🚚 Configured Ansible roles
+## 🚚 Pre-configured Ansible roles
 
 **Web/Proxy server:**
 
 - [x] `traefik` — role for run Docker container with [Traefik Proxy](https://traefik.io/traefik/).
 - [x] `nginx` — role for run Docker container with [Nginx](https://nginx.org).
 
-> ☝️ Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects.
+> ☝️ Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik is built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
 
 ## 👤 My own custom templates?
 
