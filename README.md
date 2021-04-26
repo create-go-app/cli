@@ -104,7 +104,7 @@ Unfortunately, we are unable to include all helpful documentation to the `README
 
 CLI command to create a new project with the selected configuration.
 
-For create a new project with the interactive console UI, please run `create` command:
+For create a new project with the interactive console UI, please run `create` command _without_ any options:
 
 ```bash
 cgapp create [OPTIONS]
