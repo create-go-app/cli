@@ -5,10 +5,9 @@ import (
 	"testing"
 )
 
-func TestBeautifyText(t *testing.T) {
+func Test_colorizeLevel(t *testing.T) {
 	type args struct {
-		text  string
-		color string
+		level string
 	}
 	tests := []struct {
 		name string
@@ -16,53 +15,37 @@ func TestBeautifyText(t *testing.T) {
 	}{
 		{
 			"successfully send message",
-			args{
-				text:  "Hello World!",
-				color: "",
-			},
+			args{level: ""},
 		},
 		{
-			"successfully send colored message",
-			args{
-				text:  "Hello World!",
-				color: "green",
-			},
+			"successfully send success message",
+			args{level: "success"},
 		},
 		{
-			"successfully send colored message",
-			args{
-				text:  "Hello World!",
-				color: "yellow",
-			},
+			"successfully send warning message",
+			args{level: "warning"},
 		},
 		{
-			"successfully send colored message",
-			args{
-				text:  "Hello World!",
-				color: "cyan",
-			},
+			"successfully send error message",
+			args{level: "error"},
 		},
 		{
-			"successfully send colored message",
-			args{
-				text:  "Hello World!",
-				color: "red",
-			},
+			"successfully send info message",
+			args{level: "info"},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_ = BeautifyText(tt.args.text, tt.args.color)
+			_ = colorizeLevel(tt.args.level)
 		})
 	}
 }
 
 func TestSendMsg(t *testing.T) {
 	type args struct {
-		startWithNewLine bool
-		caption          string
+		level            string
 		text             string
-		color            string
+		startWithNewLine bool
 		endWithNewLine   bool
 	}
 	tests := []struct {
@@ -75,12 +58,12 @@ func TestSendMsg(t *testing.T) {
 		},
 		{
 			"successfully send message with args",
-			args{true, "!", "Test", "", true},
+			args{"success", "Test", true, true},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			SendMsg(tt.args.startWithNewLine, tt.args.caption, tt.args.text, tt.args.color, tt.args.endWithNewLine)
+			_ = ShowMessage(tt.args.level, tt.args.text, tt.args.startWithNewLine, tt.args.endWithNewLine)
 		})
 	}
 }

@@ -17,8 +17,6 @@ const (
 	RegexpBackendPattern = "^(net/http|fiber)$"
 	// RegexpFrontendPattern pattern for backend.
 	RegexpFrontendPattern = "^(p?react:?|vue(:?[\\w]+)?(:?[\\w-_0-9\\/]+)?|angular|svelte|sapper:?)"
-	// RegexpWebServerPattern pattern for web/proxy servers.
-	RegexpWebServerPattern = "^(nginx|traefik)$"
 )
 
 // Project struct for describe project.
@@ -42,27 +40,13 @@ type Command struct {
 
 // CreateAnswers struct for a survey's answers for `create` command.
 type CreateAnswers struct {
-	Backend             string
-	Frontend            string
-	InstallAnsibleRoles bool `survey:"roles"`
-	AgreeCreation       bool `survey:"agree"`
-}
-
-// DeployAnswers struct for a survey's answers for `deploy` command.
-type DeployAnswers struct {
-	Username        string
-	Host            string
-	Network         string
-	BackendPort     string
-	AskBecomePass   bool `survey:"become_pass"`
-	AgreeDeployment bool `survey:"agree"`
+	Backend       string
+	Frontend      string
+	Proxy         string
+	AgreeCreation bool `survey:"agree"`
 }
 
 var (
-	// EmbedConfigs configs for Create Go App CLI.
-	//go:embed configs/*
-	EmbedConfigs embed.FS
-
 	// EmbedMiscFiles misc files and configs.
 	//go:embed misc/*
 	EmbedMiscFiles embed.FS
@@ -70,6 +54,10 @@ var (
 	// EmbedRoles Ansible roles.
 	//go:embed roles/*
 	EmbedRoles embed.FS
+
+	// EmbedTemplates template files.
+	//go:embed templates/*
+	EmbedTemplates embed.FS
 
 	// Repositories collection.
 	Repositories = map[string]*Repository{
@@ -131,7 +119,10 @@ var (
 			Name: "backend",
 			Prompt: &survey.Select{
 				Message: "Choose a backend framework:",
-				Options: []string{"net/http", "Fiber"},
+				Options: []string{
+					"net/http",
+					"Fiber",
+				},
 				Default: "Fiber",
 			},
 			Validate: survey.Required,
@@ -140,92 +131,35 @@ var (
 			Name: "frontend",
 			Prompt: &survey.Select{
 				Message: "Choose a frontend UI library:",
-				Options: []string{"none", "React", "Preact", "Vue", "Angular", "Svelte", "Sapper"},
+				Options: []string{
+					"none",
+					"React",
+					"Preact",
+					"Vue",
+					"Angular",
+					"Svelte",
+					"Sapper",
+				},
 				Default: "none",
 			},
 		},
 		{
-			Name: "roles",
-			Prompt: &survey.Confirm{
-				Message: "Do you want to create Ansible playbook and roles for deploy your project?",
-				Default: true,
+			Name: "proxy",
+			Prompt: &survey.Select{
+				Message: "Choose a proxy server:",
+				Options: []string{
+					"none",
+					"Traefik",
+					"Traefik (with DNS challenge)",
+					"Nginx",
+				},
+				Default: "traefik",
 			},
 		},
 		{
 			Name: "agree",
 			Prompt: &survey.Confirm{
-				Message: "If everything is okay, can I create this project? ;)",
-				Default: true,
-			},
-		},
-	}
-
-	// DeployQuestions survey's questions for `deploy` command.
-	DeployQuestions = []*survey.Question{
-		{
-			Name: "project_domain_url",
-			Prompt: &survey.Input{
-				Message: "Enter domain for this project (e.g. example.com):",
-			},
-			Validate: survey.Required,
-		},
-		{
-			Name: "letsencript_email",
-			Prompt: &survey.Input{
-				Message: "Enter your Email address for generating Let's Encrypt SSL certificate (e.g. mail@example.com):",
-			},
-			Validate: survey.Required,
-		},
-		{
-			Name: "system_user_name",
-			Prompt: &survey.Input{
-				Message: "Enter system username:",
-				Default: "root",
-			},
-			Validate: survey.Required,
-		},
-		{
-			Name: "become_pass",
-			Prompt: &survey.Confirm{
-				Message: "Do you need to enter password for this username?",
-				Default: true,
-			},
-		},
-		{
-			Name: "host_name",
-			Prompt: &survey.Input{
-				Message: "Enter host name to deploy (from Ansible inventory):",
-				Default: "localhost",
-			},
-			Validate: survey.Required,
-		},
-		{
-			Name: "docker_network",
-			Prompt: &survey.Input{
-				Message: "Enter name of the Docker network:",
-				Default: "cgapp_network",
-			},
-			Validate: survey.Required,
-		},
-		{
-			Name: "traefik_dashboard_password",
-			Prompt: &survey.Password{
-				Message: "Create a new password for Traefik dashboard:",
-			},
-			Validate: survey.Required,
-		},
-		{
-			Name: "backend_port",
-			Prompt: &survey.Input{
-				Message: "Enter port number, using for backend Docker container:",
-				Default: "5000",
-			},
-			Validate: survey.Required,
-		},
-		{
-			Name: "agree",
-			Prompt: &survey.Confirm{
-				Message: "If everything is okay, can I deploy this project? ;)",
+				Message: "If everything is okay, can I create this project for you? ;)",
 				Default: true,
 			},
 		},

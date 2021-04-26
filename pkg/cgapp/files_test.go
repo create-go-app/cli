@@ -10,7 +10,7 @@ import (
 
 func TestMakeFile(t *testing.T) {
 
-	fileData, err := fs.ReadFile(registry.EmbedConfigs, "configs/.cgapp.yml")
+	fileData, err := fs.ReadFile(registry.EmbedMiscFiles, "misc/Makefile")
 	if err != nil {
 		t.Error()
 	}
@@ -28,8 +28,8 @@ func TestMakeFile(t *testing.T) {
 		{
 			"successfully created files",
 			args{
-				rootFolder: ".cgapp.yml",
-				file:       ".cgapp.yml",
+				rootFolder: "Makefile",
+				file:       "Makefile",
 				data:       fileData,
 			},
 			false,
@@ -53,7 +53,7 @@ func TestMakeFile(t *testing.T) {
 		})
 
 		// Clean
-		os.RemoveAll(".cgapp.yml")
+		os.RemoveAll("Makefile")
 	}
 }
 

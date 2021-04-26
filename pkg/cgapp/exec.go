@@ -8,7 +8,6 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"log"
 	"os/exec"
 )
 
@@ -31,25 +30,31 @@ func ExecCommand(command string, options []string) error {
 	// Create a new reader
 	cmdReader, errStdoutPipe := cmd.StdoutPipe()
 	if errStdoutPipe != nil {
-		log.Fatal(BeautifyText(errStdoutPipe.Error(), "red"))
+		return fmt.Errorf(
+			ShowMessage("error", errStdoutPipe.Error(), true, true),
+		)
 	}
 
 	// Start executing command.
 	if errStart := cmd.Start(); errStart != nil {
-		log.Fatal(BeautifyText(stderr.String(), "red"))
+		return fmt.Errorf(
+			ShowMessage("error", stderr.String(), true, true),
+		)
 	}
 
 	// Create a new scanner and run goroutine func with output.
 	scanner := bufio.NewScanner(cmdReader)
 	go func() {
 		for scanner.Scan() {
-			SendMsg(false, "*", scanner.Text(), "cyan", false)
+			_ = ShowMessage("info", scanner.Text(), false, false)
 		}
 	}()
 
 	// Wait for executing command.
 	if errWait := cmd.Wait(); errWait != nil {
-		log.Fatal(BeautifyText(stderr.String(), "red"))
+		return fmt.Errorf(
+			ShowMessage("error", stderr.String(), true, true),
+		)
 	}
 
 	return nil

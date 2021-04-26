@@ -5,7 +5,7 @@
 package cgapp
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/go-git/go-git/v5"
 )
@@ -21,7 +21,9 @@ func GitClone(rootFolder, templateName string) error {
 		},
 	)
 	if err != nil {
-		log.Fatal(BeautifyText("Repository was not cloned!", "red"))
+		return fmt.Errorf(
+			ShowMessage("error", "Repository `"+templateName+"` was not cloned!", true, true),
+		)
 	}
 
 	return nil

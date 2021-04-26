@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -28,7 +29,7 @@ var createCmd = &cobra.Command{
 // runCreateCmd represents runner for the `create` command.
 var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	// Start message.
-	cgapp.SendMsg(true, "* * *", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
+	_ = cgapp.ShowMessage("", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", true, true)
 
 	// Start timer.
 	startTimer := time.Now()
@@ -37,62 +38,32 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	if err := survey.Ask(
 		registry.CreateQuestions, &createAnswers, survey.WithIcons(surveyIconsConfig),
 	); err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
+		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 	}
 
 	// If something went wrong, cancel and exit.
 	if !createAnswers.AgreeCreation {
-		cgapp.SendMsg(true, "[!]", "You're stopped creation of a new project.", "red", false)
-		cgapp.SendMsg(false, "[!]", "Run `cgapp create` once again!", "red", true)
-		os.Exit(1)
+		log.Fatal(
+			cgapp.ShowMessage("error", "Creation of a new project was stopped. Run `cgapp create` once again!", true, true),
+		)
 	}
 
 	// Insert empty line.
-	cgapp.SendMsg(false, "", "", "", false)
+	_ = cgapp.ShowMessage("", "", true, false)
 
 	// Define variables for better display.
 	backend = strings.ToLower(createAnswers.Backend)
 	frontend = strings.ToLower(createAnswers.Frontend)
-	installAnsibleRoles = createAnswers.InstallAnsibleRoles
+	proxy = strings.ToLower(createAnswers.Proxy)
 
 	// Get current directory.
 	currentDir, err := os.Getwd()
 	if err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
-	}
-
-	// Copy misc files from embedded file system.
-	cgapp.SendMsg(false, "*", "Create misc files for your project...", "cyan", true)
-	if err := cgapp.CopyFromEmbeddedFS(
-		&cgapp.EmbeddedFileSystem{
-			Name:       registry.EmbedMiscFiles,
-			RootFolder: "misc",
-			SkipDir:    true,
-		},
-	); err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
-	}
-
-	if installAnsibleRoles {
-		// Copy Ansible playbooks and roles from embedded file system, if not skipped.
-		cgapp.SendMsg(true, "*", "Create Ansible playbooks and roles...", "cyan", true)
-		if err := cgapp.CopyFromEmbeddedFS(
-			&cgapp.EmbeddedFileSystem{
-				Name:       registry.EmbedRoles,
-				RootFolder: "roles",
-				SkipDir:    false,
-			},
-		); err != nil {
-			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
+		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 	}
 
 	// Create backend files.
-	cgapp.SendMsg(true, "*", "Create project backend...", "cyan", true)
+	_ = cgapp.ShowMessage("warning", "Create project backend...", true, true)
 	if err := cgapp.CreateProjectFromRegistry(
 		&registry.Project{
 			Type:       "backend",
@@ -102,13 +73,12 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		registry.Repositories,
 		registry.RegexpBackendPattern,
 	); err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
+		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 	}
 
 	if frontend != "none" {
 		// Create frontend files.
-		cgapp.SendMsg(true, "*", "Create project frontend...", "cyan", false)
+		_ = cgapp.ShowMessage("warning", "Create project frontend...", true, true)
 		if err := cgapp.CreateProjectFromCmd(
 			&registry.Project{
 				Type:       "frontend",
@@ -118,18 +88,79 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			registry.Commands,
 			registry.RegexpFrontendPattern,
 		); err != nil {
-			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
+			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 		}
+	}
+
+	if proxy != "none" {
+		//
+		switch proxy {
+		case "traefik":
+			inventoryVariables = map[string]interface{}{}
+			playbookVariables = map[string]interface{}{}
+		case "traefik (with dns challenge)":
+			inventoryVariables = map[string]interface{}{}
+			playbookVariables = map[string]interface{}{}
+		default:
+			log.Fatal(cgapp.ShowMessage("error", "The proxy server has not been set!", true, true))
+		}
+
+		// Copy Ansible playbook, inventory and roles from embedded file system, if not skipped.
+		_ = cgapp.ShowMessage("warning", "Create Ansible playbook and inventory...", true, true)
+		if err := cgapp.CopyFromEmbeddedFS(
+			&cgapp.EmbeddedFileSystem{
+				Name:       registry.EmbedTemplates,
+				RootFolder: "templates",
+				SkipDir:    true,
+			},
+		); err != nil {
+			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
+		}
+
+		//
+		if err := cgapp.GenerateFileFromTemplate("hosts.ini.tmpl", inventoryVariables); err != nil {
+			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
+		}
+
+		//
+		if err := cgapp.GenerateFileFromTemplate("playbook.yml.tmpl", playbookVariables); err != nil {
+			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
+		}
+
+		// Copy Ansible playbooks and roles from embedded file system, if not skipped.
+		_ = cgapp.ShowMessage("warning", "Create Ansible roles for deploy...", true, true)
+		if err := cgapp.CopyFromEmbeddedFS(
+			&cgapp.EmbeddedFileSystem{
+				Name:       registry.EmbedRoles,
+				RootFolder: "roles",
+				SkipDir:    false,
+			},
+		); err != nil {
+			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
+		}
+
+		//
+		_ = cgapp.ShowMessage("info", "Please, fill out Ansible inventory file (`hosts.ini`) before deploy!", false, true)
+	}
+
+	// Copy misc files from embedded file system.
+	_ = cgapp.ShowMessage("warning", "Create misc files for your project...", true, true)
+	if err := cgapp.CopyFromEmbeddedFS(
+		&cgapp.EmbeddedFileSystem{
+			Name:       registry.EmbedMiscFiles,
+			RootFolder: "misc",
+			SkipDir:    true,
+		},
+	); err != nil {
+		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 	}
 
 	// Stop timer.
 	stopTimer := fmt.Sprintf("%.0f", time.Since(startTimer).Seconds())
 
 	// End message.
-	cgapp.SendMsg(true, "* * *", "Completed in "+stopTimer+" seconds!", "yellow", true)
-	cgapp.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	cgapp.SendMsg(false, "(i)", "Run `cgapp deploy [mode]` to deploy your project to a remote server or run on localhost.", "green", true)
+	_ = cgapp.ShowMessage("success", "Completed in "+stopTimer+" seconds!", true, true)
+	_ = cgapp.ShowMessage("", "A helpful documentation and next steps -> https://create-go.app/", false, true)
 }
 
 func init() {

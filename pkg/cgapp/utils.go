@@ -9,54 +9,54 @@ import (
 	"regexp"
 )
 
-// BeautifyText function for send (colored or common) message to output.
-func BeautifyText(text, color string) string {
-	// Define variables.
-	var (
-		red       string = "\033[0;31m"
-		green     string = "\033[0;32m"
-		cyan      string = "\033[0;36m"
-		yellow    string = "\033[1;33m"
-		noColor   string = "\033[0m"
-		textColor string
-	)
-
-	// Switch color.
-	switch color {
-	case "":
-		textColor = noColor
-	case "green":
-		textColor = green
-	case "yellow":
-		textColor = yellow
-	case "red":
-		textColor = red
-	case "cyan":
-		textColor = cyan
-	}
-
-	// Send common or colored text.
-	return textColor + text + noColor
-}
-
-// SendMsg function forsend message to output.
-func SendMsg(startWithNewLine bool, caption, text, color string, endWithNewLine bool) {
+// ShowMessage function for send message to output.
+func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) string {
 	// Define variables.
 	var startNewLine, endNewLine string
 
 	if startWithNewLine {
-		startNewLine = "\n" // set new line
+		startNewLine = "\n" // set a new line
 	}
 
 	if endWithNewLine {
-		endNewLine = "\n" // set new line
+		endNewLine = "\n" // set a new line
 	}
 
-	if caption == "" {
-		fmt.Println(startNewLine + text + endNewLine) // common text
-	} else {
-		fmt.Println(startNewLine + BeautifyText(caption, color) + " " + text + endNewLine) // colorized text
+	return startNewLine + colorizeLevel(level) + text + endNewLine
+}
+
+// colorizeLevel function for send (colored or common) message to output.
+func colorizeLevel(level string) string {
+	// Define variables.
+	var (
+		red         string = "\033[0;31m"
+		green       string = "\033[0;32m"
+		cyan        string = "\033[0;36m"
+		yellow      string = "\033[1;33m"
+		noColor     string = "\033[0m"
+		color, icon string
+	)
+
+	// Switch color.
+	switch level {
+	case "success":
+		color = green
+		icon = "[OK] "
+	case "warning":
+		color = yellow
+		icon = "[WARNING] "
+	case "error":
+		color = red
+		icon = "[ERROR] "
+	case "info":
+		color = cyan
+		icon = "[INFO] "
+	default:
+		color = noColor
 	}
+
+	// Send common or colored caption.
+	return color + icon + noColor
 }
 
 // stringSplit function for split string by pattern.

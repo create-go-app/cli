@@ -5,7 +5,7 @@
 package cmd
 
 import (
-	"os"
+	"log"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/create-go-app/cli/pkg/cgapp"
@@ -14,11 +14,11 @@ import (
 )
 
 var (
-	generateDeployConfig               string                 // generate deploy config
-	backend, frontend                  string                 // define project variables
-	options                            []string               // define options
-	installAnsibleRoles, askBecomePass bool                   // install Ansible roles, ask become pass
-	createAnswers                      registry.CreateAnswers // define answers variable for `create` command
+	backend, frontend, proxy              string                 // define project variables
+	inventoryVariables, playbookVariables map[string]interface{} // define template variables
+	options                               []string               // define options
+	askBecomePass                         bool                   // install Ansible roles, ask become pass
+	createAnswers                         registry.CreateAnswers // define answers variable for `create` command
 
 	// Config for survey icons and colors.
 	// See: https://github.com/mgutz/ansi#style-format
@@ -54,7 +54,6 @@ A helpful documentation and next steps -> https://create-go.app/`,
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
+		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 	}
 }

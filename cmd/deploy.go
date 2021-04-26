@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"os"
+	"log"
 	"time"
 
 	"github.com/create-go-app/cli/pkg/cgapp"
@@ -26,7 +26,7 @@ var deployCmd = &cobra.Command{
 // runDeployCmd represents runner for the `deploy` command.
 var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	// Start message.
-	cgapp.SendMsg(true, "* * *", "Deploying project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
+	_ = cgapp.ShowMessage("warning", "Deploying project via Create Go App CLI v"+registry.CLIVersion+"...", true, true)
 
 	// Start timer.
 	startTimer := time.Now()
@@ -41,21 +41,19 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	}
 
 	// Create config files for your project.
-	cgapp.SendMsg(false, "*", "Run Ansible playbook for deploy your project...", "cyan", true)
+	_ = cgapp.ShowMessage("warning", "Run Ansible playbook for deploy your project...", true, true)
 
 	// Run execution for Ansible playbook.
 	if err := cgapp.ExecCommand("ansible-playbook", options); err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
+		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 	}
 
 	// Stop timer.
 	stopTimer := fmt.Sprintf("%.0f", time.Since(startTimer).Seconds())
 
 	// End message.
-	cgapp.SendMsg(true, "* * *", "Completed in "+stopTimer+" seconds!", "yellow", true)
-	cgapp.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	cgapp.SendMsg(false, "(i)", "Go to the project domain to see your deployed project! :)", "green", true)
+	_ = cgapp.ShowMessage("success", "Completed in "+stopTimer+" seconds!", true, true)
+	_ = cgapp.ShowMessage("", "A helpful documentation and next steps -> https://create-go.app/", false, true)
 }
 
 func init() {

@@ -6,7 +6,6 @@ package cgapp
 
 import (
 	"fmt"
-	"log"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -30,7 +29,9 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 	// Create match expration.
 	match, err := regexp.MatchString(m, p.Name)
 	if err != nil {
-		log.Fatal(BeautifyText(err.Error(), "red"))
+		return fmt.Errorf(
+			ShowMessage("error", err.Error(), true, true),
+		)
 	}
 
 	// Check for regexp.
@@ -40,7 +41,9 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 
 		// If match, create from default template.
 		if err := GitClone(folder, template); err != nil {
-			log.Fatal(BeautifyText(err.Error(), "red"))
+			return fmt.Errorf(
+				ShowMessage("error", err.Error(), true, true),
+			)
 		}
 	} else {
 		// Re-define vars.
@@ -48,12 +51,14 @@ func CreateProjectFromRegistry(p *registry.Project, r map[string]*registry.Repos
 
 		// Else create from user template (from GitHub, etc).
 		if err := GitClone(folder, template); err != nil {
-			log.Fatal(BeautifyText(err.Error(), "red"))
+			return fmt.Errorf(
+				ShowMessage("error", err.Error(), true, true),
+			)
 		}
 	}
 
 	// Show success report.
-	SendMsg(false, "[OK]", strings.Title(p.Type)+": created with the `"+template+"` template!", "cyan", false)
+	_ = ShowMessage("success", strings.Title(p.Type)+": created with the `"+template+"` template!", true, false)
 
 	// Cleanup project.
 	foldersToRemove := []string{".git", ".github"}
@@ -78,14 +83,18 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 	// Create match expration for name.
 	match, err := regexp.MatchString(m, p.Name)
 	if err != nil {
-		log.Fatal(BeautifyText(err.Error(), "red"))
+		return fmt.Errorf(
+			ShowMessage("error", err.Error(), true, true),
+		)
 	}
 
 	if match {
 		// Split frontend library/framework name and template.
 		project, errStringSplit := stringSplit(":", p.Name)
 		if errStringSplit != nil {
-			log.Fatal(BeautifyText(errStringSplit.Error(), "red"))
+			return fmt.Errorf(
+				ShowMessage("error", errStringSplit.Error(), true, true),
+			)
 		}
 
 		// Re-define vars for more beauty view.
@@ -132,21 +141,24 @@ func CreateProjectFromCmd(p *registry.Project, c map[string]*registry.Command, m
 
 		// Run execution command.
 		if errExecCommand := ExecCommand(runner, options); errExecCommand != nil {
-			log.Fatal(BeautifyText(errExecCommand.Error(), "red"))
+			return fmt.Errorf(
+				ShowMessage("error", errExecCommand.Error(), true, true),
+			)
 		}
 	} else {
 		// Create frontend from given repository (GitHub, etc).
 		if err := GitClone(folder, p.Name); err != nil {
-			log.Fatal(BeautifyText(err.Error(), "red"))
+			return fmt.Errorf(
+				ShowMessage("error", err.Error(), true, true),
+			)
 		}
 	}
 
 	// Cleanup project.
-	folderToRemove := []string{".git", ".github"}
-	RemoveFolders(folder, folderToRemove)
+	RemoveFolders(folder, []string{".git", ".github"})
 
 	// Show success report.
-	SendMsg(true, "[OK]", "Frontend: created with template `"+p.Name+"`!", "cyan", false)
+	_ = ShowMessage("success", "Frontend: created with template `"+p.Name+"`!", true, false)
 
 	return nil
 }

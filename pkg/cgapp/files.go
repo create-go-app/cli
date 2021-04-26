@@ -6,11 +6,14 @@ package cgapp
 
 import (
 	"embed"
+	"fmt"
+	"io"
 	"io/fs"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
+	"strings"
+	"text/template"
 )
 
 // EmbeddedFileSystems struct contains embedded file system fields.
@@ -26,14 +29,18 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 	if err := fs.WalkDir(efs.Name, efs.RootFolder, func(path string, entry fs.DirEntry, err error) error {
 		// Checking embed path.
 		if err != nil {
-			log.Fatal(BeautifyText("Can't make structure from embedded path `"+efs.RootFolder+"`!", "red"))
+			return fmt.Errorf(
+				ShowMessage("error", "Can't copy files from embedded path `"+efs.RootFolder+"`!", true, true),
+			)
 		}
 
 		// Checking, if embedded file is a folder.
 		if entry.IsDir() && !efs.SkipDir {
 			// Create folders structure from embedded.
 			if err := MakeFolder(path); err != nil {
-				log.Fatal(BeautifyText(err.Error(), "red"))
+				return fmt.Errorf(
+					ShowMessage("error", err.Error(), true, true),
+				)
 			}
 		}
 
@@ -42,7 +49,9 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 			// Set file data.
 			fileData, errReadFile := fs.ReadFile(efs.Name, path)
 			if errReadFile != nil {
-				log.Fatal(BeautifyText("File `"+path+"/"+entry.Name()+"` was broken!", "red"))
+				return fmt.Errorf(
+					ShowMessage("error", "File `"+path+"/"+entry.Name()+"` was broken!", true, true),
+				)
 			}
 
 			// Path to file, if skipped folders.
@@ -52,13 +61,68 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 
 			// Create file from embedded.
 			if errMakeFile := MakeFile(path, fileData); errMakeFile != nil {
-				log.Fatal(BeautifyText(err.Error(), "red"))
+				return fmt.Errorf(
+					ShowMessage("error", errMakeFile.Error(), true, true),
+				)
 			}
 		}
 
 		return nil
 	}); err != nil {
-		log.Fatal(BeautifyText(err.Error(), "red"))
+		return fmt.Errorf(
+			ShowMessage("error", err.Error(), true, true),
+		)
+	}
+
+	return nil
+}
+
+// GenerateFileFromTemplate ...
+func GenerateFileFromTemplate(fileName string, variables map[string]interface{}) error {
+	//
+	tmpl, errParseFiles := template.ParseFiles(fileName)
+	if errParseFiles != nil {
+		return fmt.Errorf(
+			ShowMessage("error", errParseFiles.Error(), true, true),
+		)
+	}
+
+	//
+	file, errCreate := os.Create(fileName)
+	if errCreate != nil {
+		return fmt.Errorf(
+			ShowMessage("error", errCreate.Error(), true, true),
+		)
+	}
+
+	//
+	if errExecute := tmpl.Execute(file, variables); errExecute != nil {
+		return fmt.Errorf(
+			ShowMessage("error", errExecute.Error(), true, true),
+		)
+	}
+	_ = file.Close()
+
+	resultFile, errOpen := os.Open(filepath.Clean(fileName))
+	if errOpen != nil {
+		return fmt.Errorf(
+			ShowMessage("error", errOpen.Error(), true, true),
+		)
+	}
+
+	if _, errCopy := io.Copy(os.Stdout, resultFile); errCopy != nil {
+		return fmt.Errorf(
+			ShowMessage("error", errCopy.Error(), true, true),
+		)
+	}
+	_ = resultFile.Close()
+
+	//
+	newFileName := strings.Replace(fileName, ".tmpl", "", -1)
+	if errRename := os.Rename(fileName, newFileName); errRename != nil {
+		return fmt.Errorf(
+			ShowMessage("error", errRename.Error(), true, true),
+		)
 	}
 
 	return nil
@@ -68,11 +132,13 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 func MakeFile(fileName string, fileData []byte) error {
 	// Write to created file.
 	if err := ioutil.WriteFile(fileName, fileData, 0600); err != nil {
-		log.Fatal(BeautifyText("File `"+fileName+"` was not created!", "red"))
+		return fmt.Errorf(
+			ShowMessage("error", "File `"+fileName+"` was not created!", true, true),
+		)
 	}
 
 	// Show report for file.
-	SendMsg(false, "[OK]", "File `"+fileName+"` was created!", "cyan", false)
+	_ = ShowMessage("success", "File `"+fileName+"` was created!", false, true)
 
 	return nil
 }
@@ -81,11 +147,13 @@ func MakeFile(fileName string, fileData []byte) error {
 func MakeFolder(folderName string) error {
 	// Check if folder exists, fail if it does.
 	if err := os.Mkdir(folderName, 0750); err != nil {
-		log.Fatal(BeautifyText("Folder `"+folderName+"` is exists!", "red"))
+		return fmt.Errorf(
+			ShowMessage("error", "Folder `"+folderName+"` is exists!", true, true),
+		)
 	}
 
 	// Show report for folder.
-	SendMsg(false, "[OK]", "Folder `"+folderName+"` was created!", "cyan", false)
+	_ = ShowMessage("success", "Folder `"+folderName+"` was created!", false, true)
 
 	return nil
 }

@@ -15,7 +15,7 @@ Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-
 ```bash
 go install github.com/create-go-app/cli/cmd/cgapp@latest
 
-# If you want to reduce binary size, you can run this command with options:
+# If you want to reduce binary size of the CLI, you can run this command with options:
 CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
 ```
 
@@ -35,13 +35,7 @@ Let's create a new project via **interactive console UI** (or **CUI** for short)
 cgapp create
 ```
 
-Okay, it works! Now, you can create a new **pre-configured** Ansible inventory file in current folder:
-
-```bash
-cgapp generate -p traefik
-```
-
-Open the generated file (called `hosts.ini`) and fill in the variables according to your server configuration. Now you are ready to **automatically deploy** the project on the remote server:
+Okay, it works! Next, open the generated Ansible inventory file (called `hosts.ini`) and fill in the variables according to your server configuration. Now you are ready to **automatically deploy** the project on the remote server:
 
 ```bash
 cgapp deploy
@@ -62,7 +56,6 @@ With this Docker image, you do **not** have to worry about installing tools/CLI 
 Available commands for [official Docker image](https://create-go.app/detailed-guides/official-docker-image/):
 
 - [x] [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
-- [x] [`generate`](https://create-go.app/detailed-guides/commands-and-options/#generate)
 
 > 🔔 Please note: the [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently **unavailable** in this image.
 
@@ -86,7 +79,6 @@ Unfortunately, we are unable to include all helpful documentation to the `README
     - [Alternative installations](https://create-go.app/detailed-guides/installation/#alternative-installations)
   - [Understanding CLI commands and options](https://create-go.app/detailed-guides/commands-and-options/)
     - [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
-    - [`generate`](https://create-go.app/detailed-guides/commands-and-options/#generate)
     - [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy)
   - [Working with the official Docker image](https://create-go.app/detailed-guides/official-docker-image/)
   - [Run project on your local machine](https://create-go.app/detailed-guides/run-on-local/)
@@ -113,61 +105,12 @@ cgapp create [OPTIONS]
 - 📺 Preview: https://recordit.co/LTxFQloedn
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
 
-| Option | Values | Default | Required? |
-| --- | --- | --- | --- |
-| `-b`,&nbsp;`--backend` | <br/><ul><li>`url` — address to your custom backend git repository;</li></ul> | `""` | No |
-| `-f`,&nbsp;`--frontend` | <br/><ul><li>`url` — address to your custom frontend git repository;</li></ul> | `""` | No |
+| Option                  | Values                                                                         | Default | Required? |
+| ----------------------- | ------------------------------------------------------------------------------ | ------- | --------- |
+| `-b`,&nbsp;`--backend`  | <br/><ul><li>`url` — address to your custom backend git repository;</li></ul>  | `""`    | No        |
+| `-f`,&nbsp;`--frontend` | <br/><ul><li>`url` — address to your custom frontend git repository;</li></ul> | `""`    | No        |
 
 > ☝️ No need to specify `https://` protocol, it will be added automatically! Support **public** repositories from any `git` providers, like GitHub, Bitbucket, Gitlab, your own Gitea, or else.
-
-### `generate`
-
-CLI command for generate a new pre-configured Ansible inventory file, called `hosts.ini`, for specified proxy server in current folder:
-
-```bash
-cgapp generate [OPTION]
-```
-
-| Option | Values | Default | Required? |
-| --- | --- | --- | --- |
-| `-p`,&nbsp;`--proxy` | <br/><ul><li>`traefik` — a basic ACME challenge via Let's Encrypt server;</li><li>`traefik:dns` — more complex ACME challenge via choosen DNS provider, supports challenge to getting SSL certificates for you subdomains;</li></ul> | `traefik` | Yes |
-
-- 📺 Preview: https://recordit.co/yvlnIu8Lyp
-- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#generate
-
-<details>
-<summary>Example inventory file</summary>
-
-<br/>
-
-```ini
-[cgapp_project]
-127.0.0.1 # CHANGE THIS TO YOUR REMOTE SERVER IP!
-
-[cgapp_project:vars]
-# Set Ansible default variables to start playbook:
-ansible_user=root       # remote sudo user name
-ansible_become=true     # ask become password for remote sudo user
-ansible_connection=ssh  # connection to remote server via SSH
-
-# Set Python 3 default path:
-ansible_python_interpreter_path=/usr/bin/python3
-
-# Set Docker network name:
-docker_network=cgapp_network
-
-# Set your project domain:
-project_domain=example.com
-
-# Set directory on your remote server for store project files:
-server_dir=/var/www/cgapp
-
-# Set user (owner) name & group name (to create files on server):
-system_user=root
-system_group=docker
-```
-
-</details>
 
 ### `deploy`
 
@@ -181,9 +124,9 @@ Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [An
 cgapp deploy [OPTION]
 ```
 
-| Option | Values | Default | Required? |
-| --- | --- | --- | --- |
-| `-K`,&nbsp;`--ask-become-pass` | <br/><ul><li>`boolean` — prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option);</li></ul> | `false` | No |
+| Option                         | Values                                                                                                                                | Default | Required? |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
+| `-K`,&nbsp;`--ask-become-pass` | <br/><ul><li>`boolean` — prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option);</li></ul> | `false` | No        |
 
 - 📺 Preview: https://recordit.co/ewjG9dgMPX
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
