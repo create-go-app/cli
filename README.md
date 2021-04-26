@@ -174,6 +174,10 @@ Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [An
 cgapp deploy [OPTION]
 ```
 
+| Option | Values |
+| --- | --- |
+| `-K`,&nbsp;`--ask-become-pass` | <br/><ul><li>`boolean` — prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option);</li></ul> |
+
 - 📺 Preview: https://recordit.co/ewjG9dgMPX
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
 
