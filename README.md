@@ -43,7 +43,7 @@ cgapp deploy
 
 That's all you need to know to start! 🎉
 
-### ~ Docker-way to quick start
+### 🐳 Docker-way to quick start
 
 If you don't want to install Create Go App CLI to your system, you feel free to using our official [Docker image](https://hub.docker.com/r/koddr/cgapp) and run CLI from isolated container:
 
