@@ -45,7 +45,7 @@ That's all you need to know to start! 🎉
 If you don't want to install Create Go App CLI to your system, you feel free to using our official [Docker image](https://hub.docker.com/r/koddr/cgapp) and run CLI from isolated container:
 
 ```bash
-docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest
+docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest [COMMAND]
 ```
 
 > 🔔 Please note: the [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently **unavailable** in this image.
@@ -61,7 +61,7 @@ A short video screencast to introduce main features of the Create Go App CLI.
 
 ## 📖 Official Documentation
 
-Unfortunately, we are unable to include all helpful documentation to the `README` file. That's why, the best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/) and explore [Discussions](https://github.com/create-go-app/cli/discussions).
+The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/) and take part in [Discussions](https://github.com/create-go-app/cli/discussions).
 
 > 🔥 We've put together a subject index specifically for you, so you can find any answer you want in seconds!
 
@@ -166,8 +166,6 @@ go install github.com/create-go-app/cli/cmd/cgapp@2.0.0
 Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
 
 > ☝️ Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
->
-> For example: `mv $GOPATH/bin/cgapp $GOPATH/bin/cgapp_v2_0_0` and run it by `cgapp_v2_0_0 [COMMAND]`.
 
 ## ⭐️ Project assistance
 
