@@ -99,18 +99,11 @@ CLI command to create a new project with the selected configuration.
 For create a new project with the interactive console UI, please run `create` command _without_ any options:
 
 ```bash
-cgapp create [OPTIONS]
+cgapp create
 ```
 
 - 📺 Preview: https://recordit.co/LTxFQloedn
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
-
-| Option                  | Values                                                                         | Default | Required? |
-| ----------------------- | ------------------------------------------------------------------------------ | ------- | --------- |
-| `-b`,&nbsp;`--backend`  | <br/><ul><li>`url` — address to your custom backend git repository;</li></ul>  | `""`    | No        |
-| `-f`,&nbsp;`--frontend` | <br/><ul><li>`url` — address to your custom frontend git repository;</li></ul> | `""`    | No        |
-
-> ☝️ No need to specify `https://` protocol, it will be added automatically! Support **public** repositories from any `git` providers, like GitHub, Bitbucket, Gitlab, your own Gitea, or else.
 
 ### `deploy`
 
@@ -124,9 +117,9 @@ Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [An
 cgapp deploy [OPTION]
 ```
 
-| Option                         | Values                                                                                                                                | Default | Required? |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
-| `-K`,&nbsp;`--ask-become-pass` | <br/><ul><li>`boolean` — prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option);</li></ul> | `false` | No        |
+| Option | Values                                                                                                        | Default | Required? |
+| ------ | ------------------------------------------------------------------------------------------------------------- | ------- | --------- |
+| `-K`   | `boolean` — prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option) | `false` | No        |
 
 - 📺 Preview: https://recordit.co/ewjG9dgMPX
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
@@ -160,6 +153,25 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 
 > ☝️ Frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
 
+## 👤 Use custom templates
+
+Create Go App CLI provide works with **your own** custom templates, instead of those prepared by authors. Please, read the [instructions](https://create-go.app/detailed-guides/make-custom-template/) for creating a custom template that will work with the Create Go App CLI.
+
+Specify backend (`-b`) and frontend (`-f`) with addresses to their repositories in `create` command:
+
+```console
+cgapp create \
+  -b github.com/user1/my-template-1 \
+  -f bitbucket.org/user2/my-template-2
+```
+
+| Option | Values                                                 | Default | Required? |
+| ------ | ------------------------------------------------------ | ------- | --------- |
+| `-b`   | `url` — address to your custom backend git repository  | `""`    | No        |
+| `-f`   | `url` — address to your custom frontend git repository | `""`    | No        |
+
+> ☝️ No need to specify `https://` protocol, it will be added automatically! Support **public** repositories from any `git` providers, like GitHub, Bitbucket, Gitlab, your own Gitea, or else.
+
 ## 🚚 Pre-configured Ansible roles
 
 **Web/Proxy server:**
@@ -168,18 +180,6 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 - [x] `nginx` — role for run Docker container with [Nginx](https://nginx.org).
 
 > 👍 Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
-
-## 👤 My own custom templates?
-
-Create Go App CLI provide works with **your own** custom templates, instead of those prepared by authors. Just specify backend (`-b`) and frontend (`-f`) with addresses to their repositories in `create` command:
-
-```console
-cgapp create \
-  -b github.com/user1/my-template-1 \
-  -f bitbucket.org/user2/my-template-2
-```
-
-Read the [instructions](https://create-go.app/detailed-guides/make-custom-template/) for creating a custom template that will work with the Create Go App CLI.
 
 ## 👵 How to install older version?
 
