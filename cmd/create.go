@@ -62,7 +62,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 	// Create backend files.
 	_ = cgapp.ShowMessage("warning", "Create backend for your project...", true, true)
-	if err := cgapp.CreateProjectFromGit(
+	if err := cgapp.GitClone(
 		"backend",
 		fmt.Sprintf("github.com/create-go-app/%v-go-template", backend),
 	); err != nil {
@@ -82,7 +82,8 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	if frontend != "none" {
 		// Create frontend files.
 		_ = cgapp.ShowMessage("warning", "Create frontend for your project...", true, true)
-		if err := cgapp.CreateProjectFromCmd(
+		if err := cgapp.ExecCommand(
+			"npm",
 			[]string{"init", "@vitejs/app", "frontend", "--", "--template", frontend},
 		); err != nil {
 			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
@@ -128,12 +129,26 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 		}
 
-		//
+		// Set template variables for Ansible playbook and inventory files.
 		switch proxy {
-		case "traefik":
+		case "traefik-acme-ca":
+			// Traefik with simple ACME challenge via Let's Encrypt CA server.
+			// See: https://doc.traefik.io/traefik/https/acme/#caserver
 			inventory = map[string]interface{}{}
 			playbook = map[string]interface{}{}
 		case "traefik-acme-dns":
+			// Traefik with more complex ACME challenge via your DNS provider.
+			// See: https://doc.traefik.io/traefik/https/acme/#dnschallenge
+			inventory = map[string]interface{}{}
+			playbook = map[string]interface{}{}
+		case "nginx":
+			// Nginx.
+			// See: https://nginx.org/en/docs/http/configuring_https_servers.html
+			inventory = map[string]interface{}{}
+			playbook = map[string]interface{}{}
+		case "haproxy":
+			// HAProxy.
+			// See: http://cbonte.github.io/haproxy-dconv/2.4/intro.html#3.3.2
 			inventory = map[string]interface{}{}
 			playbook = map[string]interface{}{}
 		default:

@@ -79,12 +79,12 @@ var (
 				Message: "Choose a proxy server:",
 				Options: []string{
 					"none",
-					"traefik",
+					"traefik-acme-ca",
 					"traefik-acme-dns",
 					"nginx",
 					"haproxy",
 				},
-				Default: "traefik",
+				Default: "none",
 			},
 		},
 		{

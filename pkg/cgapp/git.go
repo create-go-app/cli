@@ -6,7 +6,6 @@ package cgapp
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -15,13 +14,15 @@ import (
 
 // GitClone function for `git clone` defined project template.
 func GitClone(templateType, templateURL string) error {
-	// Get current directory.
-	currentDir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(ShowMessage("error", err.Error(), true, true))
+	// Checking for nil.
+	if templateType == "" || templateURL == "" {
+		return fmt.Errorf("Project template not found!")
 	}
 
-	//
+	// Get current directory.
+	currentDir, _ := os.Getwd()
+
+	// Set project folder.
 	folder := filepath.Join(currentDir, templateType)
 
 	// Clone project template.
@@ -34,7 +35,11 @@ func GitClone(templateType, templateURL string) error {
 	)
 	if errPlainClone != nil {
 		return fmt.Errorf(
-			ShowMessage("error", "Repository `"+templateURL+"` was not cloned!", true, true),
+			ShowMessage(
+				"error",
+				fmt.Sprintf("Repository `%v` was not cloned!", templateURL),
+				true, true,
+			),
 		)
 	}
 

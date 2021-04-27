@@ -18,15 +18,15 @@ func TestGitClone(t *testing.T) {
 		{
 			"successfully cloned project",
 			args{
-				rootFolder:   "../../tmp",
-				templateName: "github.com/create-go-app/fiber-go-template",
+				rootFolder:   "../../tmp/test",
+				templateName: "github.com/koddr/koddr",
 			},
 			false,
 		},
 		{
 			"failed clone project (empty template)",
 			args{
-				rootFolder:   "../../tmp",
+				rootFolder:   "../../tmp/test",
 				templateName: "",
 			},
 			true,

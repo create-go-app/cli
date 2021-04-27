@@ -129,3 +129,80 @@ func TestRemoveFolders(t *testing.T) {
 		})
 	}
 }
+
+func TestCopyFromEmbeddedFS(t *testing.T) {
+	type args struct {
+		efs *EmbeddedFileSystem
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully copy from embedded fs",
+			args{
+				efs: &EmbeddedFileSystem{
+					Name:       registry.EmbedTemplates,
+					RootFolder: "templates",
+					SkipDir:    false,
+				},
+			},
+			false,
+		},
+		{
+			"fail to copy from embedded fs",
+			args{
+				efs: &EmbeddedFileSystem{
+					Name:       registry.EmbedTemplates,
+					RootFolder: "does-not-exist",
+					SkipDir:    false,
+				},
+			},
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := CopyFromEmbeddedFS(tt.args.efs); (err != nil) != tt.wantErr {
+				t.Errorf("CopyFromEmbeddedFS() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+
+		// Clean
+		os.RemoveAll(tt.args.efs.RootFolder)
+	}
+}
+
+func TestGenerateFileFromTemplate(t *testing.T) {
+	type args struct {
+		fileName  string
+		variables map[string]interface{}
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		// {
+		// 	"successfully generate file",
+		// 	args{
+		// 		fileName:  "",
+		// 		variables: map[string]interface{}{},
+		// 	},
+		// 	false,
+		// },
+		{
+			"failed to generate file",
+			args{},
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := GenerateFileFromTemplate(tt.args.fileName, tt.args.variables); (err != nil) != tt.wantErr {
+				t.Errorf("GenerateFileFromTemplate() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}

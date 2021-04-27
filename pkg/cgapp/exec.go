@@ -13,21 +13,21 @@ import (
 
 // ExecCommand function to execute a given command.
 func ExecCommand(command string, options []string) error {
-	//
-	if command == "" {
+	// Checking for nil.
+	if command == "" || options == nil {
 		return fmt.Errorf("No command to execute!")
 	}
 
 	// Create buffer for stderr.
 	stderr := &bytes.Buffer{}
 
-	// Collect command line
+	// Collect command line.
 	cmd := exec.Command(command, options...) // #nosec G204
 
-	// Set buffer for stderr from cmd
+	// Set buffer for stderr from cmd.
 	cmd.Stderr = stderr
 
-	// Create a new reader
+	// Create a new reader.
 	cmdReader, errStdoutPipe := cmd.StdoutPipe()
 	if errStdoutPipe != nil {
 		return fmt.Errorf(
