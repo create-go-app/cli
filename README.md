@@ -90,7 +90,7 @@ Unfortunately, we are unable to include all helpful documentation to the `README
 
 ### `create`
 
-CLI command to create a new project with the selected configuration. For create a new project with the interactive console UI, please run `create` command _without_ any options:
+CLI command for create a new project with the interactive console UI.
 
 ```bash
 cgapp create
@@ -103,9 +103,7 @@ cgapp create
 
 CLI command for deploy Docker containers with your project via Ansible to the remote server.
 
-> ☝️ You should only run this command from the **root folder** of your project, which created with `create` commands! It's a necessary condition for everything to work perfectly.
-
-Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [Ansible 2.9+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer. Run `deploy` command:
+> ☝️ Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [Ansible 2.9+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer.
 
 ```bash
 cgapp deploy [OPTION]
