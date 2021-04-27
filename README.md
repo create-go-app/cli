@@ -29,7 +29,7 @@ brew tap create-go-app/cli
 brew install create-go-app/cli/cgapp
 ```
 
-Let's create a new project via **interactive console UI** (or **CUI** for short) into current folder:
+Let's create a new project via **interactive console UI** (or **CUI** for short) in current folder:
 
 ```bash
 cgapp create
