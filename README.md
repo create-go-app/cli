@@ -61,9 +61,7 @@ A short video screencast to introduce main features of the Create Go App CLI.
 
 ## 📖 Official Documentation
 
-The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/) and take part in [Discussions](https://github.com/create-go-app/cli/discussions).
-
-> 🔥 We've put together a subject index specifically for you, so you can find any answer you want in seconds!
+The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/) and take part in [Discussions](https://github.com/create-go-app/cli/discussions). We've put together a subject index specifically for you, so you can find any answer you want in seconds!
 
 - [Detailed guides](https://create-go.app/detailed-guides/)
   - [CLI Installation](https://create-go.app/detailed-guides/installation/)
@@ -130,7 +128,7 @@ cgapp deploy [OPTION]
 - [x] `lit-element` — [Lit](https://lit.dev/) Web Components frontend app.
   - `lit-element-ts` — generated template with TypeScript for LitElement app.
 
-> ☝️ Frontend part will be generate using awesome tool [Vite.js](https://vitejs.dev/) under the hood. So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates for your project!
+> ☝️ Frontend part will be generate using awesome tool [Vite.js](https://vitejs.dev/) under the hood. So, you'll always get the latest version of `React`, `Preact`, `Vue`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates for your project!
 
 ## 🚚 Pre-configured Ansible roles
 
