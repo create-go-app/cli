@@ -35,7 +35,7 @@ Let's create a new project via **interactive console UI** (or **CUI** for short)
 cgapp create
 ```
 
-Next, open the generated Ansible inventory file (called `hosts.ini`) and fill in the variables according to your server configuration. Now you are ready to **automatically deploy** the project on the remote server:
+Next, open the generated Ansible inventory file (called `hosts.ini`) and fill in the variables according to your server configuration. And you're ready to **automatically deploy** this project:
 
 ```bash
 cgapp deploy
