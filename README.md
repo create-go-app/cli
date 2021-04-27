@@ -51,11 +51,7 @@ If you don't want to install Create Go App CLI to your system, you feel free to 
 docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest
 ```
 
-With this Docker image, you do **not** have to worry about installing tools/CLI of frontend UI libraries/frameworks. Everything is **already included**: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit` (for Svelte and Sapper).
-
-Available commands for [official Docker image](https://create-go.app/detailed-guides/official-docker-image/):
-
-- [x] [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
+You do **not** have to worry about installing tools/CLIs of frontend UI libraries/frameworks. Everything is **already included**: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit`.
 
 > 🔔 Please note: the [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently **unavailable** in this image.
 
@@ -94,9 +90,7 @@ Unfortunately, we are unable to include all helpful documentation to the `README
 
 ### `create`
 
-CLI command to create a new project with the selected configuration.
-
-For create a new project with the interactive console UI, please run `create` command _without_ any options:
+CLI command to create a new project with the selected configuration. For create a new project with the interactive console UI, please run `create` command _without_ any options:
 
 ```bash
 cgapp create
@@ -151,7 +145,7 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 - [x] `sapper` — [Sapper](https://sapper.svelte.dev/) frontend app for static websites.
   - `sapper:<webpack>` — Preset for generating Sapper with Webpack bundler.
 
-> ☝️ Frontend part of your project will be generated **using official CLI** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
+> ☝️ Frontend part of your project will be generated **using official CLIs** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
 
 ## 👤 Use custom templates
 
@@ -164,11 +158,6 @@ cgapp create \
   -b github.com/user1/my-template-1 \
   -f bitbucket.org/user2/my-template-2
 ```
-
-| Option | Values                                                 | Default | Required? |
-| ------ | ------------------------------------------------------ | ------- | --------- |
-| `-b`   | `url` — address to your custom backend git repository  | `""`    | No        |
-| `-f`   | `url` — address to your custom frontend git repository | `""`    | No        |
 
 > ☝️ No need to specify `https://` protocol, it will be added automatically! Support **public** repositories from any `git` providers, like GitHub, Bitbucket, Gitlab, your own Gitea, or else.
 
