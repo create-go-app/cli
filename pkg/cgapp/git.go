@@ -6,25 +6,40 @@ package cgapp
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/go-git/go-git/v5"
 )
 
 // GitClone function for `git clone` defined project template.
-func GitClone(rootFolder, templateName string) error {
+func GitClone(templateType, templateURL string) error {
+	// Get current directory.
+	currentDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(ShowMessage("error", err.Error(), true, true))
+	}
+
+	//
+	folder := filepath.Join(currentDir, templateType)
+
 	// Clone project template.
-	_, err := git.PlainClone(
-		rootFolder,
+	_, errPlainClone := git.PlainClone(
+		folder,
 		false,
 		&git.CloneOptions{
-			URL: "https://" + templateName,
+			URL: "https://" + templateURL,
 		},
 	)
-	if err != nil {
+	if errPlainClone != nil {
 		return fmt.Errorf(
-			ShowMessage("error", "Repository `"+templateName+"` was not cloned!", true, true),
+			ShowMessage("error", "Repository `"+templateURL+"` was not cloned!", true, true),
 		)
 	}
+
+	// Cleanup project.
+	RemoveFolders(folder, []string{".git", ".github"})
 
 	return nil
 }

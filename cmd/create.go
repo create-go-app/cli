@@ -7,7 +7,6 @@ package cmd
 import (
 	"fmt"
 	"log"
-	"os"
 	"strings"
 	"time"
 
@@ -29,7 +28,11 @@ var createCmd = &cobra.Command{
 // runCreateCmd represents runner for the `create` command.
 var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	// Start message.
-	_ = cgapp.ShowMessage("", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", true, true)
+	_ = cgapp.ShowMessage(
+		"",
+		fmt.Sprintf("Create a new project via Create Go App CLI v%v...", registry.CLIVersion),
+		true, true,
+	)
 
 	// Start timer.
 	startTimer := time.Now()
@@ -41,72 +44,80 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 	}
 
+	// Define variables for better display.
+	backend = strings.Replace(createAnswers.Backend, "/", "_", -1)
+	frontend = createAnswers.Frontend
+	proxy = createAnswers.Proxy
+
 	// If something went wrong, cancel and exit.
 	if !createAnswers.AgreeCreation {
 		log.Fatal(
-			cgapp.ShowMessage("error", "Creation of a new project was stopped. Run `cgapp create` once again!", true, true),
+			cgapp.ShowMessage(
+				"error",
+				"Creation of a new project was stopped. Run `cgapp create` once again!",
+				true, true,
+			),
 		)
 	}
 
-	// Insert empty line.
-	_ = cgapp.ShowMessage("", "", true, false)
-
-	// Define variables for better display.
-	backend = strings.ToLower(createAnswers.Backend)
-	frontend = strings.ToLower(createAnswers.Frontend)
-	proxy = strings.ToLower(createAnswers.Proxy)
-
-	// Get current directory.
-	currentDir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
-	}
-
 	// Create backend files.
-	_ = cgapp.ShowMessage("warning", "Create project backend...", true, true)
-	if err := cgapp.CreateProjectFromRegistry(
-		&registry.Project{
-			Type:       "backend",
-			Name:       backend,
-			RootFolder: currentDir,
-		},
-		registry.Repositories,
-		registry.RegexpBackendPattern,
+	_ = cgapp.ShowMessage("warning", "Create backend for your project...", true, true)
+	if err := cgapp.CreateProjectFromGit(
+		"backend",
+		fmt.Sprintf("github.com/create-go-app/%v-go-template", backend),
 	); err != nil {
 		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 	}
 
+	// Cleanup project.
+	cgapp.RemoveFolders("backend", []string{".git", ".github"})
+
+	// Show success report.
+	_ = cgapp.ShowMessage(
+		"success",
+		fmt.Sprintf("Backend was created with template `%v`!", backend),
+		true, false,
+	)
+
 	if frontend != "none" {
 		// Create frontend files.
-		_ = cgapp.ShowMessage("warning", "Create project frontend...", true, true)
+		_ = cgapp.ShowMessage("warning", "Create frontend for your project...", true, true)
 		if err := cgapp.CreateProjectFromCmd(
-			&registry.Project{
-				Type:       "frontend",
-				Name:       frontend,
-				RootFolder: currentDir,
-			},
-			registry.Commands,
-			registry.RegexpFrontendPattern,
+			[]string{"init", "@vitejs/app", "frontend", "--", "--template", frontend},
 		); err != nil {
 			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 		}
+
+		// Cleanup project.
+		cgapp.RemoveFolders("frontend", []string{".git", ".github"})
+
+		// Show success report.
+		_ = cgapp.ShowMessage(
+			"success",
+			fmt.Sprintf("Frontend was created with template `%v`!", frontend),
+			true, false,
+		)
 	}
 
 	if proxy != "none" {
-		//
-		switch proxy {
-		case "traefik":
-			inventoryVariables = map[string]interface{}{}
-			playbookVariables = map[string]interface{}{}
-		case "traefik (with dns challenge)":
-			inventoryVariables = map[string]interface{}{}
-			playbookVariables = map[string]interface{}{}
-		default:
-			log.Fatal(cgapp.ShowMessage("error", "The proxy server has not been set!", true, true))
+		// Copy Ansible playbooks and roles from embedded file system.
+		_ = cgapp.ShowMessage("warning", "Create Ansible roles...", true, true)
+		if err := cgapp.CopyFromEmbeddedFS(
+			&cgapp.EmbeddedFileSystem{
+				Name:       registry.EmbedRoles,
+				RootFolder: "roles",
+				SkipDir:    false,
+			},
+		); err != nil {
+			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 		}
 
-		// Copy Ansible playbook, inventory and roles from embedded file system, if not skipped.
-		_ = cgapp.ShowMessage("warning", "Create Ansible playbook and inventory...", true, true)
+		// Copy Ansible playbook, inventory and roles from embedded file system.
+		_ = cgapp.ShowMessage(
+			"warning",
+			"Create Ansible inventory and playbook files...",
+			true, true,
+		)
 		if err := cgapp.CopyFromEmbeddedFS(
 			&cgapp.EmbeddedFileSystem{
 				Name:       registry.EmbedTemplates,
@@ -118,29 +129,33 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		}
 
 		//
-		if err := cgapp.GenerateFileFromTemplate("hosts.ini.tmpl", inventoryVariables); err != nil {
+		switch proxy {
+		case "traefik":
+			inventory = map[string]interface{}{}
+			playbook = map[string]interface{}{}
+		case "traefik-acme-dns":
+			inventory = map[string]interface{}{}
+			playbook = map[string]interface{}{}
+		default:
+			log.Fatal(cgapp.ShowMessage("error", "The proxy server has not been set!", true, true))
+		}
+
+		// Generate Ansible inventory file.
+		if err := cgapp.GenerateFileFromTemplate("hosts.ini.tmpl", inventory); err != nil {
+			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
+		}
+
+		// Generate Ansible playbook file.
+		if err := cgapp.GenerateFileFromTemplate("playbook.yml.tmpl", playbook); err != nil {
 			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
 		}
 
 		//
-		if err := cgapp.GenerateFileFromTemplate("playbook.yml.tmpl", playbookVariables); err != nil {
-			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
-		}
-
-		// Copy Ansible playbooks and roles from embedded file system, if not skipped.
-		_ = cgapp.ShowMessage("warning", "Create Ansible roles for deploy...", true, true)
-		if err := cgapp.CopyFromEmbeddedFS(
-			&cgapp.EmbeddedFileSystem{
-				Name:       registry.EmbedRoles,
-				RootFolder: "roles",
-				SkipDir:    false,
-			},
-		); err != nil {
-			log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
-		}
-
-		//
-		_ = cgapp.ShowMessage("info", "Please, fill out Ansible inventory file (`hosts.ini`) before deploy!", false, true)
+		_ = cgapp.ShowMessage(
+			"success",
+			fmt.Sprintf("Ansible inventory, playbook and roles for `%v` was created!", proxy),
+			false, true,
+		)
 	}
 
 	// Copy misc files from embedded file system.
@@ -157,10 +172,25 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 	// Stop timer.
 	stopTimer := fmt.Sprintf("%.0f", time.Since(startTimer).Seconds())
+	_ = cgapp.ShowMessage(
+		"success",
+		fmt.Sprintf("Completed in %v seconds!", stopTimer),
+		true, true,
+	)
 
-	// End message.
-	_ = cgapp.ShowMessage("success", "Completed in "+stopTimer+" seconds!", true, true)
-	_ = cgapp.ShowMessage("", "A helpful documentation and next steps -> https://create-go.app/", false, true)
+	// Ending message.
+	if proxy != "none" {
+		_ = cgapp.ShowMessage(
+			"",
+			"Please, fill out Ansible inventory file (`$PWD/hosts.ini`) before deploy!",
+			true, true,
+		)
+	}
+	_ = cgapp.ShowMessage(
+		"",
+		"A helpful documentation and next steps -> https://create-go.app/",
+		false, true,
+	)
 }
 
 func init() {

@@ -14,9 +14,6 @@ Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-
 
 ```bash
 go install github.com/create-go-app/cli/cmd/cgapp@latest
-
-# If you want to reduce binary size of the CLI, you can run this command with options:
-CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
 ```
 
 Also, macOS and GNU/Linux users available way to install via [Homebrew](https://brew.sh/):
@@ -51,8 +48,6 @@ If you don't want to install Create Go App CLI to your system, you feel free to 
 docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest
 ```
 
-You do **not** have to worry about installing tools/CLIs of frontend UI libraries/frameworks. Everything is **already included**: `create-react-app`, `preact-cli`, `vue-cli`, `ng-cli` and `degit`.
-
 > 🔔 Please note: the [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently **unavailable** in this image.
 
 ## 📺 Video screencast
@@ -79,11 +74,8 @@ Unfortunately, we are unable to include all helpful documentation to the `README
   - [Working with the official Docker image](https://create-go.app/detailed-guides/official-docker-image/)
   - [Run project on your local machine](https://create-go.app/detailed-guides/run-on-local/)
   - [Deploy project to a production server](https://create-go.app/detailed-guides/deploy-to-server/)
-  - [Make your own project template](https://create-go.app/detailed-guides/make-custom-template/)
-  - [Make your own Ansible role](https://create-go.app/detailed-guides/make-custom-ansible-roles/)
-- [FAQ](https://create-go.app/faq/)
-  - [Automation of a deploy process](https://create-go.app/automation/)
-  - [How do I ask the right question?](https://create-go.app/ask-question/#how-do-i-ask-the-right-question)
+- [Automation of the deploy process](https://create-go.app/automation/)
+- [How do I ask the right question?](https://create-go.app/ask-question/#how-do-i-ask-the-right-question)
 - [Official logo](https://create-go.app/logo/)
 
 ## ⚙️ Commands & Options
@@ -103,24 +95,18 @@ cgapp create
 
 CLI command for deploy Docker containers with your project via Ansible to the remote server.
 
-> ☝️ Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [Ansible 2.9+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer.
+> ☝️ Make sure that you have [Python 3.9+](https://www.python.org/downloads/) and [Ansible 2.10+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer.
 
 ```bash
 cgapp deploy [OPTION]
 ```
 
-| Option | Values                                                                                                        | Default | Required? |
-| ------ | ------------------------------------------------------------------------------------------------------------- | ------- | --------- |
-| `-K`   | `boolean` — prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option) | `false` | No        |
+| Option | Values                                                                                                            | Default | Required? |
+| ------ | ----------------------------------------------------------------------------------------------------------------- | ------- | --------- |
+| `-K`   | `boolean` — prompt you to provide the remote user sudo password (_a standard Ansible `--ask-become-pass` option_) | `false` | No        |
 
 - 📺 Preview: https://recordit.co/ewjG9dgMPX
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
-
-## 🤔 Why another CLI?
-
-When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project and/or the deployment of an existing one **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
-
-So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React.js ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
 
 ## 📝 Production-ready project templates
 
@@ -131,33 +117,20 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 
 **Frontend:**
 
+- [x] `vanilla` — Pure JavaScript frontend app.
+  - `vanilla-ts` — generated template with pure TypeScript app.
 - [x] `react` — [React](https://reactjs.org/) frontend app.
-  - `react:<template>` — CRA generated template for React app.
+  - `react-ts` — generated template with TypeScript for React app.
 - [x] `preact` — [Preact](https://preactjs.com/) frontend app.
-  - `preact:<template>` — Preact CLI generated template for Preact app.
+  - `preact-ts` — generated template with TypeScript for Preact app.
 - [x] `vue` — [Vue.js](https://vuejs.org/) frontend app.
-  - `vue:<user/repo>` — Preset for generating Vue.js app from GitHub.
-  - `vue:<gitlab|bitbucket>:<user/repo>` — Preset for generating Vue.js app from Gitlab/Bitbucket/etc.
-- [x] `angular` — [Angular](https://angular.io/) frontend app.
+  - `vue-ts` — generated template with TypeScript for Vue.js app.
 - [x] `svelte` — [Svelte](https://svelte.dev/) frontend app.
-- [x] `sapper` — [Sapper](https://sapper.svelte.dev/) frontend app for static websites.
-  - `sapper:<webpack>` — Preset for generating Sapper with Webpack bundler.
+  - `svelte-ts` — generated template with TypeScript for Svelte app.
+- [x] `lit-element` — [Lit](https://lit.dev/) Web Components frontend app.
+  - `lit-element-ts` — generated template with TypeScript for LitElement app.
 
-> ☝️ Frontend part of your project will be generated **using official CLIs** from the authors of each frontend UI library/framework (_under the hood_). So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Angular`, `Svelte` or `Sapper` for your project from their authors!
-
-## 👤 Use custom templates
-
-Create Go App CLI provide works with **your own** custom templates, instead of those prepared by authors. Please, read the [instructions](https://create-go.app/detailed-guides/make-custom-template/) for creating a custom template that will work with the Create Go App CLI.
-
-Specify backend (`-b`) and frontend (`-f`) with addresses to their repositories in `create` command:
-
-```console
-cgapp create \
-  -b github.com/user1/my-template-1 \
-  -f bitbucket.org/user2/my-template-2
-```
-
-> ☝️ No need to specify `https://` protocol, it will be added automatically! Support **public** repositories from any `git` providers, like GitHub, Bitbucket, Gitlab, your own Gitea, or else.
+> ☝️ Frontend part will be generate using awesome tool [Vite.js](https://vitejs.dev/) under the hood. So, you'll always get the latest version of `React`, `Preact`, `Vue.js`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates for your project!
 
 ## 🚚 Pre-configured Ansible roles
 
@@ -168,19 +141,33 @@ cgapp create \
 
 > 👍 Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
 
-## 👵 How to install older version?
+## 📚 FAQ
 
-You can do it by using a version suffix in `go install` command:
+### Why another CLI?
+
+When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project and/or the deployment of an existing one **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
+
+So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React.js ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
+
+### How to reduce binary size of the CLI?
+
+```console
+CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
+```
+
+> ☝️ By the way, if you install the CLI by Homebrew, you already have this optimization.
+
+### How to install older version?
 
 ```console
 go install github.com/create-go-app/cli/cmd/cgapp@2.0.0
 ```
 
+Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
+
 > ☝️ Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
 >
 > For example: `mv $GOPATH/bin/cgapp $GOPATH/bin/cgapp_v2_0_0` and run it by `cgapp_v2_0_0 [COMMAND]`.
-
-Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
 
 ## ⭐️ Project assistance
 

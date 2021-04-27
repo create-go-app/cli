@@ -14,11 +14,11 @@ import (
 )
 
 var (
-	backend, frontend, proxy              string                 // define project variables
-	inventoryVariables, playbookVariables map[string]interface{} // define template variables
-	options                               []string               // define options
-	askBecomePass                         bool                   // install Ansible roles, ask become pass
-	createAnswers                         registry.CreateAnswers // define answers variable for `create` command
+	backend, frontend, proxy string                 // define project variables
+	inventory, playbook      map[string]interface{} // define template variables
+	options                  []string               // define options
+	askBecomePass            bool                   // install Ansible roles, ask become pass
+	createAnswers            registry.CreateAnswers // define answers variable for `create` command
 
 	// Config for survey icons and colors.
 	// See: https://github.com/mgutz/ansi#style-format
