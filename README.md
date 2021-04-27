@@ -35,7 +35,7 @@ Let's create a new project via **interactive console UI** (or **CUI** for short)
 cgapp create
 ```
 
-Okay, it works! Next, open the generated Ansible inventory file (called `hosts.ini`) and fill in the variables according to your server configuration. Now you are ready to **automatically deploy** the project on the remote server:
+Next, open the generated Ansible inventory file (called `hosts.ini`) and fill in the variables according to your server configuration. Now you are ready to **automatically deploy** the project on the remote server:
 
 ```bash
 cgapp deploy
@@ -114,9 +114,9 @@ cgapp create [OPTIONS]
 
 ### `deploy`
 
-CLI command for deploy Docker containers with your project via Ansible to a remote server.
+CLI command for deploy Docker containers with your project via Ansible to the remote server.
 
-> ☝️ You should only run this command from the **root folder** of your project, which created with `create` and `generate` commands! It's a necessary condition for everything to work perfectly.
+> ☝️ You should only run this command from the **root folder** of your project, which created with `create` commands! It's a necessary condition for everything to work perfectly.
 
 Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [Ansible 2.9+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer. Run `deploy` command:
 
@@ -167,7 +167,7 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 - [x] `traefik` — role for run Docker container with [Traefik Proxy](https://traefik.io/traefik/).
 - [x] `nginx` — role for run Docker container with [Nginx](https://nginx.org).
 
-> ☝️ Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
+> 👍 Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
 
 ## 👤 My own custom templates?
 
@@ -178,6 +178,8 @@ cgapp create \
   -b github.com/user1/my-template-1 \
   -f bitbucket.org/user2/my-template-2
 ```
+
+Read the [instructions](https://create-go.app/detailed-guides/make-custom-template/) for creating a custom template that will work with the Create Go App CLI.
 
 ## 👵 How to install older version?
 
