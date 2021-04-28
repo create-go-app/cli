@@ -143,8 +143,8 @@ cgapp deploy [OPTION]
 ### Web/Proxy server
 
 - Roles for run Docker container with [Traefik Proxy](https://traefik.io/traefik/):
-  - `traefik` — configured Traefik container with simple ACME challenge via CA server.
-  - `traefik-acme-dns` — configured Traefik container with complex ACME challenge via DNS provider.
+  - `traefik` — configured Traefik container with a simple ACME challenge via CA server.
+  - `traefik-acme-dns` — configured Traefik container with a complex ACME challenge via DNS provider.
 - Roles for run Docker container with [Nginx](https://nginx.org):
   - `nginx` — pure Nginx container with "the best practice" configuration.
 
@@ -156,7 +156,7 @@ cgapp deploy [OPTION]
 
 When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project and/or the deployment of an existing one **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
 
-So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React.js ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
+So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
 
 ### How to reduce binary size of the CLI?
 
