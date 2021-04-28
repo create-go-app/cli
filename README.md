@@ -154,9 +154,11 @@ cgapp deploy [OPTION]
 
 ### Why another CLI?
 
-When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
+When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project **can be automated**. And it would be better to have all the necessary functions inside one CLI.
 
-So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
+That's why we transferred all our experience to this project, which **we use ourselves**!
+
+So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React ecosystem does) and **deploy an existing project** to a remote server in configured Docker containers.
 
 ### How to reduce binary size of the CLI?
 
