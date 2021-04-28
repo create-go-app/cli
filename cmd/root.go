@@ -8,7 +8,6 @@ import (
 	"log"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/create-go-app/cli/pkg/cgapp"
 	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/spf13/cobra"
 )
@@ -54,6 +53,6 @@ A helpful documentation and next steps -> https://create-go.app/`,
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
+		log.Fatal(err.Error())
 	}
 }

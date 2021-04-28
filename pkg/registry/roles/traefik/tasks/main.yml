@@ -4,27 +4,6 @@
 
 ---
 #
-# Set local variables for this role.
-#
-- name: Set Traefik variables
-  set_fact:
-    # ACME settings
-    email: "{{ letsencript_email }}"
-    # ACME config for simple challenge (without wildcard)
-    staging: "{{ letsencript_staging | default('yes') }}"
-    # ACME config for complex challenge (with wildcard)
-    wildcard: "{{ letsencript_wildcard | default('no') }}"
-    wildcard_provider: "{{ letsencript_wildcard_provider | default('manual') }}"
-    # Logs config
-    log_level: "{{ traefik_log_level | default('ERROR') }}"
-    log_format: "{{ traefik_log_format | default('common') }}"
-    # Container config
-    version: "{{ traefik_version | default('latest') }}"
-    dashboard_domain: "{{ traefik_dashboard_url | default('dashboard.{{ project_domain }}') }}"
-    dashboard_user: "{{ traefik_dashboard_user | default('admin') }}"
-    dashboard_password: "{{ traefik_dashboard_password | password_hash('blowfish') }}"
-
-#
 # Create folder for Traefik.
 #
 - name: Ensures Traefik dir exists
@@ -67,7 +46,7 @@
 - name: Run Traefik container
   docker_container:
     name: traefik
-    image: "traefik:{{ version }}"
+    image: "traefik:{{ traefik_version }}"
     restart_policy: unless-stopped
     recreate: true
     networks:
@@ -82,8 +61,15 @@
       - "{{ server_dir }}/webserver/traefik.log:/traefik.log:rw"
     labels:
       traefik.enable: "true"
-      traefik.http.routers.traefik.rule: "Host(`{{ dashboard_domain }}`)"
+      traefik.http.routers.traefik.rule: "Host(`{{ traefik_dashboard_url }}`)"
       traefik.http.routers.traefik.entrypoints: "websecure"
       traefik.http.routers.traefik.service: "api@internal"
       traefik.http.routers.traefik.middlewares: "auth"
-      traefik.http.middlewares.auth.basicauth.users: "{{ dashboard_user }}:{{ dashboard_password }}"
+      traefik.http.middlewares.auth.basicauth.users: "{{ traefik_dashboard_user }}:{{ traefik_dashboard_password }}"
+    #
+    # Don't forget to set environment variables, if your choose DNS way to getting SSL cert.
+    # See: https://doc.traefik.io/traefik/https/acme/#providers
+    #
+    # env:
+    #   DO_AUTH_TOKEN: "{{ do_auth_token }}" # for example, auth token for DigitalOcean DNS provider
+    #

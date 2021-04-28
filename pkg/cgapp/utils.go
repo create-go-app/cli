@@ -4,25 +4,27 @@
 
 package cgapp
 
-import (
-	"fmt"
-	"regexp"
-)
+import "fmt"
 
 // ShowMessage function for send message to output.
-func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) string {
+func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 	// Define variables.
-	var startNewLine, endNewLine string
+	var startLine, endLine string
 
 	if startWithNewLine {
-		startNewLine = "\n" // set a new line
+		startLine = "\n" // set a new line
 	}
 
 	if endWithNewLine {
-		endNewLine = "\n" // set a new line
+		endLine = "\n" // set a new line
 	}
 
-	return startNewLine + colorizeLevel(level) + text + endNewLine
+	fmt.Println(startLine + colorizeLevel(level) + text + endLine)
+}
+
+// ShowError function for send error message to output.
+func ShowError(text string) error {
+	return fmt.Errorf(colorizeLevel("error") + text)
 }
 
 // colorizeLevel function for send (colored or common) message to output.
@@ -32,7 +34,6 @@ func colorizeLevel(level string) string {
 		red         string = "\033[0;31m"
 		green       string = "\033[0;32m"
 		cyan        string = "\033[0;36m"
-		yellow      string = "\033[1;33m"
 		noColor     string = "\033[0m"
 		color, icon string
 	)
@@ -42,9 +43,6 @@ func colorizeLevel(level string) string {
 	case "success":
 		color = green
 		icon = "[OK] "
-	case "warning":
-		color = yellow
-		icon = "[WARNING] "
 	case "error":
 		color = red
 		icon = "[ERROR] "
@@ -57,27 +55,4 @@ func colorizeLevel(level string) string {
 
 	// Send common or colored caption.
 	return color + icon + noColor
-}
-
-// stringSplit function for split string by pattern.
-func stringSplit(pattern, match string) ([]string, error) {
-	// Error, when empty or nil.
-	if pattern == "" || match == "" {
-		return nil, fmt.Errorf("Frontend template not set!")
-	}
-
-	// Define empty []string{} for splitted strings.
-	splittedStrings := []string{}
-
-	// Create regexp.
-	re := regexp.MustCompile(pattern)
-
-	// Split match string.
-	split := re.Split(match, -1)
-	for str := range split {
-		// Append all matched strings to set.
-		splittedStrings = append(splittedStrings, split[str])
-	}
-
-	return splittedStrings, nil
 }

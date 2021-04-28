@@ -12,7 +12,7 @@ import (
 )
 
 // ExecCommand function to execute a given command.
-func ExecCommand(command string, options []string) error {
+func ExecCommand(command string, options []string, silentMode bool) error {
 	// Checking for nil.
 	if command == "" || options == nil {
 		return fmt.Errorf("No command to execute!")
@@ -30,31 +30,27 @@ func ExecCommand(command string, options []string) error {
 	// Create a new reader.
 	cmdReader, errStdoutPipe := cmd.StdoutPipe()
 	if errStdoutPipe != nil {
-		return fmt.Errorf(
-			ShowMessage("error", errStdoutPipe.Error(), true, true),
-		)
+		return ShowError(errStdoutPipe.Error())
 	}
 
 	// Start executing command.
 	if errStart := cmd.Start(); errStart != nil {
-		return fmt.Errorf(
-			ShowMessage("error", stderr.String(), true, true),
-		)
+		return ShowError(stderr.String())
 	}
 
-	// Create a new scanner and run goroutine func with output.
-	scanner := bufio.NewScanner(cmdReader)
-	go func() {
-		for scanner.Scan() {
-			_ = ShowMessage("info", scanner.Text(), false, false)
-		}
-	}()
+	// Create a new scanner and run goroutine func with output, if not in silent mode.
+	if !silentMode {
+		scanner := bufio.NewScanner(cmdReader)
+		go func() {
+			for scanner.Scan() {
+				ShowMessage("", scanner.Text(), false, false)
+			}
+		}()
+	}
 
 	// Wait for executing command.
 	if errWait := cmd.Wait(); errWait != nil {
-		return fmt.Errorf(
-			ShowMessage("error", stderr.String(), true, true),
-		)
+		return ShowError(stderr.String())
 	}
 
 	return nil

@@ -15,6 +15,11 @@ const (
 	CLIVersion = "2.0.0"
 )
 
+// Variables struct for Ansible variables (inventory, hosts).
+type Variables struct {
+	List map[string]interface{}
+}
+
 // CreateAnswers struct for a survey's answers for `create` command.
 type CreateAnswers struct {
 	Backend       string
@@ -92,6 +97,56 @@ var (
 			Prompt: &survey.Confirm{
 				Message: "If everything is okay, can I create this project for you? ;)",
 				Default: true,
+			},
+		},
+	}
+
+	// AnsibleInventoryVariables
+	AnsibleInventoryVariables = map[string]*Variables{
+		"traefik-acme-ca": {
+			List: map[string]interface{}{
+				"Proxy":    "traefik",
+				"Wildcard": false,
+			},
+		},
+		"traefik-acme-dns": {
+			List: map[string]interface{}{
+				"Proxy":    "traefik",
+				"Wildcard": true,
+			},
+		},
+		"nginx": {
+			List: map[string]interface{}{
+				"Proxy": "nginx",
+			},
+		},
+		"haproxy": {
+			List: map[string]interface{}{
+				"Proxy": "haproxy",
+			},
+		},
+	}
+
+	//
+	AnsiblePlaybookVariables = map[string]*Variables{
+		"traefik-acme-ca": {
+			List: map[string]interface{}{
+				"Proxy": "traefik",
+			},
+		},
+		"traefik-acme-dns": {
+			List: map[string]interface{}{
+				"Proxy": "traefik",
+			},
+		},
+		"nginx": {
+			List: map[string]interface{}{
+				"Proxy": "nginx",
+			},
+		},
+		"haproxy": {
+			List: map[string]interface{}{
+				"Proxy": "haproxy",
 			},
 		},
 	}

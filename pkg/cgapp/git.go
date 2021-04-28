@@ -34,12 +34,8 @@ func GitClone(templateType, templateURL string) error {
 		},
 	)
 	if errPlainClone != nil {
-		return fmt.Errorf(
-			ShowMessage(
-				"error",
-				fmt.Sprintf("Repository `%v` was not cloned!", templateURL),
-				true, true,
-			),
+		return ShowError(
+			fmt.Sprintf("Repository `%v` was not cloned!", templateURL),
 		)
 	}
 

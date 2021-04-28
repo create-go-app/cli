@@ -3,8 +3,8 @@ global:
   sendAnonymousUsage: false
 
 log:
-  level: "{{ log_level|upper }}"
-  format: "{{ log_format }}"
+  level: "{{ traefik_log_level }}"
+  format: "{{ traefik_log_format }}"
   filePath: traefik.log
 
 api:
@@ -25,7 +25,7 @@ entryPoints:
         certResolver: le
         domains:
           - main: "{{ project_domain }}"
-{% if wildcard == 'yes' %}
+{% if acme_dns_provider %}
             sans:
               - "*.{{ project_domain }}"
 {% endif %}
@@ -33,17 +33,17 @@ entryPoints:
 certificatesResolvers:
   le:
     acme:
-      email: "{{ email }}"
+      email: "{{ acme_email }}"
       storage: acme.json
-{% if wildcard == 'yes' %}
+{% if acme_dns_provider %}
       dnsChallenge:
-        provider: "{{ wildcard_provider }}"
+        provider: "{{ acme_dns_provider }}"
         delayBeforeCheck: 5
         resolvers:
           - 1.1.1.1:53
           - 8.8.8.8:53
 {% else %}
-      caServer: https://acme-{% if staging == 'yes' %}staging-{% endif %}v02.api.letsencrypt.org/directory
+      caServer: https://acme-{% if acme_staging == 'yes' %}staging-{% endif %}v02.api.letsencrypt.org/directory
 {% endif %}
 
 providers:

@@ -26,41 +26,53 @@ var deployCmd = &cobra.Command{
 // runDeployCmd represents runner for the `deploy` command.
 var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	// Start message.
-	_ = cgapp.ShowMessage("warning", "Deploying project via Create Go App CLI v"+registry.CLIVersion+"...", true, true)
+	cgapp.ShowMessage(
+		"",
+		fmt.Sprintf("Deploying project via Create Go App CLI v`%v`...", registry.CLIVersion),
+		true, true,
+	)
 
 	// Start timer.
 	startTimer := time.Now()
 
-	// Define Ansible options.
+	// Set Ansible playbook and inventory files.
 	if askBecomePass {
-		//
+		// With entering password.
 		options = []string{"playbook.yml", "-i", "hosts.ini", "-K"}
 	} else {
-		//
+		// Without entering password.
 		options = []string{"playbook.yml", "-i", "hosts.ini"}
 	}
 
 	// Create config files for your project.
-	_ = cgapp.ShowMessage("warning", "Run Ansible playbook for deploy your project...", true, true)
+	cgapp.ShowMessage("info", "Run Ansible playbook for deploy your project...", true, true)
 
 	// Run execution for Ansible playbook.
-	if err := cgapp.ExecCommand("ansible-playbook", options); err != nil {
-		log.Fatal(cgapp.ShowMessage("error", err.Error(), true, true))
+	if err := cgapp.ExecCommand("ansible-playbook", options, false); err != nil {
+		log.Fatal(cgapp.ShowError(err.Error()))
 	}
 
 	// Stop timer.
 	stopTimer := fmt.Sprintf("%.0f", time.Since(startTimer).Seconds())
 
-	// End message.
-	_ = cgapp.ShowMessage("success", "Completed in "+stopTimer+" seconds!", true, true)
-	_ = cgapp.ShowMessage("", "A helpful documentation and next steps -> https://create-go.app/", false, true)
+	// End messages.
+	cgapp.ShowMessage(
+		"info",
+		fmt.Sprintf("Completed in %v seconds!", stopTimer),
+		true, true,
+	)
+	cgapp.ShowMessage(
+		"",
+		"Have a great project launch! :)",
+		false, true,
+	)
 }
 
 func init() {
 	rootCmd.AddCommand(deployCmd)
 	deployCmd.PersistentFlags().BoolVarP(
 		&askBecomePass,
-		"ask-become-pass", "K", false,
+		"", "K", false,
 		"prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option)",
 	)
 }

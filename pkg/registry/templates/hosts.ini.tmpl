@@ -7,9 +7,9 @@
 
 [cgapp_project:vars]
 # Set Ansible default variables to start playbook:
-ansible_user=root       # remote sudo user name
-ansible_become=true     # ask become password for remote sudo user
-ansible_connection=ssh  # connection to remote server via SSH
+ansible_user=root       # remote sudo username
+ansible_become=yes      # ask become password for remote sudo user
+ansible_connection=ssh  # connection type to remote server (usually, 'ssh')
 
 # Set Python 3 default path:
 ansible_python_interpreter_path=/usr/bin/python3
@@ -26,3 +26,24 @@ server_dir=/var/www/cgapp
 # Set user (owner) name & group name (to create files on server):
 system_user=root
 system_group=docker
+
+{{ if eq .Proxy "traefik" }}# Set Traefik Proxy configuration
+traefik_version=latest               # Traefik version (for example, v2.4)
+traefik_log_level=ERROR              # log level in capital letters (DEBUG, PANIC, FATAL, ERROR, WARN, INFO)
+traefik_log_format=json              # log format between json and common
+traefik_dashboard_url=cp.example.com # URL for Traefik admin dashboard
+traefik_dashboard_user=admin         # username for Traefik admin dashboard
+traefik_dashboard_password=          # hashed password for Traefik admin dashboard
+                                     # see: https://doc.traefik.io/traefik/middlewares/basicauth/#users
+
+# ACME configuration (Let's Encrypt):
+acme_email=mail@example.com # your email address for SSL cert
+acme_staging=yes            # change to 'no' for getting a real SSL cert
+{{ if .Wildcard }}acme_dns_provider=manual    # DNS provider
+
+# Don't forget to set environment variables here as well as in `./roles/traefik/tasks/main.yml` file, 
+# if your choose DNS way to getting SSL cert. See: https://doc.traefik.io/traefik/https/acme/#providers
+do_auth_token=XXXXXXXXXXX # for example, auth token for DigitalOcean DNS provider{{ end }}
+{{ else if eq .Proxy "nginx" }}# Set Nginx configuration
+{{ else if eq .Proxy "haproxy" }}# Set HAProxy configuration
+{{ end }}
