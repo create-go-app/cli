@@ -99,9 +99,9 @@ CLI command for deploy Docker containers with your project via Ansible to the re
 cgapp deploy [OPTION]
 ```
 
-| Option name | Description                                                                                            | Type      | Default | Required? |
-| ----------- | ------------------------------------------------------------------------------------------------------ | --------- | ------- | --------- |
-| `-K`        | Prompt you to provide the remote user sudo password (_a standard Ansible `--ask-become-pass` option_). | `boolean` | `false` | No        |
+| Option | Description                                                                                            | Type      | Default | Required? |
+| ------ | ------------------------------------------------------------------------------------------------------ | --------- | ------- | --------- |
+| `-K`   | Prompt you to provide the remote user sudo password (_a standard Ansible `--ask-become-pass` option_). | `boolean` | `false` | No        |
 
 - 📺 Preview: https://recordit.co/ewjG9dgMPX
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
