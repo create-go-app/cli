@@ -84,7 +84,7 @@ var (
 				Message: "Choose a proxy server:",
 				Options: []string{
 					"none",
-					"traefik-acme-ca",
+					"traefik",
 					"traefik-acme-dns",
 					"nginx",
 				},
@@ -100,9 +100,9 @@ var (
 		},
 	}
 
-	// AnsibleInventoryVariables list of variables for inventory
+	// AnsibleInventoryVariables list of variables for inventory.
 	AnsibleInventoryVariables = map[string]*Variables{
-		"traefik-acme-ca": {
+		"traefik": {
 			List: map[string]interface{}{
 				"Proxy":    "traefik",
 				"Wildcard": false,
@@ -121,9 +121,9 @@ var (
 		},
 	}
 
-	// AnsiblePlaybookVariables list of variables for playbook
+	// AnsiblePlaybookVariables list of variables for playbook.
 	AnsiblePlaybookVariables = map[string]*Variables{
-		"traefik-acme-ca": {
+		"traefik": {
 			List: map[string]interface{}{
 				"Proxy": "traefik",
 			},
