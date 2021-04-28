@@ -28,7 +28,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	// Start message.
 	cgapp.ShowMessage(
 		"",
-		fmt.Sprintf("Deploying project via Create Go App CLI v`%v`...", registry.CLIVersion),
+		fmt.Sprintf("Deploying project via Create Go App CLI v%v...", registry.CLIVersion),
 		true, true,
 	)
 
@@ -45,11 +45,11 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	}
 
 	// Create config files for your project.
-	cgapp.ShowMessage("info", "Run Ansible playbook for deploy your project...", true, true)
+	cgapp.ShowMessage("info", "Run Ansible playbook for deploy your project", false, false)
 
 	// Run execution for Ansible playbook.
 	if err := cgapp.ExecCommand("ansible-playbook", options, false); err != nil {
-		log.Fatal(cgapp.ShowError(err.Error()))
+		log.Fatal(err.Error())
 	}
 
 	// Stop timer.

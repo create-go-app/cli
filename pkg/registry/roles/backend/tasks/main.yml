@@ -4,14 +4,6 @@
 
 ---
 #
-# Set local variables for this role.
-#
-- name: Set backend variables
-  set_fact:
-    # Ports config
-    port: "{{ backend_port | default(5000) }}"
-
-#
 # Delete backend files.
 #
 - name: Delete previous backend files
@@ -52,7 +44,7 @@
     networks:
       - name: "{{ docker_network }}"
     ports:
-      - "{{ port }}:{{ port }}"
+      - "{{ backend_port }}:{{ backend_port }}"
     labels:
       traefik.enable: "true"
       traefik.http.routers.backend.rule: "Host(`{{ project_domain }}`)"

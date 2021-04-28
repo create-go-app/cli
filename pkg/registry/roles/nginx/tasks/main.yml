@@ -1,0 +1,50 @@
+# Ansible role for deploy the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+---
+#
+# Create folder for Nginx.
+#
+- name: Ensures Nginx dir exists
+  file:
+    state: directory
+    path: "{{ server_dir }}/webserver"
+    owner: "{{ system_user }}"
+    group: "{{ system_group }}"
+
+#
+# Create Nginx config.
+#
+- name: Adding nginx.conf file
+  template:
+    src: nginx.conf.j2
+    dest: "{{ server_dir }}/webserver/nginx.conf"
+    mode: 0600
+
+#
+# Create default host config.
+#
+- name: Adding default.conf file
+  template:
+    src: default.conf.j2
+    dest: "{{ server_dir }}/webserver/default.conf"
+    mode: 0600
+
+#
+# Run official Nginx Docker container with specified version.
+#
+- name: Run Nginx container
+  docker_container:
+    name: cgapp-nginx
+    image: "nginx:{{ nginx_version }}"
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "{{ server_dir }}/webserver/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "{{ server_dir }}/webserver/default.conf:/etc/nginx/conf.d/default.conf:ro"

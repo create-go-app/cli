@@ -108,34 +108,45 @@ cgapp deploy [OPTION]
 
 ## 📝 Production-ready project templates
 
-**Backend:**
+### Backend
 
-- [x] [`net/http`](https://create-go.app/production-templates/net-http-go/) — Backend template with Golang built-in [net/http](https://golang.org/pkg/net/http/) package.
-- [x] [`fiber`](https://create-go.app/production-templates/fiber-go/) — Backend template with [Fiber](https://github.com/gofiber/fiber).
+- [x] Backend template with Golang built-in [net/http](https://golang.org/pkg/net/http/) package:
+  - [`net/http`](https://github.com/create-go-app/net_http-go-template) — simple REST API with CRUD and JWT auth.
+- [x] Backend template with [Fiber](https://github.com/gofiber/fiber):
+  - [`fiber`](https://github.com/create-go-app/fiber-go-template) — complex REST API with CRUD, JWT auth and Renew token.
 
-**Frontend:**
+### Frontend
 
-- [x] `vanilla` — Pure JavaScript frontend app.
+- [x] Pure JavaScript:
+  - `vanilla` — generated template with pure JavaScript app.
   - `vanilla-ts` — generated template with pure TypeScript app.
-- [x] `react` — [React](https://reactjs.org/) frontend app.
+- [x] [React](https://reactjs.org/):
+  - `react` — generated template with React app.
   - `react-ts` — generated template with TypeScript for React app.
-- [x] `preact` — [Preact](https://preactjs.com/) frontend app.
+- [x] [Preact](https://preactjs.com/):
+  - `preact` — generated template with Preact app.
   - `preact-ts` — generated template with TypeScript for Preact app.
-- [x] `vue` — [Vue.js](https://vuejs.org/) frontend app.
+- [x] [Vue.js](https://vuejs.org/):
+  - `vue` — generated template with Vue.js app.
   - `vue-ts` — generated template with TypeScript for Vue.js app.
-- [x] `svelte` — [Svelte](https://svelte.dev/) frontend app.
+- [x] [Svelte](https://svelte.dev/):
+  - `svelte` — generated template with Svelte app.
   - `svelte-ts` — generated template with TypeScript for Svelte app.
-- [x] `lit-element` — [Lit](https://lit.dev/) Web Components frontend app.
-  - `lit-element-ts` — generated template with TypeScript for LitElement app.
+- [x] [Lit](https://lit.dev/) web components:
+  - `lit-element` — generated template with Lit app.
+  - `lit-element-ts` — generated template with TypeScript for Lit app.
 
 > ☝️ Frontend part will be generate using awesome tool [Vite.js](https://vitejs.dev/) under the hood. So, you'll always get the latest version of `React`, `Preact`, `Vue`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates for your project!
 
 ## 🚚 Pre-configured Ansible roles
 
-**Web/Proxy server:**
+### Web/Proxy server
 
-- [x] `traefik` — role for run Docker container with [Traefik Proxy](https://traefik.io/traefik/).
-- [x] `nginx` — role for run Docker container with [Nginx](https://nginx.org).
+- [x] Role for run Docker container with [Traefik Proxy](https://traefik.io/traefik/):
+  - `traefik-acme-ca` —
+  - `traefik-acme-dns` —
+- [x] Role for run Docker container with [Nginx](https://nginx.org):
+  - `nginx` —
 
 > 👍 Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
 

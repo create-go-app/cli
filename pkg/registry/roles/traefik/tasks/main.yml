@@ -45,7 +45,7 @@
 #
 - name: Run Traefik container
   docker_container:
-    name: traefik
+    name: cgapp-traefik
     image: "traefik:{{ traefik_version }}"
     restart_policy: unless-stopped
     recreate: true

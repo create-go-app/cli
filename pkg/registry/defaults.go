@@ -87,7 +87,6 @@ var (
 					"traefik-acme-ca",
 					"traefik-acme-dns",
 					"nginx",
-					"haproxy",
 				},
 				Default: "none",
 			},
@@ -101,7 +100,7 @@ var (
 		},
 	}
 
-	// AnsibleInventoryVariables
+	// AnsibleInventoryVariables list of variables for inventory
 	AnsibleInventoryVariables = map[string]*Variables{
 		"traefik-acme-ca": {
 			List: map[string]interface{}{
@@ -120,14 +119,9 @@ var (
 				"Proxy": "nginx",
 			},
 		},
-		"haproxy": {
-			List: map[string]interface{}{
-				"Proxy": "haproxy",
-			},
-		},
 	}
 
-	//
+	// AnsiblePlaybookVariables list of variables for playbook
 	AnsiblePlaybookVariables = map[string]*Variables{
 		"traefik-acme-ca": {
 			List: map[string]interface{}{
@@ -142,11 +136,6 @@ var (
 		"nginx": {
 			List: map[string]interface{}{
 				"Proxy": "nginx",
-			},
-		},
-		"haproxy": {
-			List: map[string]interface{}{
-				"Proxy": "haproxy",
 			},
 		},
 	}
