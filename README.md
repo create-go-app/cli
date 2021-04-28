@@ -174,7 +174,7 @@ go install github.com/create-go-app/cli/cmd/cgapp@v2.0.0
 
 Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
 
-> 👉 Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
+> 🔔 Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
 
 ## ⭐️ Project assistance
 
