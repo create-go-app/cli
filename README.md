@@ -148,7 +148,7 @@ cgapp deploy [OPTION]
 - Roles for run Docker container with [Nginx](https://nginx.org):
   - `nginx` — pure Nginx container with "the best practice" configuration.
 
-> 👍 Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
+> ✌️ Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
 
 ## 📚 FAQ
 
@@ -174,7 +174,7 @@ go install github.com/create-go-app/cli/cmd/cgapp@v2.0.0
 
 Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
 
-> ☝️ Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
+> 👉 Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
 
 ## ⭐️ Project assistance
 
