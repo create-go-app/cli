@@ -93,7 +93,7 @@ cgapp create
 
 CLI command for deploy Docker containers with your project via Ansible to the remote server.
 
-> ☝️ Make sure that you have [Python 3.9+](https://www.python.org/downloads/) and [Ansible 2.10+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer.
+> 🔔 Make sure that you have [Python 3.9+](https://www.python.org/downloads/) and [Ansible 2.10+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer.
 
 ```bash
 cgapp deploy [OPTION]
@@ -154,7 +154,7 @@ cgapp deploy [OPTION]
 
 ### Why another CLI?
 
-When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project and/or the deployment of an existing one **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
+When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project **can be automated**. And it would be better to have all the necessary functions inside one CLI. That's why we transferred all our experience to the Create Go App CLI, which we use ourselves!
 
 So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React ecosystem does) and **deploy an existing project** to a remote server in configured and fully isolated Docker containers.
 
@@ -164,7 +164,7 @@ So, yes, this CLI gives you the ability to prepare everything you need to **star
 CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
 ```
 
-> ☝️ By the way, if you install the CLI by Homebrew, you already have this optimization.
+> 👋 By the way, if you install the CLI by Homebrew, you already have this optimization.
 
 ### How to install older version?
 
