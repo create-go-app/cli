@@ -23,11 +23,11 @@
     mode: 0600
 
 #
-# Create default host config.
+# Create default server config.
 #
 - name: Adding default.conf file
   template:
-    src: default.conf.j2
+    src: "{{ 'default-https.conf.j2' if nginx_use_only_https else 'default-http.conf.j2' }}"
     dest: "{{ server_dir }}/webserver/default.conf"
     mode: 0600
 
@@ -44,7 +44,7 @@
       - name: "{{ docker_network }}"
     ports:
       - "80:80"
-      - "443:443"
+      - "{{ '443:443' if nginx_use_only_https }}"
     volumes:
       - "{{ server_dir }}/webserver/nginx.conf:/etc/nginx/nginx.conf:ro"
       - "{{ server_dir }}/webserver/default.conf:/etc/nginx/conf.d/default.conf:ro"

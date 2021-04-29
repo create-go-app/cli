@@ -70,4 +70,8 @@ acme_staging=yes{{ end }}
 
 # Set Nginx version (for example, 1.20-alpine)
 nginx_version=alpine
+# Set redirect from HTTP to HTTPS for default server
+nginx_use_only_https=yes
+# Set redirect from WWW to non-WWW domain for default server
+nginx_redirect_to_non_www=yes
 {{ end }}
