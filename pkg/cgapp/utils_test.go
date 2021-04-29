@@ -21,10 +21,6 @@ func Test_colorizeLevel(t *testing.T) {
 			args{level: "success"},
 		},
 		{
-			"successfully send warning message",
-			args{level: "warning"},
-		},
-		{
 			"successfully send error message",
 			args{level: "error"},
 		},
@@ -40,7 +36,7 @@ func Test_colorizeLevel(t *testing.T) {
 	}
 }
 
-func TestSendMsg(t *testing.T) {
+func TestShowMessage(t *testing.T) {
 	type args struct {
 		level            string
 		text             string
