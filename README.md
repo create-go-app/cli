@@ -160,6 +160,14 @@ That's why we transferred all our experience to this project, which **we use our
 
 So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React ecosystem does) and **deploy an existing project** to a remote server in configured Docker containers.
 
+### Instruction for deploy the project
+
+We're strongly recommend to use Docker-ready (_pre-installed_) virtual servers for easily deploy your project. All modern cloud platforms provide such presets out of the box. For example, at [DigitalOcean](https://m.do.co/c/b41859fa9b6e) you can found that droplet preset here:
+
+![do screenshot](https://user-images.githubusercontent.com/11155743/116597514-5be11700-a92e-11eb-986c-dad3e44bd8de.png)
+
+Next, all you have to do is create a new server (or _droplet_), generate SSH key to authenticate your computer to this remote server and run the `cgapp deploy` command from the project root folder!
+
 ### How to reduce binary size of the CLI?
 
 ```console
@@ -168,7 +176,7 @@ CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp
 
 > 👋 By the way, if you install the CLI by Homebrew, you already have this optimization.
 
-### How to install older version?
+### How to install older CLI version?
 
 ```console
 go install github.com/create-go-app/cli/cmd/cgapp@v2.0.0
