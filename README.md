@@ -160,13 +160,13 @@ That's why we transferred all our experience to this project, which **we use our
 
 So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React ecosystem does) and **deploy an existing project** to a remote server in configured Docker containers.
 
-### Instruction for deploy the project
+### Instructions for deploy the project
 
 We're strongly recommend to use Docker-ready (_pre-installed_) virtual servers for easily deploy your project. All modern cloud platforms provide such presets out of the box. For example, at [DigitalOcean](https://m.do.co/c/b41859fa9b6e) you can found that droplet preset here:
 
 ![do screenshot](https://user-images.githubusercontent.com/11155743/116597514-5be11700-a92e-11eb-986c-dad3e44bd8de.png)
 
-Next, all you have to do is create a new server (or _droplet_), generate SSH key to authenticate your computer to this remote server and run the `cgapp deploy` command from the project root folder!
+Next, all you have to do is create a new server (or _droplet_), generate SSH key to authenticate your computer to this remote server, fill in Ansible inventory file (`hosts.ini`) with your credentials and run the `cgapp deploy` command from the project root folder!
 
 ### How to reduce binary size of the CLI?
 
@@ -191,7 +191,7 @@ Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.c
 If you want to say **thank you** or/and support active development of `Create Go App CLI`:
 
 - Add a [GitHub Star](https://github.com/create-go-app/cli) to the project.
-- Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=Create%20a%20new%20production-ready%20project%20with%20backend%20%28Golang%29%2C%20frontend%20%28JavaScript%2C%20TypeScript%29%20%26%20deploy%20automation%20%28Ansible%2C%20Docker%29%20by%20running%20one%20CLI%20command%21%20%F0%9F%9A%80%20https%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
+- Twit about project [on your Twitter](https://twitter.com/intent/tweet?text=%E2%9C%A8%20Create%20a%20new%20production-ready%20project%20with%20%23Golang%20backend%2C%20%23JavaScript%20or%20%23TypeScript%20frontend%2C%20%23Docker%20and%20%23Ansible%20deploy%20automation%20by%20running%20one%20command.%20%0A%0AFocus%20on%20writing%20code%20and%20thinking%20of%20business-logic%21%0AThe%20CLI%20will%20take%20care%20of%20the%20rest.%0A%0Ahttps%3A%2F%2Fgithub.com%2Fcreate-go-app%2Fcli).
 - Write interesting articles about project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or personal blog.
 - Join DigitalOcean at our [referral link](https://m.do.co/c/b41859fa9b6e) (your profit is **$100** and we get $25).
 
