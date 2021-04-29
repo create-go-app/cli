@@ -15,10 +15,10 @@ server {
   listen      443 ssl http2;
   listen      [::]:443 ssl http2;
 {% if nginx_redirect_to_non_www %}
-  server_name {{ project_domain }};
+  server_name www.{{ project_domain }};
   return 301 https://{{ project_domain }}$request_uri;
 {% else %}
-  server_name www.{{ project_domain }};
+  server_name {{ project_domain }};
   return 301 https://www.{{ project_domain }}$request_uri;
 {% endif %}
 }
@@ -30,7 +30,7 @@ server {
 {% if nginx_redirect_to_non_www %}
   server_name {{ project_domain }};
 {% else %}
-  server_name www.{{ project_domain }};
+  server_name {{ project_domain }} www.{{ project_domain }};
 {% endif %}
   ssl_dhparam             /etc/letsencrypt/ssl-dhparams.pem;
   ssl_certificate         /etc/letsencrypt/live/{{ project_domain }}/fullchain.pem;

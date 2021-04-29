@@ -19,7 +19,7 @@ server {
 {% if nginx_redirect_to_non_www %}
   server_name {{ project_domain }};
 {% else %}
-  server_name www.{{ project_domain }};
+  server_name {{ project_domain }} www.{{ project_domain }};
 {% endif %}
   location / {
     resolver                            127.0.0.11;

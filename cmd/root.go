@@ -15,7 +15,7 @@ import (
 var (
 	backend, frontend, proxy string                 // define project variables
 	inventory, playbook      map[string]interface{} // define template variables
-	options                  []string               // define options
+	options, proxyList       []string               // define options, proxy list
 	askBecomePass            bool                   // install Ansible roles, ask become pass
 	createAnswers            registry.CreateAnswers // define answers variable for `create` command
 

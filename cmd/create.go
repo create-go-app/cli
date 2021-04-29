@@ -132,6 +132,14 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			log.Fatal(cgapp.ShowError(err.Error()))
 		}
 
+		// Delete unused proxy roles.
+		if proxy == "traefik" {
+			proxyList = []string{"nginx"}
+		} else if proxy == "nginx" {
+			proxyList = []string{"traefik"}
+		}
+		cgapp.RemoveFolders("roles", proxyList)
+
 		// Success message.
 		cgapp.ShowMessage(
 			"success",
