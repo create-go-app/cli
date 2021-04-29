@@ -151,6 +151,17 @@ func TestCopyFromEmbeddedFS(t *testing.T) {
 			false,
 		},
 		{
+			"successfully copy from embedded fs with skip dirs",
+			args{
+				efs: &EmbeddedFileSystem{
+					Name:       registry.EmbedTemplates,
+					RootFolder: "templates",
+					SkipDir:    true,
+				},
+			},
+			false,
+		},
+		{
 			"fail to copy from embedded fs",
 			args{
 				efs: &EmbeddedFileSystem{
@@ -158,6 +169,13 @@ func TestCopyFromEmbeddedFS(t *testing.T) {
 					RootFolder: "does-not-exist",
 					SkipDir:    false,
 				},
+			},
+			true,
+		},
+		{
+			"fail (no args)",
+			args{
+				efs: &EmbeddedFileSystem{},
 			},
 			true,
 		},
@@ -170,7 +188,9 @@ func TestCopyFromEmbeddedFS(t *testing.T) {
 		})
 
 		// Clean
-		os.RemoveAll(tt.args.efs.RootFolder)
+		_ = os.Remove("hosts.ini.tmpl")
+		_ = os.Remove("playbook.yml.tmpl")
+		_ = os.RemoveAll(tt.args.efs.RootFolder)
 	}
 }
 
@@ -184,25 +204,32 @@ func TestGenerateFileFromTemplate(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		// {
-		// 	"successfully generate file",
-		// 	args{
-		// 		fileName:  "",
-		// 		variables: map[string]interface{}{},
-		// 	},
-		// 	false,
-		// },
+		{
+			"successfully generate file",
+			args{
+				fileName:  "../../tmp/test.txt",
+				variables: map[string]interface{}{},
+			},
+			false,
+		},
 		{
 			"failed to generate file",
 			args{},
 			true,
 		},
 	}
+
+	_ = os.Mkdir("../../tmp", 0750)
+	_, _ = os.Create("../../tmp/test.txt")
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := GenerateFileFromTemplate(tt.args.fileName, tt.args.variables); (err != nil) != tt.wantErr {
 				t.Errorf("GenerateFileFromTemplate() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
+
+		// Clean
+		_ = os.RemoveAll("../../tmp")
 	}
 }

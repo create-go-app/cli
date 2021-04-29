@@ -32,6 +32,14 @@ func TestGitClone(t *testing.T) {
 			true,
 		},
 		{
+			"failed clone project",
+			args{
+				rootFolder:   "../../tmp/test",
+				templateName: "404.404/404/404",
+			},
+			true,
+		},
+		{
 			"failed clone project (empty args)",
 			args{},
 			true,

@@ -18,6 +18,15 @@ func TestExecCommand(t *testing.T) {
 			args{
 				command:    "echo",
 				options:    []string{"ping"},
+				silentMode: false,
+			},
+			false,
+		},
+		{
+			"successfully executing command with silent mode",
+			args{
+				command:    "echo",
+				options:    []string{"ping"},
 				silentMode: true,
 			},
 			false,

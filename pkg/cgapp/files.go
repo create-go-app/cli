@@ -68,7 +68,7 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 	return nil
 }
 
-// GenerateFileFromTemplate ...
+// GenerateFileFromTemplate func to generate files from templates.
 func GenerateFileFromTemplate(fileName string, variables map[string]interface{}) error {
 	// Parse template.
 	tmpl, errParseFiles := template.ParseFiles(fileName)
