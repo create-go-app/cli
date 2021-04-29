@@ -33,9 +33,9 @@
     source: build
 
 #
-# Run backend container.
+# Run backend container (for Traefik Proxy).
 #
-- name: Run Docker container with backend
+- name: Run Docker container with backend (for Traefik Proxy)
   docker_container:
     name: cgapp-backend # name of the backend container
     image: cgapp_backend:latest
@@ -49,3 +49,19 @@
       traefik.enable: "true"
       traefik.http.routers.backend.rule: "Host(`{{ project_domain }}`)"
       traefik.http.routers.backend.entrypoints: "websecure"
+  when: traefik_version is defined
+
+#
+# Run backend container (for Nginx).
+#
+- name: Run Docker container with backend (for Nginx)
+  docker_container:
+    name: cgapp-backend # name of the backend container
+    image: cgapp_backend:latest
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "{{ backend_port }}:{{ backend_port }}"
+  when: nginx_version is defined

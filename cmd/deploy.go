@@ -45,7 +45,11 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	}
 
 	// Create config files for your project.
-	cgapp.ShowMessage("info", "Run Ansible playbook for deploy your project", false, false)
+	cgapp.ShowMessage(
+		"info",
+		"Ansible playbook for deploy your project is running. Please wait for completion!",
+		false, false,
+	)
 
 	// Run execution for Ansible playbook.
 	if err := cgapp.ExecCommand("ansible-playbook", options, false); err != nil {
@@ -59,7 +63,7 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 	cgapp.ShowMessage(
 		"info",
 		fmt.Sprintf("Completed in %v seconds!", stopTimer),
-		true, true,
+		false, true,
 	)
 	cgapp.ShowMessage(
 		"",

@@ -16,4 +16,5 @@ tmp/
 **/node_modules/
 
 # Files
+hosts.ini
 *.out

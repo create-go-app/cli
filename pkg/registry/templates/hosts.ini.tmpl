@@ -17,7 +17,7 @@ ansible_become=yes
 # Set connection type to remote server (usually, 'ssh')
 ansible_connection=ssh
 # Set Python 3 default path
-ansible_python_interpreter_path=/usr/bin/python3
+ansible_python_interpreter=/usr/bin/python3
 # Set Docker network name
 docker_network=cgapp_network
 # Set your project domain
@@ -75,3 +75,11 @@ nginx_use_only_https=yes
 # Set redirect from WWW to non-WWW domain for default server
 nginx_redirect_to_non_www=yes
 {{ end }}
+#
+# Backend configuration:
+#
+
+# Set backend port number,
+# MUST BE MATCH to the port that is listed
+# in your `./backend/main.go` file!
+backend_port=5000
