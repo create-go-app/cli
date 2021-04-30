@@ -121,20 +121,20 @@ cgapp deploy [OPTION]
   - `vanilla` — generated template with pure JavaScript app.
   - `vanilla-ts` — generated template with pure TypeScript app.
 - Frontend template with [React](https://reactjs.org/):
-  - `react` — generated template with React app.
-  - `react-ts` — generated template with TypeScript for React app.
+  - `react` — generated template with a common React app.
+  - `react-ts` — generated template with a TypeScript version of the React app.
 - Frontend template with [Preact](https://preactjs.com/):
-  - `preact` — generated template with Preact app.
-  - `preact-ts` — generated template with TypeScript for Preact app.
+  - `preact` — generated template with a common Preact app.
+  - `preact-ts` — generated template with a TypeScript version of the Preact app.
 - Frontend template with [Vue.js](https://vuejs.org/):
-  - `vue` — generated template with Vue.js app.
-  - `vue-ts` — generated template with TypeScript for Vue.js app.
+  - `vue` — generated template with a common Vue.js app.
+  - `vue-ts` — generated template with a TypeScript version of the Vue.js app.
 - Frontend template with [Svelte](https://svelte.dev/):
-  - `svelte` — generated template with Svelte app.
-  - `svelte-ts` — generated template with TypeScript for Svelte app.
+  - `svelte` — generated template with a common Svelte app.
+  - `svelte-ts` — generated template with a TypeScript version of the Svelte app.
 - Frontend template with [Lit](https://lit.dev/) web components:
-  - `lit-element` — generated template with Lit app.
-  - `lit-element-ts` — generated template with TypeScript for Lit app.
+  - `lit-element` — generated template with a common Lit app.
+  - `lit-element-ts` — generated template a TypeScript version of the Lit app.
 
 > ☝️ Frontend part will be generate using awesome tool [Vite.js](https://vitejs.dev/) under the hood. So, you'll always get the latest version of `React`, `Preact`, `Vue`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates for your project!
 
