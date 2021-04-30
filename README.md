@@ -202,7 +202,7 @@ CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp
 
 ### How to install older CLI version?
 
-Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page, choose any version you want and run this command (_where `X.X.X` it's a needed version of the Create Go App CLI package_):
+Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page, choose any version you want and run this command, where `X.X.X` it's a needed version of the Create Go App CLI package:
 
 ```console
 go install github.com/create-go-app/cli/cmd/cgapp@vX.X.X
