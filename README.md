@@ -93,7 +93,7 @@ cgapp create
 
 CLI command for deploy Docker containers with your project via Ansible to the remote server.
 
-> 🔔 Make sure that you have [Python 3.9+](https://www.python.org/downloads/) and [Ansible 2.10+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer.
+> 🔔 Make sure that you have [Python 3.8+](https://www.python.org/downloads/) and [Ansible 2.9+](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems) installed on your computer.
 
 ```bash
 cgapp deploy [OPTION]
