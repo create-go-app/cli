@@ -168,6 +168,23 @@ We're strongly recommend to use Docker-ready (_pre-installed_) virtual servers f
 
 Next, all you have to do is create a new server (or _droplet_), generate SSH key to authenticate your computer to this remote server, fill in Ansible inventory file (`hosts.ini`) with your credentials and run the `cgapp deploy` command from the project root folder!
 
+### Use custom Ansible roles
+
+If you want or need to use your own roles, you can do it quite easily. Just stick to the single structure of your role described in the [Ansible User Guide](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html) and do just two things:
+
+1. Place the role in the `./roles` folder at the root of the project;
+2. Edit the `./playbook.yml` file, like this:
+
+```yaml
+# ...
+
+roles:
+  -  # ...other roles...
+  - { role: my_role, tags: [my_role, another_tag] }
+```
+
+Note especially the order in which the roles are specified! Ansible will execute them by default in a strictly specified order (from top to bottom).
+
 ### How to reduce binary size of the CLI?
 
 ```console
