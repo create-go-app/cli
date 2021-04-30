@@ -117,22 +117,22 @@ cgapp deploy [OPTION]
 
 ### Frontend
 
-- Pure JavaScript:
+- Pure JavaScript frontend template:
   - `vanilla` — generated template with pure JavaScript app.
   - `vanilla-ts` — generated template with pure TypeScript app.
-- [React](https://reactjs.org/):
+- Frontend template with [React](https://reactjs.org/):
   - `react` — generated template with React app.
   - `react-ts` — generated template with TypeScript for React app.
-- [Preact](https://preactjs.com/):
+- Frontend template with [Preact](https://preactjs.com/):
   - `preact` — generated template with Preact app.
   - `preact-ts` — generated template with TypeScript for Preact app.
-- [Vue.js](https://vuejs.org/):
+- Frontend template with [Vue.js](https://vuejs.org/):
   - `vue` — generated template with Vue.js app.
   - `vue-ts` — generated template with TypeScript for Vue.js app.
-- [Svelte](https://svelte.dev/):
+- Frontend template with [Svelte](https://svelte.dev/):
   - `svelte` — generated template with Svelte app.
   - `svelte-ts` — generated template with TypeScript for Svelte app.
-- [Lit](https://lit.dev/) web components:
+- Frontend template with [Lit](https://lit.dev/) web components:
   - `lit-element` — generated template with Lit app.
   - `lit-element-ts` — generated template with TypeScript for Lit app.
 
@@ -148,7 +148,7 @@ cgapp deploy [OPTION]
 - Roles for run Docker container with [Nginx](https://nginx.org):
   - `nginx` — pure Nginx container with "the best practice" configuration.
 
-> ✌️ Since Create Go App CLI `v2.0.0`, we're strongly recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
+> ✌️ Since Create Go App CLI `v2.0.0`, we're recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
 
 ## 📚 FAQ
 
@@ -192,6 +192,8 @@ If you want or need to use your own roles, you can do it quite easily. Just foll
 
 ### How to reduce binary size of the CLI?
 
+Sometimes even a few extra megabytes can give you a problem. With this command you can reduce the size of the binary file without losing CLI functionality:
+
 ```console
 CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
 ```
@@ -200,11 +202,11 @@ CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp
 
 ### How to install older CLI version?
 
-```console
-go install github.com/create-go-app/cli/cmd/cgapp@v2.0.0
-```
+Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page and run this command (_where `X.X.X` it's needed version of the package_):
 
-Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page.
+```console
+go install github.com/create-go-app/cli/cmd/cgapp@vX.X.X
+```
 
 > 🔔 Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
 
