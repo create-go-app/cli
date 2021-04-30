@@ -48,7 +48,7 @@ If you don't want to install Create Go App CLI to your system, you feel free to 
 docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest [COMMAND]
 ```
 
-> 🔔 Please note: the [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy) command is currently **unavailable** in this image.
+> 🔔 Please note: the `deploy` command is currently **unavailable** in this image.
 
 ## 📺 Video screencast
 
