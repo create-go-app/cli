@@ -170,20 +170,25 @@ Next, all you have to do is create a new server (or _droplet_), generate SSH key
 
 ### Use custom Ansible roles
 
-If you want or need to use your own roles, you can do it quite easily. Just stick to the single structure of your role described in the [Ansible User Guide](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html) and do just two things:
+If you want or need to use your own roles, you can do it quite easily. Just follow the consistent structure of your role as described in the [Ansible User Guide](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html), and make sure you do only three things:
 
-1. Place the role in the `./roles` folder at the root of the project;
+1. Place the role in the `./roles` folder at the root of the project.
 2. Edit the `./playbook.yml` file, like this:
 
 ```yaml
 # ...
+- name: Deploy the Create Go App project
+  hosts: cgapp_project
 
-roles:
-  -  # ...other roles...
-  - { role: my_role, tags: [my_role, another_tag] }
+  # ...
+  roles:
+    -  # ...other roles...
+    - { role: my_role, tags: [my_role, another_tag] }
 ```
 
-Note especially the order in which the roles are specified! Ansible will execute them by default in a strictly specified order (from top to bottom).
+3. Next, start the deployment process as usual with the `cgapp deploy` command.
+
+> 🔔 Note especially the order in which the roles are specified! Ansible will execute them by default in a strictly specified order (_from top to bottom_).
 
 ### How to reduce binary size of the CLI?
 
