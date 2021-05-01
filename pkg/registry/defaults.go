@@ -10,10 +10,8 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 )
 
-const (
-	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "2.0.0"
-)
+// CLIVersion version of Create Go App CLI.
+const CLIVersion string = "2.0.0"
 
 // Variables struct for Ansible variables (inventory, hosts).
 type Variables struct {
@@ -83,7 +81,7 @@ var (
 		{
 			Name: "proxy",
 			Prompt: &survey.Select{
-				Message: "Choose a proxy server:",
+				Message: "Choose a web/proxy server:",
 				Options: []string{
 					"none",
 					"traefik",

@@ -6,7 +6,6 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/create-go-app/cli/pkg/cgapp"
@@ -20,11 +19,11 @@ var deployCmd = &cobra.Command{
 	Aliases: []string{"push"},
 	Short:   "Deploy your project to the remote server via Ansible",
 	Long:    "\nDeploy your project to the remote server by Ansible playbooks and roles.",
-	Run:     runDeployCmd,
+	RunE:    runDeployCmd,
 }
 
 // runDeployCmd represents runner for the `deploy` command.
-var runDeployCmd = func(cmd *cobra.Command, args []string) {
+func runDeployCmd(cmd *cobra.Command, args []string) error {
 	// Start message.
 	cgapp.ShowMessage(
 		"",
@@ -53,23 +52,25 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 
 	// Run execution for Ansible playbook.
 	if err := cgapp.ExecCommand("ansible-playbook", options, false); err != nil {
-		log.Fatal(err.Error())
+		return cgapp.ShowError(err.Error())
 	}
 
 	// Stop timer.
-	stopTimer := fmt.Sprintf("%.0f", time.Since(startTimer).Seconds())
-
-	// End messages.
+	stopTimer := cgapp.CalculateDurationTime(startTimer)
 	cgapp.ShowMessage(
 		"info",
 		fmt.Sprintf("Completed in %v seconds!", stopTimer),
 		false, true,
 	)
+
+	// Ending message.
 	cgapp.ShowMessage(
 		"",
 		"Have a great project launch! :)",
 		false, true,
 	)
+
+	return nil
 }
 
 func init() {

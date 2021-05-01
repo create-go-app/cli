@@ -4,7 +4,10 @@
 
 package cgapp
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // ShowMessage function for send message to output.
 func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
@@ -25,6 +28,11 @@ func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 // ShowError function for send error message to output.
 func ShowError(text string) error {
 	return fmt.Errorf(colorizeLevel("error") + text)
+}
+
+// CalculateDurationTime func to calculate duration time.
+func CalculateDurationTime(startTimer time.Time) string {
+	return fmt.Sprintf("%.0f", time.Since(startTimer).Seconds())
 }
 
 // colorizeLevel function for send (colored or common) message to output.

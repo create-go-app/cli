@@ -2,6 +2,7 @@ package cgapp
 
 import (
 	"testing"
+	"time"
 )
 
 func Test_colorizeLevel(t *testing.T) {
@@ -59,6 +60,32 @@ func TestShowMessage(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			ShowMessage(tt.args.level, tt.args.text, tt.args.startWithNewLine, tt.args.endWithNewLine)
+		})
+	}
+}
+
+func TestCalculateDurationTime(t *testing.T) {
+	type args struct {
+		startTimer time.Time
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"successfully",
+			args{
+				startTimer: time.Now(),
+			},
+			"0",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := CalculateDurationTime(tt.args.startTimer); got != tt.want {
+				t.Errorf("CalculateDurationTime() = %v, want %v", got, tt.want)
+			}
 		})
 	}
 }

@@ -5,8 +5,6 @@
 package cmd
 
 import (
-	"log"
-
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/spf13/cobra"
@@ -52,7 +50,5 @@ A helpful documentation and next steps -> https://create-go.app/`,
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		log.Fatal(err.Error())
-	}
+	_ = rootCmd.Execute()
 }

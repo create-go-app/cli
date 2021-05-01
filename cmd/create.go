@@ -6,7 +6,6 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
@@ -22,11 +21,11 @@ var createCmd = &cobra.Command{
 	Aliases: []string{"new"},
 	Short:   "Create a new project via interactive UI",
 	Long:    "\nCreate a new project via interactive UI.",
-	Run:     runCreateCmd,
+	RunE:    runCreateCmd,
 }
 
 // runCreateCmd represents runner for the `create` command.
-var runCreateCmd = func(cmd *cobra.Command, args []string) {
+func runCreateCmd(cmd *cobra.Command, args []string) error {
 	// Start message.
 	cgapp.ShowMessage(
 		"",
@@ -38,20 +37,13 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	if err := survey.Ask(
 		registry.CreateQuestions, &createAnswers, survey.WithIcons(surveyIconsConfig),
 	); err != nil {
-		log.Fatal(cgapp.ShowError(err.Error()))
+		return cgapp.ShowError(err.Error())
 	}
 
 	// Define variables for better display.
 	backend = strings.Replace(createAnswers.Backend, "/", "_", -1)
 	frontend = createAnswers.Frontend
 	proxy = createAnswers.Proxy
-
-	// If something went wrong, cancel and exit.
-	if !createAnswers.AgreeCreation {
-		log.Fatal(
-			cgapp.ShowError("Creation of a new project was stopped. Run `cgapp create` again!"),
-		)
-	}
 
 	// Start timer.
 	startTimer := time.Now()
@@ -65,7 +57,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		"backend",
 		fmt.Sprintf("github.com/create-go-app/%v-go-template", backend),
 	); err != nil {
-		log.Fatal(cgapp.ShowError(err.Error()))
+		return cgapp.ShowError(err.Error())
 	}
 
 	// Cleanup project.
@@ -89,7 +81,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			[]string{"init", "@vitejs/app", "frontend", "--", "--template", frontend},
 			true,
 		); err != nil {
-			log.Fatal(cgapp.ShowError(err.Error()))
+			return cgapp.ShowError(err.Error())
 		}
 
 		// Cleanup project.
@@ -116,7 +108,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 				SkipDir:    false,
 			},
 		); err != nil {
-			log.Fatal(cgapp.ShowError(err.Error()))
+			return cgapp.ShowError(err.Error())
 		}
 
 		// Copy Ansible playbook, inventory and roles from embedded file system.
@@ -127,7 +119,7 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 				SkipDir:    true,
 			},
 		); err != nil {
-			log.Fatal(cgapp.ShowError(err.Error()))
+			return cgapp.ShowError(err.Error())
 		}
 
 		// Set template variables for Ansible playbook and inventory files.
@@ -136,12 +128,12 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 
 		// Generate Ansible inventory file.
 		if err := cgapp.GenerateFileFromTemplate("hosts.ini.tmpl", inventory); err != nil {
-			log.Fatal(cgapp.ShowError(err.Error()))
+			return cgapp.ShowError(err.Error())
 		}
 
 		// Generate Ansible playbook file.
 		if err := cgapp.GenerateFileFromTemplate("playbook.yml.tmpl", playbook); err != nil {
-			log.Fatal(cgapp.ShowError(err.Error()))
+			return cgapp.ShowError(err.Error())
 		}
 
 		// Set unused proxy roles.
@@ -184,11 +176,11 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			SkipDir:    true,
 		},
 	); err != nil {
-		log.Fatal(cgapp.ShowError(err.Error()))
+		return cgapp.ShowError(err.Error())
 	}
 
 	// Stop timer.
-	stopTimer := fmt.Sprintf("%.0f", time.Since(startTimer).Seconds())
+	stopTimer := cgapp.CalculateDurationTime(startTimer)
 	cgapp.ShowMessage(
 		"info",
 		fmt.Sprintf("Completed in %v seconds!", stopTimer),
@@ -220,6 +212,8 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		"Have a happy new project! :)",
 		false, true,
 	)
+
+	return nil
 }
 
 func init() {
