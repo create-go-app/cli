@@ -206,13 +206,13 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 	if frontend != "none" {
 		cgapp.ShowMessage(
 			"",
-			fmt.Sprintf("* Visit https://vitejs.dev/guide/ for more information about using the `%v` frontend template!", frontend),
+			fmt.Sprintf("* Visit https://vitejs.dev/guide/ for more info about using the `%v` frontend template!", frontend),
 			false, false,
 		)
 	}
 	cgapp.ShowMessage(
 		"",
-		"* A helpful documentation and next steps -> https://create-go.app/",
+		"* A helpful documentation and next steps with your project is here https://create-go.app/",
 		false, true,
 	)
 	cgapp.ShowMessage(
