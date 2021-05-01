@@ -55,7 +55,7 @@ docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest [COMMAND]
 A short video screencast to introduce main features of the Create Go App CLI.
 
 <a align="center" href="https://youtu.be/5-DNZFU9TOQ" target="_blank">
-  <img src="https://create-go.app/assets/images/youtube-preview.jpg" alt="youtube preview"/><br/>
+  <img src="https://user-images.githubusercontent.com/11155743/116786267-56a6d800-aaa6-11eb-996b-87980422435d.jpg" alt="youtube preview"/><br/>
   🔗 https://youtu.be/5-DNZFU9TOQ
 </a>
 
@@ -86,7 +86,7 @@ CLI command for create a new project with the interactive console UI.
 cgapp create
 ```
 
-- 📺 Preview: https://recordit.co/LTxFQloedn
+- 📺 Preview: https://recordit.co/OQAwkZBrjN
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
 
 ### `deploy`
@@ -103,7 +103,7 @@ cgapp deploy [OPTION]
 | ------ | ------------------------------------------------------------------------------------------------------ | --------- | ------- | --------- |
 | `-K`   | Prompt you to provide the remote user sudo password (_a standard Ansible `--ask-become-pass` option_). | `boolean` | `false` | No        |
 
-- 📺 Preview: https://recordit.co/ewjG9dgMPX
+- 📺 Preview: https://recordit.co/ishTf0Au1x
 - 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
 
 ## 📝 Production-ready project templates
