@@ -61,7 +61,7 @@ A short video screencast to introduce main features of the Create Go App CLI.
 
 ## 📖 Official Documentation
 
-The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Wiki](https://github.com/create-go-app/cli/wiki) and take part in [Discussions](https://github.com/create-go-app/cli/discussions) and/or [Issues](https://github.com/create-go-app/cli/issues).
+The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Wiki](https://github.com/create-go-app/cli/wiki) and take part in [Discussions](https://github.com/create-go-app/cli/discussions) and/or [Issues](https://github.com/create-go-app/cli/issues). Yes, the most frequently asked questions (_FAQ_) are also [here](https://github.com/create-go-app/cli/wiki/FAQ).
 
 ## ⚙️ Commands & Options
 
@@ -136,66 +136,6 @@ cgapp deploy [OPTION]
   - `nginx` — pure Nginx container with "the best practice" configuration.
 
 > ✌️ Since Create Go App CLI `v2.0.0`, we're recommend to use **Traefik Proxy** as default proxy server for your projects. The main reason: this proxy provides _automatic_ SSL certificates from Let's Encrypt out of the box. Also, Traefik was built on the Docker ecosystem and has a _really good looking_ and _useful_ Web UI.
-
-## 📚 FAQ
-
-### Why another CLI?
-
-When we started this project, we asked ourselves this question too and... came to the conclusion, that approximately 8 out of 10 routine operations at the start of a new project **can be automated**. And it would be better to have all the necessary functions inside one CLI.
-
-That's why we transferred all our experience to this project, which **we use ourselves**!
-
-So, yes, this CLI gives you the ability to prepare everything you need to **start a new project** (as `create-react-app` for the React ecosystem does) and **deploy an existing project** to a remote server in configured Docker containers.
-
-### Instructions for deploy the project
-
-We're strongly recommend to use Docker-ready (_pre-installed_) virtual servers for easily deploy your project. All modern cloud platforms provide such presets out of the box. For example, at [DigitalOcean](https://m.do.co/c/b41859fa9b6e) you can found that droplet preset here:
-
-![do screenshot](https://user-images.githubusercontent.com/11155743/116597514-5be11700-a92e-11eb-986c-dad3e44bd8de.png)
-
-Next, all you have to do is create a new server (or _droplet_), generate SSH key to authenticate your computer to this remote server, fill in Ansible inventory file (`hosts.ini`) with your credentials and run the `cgapp deploy` command from the project root folder!
-
-### Use custom Ansible roles
-
-If you want or need to use your own roles, you can do it quite easily. Just follow the consistent structure of your role as described in the [Ansible User Guide](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html), and make sure you do only three things:
-
-1. Place the role in the `./roles` folder at the root of the project.
-2. Edit the `./playbook.yml` file, like this:
-
-```yaml
-# ...
-- name: Deploy the Create Go App project
-  hosts: cgapp_project
-
-  # ...
-  roles:
-    # ...other roles...
-    - { role: my_role, tags: [my_role, another_tag] }
-```
-
-3. Next, start the deployment process as usual with the `cgapp deploy` command.
-
-> 🔔 Note especially the order in which the roles are specified! Ansible will execute them by default in a strictly specified order (_from top to bottom_).
-
-### How to reduce binary size of the CLI?
-
-Sometimes even a few extra megabytes can give you a problem. With this command you can reduce the size of the binary file without losing CLI functionality:
-
-```console
-CGO_ENABLED=0 go install -ldflags="-s -w" github.com/create-go-app/cli/cmd/cgapp@latest
-```
-
-> 👋 By the way, if you install the CLI by Homebrew, you already have this optimization.
-
-### How to install older CLI version?
-
-Found all available CLI versions on our [pkg.go.dev](https://pkg.go.dev/github.com/create-go-app/cli?tab=versions) page, choose any version you want and run this command, where `X.X.X` it's a needed version of the Create Go App CLI package:
-
-```console
-go install github.com/create-go-app/cli/cmd/cgapp@vX.X.X
-```
-
-> 🔔 Don't forget to rename binary after installation, according to the version you have installed! This must be done to avoid confusion with the latest version.
 
 ## ⭐️ Project assistance
 
