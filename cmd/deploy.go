@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/create-go-app/cli/pkg/cgapp"
-	"github.com/create-go-app/cli/pkg/registry"
+	"github.com/create-go-app/cli/v2/pkg/cgapp"
+	"github.com/create-go-app/cli/v2/pkg/registry"
 	"github.com/spf13/cobra"
 )
 
