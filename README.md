@@ -50,9 +50,9 @@ docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest [COMMAND]
 
 > 🔔 Please note: the `deploy` command is currently **unavailable** in this image.
 
-## 📖 Official Documentation
+## 📖 Project Wiki
 
-The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Wiki](https://github.com/create-go-app/cli/wiki) and take part in [Discussions](https://github.com/create-go-app/cli/discussions) and/or [Issues](https://github.com/create-go-app/cli/issues). Yes, the most frequently asked questions (_FAQ_) are also [here](https://github.com/create-go-app/cli/wiki/FAQ).
+The best way to better explore all the features of the **Create Go App CLI** is to read the project [Wiki](https://github.com/create-go-app/cli/wiki) and take part in [Discussions](https://github.com/create-go-app/cli/discussions) and/or [Issues](https://github.com/create-go-app/cli/issues). Yes, the most frequently asked questions (_FAQ_) are also [here](https://github.com/create-go-app/cli/wiki/FAQ).
 
 ## ⚙️ Commands & Options
 
@@ -66,7 +66,7 @@ cgapp create
 
 ![cgapp_create](https://user-images.githubusercontent.com/11155743/116796937-38160080-aae9-11eb-8e21-fb1be2750aa4.gif)
 
-- 📺 Full video preview: https://recordit.co/OQAwkZBrjN
+- 📺 Full demo video: https://recordit.co/OQAwkZBrjN
 - 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-create
 
 ### `deploy`
@@ -79,13 +79,13 @@ CLI command for deploy Docker containers with your project via Ansible to the re
 cgapp deploy [OPTION]
 ```
 
-![cgapp_deploy](https://user-images.githubusercontent.com/11155743/116796941-3c421e00-aae9-11eb-9575-d72550814d7a.gif)
-
 | Option | Description                                                                                            | Type      | Default | Required? |
 | ------ | ------------------------------------------------------------------------------------------------------ | --------- | ------- | --------- |
 | `-K`   | Prompt you to provide the remote user sudo password (_a standard Ansible `--ask-become-pass` option_). | `boolean` | `false` | No        |
 
-- 📺 Full video preview: https://recordit.co/ishTf0Au1x
+![cgapp_deploy](https://user-images.githubusercontent.com/11155743/116796941-3c421e00-aae9-11eb-9575-d72550814d7a.gif)
+
+- 📺 Full demo video: https://recordit.co/ishTf0Au1x
 - 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-deploy
 
 ## 📝 Production-ready project templates
