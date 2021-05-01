@@ -8,6 +8,7 @@ before:
 
 builds:
   - # Build macOS, Linux and Windows versions
+    main: ./cmd/cgapp/main.go
     goos:
       - linux
       - darwin
