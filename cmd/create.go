@@ -84,9 +84,6 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 			return cgapp.ShowError(err.Error())
 		}
 
-		// Cleanup project.
-		cgapp.RemoveFolders("frontend", []string{".git", ".github"})
-
 		// Show success report.
 		cgapp.ShowMessage(
 			"success",
@@ -141,11 +138,6 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 			proxyList = []string{"nginx"}
 		} else if proxy == "nginx" {
 			proxyList = []string{"traefik"}
-		}
-
-		// Set unused proxy role.
-		if frontend == "none" {
-			proxyList = append(proxyList, "frontend")
 		}
 
 		// Delete unused proxy and/or frontend roles.

@@ -1,7 +1,7 @@
 # Please DO NOT use it for build a normal Docker image for Create Go App CLI!
 # This Dockerfile used ONLY with GoReleaser project (`task release [TAG...]`).
 
-FROM alpine:3.12
+FROM alpine:edge
 
 LABEL maintainer="Vic Shóstak <vic@shostak.dev>"
 
