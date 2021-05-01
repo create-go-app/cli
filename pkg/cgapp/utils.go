@@ -33,7 +33,7 @@ func colorizeLevel(level string) string {
 	var (
 		red         string = "\033[0;31m"
 		green       string = "\033[0;32m"
-		cyan        string = "\033[0;36m"
+		yellow      string = "\033[1;33m"
 		noColor     string = "\033[0m"
 		color, icon string
 	)
@@ -47,7 +47,7 @@ func colorizeLevel(level string) string {
 		color = red
 		icon = "[ERROR] "
 	case "info":
-		color = cyan
+		color = yellow
 		icon = "[INFO] "
 	default:
 		color = noColor
