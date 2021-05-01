@@ -55,26 +55,13 @@ docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest [COMMAND]
 A short video screencast to introduce main features of the Create Go App CLI.
 
 <a align="center" href="https://youtu.be/5-DNZFU9TOQ" target="_blank">
-  <img src="https://user-images.githubusercontent.com/11155743/116786267-56a6d800-aaa6-11eb-996b-87980422435d.jpg" alt="youtube preview"/><br/>
+  <img src="https://user-images.githubusercontent.com/11155743/116787503-0d0dbb80-aaad-11eb-9ef1-dce2df6f606c.jpg" alt="youtube preview"/><br/>
   🔗 https://youtu.be/5-DNZFU9TOQ
 </a>
 
 ## 📖 Official Documentation
 
-The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Documentation](https://create-go.app/) and take part in [Discussions](https://github.com/create-go-app/cli/discussions). We've put together a subject index specifically for you, so you can find any answer you want in seconds!
-
-- [Detailed guides](https://create-go.app/detailed-guides/)
-  - [CLI Installation](https://create-go.app/detailed-guides/installation/)
-    - [Alternative installations](https://create-go.app/detailed-guides/installation/#alternative-installations)
-  - [Understanding CLI commands and options](https://create-go.app/detailed-guides/commands-and-options/)
-    - [`create`](https://create-go.app/detailed-guides/commands-and-options/#create)
-    - [`deploy`](https://create-go.app/detailed-guides/commands-and-options/#deploy)
-  - [Working with the official Docker image](https://create-go.app/detailed-guides/official-docker-image/)
-  - [Run project on your local machine](https://create-go.app/detailed-guides/run-on-local/)
-  - [Deploy project to a production server](https://create-go.app/detailed-guides/deploy-to-server/)
-- [Automation of the deploy process](https://create-go.app/automation/)
-- [How do I ask the right question?](https://create-go.app/ask-question/#how-do-i-ask-the-right-question)
-- [Official logo](https://create-go.app/logo/)
+The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Wiki](https://github.com/create-go-app/cli/wiki) and take part in [Discussions](https://github.com/create-go-app/cli/discussions). We've put together a subject index specifically for you, so you can find any answer you want in seconds!
 
 ## ⚙️ Commands & Options
 
