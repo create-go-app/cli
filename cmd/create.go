@@ -5,7 +5,7 @@
 package cmd
 
 import (
-	"os"
+	"fmt"
 	"strings"
 	"time"
 
@@ -19,161 +19,195 @@ import (
 var createCmd = &cobra.Command{
 	Use:     "create",
 	Aliases: []string{"new"},
-	Short:   "Create a new project via interactive UI or configuration file",
-	Long:    "\nCreate a new project via interactive UI or configuration file.",
-	Run:     runCreateCmd,
+	Short:   "Create a new project via interactive UI",
+	Long:    "\nCreate a new project via interactive UI.",
+	RunE:    runCreateCmd,
 }
 
 // runCreateCmd represents runner for the `create` command.
-var runCreateCmd = func(cmd *cobra.Command, args []string) {
+func runCreateCmd(cmd *cobra.Command, args []string) error {
 	// Start message.
-	cgapp.SendMsg(true, "* * *", "Create a new project via Create Go App CLI v"+registry.CLIVersion+"...", "yellow", true)
+	cgapp.ShowMessage(
+		"",
+		fmt.Sprintf("Create a new project via Create Go App CLI v%v...", registry.CLIVersion),
+		true, true,
+	)
 
-	// If config is set and correct, skip survey and use it.
-	if useConfigFile && projectConfig != nil {
-		// Re-define variables from config file (default is $PWD/.cgapp.yml).
-		backend = strings.ToLower(projectConfig["backend"].(string))
-		frontend = strings.ToLower(projectConfig["frontend"].(string))
-		webserver = strings.ToLower(projectConfig["webserver"].(string))
-
-		// Check, if config file contains `roles` section
-		if rolesConfig != nil {
-			installAnsibleRoles = true
-		}
-	} else {
-		// Start survey.
-		if err := survey.Ask(
-			registry.CreateQuestions, &createAnswers, survey.WithIcons(surveyIconsConfig),
-		); err != nil {
-			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
-
-		// If something went wrong, cancel and exit.
-		if !createAnswers.AgreeCreation {
-			cgapp.SendMsg(true, "[!]", "You're stopped creation of a new project.", "red", false)
-			cgapp.SendMsg(false, "[!]", "Run `cgapp create` once again!", "red", true)
-			os.Exit(1)
-		}
-
-		// Insert empty line.
-		cgapp.SendMsg(false, "", "", "", false)
-
-		// Define variables for better display.
-		backend = strings.ToLower(createAnswers.Backend)
-		frontend = strings.ToLower(createAnswers.Frontend)
-		webserver = strings.ToLower(createAnswers.Webserver)
-		installAnsibleRoles = createAnswers.InstallAnsibleRoles
+	// Start survey.
+	if err := survey.Ask(
+		registry.CreateQuestions, &createAnswers, survey.WithIcons(surveyIconsConfig),
+	); err != nil {
+		return cgapp.ShowError(err.Error())
 	}
+
+	// Define variables for better display.
+	backend = strings.Replace(createAnswers.Backend, "/", "_", -1)
+	frontend = createAnswers.Frontend
+	proxy = createAnswers.Proxy
 
 	// Start timer.
 	startTimer := time.Now()
 
-	// Get current directory.
-	currentDir, err := os.Getwd()
-	if err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
-	}
+	/*
+		The project's backend part creation.
+	*/
 
-	// Create config files for your project.
-	cgapp.SendMsg(false, "*", "Create config files for your project...", "cyan", true)
-
-	// Create configuration files.
-	filesToMake := map[string][]byte{
-		".gitignore":     registry.EmbedGitIgnore,
-		".gitattributes": registry.EmbedGitAttributes,
-		".editorconfig":  registry.EmbedEditorConfig,
-		"Makefile":       registry.EmbedMakefile,
-	}
-	if err := cgapp.MakeFiles(currentDir, filesToMake); err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
-	}
-
-	// Create Ansible playbook with tasks, if not skipped.
-	if installAnsibleRoles {
-		cgapp.SendMsg(true, "*", "Create Ansible playbook with tasks...", "cyan", true)
-
-		// Create playbook.
-		fileToMake := map[string][]byte{
-			"deploy-playbook.yml": registry.EmbedDeployPlaybook,
-		}
-		if err := cgapp.MakeFiles(currentDir, fileToMake); err != nil {
-			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
-	}
-
-	// Create backend files.
-	cgapp.SendMsg(true, "*", "Create project backend...", "cyan", true)
-	if err := cgapp.CreateProjectFromRegistry(
-		&registry.Project{
-			Type:       "backend",
-			Name:       backend,
-			RootFolder: currentDir,
-		},
-		registry.Repositories,
-		registry.RegexpBackendPattern,
+	// Clone backend files from git repository.
+	if err := cgapp.GitClone(
+		"backend",
+		fmt.Sprintf("github.com/create-go-app/%v-go-template", backend),
 	); err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
+		return cgapp.ShowError(err.Error())
 	}
+
+	// Cleanup project.
+	cgapp.RemoveFolders("backend", []string{".git", ".github"})
+
+	// Show success report.
+	cgapp.ShowMessage(
+		"success",
+		fmt.Sprintf("Backend was created with template `%v`!", backend),
+		true, false,
+	)
+
+	/*
+		The project's frontend part creation.
+	*/
 
 	if frontend != "none" {
 		// Create frontend files.
-		cgapp.SendMsg(true, "*", "Create project frontend...", "cyan", false)
-		if err := cgapp.CreateProjectFromCmd(
-			&registry.Project{
-				Type:       "frontend",
-				Name:       frontend,
-				RootFolder: currentDir,
-			},
-			registry.Commands,
-			registry.RegexpFrontendPattern,
+		if err := cgapp.ExecCommand(
+			"npm",
+			[]string{"init", "@vitejs/app", "frontend", "--", "--template", frontend},
+			true,
 		); err != nil {
-			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
+			return cgapp.ShowError(err.Error())
 		}
+
+		// Show success report.
+		cgapp.ShowMessage(
+			"success",
+			fmt.Sprintf("Frontend was created with template `%v`!", frontend),
+			false, false,
+		)
 	}
 
-	// Docker containers.
-	if webserver != "none" {
+	/*
+		The project's webserver part creation.
+	*/
 
-		cgapp.SendMsg(true, "* * *", "Configuring Docker containers...", "yellow", false)
-
-		if webserver != "none" {
-			// Create container with a web/proxy server.
-			cgapp.SendMsg(true, "*", "Create container with web/proxy server...", "cyan", true)
-			if err := cgapp.CreateProjectFromRegistry(
-				&registry.Project{
-					Type:       "webserver",
-					Name:       webserver,
-					RootFolder: currentDir,
-				},
-				registry.Repositories,
-				registry.RegexpWebServerPattern,
-			); err != nil {
-				cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-				os.Exit(1)
-			}
+	if proxy != "none" {
+		// Copy Ansible roles from embedded file system.
+		if err := cgapp.CopyFromEmbeddedFS(
+			&cgapp.EmbeddedFileSystem{
+				Name:       registry.EmbedRoles,
+				RootFolder: "roles",
+				SkipDir:    false,
+			},
+		); err != nil {
+			return cgapp.ShowError(err.Error())
 		}
+
+		// Copy Ansible playbook, inventory and roles from embedded file system.
+		if err := cgapp.CopyFromEmbeddedFS(
+			&cgapp.EmbeddedFileSystem{
+				Name:       registry.EmbedTemplates,
+				RootFolder: "templates",
+				SkipDir:    true,
+			},
+		); err != nil {
+			return cgapp.ShowError(err.Error())
+		}
+
+		// Set template variables for Ansible playbook and inventory files.
+		inventory = registry.AnsibleInventoryVariables[proxy].List
+		playbook = registry.AnsiblePlaybookVariables[proxy].List
+
+		// Generate Ansible inventory file.
+		if err := cgapp.GenerateFileFromTemplate("hosts.ini.tmpl", inventory); err != nil {
+			return cgapp.ShowError(err.Error())
+		}
+
+		// Generate Ansible playbook file.
+		if err := cgapp.GenerateFileFromTemplate("playbook.yml.tmpl", playbook); err != nil {
+			return cgapp.ShowError(err.Error())
+		}
+
+		// Set unused proxy roles.
+		if proxy == "traefik" || proxy == "traefik-acme-dns" {
+			proxyList = []string{"nginx"}
+		} else if proxy == "nginx" {
+			proxyList = []string{"traefik"}
+		}
+
+		// Delete unused proxy and/or frontend roles.
+		cgapp.RemoveFolders("roles", proxyList)
+
+		// Success messages.
+		cgapp.ShowMessage(
+			"success",
+			fmt.Sprintf("Web/Proxy server configuration for `%v` was created!", proxy),
+			false, false,
+		)
+		cgapp.ShowMessage(
+			"success",
+			"Ansible inventory, playbook and roles for deploying was created!",
+			false, false,
+		)
 	}
 
-	// Stop timer
-	stopTimer := time.Since(startTimer).String()
+	/*
+		The project's misc files part creation.
+	*/
 
-	// End message.
-	cgapp.SendMsg(true, "* * *", "Completed in "+stopTimer+"!", "yellow", true)
-	cgapp.SendMsg(false, "(i)", "A helpful documentation and next steps -> https://create-go.app/", "green", false)
-	cgapp.SendMsg(false, "(i)", "Run `cgapp deploy` to deploy your project to a remote server or run on localhost.", "green", true)
+	// Copy from embedded file system.
+	if err := cgapp.CopyFromEmbeddedFS(
+		&cgapp.EmbeddedFileSystem{
+			Name:       registry.EmbedMiscFiles,
+			RootFolder: "misc",
+			SkipDir:    true,
+		},
+	); err != nil {
+		return cgapp.ShowError(err.Error())
+	}
+
+	// Stop timer.
+	stopTimer := cgapp.CalculateDurationTime(startTimer)
+	cgapp.ShowMessage(
+		"info",
+		fmt.Sprintf("Completed in %v seconds!", stopTimer),
+		true, true,
+	)
+
+	// Ending messages.
+	if proxy != "none" {
+		cgapp.ShowMessage(
+			"",
+			"* Please put credentials into the Ansible inventory file (`hosts.ini`) before you start deploying a project!",
+			false, false,
+		)
+	}
+	if frontend != "none" {
+		cgapp.ShowMessage(
+			"",
+			fmt.Sprintf("* Visit https://vitejs.dev/guide/ for more info about using the `%v` frontend template!", frontend),
+			false, false,
+		)
+	}
+	cgapp.ShowMessage(
+		"",
+		"* A helpful documentation and next steps with your project is here https://create-go.app/",
+		false, true,
+	)
+	cgapp.ShowMessage(
+		"",
+		"Have a happy new project! :)",
+		false, true,
+	)
+
+	return nil
 }
 
 func init() {
 	rootCmd.AddCommand(createCmd)
-	createCmd.PersistentFlags().BoolVarP(
-		&useConfigFile,
-		"use-config", "c", false,
-		"use config file to create a new project or deploy to a remote server (by default, in $PWD/.cgapp.yml)",
-	)
 }

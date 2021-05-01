@@ -5,147 +5,39 @@
 package registry
 
 import (
-	_ "embed" // for embed config files
+	"embed"
 
 	"github.com/AlecAivazis/survey/v2"
 )
 
-const (
-	// CLIVersion version of Create Go App CLI.
-	CLIVersion = "1.7.5"
-	// RegexpAnsiblePattern pattern for Ansible roles.
-	RegexpAnsiblePattern = "^(deploy)$"
-	// RegexpBackendPattern pattern for backend.
-	RegexpBackendPattern = "^(net/http|fiber)$"
-	// RegexpFrontendPattern pattern for backend.
-	RegexpFrontendPattern = "^(p?react:?|vue(:?[\\w]+)?(:?[\\w-_0-9\\/]+)?|angular|svelte|sapper:?)"
-	// RegexpWebServerPattern pattern for web/proxy servers.
-	RegexpWebServerPattern = "^(nginx)$"
-)
+// CLIVersion version of Create Go App CLI.
+const CLIVersion string = "2.0.0"
 
-// Project struct for describe project.
-type Project struct {
-	Type       string
-	Name       string
-	RootFolder string
-}
-
-// Repository struct for describe repositories collection.
-type Repository struct {
-	List map[string]string
-}
-
-// Command struct for describe commands collection.
-type Command struct {
-	Runner string
-	Create string
-	Args   map[string]string
+// Variables struct for Ansible variables (inventory, hosts).
+type Variables struct {
+	List map[string]interface{}
 }
 
 // CreateAnswers struct for a survey's answers for `create` command.
 type CreateAnswers struct {
-	Backend             string
-	Frontend            string
-	Webserver           string
-	InstallAnsibleRoles bool `survey:"roles"`
-	AgreeCreation       bool `survey:"agree"`
-}
-
-// DeployAnswers struct for a survey's answers for `deploy` command.
-type DeployAnswers struct {
-	Username        string
-	Host            string
-	Network         string
-	BackendPort     string
-	AskBecomePass   bool `survey:"become"`
-	AgreeDeployment bool `survey:"agree"`
+	Backend       string
+	Frontend      string
+	Proxy         string
+	AgreeCreation bool `survey:"agree"`
 }
 
 var (
-	// EmbedCGAPPConfig main config file for Create Go App.
-	//go:embed configs/.cgapp.yml
-	EmbedCGAPPConfig []byte
+	// EmbedMiscFiles misc files and configs.
+	//go:embed misc/*
+	EmbedMiscFiles embed.FS
 
-	// EmbedEditorConfig config for auto configuration IDE.
-	//go:embed configs/.editorconfig
-	EmbedEditorConfig []byte
+	// EmbedRoles Ansible roles.
+	//go:embed roles/*
+	EmbedRoles embed.FS
 
-	// EmbedGitAttributes config for git attributes.
-	//go:embed configs/.gitattributes
-	EmbedGitAttributes []byte
-
-	// EmbedGitIgnore config for git ignore files.
-	//go:embed configs/.gitignore
-	EmbedGitIgnore []byte
-
-	// EmbedMakefile file for rapid manipulation with a new app.
-	//go:embed configs/Makefile
-	EmbedMakefile []byte
-
-	// EmbedDeployPlaybook Ansible playbook for deployment.
-	//go:embed configs/deploy-playbook.yml
-	EmbedDeployPlaybook []byte
-
-	// Repositories collection.
-	Repositories = map[string]*Repository{
-		// Backend templates.
-		"backend": {
-			List: map[string]string{
-				"net/http": "github.com/create-go-app/net_http-go-template",
-				"fiber":    "github.com/create-go-app/fiber-go-template",
-			},
-		},
-
-		// Docker containers with web/proxy servers.
-		"webserver": {
-			List: map[string]string{
-				"nginx": "github.com/create-go-app/nginx-docker",
-			},
-		},
-	}
-
-	// Commands collection.
-	Commands = map[string]*Command{
-		"react": {
-			Runner: "npx",
-			Create: "create-react-app",
-			Args: map[string]string{
-				"template": "--template",
-			},
-		},
-		"preact": {
-			Runner: "preact",
-			Create: "create",
-			Args: map[string]string{
-				"cwd":  "--cwd",
-				"name": "--name",
-			},
-		},
-		"vue": {
-			Runner: "vue",
-			Create: "create",
-			Args:   map[string]string{},
-		},
-		"angular": {
-			Runner: "ng",
-			Create: "new",
-			Args:   map[string]string{},
-		},
-		"svelte": {
-			Runner: "npx",
-			Create: "degit",
-			Args: map[string]string{
-				"template": "sveltejs/template",
-			},
-		},
-		"sapper": {
-			Runner: "npx",
-			Create: "degit",
-			Args: map[string]string{
-				"template": "sveltejs/sapper-template",
-			},
-		},
-	}
+	// EmbedTemplates template files.
+	//go:embed templates/*
+	EmbedTemplates embed.FS
 
 	// CreateQuestions survey's questions for `create` command.
 	CreateQuestions = []*survey.Question{
@@ -153,89 +45,98 @@ var (
 			Name: "backend",
 			Prompt: &survey.Select{
 				Message: "Choose a backend framework:",
-				Options: []string{"net/http", "Fiber"},
-				Default: "Fiber",
+				Options: []string{
+					"net/http",
+					"fiber",
+				},
+				Default:  "fiber",
+				PageSize: 2,
 			},
 			Validate: survey.Required,
 		},
 		{
 			Name: "frontend",
 			Prompt: &survey.Select{
-				Message: "Choose a frontend UI library:",
-				Options: []string{"none", "React", "Preact", "Vue", "Angular", "Svelte", "Sapper"},
-				Default: "none",
+				Message: "Choose a frontend framework/library:",
+				Help:    "Option with a `*-ts` tail will create a TypeScript template.",
+				Options: []string{
+					"none",
+					"vanilla",
+					"vanilla-ts",
+					"react",
+					"react-ts",
+					"preact",
+					"preact-ts",
+					"vue",
+					"vue-ts",
+					"svelte",
+					"svelte-ts",
+					"lit-element",
+					"lit-element-ts",
+				},
+				Default:  "none",
+				PageSize: 13,
 			},
 		},
 		{
-			Name: "webserver",
+			Name: "proxy",
 			Prompt: &survey.Select{
 				Message: "Choose a web/proxy server:",
-				Options: []string{"none", "Nginx"},
-				Default: "none",
-			},
-		},
-		{
-			Name: "roles",
-			Prompt: &survey.Confirm{
-				Message: "Do you want to create Ansible playbook for deploy your project?",
-				Default: true,
+				Options: []string{
+					"none",
+					"traefik",
+					"traefik-acme-dns",
+					"nginx",
+				},
+				Default:  "none",
+				PageSize: 4,
 			},
 		},
 		{
 			Name: "agree",
 			Prompt: &survey.Confirm{
-				Message: "If everything is okay, can I create this project? ;)",
+				Message: "If everything is okay, can I create this project for you? ;)",
 				Default: true,
 			},
 		},
 	}
 
-	// DeployQuestions survey's questions for `deploy` command.
-	DeployQuestions = []*survey.Question{
-		{
-			Name: "username",
-			Prompt: &survey.Input{
-				Message: "Enter username:",
-				Default: "root",
-			},
-			Validate: survey.Required,
-		},
-		{
-			Name: "become",
-			Prompt: &survey.Confirm{
-				Message: "Do you need to enter password for this username?",
-				Default: true,
+	// AnsibleInventoryVariables list of variables for inventory.
+	AnsibleInventoryVariables = map[string]*Variables{
+		"traefik": {
+			List: map[string]interface{}{
+				"Proxy":    "traefik",
+				"Wildcard": false,
 			},
 		},
-		{
-			Name: "host",
-			Prompt: &survey.Input{
-				Message: "Enter host name to deploy:",
-				Default: "localhost",
+		"traefik-acme-dns": {
+			List: map[string]interface{}{
+				"Proxy":    "traefik",
+				"Wildcard": true,
 			},
-			Validate: survey.Required,
 		},
-		{
-			Name: "network",
-			Prompt: &survey.Input{
-				Message: "Enter name of Docker network:",
-				Default: "cgapp_network",
+		"nginx": {
+			List: map[string]interface{}{
+				"Proxy": "nginx",
 			},
-			Validate: survey.Required,
 		},
-		{
-			Name: "port",
-			Prompt: &survey.Input{
-				Message: "Enter port of backend Docker container:",
-				Default: "5000",
+	}
+
+	// AnsiblePlaybookVariables list of variables for playbook.
+	AnsiblePlaybookVariables = map[string]*Variables{
+		"traefik": {
+			List: map[string]interface{}{
+				"Proxy": "traefik",
 			},
-			Validate: survey.Required,
 		},
-		{
-			Name: "agree",
-			Prompt: &survey.Confirm{
-				Message: "If everything is okay, can I deploy this project? ;)",
-				Default: true,
+		"traefik-acme-dns": {
+			List: map[string]interface{}{
+				"Proxy": "traefik",
+			},
+		},
+		"nginx": {
+			List: map[string]interface{}{
+				"Proxy": "nginx",
 			},
 		},
 	}

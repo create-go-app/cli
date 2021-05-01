@@ -6,83 +6,61 @@ package cgapp
 
 import (
 	"fmt"
-	"regexp"
+	"time"
 )
 
-// BeautifyText function for send (colored or common) message to output.
-func BeautifyText(text, color string) string {
+// ShowMessage function for send message to output.
+func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 	// Define variables.
-	var (
-		red       string = "\033[0;31m"
-		green     string = "\033[0;32m"
-		cyan      string = "\033[0;36m"
-		yellow    string = "\033[1;33m"
-		noColor   string = "\033[0m"
-		textColor string
-	)
-
-	// Switch color.
-	switch color {
-	case "":
-		textColor = noColor
-	case "green":
-		textColor = green
-	case "yellow":
-		textColor = yellow
-	case "red":
-		textColor = red
-	case "cyan":
-		textColor = cyan
-	}
-
-	// Send common or colored text.
-	return textColor + text + noColor
-}
-
-// SendMsg function forsend message to output.
-func SendMsg(startWithNewLine bool, caption, text, color string, endWithNewLine bool) {
-	// Define variables.
-	var startNewLine, endNewLine string
+	var startLine, endLine string
 
 	if startWithNewLine {
-		startNewLine = "\n" // set new line
+		startLine = "\n" // set a new line
 	}
 
 	if endWithNewLine {
-		endNewLine = "\n" // set new line
+		endLine = "\n" // set a new line
 	}
 
-	if caption == "" {
-		fmt.Println(startNewLine + text + endNewLine) // common text
-	} else {
-		fmt.Println(startNewLine + BeautifyText(caption, color) + " " + text + endNewLine) // colorized text
-	}
+	fmt.Println(startLine + colorizeLevel(level) + text + endLine)
 }
 
-// stringSplit function for split string by pattern.
-func stringSplit(pattern, match string) ([]string, error) {
-	// Error, when empty or nil.
-	if pattern == "" || match == "" {
-		return nil, throwError("Frontend template not set!")
-	}
-
-	// Define empty []string{} for splitted strings.
-	splittedStrings := []string{}
-
-	// Create regexp.
-	re := regexp.MustCompile(pattern)
-
-	// Split match string.
-	split := re.Split(match, -1)
-	for str := range split {
-		// Append all matched strings to set.
-		splittedStrings = append(splittedStrings, split[str])
-	}
-
-	return splittedStrings, nil
+// ShowError function for send error message to output.
+func ShowError(text string) error {
+	return fmt.Errorf(colorizeLevel("error") + text)
 }
 
-// throwError function for throw an error.
-func throwError(text string) error {
-	return fmt.Errorf(BeautifyText(text, "red"))
+// CalculateDurationTime func to calculate duration time.
+func CalculateDurationTime(startTimer time.Time) string {
+	return fmt.Sprintf("%.0f", time.Since(startTimer).Seconds())
+}
+
+// colorizeLevel function for send (colored or common) message to output.
+func colorizeLevel(level string) string {
+	// Define variables.
+	var (
+		red         string = "\033[0;31m"
+		green       string = "\033[0;32m"
+		yellow      string = "\033[1;33m"
+		noColor     string = "\033[0m"
+		color, icon string
+	)
+
+	// Switch color.
+	switch level {
+	case "success":
+		color = green
+		icon = "[OK] "
+	case "error":
+		color = red
+		icon = "[ERROR] "
+	case "info":
+		color = yellow
+		icon = "[INFO] "
+	default:
+		color = noColor
+	}
+
+	// Send common or colored caption.
+	return color + icon + noColor
 }

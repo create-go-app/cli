@@ -1,0 +1,48 @@
+#
+# Default server config with SSL certificate (Let's Encrypt):
+#
+
+# HTTP redirects
+server {
+  listen      80 default_server;
+  listen      [::]:80 default_server;
+  server_name {{ project_domain }} www.{{ project_domain }};
+  return 301 https://{{ project_domain }}$request_uri;
+}
+
+# WWW redirects
+server {
+  listen      443 ssl http2;
+  listen      [::]:443 ssl http2;
+{% if nginx_redirect_to_non_www %}
+  server_name www.{{ project_domain }};
+  return 301 https://{{ project_domain }}$request_uri;
+{% else %}
+  server_name {{ project_domain }};
+  return 301 https://www.{{ project_domain }}$request_uri;
+{% endif %}
+}
+
+# Main server
+server {
+  listen      443 ssl http2;
+  listen      [::]:443 ssl http2;
+{% if nginx_redirect_to_non_www %}
+  server_name {{ project_domain }};
+{% else %}
+  server_name {{ project_domain }} www.{{ project_domain }};
+{% endif %}
+  ssl_dhparam             /etc/letsencrypt/ssl-dhparams.pem;
+  ssl_certificate         /etc/letsencrypt/live/{{ project_domain }}/fullchain.pem;
+  ssl_certificate_key     /etc/letsencrypt/live/{{ project_domain }}/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/{{ project_domain }}/chain.pem;
+  location / {
+    resolver                            127.0.0.11;
+    proxy_pass                          http://cgapp-backend:{{ backend_port }}/;
+    proxy_set_header Host               $host;
+    proxy_set_header X-Real-IP          $remote_addr;
+    proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto  $scheme;
+    proxy_redirect                      off;
+  }
+}

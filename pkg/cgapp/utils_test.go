@@ -1,15 +1,13 @@
 package cgapp
 
 import (
-	"os"
-	"reflect"
 	"testing"
+	"time"
 )
 
-func TestBeautifyText(t *testing.T) {
+func Test_colorizeLevel(t *testing.T) {
 	type args struct {
-		text  string
-		color string
+		level string
 	}
 	tests := []struct {
 		name string
@@ -17,53 +15,33 @@ func TestBeautifyText(t *testing.T) {
 	}{
 		{
 			"successfully send message",
-			args{
-				text:  "Hello World!",
-				color: "",
-			},
+			args{level: ""},
 		},
 		{
-			"successfully send colored message",
-			args{
-				text:  "Hello World!",
-				color: "green",
-			},
+			"successfully send success message",
+			args{level: "success"},
 		},
 		{
-			"successfully send colored message",
-			args{
-				text:  "Hello World!",
-				color: "yellow",
-			},
+			"successfully send error message",
+			args{level: "error"},
 		},
 		{
-			"successfully send colored message",
-			args{
-				text:  "Hello World!",
-				color: "cyan",
-			},
-		},
-		{
-			"successfully send colored message",
-			args{
-				text:  "Hello World!",
-				color: "red",
-			},
+			"successfully send info message",
+			args{level: "info"},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_ = BeautifyText(tt.args.text, tt.args.color)
+			_ = colorizeLevel(tt.args.level)
 		})
 	}
 }
 
-func TestSendMsg(t *testing.T) {
+func TestShowMessage(t *testing.T) {
 	type args struct {
-		startWithNewLine bool
-		caption          string
+		level            string
 		text             string
-		color            string
+		startWithNewLine bool
 		endWithNewLine   bool
 	}
 	tests := []struct {
@@ -76,111 +54,37 @@ func TestSendMsg(t *testing.T) {
 		},
 		{
 			"successfully send message with args",
-			args{true, "!", "Test", "", true},
+			args{"success", "Test", true, true},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			SendMsg(tt.args.startWithNewLine, tt.args.caption, tt.args.text, tt.args.color, tt.args.endWithNewLine)
+			ShowMessage(tt.args.level, tt.args.text, tt.args.startWithNewLine, tt.args.endWithNewLine)
 		})
 	}
 }
 
-func TestMakeFolder(t *testing.T) {
+func TestCalculateDurationTime(t *testing.T) {
 	type args struct {
-		folderName string
-		chmod      os.FileMode
+		startTimer time.Time
 	}
 	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
+		name string
+		args args
+		want string
 	}{
 		{
-			"successfully created folder",
+			"successfully",
 			args{
-				folderName: "../../tmp",
-				chmod:      0750,
+				startTimer: time.Now(),
 			},
-			false,
-		},
-		{
-			"failed, folder is exists",
-			args{
-				folderName: "",
-				chmod:      0750,
-			},
-			true,
-		},
-		{
-			"failed, folder is exists",
-			args{
-				folderName: "cgapp-project",
-				chmod:      0750,
-			},
-			true,
-		},
-	}
-
-	_ = os.Mkdir("cgapp-project", 0750)
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := MakeFolder(tt.args.folderName, tt.args.chmod); (err != nil) != tt.wantErr {
-				t.Errorf("MakeFolder() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-
-		// Clean
-		os.RemoveAll(tt.args.folderName)
-	}
-}
-
-func Test_stringSplit(t *testing.T) {
-	type args struct {
-		pattern string
-		match   string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []string
-		wantErr bool
-	}{
-		{
-			"successfully matched",
-			args{
-				pattern: ":",
-				match:   "react:redux",
-			},
-			[]string{"react", "redux"},
-			false,
-		},
-		{
-			"successfully not matched",
-			args{
-				pattern: "=",
-				match:   "react:redux",
-			},
-			[]string{"react:redux"},
-			false,
-		},
-		{
-			"failed wrong pattern and match",
-			args{},
-			nil,
-			true,
+			"0",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := stringSplit(tt.args.pattern, tt.args.match)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("StringSplit() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("StringSplit() = %v, want %v", got, tt.want)
+			if got := CalculateDurationTime(tt.args.startTimer); got != tt.want {
+				t.Errorf("CalculateDurationTime() = %v, want %v", got, tt.want)
 			}
 		})
 	}

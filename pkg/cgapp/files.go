@@ -5,42 +5,114 @@
 package cgapp
 
 import (
+	"embed"
+	"fmt"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
+	"text/template"
 )
 
-// MakeFiles function for massively create folders.
-func MakeFiles(rootFolder string, filesToMake map[string][]byte) error {
-	for file, data := range filesToMake {
-		folder := filepath.Join(rootFolder, file)
+// EmbeddedFileSystems struct contains embedded file system fields.
+type EmbeddedFileSystem struct {
+	Name       embed.FS
+	RootFolder string
+	SkipDir    bool
+}
 
-		// Write to created file.
-		if err := ioutil.WriteFile(folder, data, 0600); err != nil {
-			return throwError("File `" + file + "` was not created!")
+// CopyFromEmbeddedFS function for copy files from embedded file system.
+func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
+	// Return copied folders and files.
+	if err := fs.WalkDir(efs.Name, efs.RootFolder, func(path string, entry fs.DirEntry, err error) error {
+		// Checking embed path.
+		if err != nil {
+			return ShowError(
+				fmt.Sprintf("Can't copy files from embedded path `%v`!", efs.RootFolder),
+			)
 		}
 
-		// Show report for file.
-		SendMsg(false, "[OK]", "File `"+file+"` was created!", "cyan", false)
+		// Checking, if embedded file is a folder.
+		if entry.IsDir() && !efs.SkipDir {
+			// Create folders structure from embedded.
+			if err := MakeFolder(path); err != nil {
+				return err
+			}
+		}
+
+		// Checking, if embedded file is not a folder.
+		if !entry.IsDir() {
+			// Set file data.
+			fileData, errReadFile := fs.ReadFile(efs.Name, path)
+			if errReadFile != nil {
+				return errReadFile
+			}
+
+			// Path to file, if skipped folders.
+			if efs.SkipDir {
+				path = entry.Name()
+			}
+
+			// Create file from embedded.
+			if errMakeFile := MakeFile(path, fileData); errMakeFile != nil {
+				return errMakeFile
+			}
+		}
+
+		return nil
+	}); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// GenerateFileFromTemplate func to generate files from templates.
+func GenerateFileFromTemplate(fileName string, variables map[string]interface{}) error {
+	// Parse template.
+	tmpl, errParseFiles := template.ParseFiles(fileName)
+	if errParseFiles != nil {
+		return ShowError(errParseFiles.Error())
+	}
+
+	// Create a new file with template data.
+	file, errCreate := os.Create(fileName)
+	if errCreate != nil {
+		return ShowError(errCreate.Error())
+	}
+
+	// Execute template with variables.
+	if errExecute := tmpl.Execute(file, variables); errExecute != nil {
+		return ShowError(errExecute.Error())
+	}
+	_ = file.Close()
+
+	// Rename output file.
+	newFileName := strings.Replace(fileName, ".tmpl", "", -1)
+	if errRename := os.Rename(fileName, newFileName); errRename != nil {
+		return ShowError(errRename.Error())
+	}
+
+	return nil
+}
+
+// MakeFile function for single file create.
+func MakeFile(fileName string, fileData []byte) error {
+	// Write to created file.
+	if err := ioutil.WriteFile(fileName, fileData, 0600); err != nil {
+		return err
 	}
 
 	return nil
 }
 
 // MakeFolder function for create folder.
-func MakeFolder(folderName string, chmod os.FileMode) error {
+func MakeFolder(folderName string) error {
 	// Check if folder exists, fail if it does.
-	if _, err := os.Stat(folderName); !os.IsNotExist(err) {
-		return throwError("Folder `" + folderName + "` exists!")
+	if err := os.Mkdir(folderName, 0750); err != nil {
+		return err
 	}
-
-	// Create folder.
-	if err := os.Mkdir(folderName, chmod); err != nil {
-		return throwError("Folder `" + folderName + "` was not created!")
-	}
-
-	// Show report for folder.
-	SendMsg(false, "OK", "Folder `"+folderName+"` was created!", "", false)
 
 	return nil
 }

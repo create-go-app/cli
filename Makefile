@@ -14,7 +14,7 @@ security:
 	gosec -quiet ./...
 
 install: security lint test
-	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp main.go
+	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp ./cmd/cgapp/main.go
 
 build: security test
 	goreleaser --snapshot --skip-publish --rm-dist

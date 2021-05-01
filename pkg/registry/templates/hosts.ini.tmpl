@@ -1,0 +1,103 @@
+# Ansible inventory for deploy the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+[cgapp_project]
+127.0.0.1 # CHANGE THIS TO YOUR REMOTE SERVER IP!
+
+[cgapp_project:vars]
+#
+# Ansible default variables to start playbook:
+#
+
+# Set remote sudo username
+ansible_user=root
+# Ask become password for remote sudo user
+ansible_become=yes
+# Set connection type to remote server (usually, 'ssh')
+ansible_connection=ssh
+# Set Python 3 default path
+ansible_python_interpreter=/usr/bin/python3
+
+#
+# Docker configuration:
+#
+
+# Set Docker network name
+docker_network=cgapp_network
+
+#
+# Remote server configuration:
+#
+
+# Set directory on your remote server for store project files
+server_dir=/var/www/cgapp
+# Set user (owner of files/folders) name
+server_user=root
+# Set group name
+server_group=docker
+
+#
+# Project configuration:
+#
+
+# Set your project domain
+project_domain=example.com
+
+#
+# Backend configuration:
+#
+
+# Set backend port number,
+# MUST BE MATCH to the port that is listed in your `./backend/.env` file!
+backend_port=5000
+
+{{ if eq .Proxy "traefik" }}#
+# Traefik Proxy configuration:
+#
+
+# Set Traefik version (for example, v2.4)
+traefik_version=latest
+# Set log level in capital letters (DEBUG, PANIC, FATAL, ERROR, WARN, INFO)
+traefik_log_level=ERROR
+# Set log format between json and common
+traefik_log_format=json
+# Set URL for Traefik admin dashboard,
+# if you DO NOT NEED dashboard (Web UI), just leave it blank
+traefik_dashboard_url=cp.example.com
+# Set username for Traefik admin dashboard,
+# DO NOT FORGET to set this setting, if `traefik_dashboard_url` variable IS NOT empty!
+traefik_dashboard_user=admin
+# Set hashed password for Traefik admin dashboard,
+# DO NOT FORGET to set this setting, if `traefik_dashboard_url` variable IS NOT empty!
+# See: https://doc.traefik.io/traefik/middlewares/basicauth/#users
+traefik_dashboard_password=admin:$$apr1$$WpxRpfMZ$$TMTfGB37C9xAHiPIDiFiB1
+
+#
+# ACME configuration (Let's Encrypt):
+#
+
+# Set your email address for SSL cert
+acme_email=mail@example.com
+{{ if .Wildcard }}
+# You choose a DNS way to getting SSL cert,
+# DO NOT FORGET to set this variable here as well as in `./roles/traefik/tasks/main.yml` file!
+
+# Set DNS provider
+# See: https://doc.traefik.io/traefik/https/acme/#providers
+acme_dns_provider=digitalocean
+# Set environment variable(s) for a DNS provider,
+# for example, auth token for DigitalOcean
+do_auth_token=XXXXXXXXXXX
+{{ else }}# Change to 'no' for getting a real SSL cert
+acme_staging=yes{{ end }}
+{{ else if eq .Proxy "nginx" }}#
+# Nginx configuration:
+#
+
+# Set Nginx version (for example, 1.20-alpine)
+nginx_version=alpine
+# Set redirect from HTTP to HTTPS for default server
+nginx_use_only_https=yes
+# Set redirect from WWW to non-WWW domain for default server
+nginx_redirect_to_non_www=yes{{ end }}

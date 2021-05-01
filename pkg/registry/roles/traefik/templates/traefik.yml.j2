@@ -1,0 +1,52 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+log:
+  level: "{{ traefik_log_level }}"
+  format: "{{ traefik_log_format }}"
+  filePath: traefik.log
+{% if traefik_dashboard_url|length > 0 %}
+api:
+  dashboard: true
+{% endif %}
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+    http:
+      tls:
+        certResolver: le
+        domains:
+          - main: "{{ project_domain }}"
+{% if acme_dns_provider %}
+            sans:
+              - "*.{{ project_domain }}"
+{% endif %}
+
+certificatesResolvers:
+  le:
+    acme:
+      email: "{{ acme_email }}"
+      storage: acme.json
+{% if acme_dns_provider %}
+      dnsChallenge:
+        provider: "{{ acme_dns_provider }}"
+        delayBeforeCheck: 5
+        resolvers:
+          - 1.1.1.1:53
+          - 8.8.8.8:53
+{% else %}
+      caServer: https://acme-{% if acme_staging == 'yes' %}staging-{% endif %}v02.api.letsencrypt.org/directory
+{% endif %}
+
+providers:
+  docker:
+    network: "{{ docker_network }}"
+    exposedByDefault: false

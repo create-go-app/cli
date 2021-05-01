@@ -7,47 +7,50 @@ package cgapp
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"os/exec"
 )
 
 // ExecCommand function to execute a given command.
-func ExecCommand(command string, options []string) error {
-	//
-	if command == "" {
-		return throwError("No command to execute!")
+func ExecCommand(command string, options []string, silentMode bool) error {
+	// Checking for nil.
+	if command == "" || options == nil {
+		return fmt.Errorf("No command to execute!")
 	}
 
 	// Create buffer for stderr.
 	stderr := &bytes.Buffer{}
 
-	// Collect command line
+	// Collect command line.
 	cmd := exec.Command(command, options...) // #nosec G204
 
-	// Set buffer for stderr from cmd
+	// Set buffer for stderr from cmd.
 	cmd.Stderr = stderr
 
-	// Create a new reader
-	cmdReader, err := cmd.StdoutPipe()
-	if err != nil {
-		return throwError(err.Error())
+	// Create a new reader.
+	cmdReader, errStdoutPipe := cmd.StdoutPipe()
+	if errStdoutPipe != nil {
+		return ShowError(errStdoutPipe.Error())
 	}
 
 	// Start executing command.
-	if err := cmd.Start(); err != nil {
-		return throwError(stderr.String())
+	if errStart := cmd.Start(); errStart != nil {
+		return ShowError(stderr.String())
 	}
 
-	// Create a new scanner and run goroutine func with output.
-	scanner := bufio.NewScanner(cmdReader)
-	go func() {
-		for scanner.Scan() {
-			SendMsg(false, "*", scanner.Text(), "cyan", false)
-		}
-	}()
+	// Create a new scanner and run goroutine func with output, if not in silent mode.
+	if !silentMode {
+		scanner := bufio.NewScanner(cmdReader)
+		go func() {
+			for scanner.Scan() {
+				ShowMessage("", scanner.Text(), false, false)
+			}
+		}()
+	}
 
 	// Wait for executing command.
-	if err := cmd.Wait(); err != nil {
-		return throwError(stderr.String())
+	if errWait := cmd.Wait(); errWait != nil {
+		return ShowError(stderr.String())
 	}
 
 	return nil

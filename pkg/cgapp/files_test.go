@@ -1,14 +1,24 @@
 package cgapp
 
 import (
+	"io/fs"
 	"os"
 	"testing"
+
+	"github.com/create-go-app/cli/pkg/registry"
 )
 
-func TestMakeFiles(t *testing.T) {
+func TestMakeFile(t *testing.T) {
+
+	fileData, err := fs.ReadFile(registry.EmbedMiscFiles, "misc/Makefile")
+	if err != nil {
+		t.Error()
+	}
+
 	type args struct {
-		rootFolder  string
-		filesToMake map[string][]byte
+		rootFolder string
+		file       string
+		data       []byte
 	}
 	tests := []struct {
 		name    string
@@ -18,36 +28,78 @@ func TestMakeFiles(t *testing.T) {
 		{
 			"successfully created files",
 			args{
-				rootFolder: "../../tmp",
-				filesToMake: map[string][]byte{
-					"test.txt": []byte("test"),
-				},
+				rootFolder: "Makefile",
+				file:       "Makefile",
+				data:       fileData,
 			},
 			false,
 		},
 		{
 			"failed created files",
 			args{
-				rootFolder: "./does/not-exists",
-				filesToMake: map[string][]byte{
-					"test.txt": []byte("test"),
-				},
+				rootFolder: "",
+				file:       "",
+				data:       fileData,
 			},
 			true,
 		},
 	}
 
-	_ = os.Mkdir("../../tmp", 0750)
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := MakeFiles(tt.args.rootFolder, tt.args.filesToMake); (err != nil) != tt.wantErr {
-				t.Errorf("MakeFiles() error = %v, wantErr %v", err, tt.wantErr)
+			if err := MakeFile(tt.args.rootFolder, tt.args.data); (err != nil) != tt.wantErr {
+				t.Errorf("MakeFile() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 
 		// Clean
-		os.RemoveAll("../../tmp")
+		os.RemoveAll("Makefile")
+	}
+}
+
+func TestMakeFolder(t *testing.T) {
+	type args struct {
+		folderName string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully created folder",
+			args{
+				folderName: "../../tmp",
+			},
+			false,
+		},
+		{
+			"failed, folder is exists",
+			args{
+				folderName: "",
+			},
+			true,
+		},
+		{
+			"failed, folder is exists",
+			args{
+				folderName: "cgapp-project",
+			},
+			true,
+		},
+	}
+
+	_ = os.Mkdir("cgapp-project", 0750)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := MakeFolder(tt.args.folderName); (err != nil) != tt.wantErr {
+				t.Errorf("MakeFolder() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+
+		// Clean
+		os.RemoveAll(tt.args.folderName)
 	}
 }
 
@@ -75,5 +127,109 @@ func TestRemoveFolders(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			RemoveFolders(tt.args.rootFolder, tt.args.foldersToRemove)
 		})
+	}
+}
+
+func TestCopyFromEmbeddedFS(t *testing.T) {
+	type args struct {
+		efs *EmbeddedFileSystem
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully copy from embedded fs",
+			args{
+				efs: &EmbeddedFileSystem{
+					Name:       registry.EmbedTemplates,
+					RootFolder: "templates",
+					SkipDir:    false,
+				},
+			},
+			false,
+		},
+		{
+			"successfully copy from embedded fs with skip dirs",
+			args{
+				efs: &EmbeddedFileSystem{
+					Name:       registry.EmbedTemplates,
+					RootFolder: "templates",
+					SkipDir:    true,
+				},
+			},
+			false,
+		},
+		{
+			"fail to copy from embedded fs",
+			args{
+				efs: &EmbeddedFileSystem{
+					Name:       registry.EmbedTemplates,
+					RootFolder: "does-not-exist",
+					SkipDir:    false,
+				},
+			},
+			true,
+		},
+		{
+			"fail (no args)",
+			args{
+				efs: &EmbeddedFileSystem{},
+			},
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := CopyFromEmbeddedFS(tt.args.efs); (err != nil) != tt.wantErr {
+				t.Errorf("CopyFromEmbeddedFS() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+
+		// Clean
+		_ = os.Remove("hosts.ini.tmpl")
+		_ = os.Remove("playbook.yml.tmpl")
+		_ = os.RemoveAll(tt.args.efs.RootFolder)
+	}
+}
+
+func TestGenerateFileFromTemplate(t *testing.T) {
+	type args struct {
+		fileName  string
+		variables map[string]interface{}
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			"successfully generate file",
+			args{
+				fileName:  "../../tmp/test.txt",
+				variables: map[string]interface{}{},
+			},
+			false,
+		},
+		{
+			"failed to generate file",
+			args{},
+			true,
+		},
+	}
+
+	_ = os.Mkdir("../../tmp", 0750)
+	_, _ = os.Create("../../tmp/test.txt")
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := GenerateFileFromTemplate(tt.args.fileName, tt.args.variables); (err != nil) != tt.wantErr {
+				t.Errorf("GenerateFileFromTemplate() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+
+		// Clean
+		_ = os.RemoveAll("../../tmp")
 	}
 }

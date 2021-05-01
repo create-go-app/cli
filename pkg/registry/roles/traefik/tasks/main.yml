@@ -1,0 +1,116 @@
+# Ansible role for deploy the Traefik Proxy for the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+---
+#
+# Delete webserver files.
+#
+- name: Delete previous webserver files
+  file:
+    state: absent
+    path: "{{ server_dir }}/webserver"
+
+#
+# Create folder for Traefik.
+#
+- name: Ensures Traefik dir exists
+  file:
+    state: directory
+    path: "{{ server_dir }}/webserver"
+    owner: "{{ server_user }}"
+    group: "{{ server_group }}"
+
+#
+# Create file for ACME challenge.
+#
+- name: Ensures acme.json file exists
+  file:
+    state: touch
+    path: "{{ server_dir }}/webserver/acme.json"
+    mode: 0600
+
+#
+# Create Traefik config.
+#
+- name: Adding traefik.yml file
+  template:
+    src: traefik.yml.j2
+    dest: "{{ server_dir }}/webserver/traefik.yml"
+    mode: 0600
+
+#
+# Create Traefik log file.
+#
+- name: Ensures traefik.log file exists
+  file:
+    state: touch
+    path: "{{ server_dir }}/webserver/traefik.log"
+    mode: 0600
+
+#
+# Run official Traefik Docker container
+# WITHOUT dashboard (Traefik Web UI) and specified version.
+#
+- name: Run Traefik container without dashboard (Traefik Web UI)
+  docker_container:
+    name: cgapp-traefik
+    image: "traefik:{{ traefik_version }}"
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "{{ server_dir }}/webserver/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "{{ server_dir }}/webserver/acme.json:/acme.json:rw"
+      - "{{ server_dir }}/webserver/traefik.log:/traefik.log:rw"
+    #
+    # Don't forget to set environment variables, if your choose DNS way to getting SSL cert.
+    # See: https://doc.traefik.io/traefik/https/acme/#providers
+    #
+    # env:
+    #   # For example, auth token for DigitalOcean DNS provider:
+    #   DO_AUTH_TOKEN: "{{ do_auth_token }}"
+    #
+    when: (traefik_dashboard_url is not defined) or (traefik_dashboard_url|length == 0)
+
+#
+# Run official Traefik Docker container
+# WITH dashboard (Traefik Web UI) and specified version.
+#
+- name: Run Traefik container with dashboard (Traefik Web UI)
+  docker_container:
+    name: cgapp-traefik
+    image: "traefik:{{ traefik_version }}"
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "{{ server_dir }}/webserver/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "{{ server_dir }}/webserver/acme.json:/acme.json:rw"
+      - "{{ server_dir }}/webserver/traefik.log:/traefik.log:rw"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.traefik.rule: "Host(`{{ traefik_dashboard_url }}`)"
+      traefik.http.routers.traefik.entrypoints: "websecure"
+      traefik.http.routers.traefik.service: "api@internal"
+      traefik.http.routers.traefik.middlewares: "auth"
+      traefik.http.middlewares.auth.basicauth.users: "{{ traefik_dashboard_user }}:{{ traefik_dashboard_password }}"
+    #
+    # Don't forget to set environment variables, if your choose DNS way to getting SSL cert.
+    # See: https://doc.traefik.io/traefik/https/acme/#providers
+    #
+    # env:
+    #   # For example, auth token for DigitalOcean DNS provider:
+    #   DO_AUTH_TOKEN: "{{ do_auth_token }}"
+    #
+    when: (traefik_dashboard_url is defined) or (traefik_dashboard_url|length > 0)

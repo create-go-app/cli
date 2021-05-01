@@ -5,25 +5,17 @@
 package cmd
 
 import (
-	"os"
-
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/create-go-app/cli/pkg/cgapp"
 	"github.com/create-go-app/cli/pkg/registry"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var (
-	useConfigFile                      bool                                           // indicate using config (from $PWD/.cgapp.yml)
-	projectConfig                      map[string]interface{}                         // parse project config
-	rolesConfig                        map[string]interface{}                         // parse Ansible roles config
-	backend, frontend, webserver       string                                         // define project variables
-	installAnsibleRoles, askBecomePass bool                                           // install Ansible roles, ask become pass
-	username, host, network, port      string                                         // define deploy variables
-	playbook                           string                 = "deploy-playbook.yml" // default Ansible playbook
-	createAnswers                      registry.CreateAnswers                         // define answers variable for `create` command
-	deployAnswers                      registry.DeployAnswers                         // define answers variable for `deploy` command
+	backend, frontend, proxy string                 // define project variables
+	inventory, playbook      map[string]interface{} // define template variables
+	options, proxyList       []string               // define options, proxy list
+	askBecomePass            bool                   // install Ansible roles, ask become pass
+	createAnswers            registry.CreateAnswers // define answers variable for `create` command
 
 	// Config for survey icons and colors.
 	// See: https://github.com/mgutz/ansi#style-format
@@ -55,36 +47,8 @@ frontend (JavaScript, TypeScript) and deploy automation
 A helpful documentation and next steps -> https://create-go.app/`,
 }
 
-func init() {
-	cobra.OnInitialize(initConfig)
-}
-
-// initConfig reads in config file, if set.
-func initConfig() {
-	if useConfigFile {
-		// Get current directory.
-		currentDir, _ := os.Getwd()
-
-		viper.AddConfigPath(currentDir) // add config path
-		viper.SetConfigName(".cgapp")   // set config name
-
-		// If a config file is found, read it in.
-		if err := viper.ReadInConfig(); err != nil {
-			cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-			os.Exit(1)
-		}
-
-		// Parse configs.
-		_ = viper.UnmarshalKey("project", &projectConfig)
-		_ = viper.UnmarshalKey("roles", &rolesConfig)
-	}
-}
-
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		cgapp.SendMsg(true, "[ERROR]", err.Error(), "red", true)
-		os.Exit(1)
-	}
+	_ = rootCmd.Execute()
 }
