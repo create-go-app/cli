@@ -1,4 +1,4 @@
-module github.com/create-go-app/cli
+module github.com/create-go-app/cli/v2
 
 go 1.16
 

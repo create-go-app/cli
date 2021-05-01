@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/create-go-app/cli/pkg/registry"
+	"github.com/create-go-app/cli/v2/pkg/registry"
 	"github.com/spf13/cobra"
 )
 

@@ -26,7 +26,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/create-go-app/cli/cmd"
+import "github.com/create-go-app/cli/v2/cmd"
 
 func main() {
 	cmd.Execute()

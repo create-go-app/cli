@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/create-go-app/cli/pkg/registry"
+	"github.com/create-go-app/cli/v2/pkg/registry"
 )
 
 func TestMakeFile(t *testing.T) {

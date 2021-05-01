@@ -13,7 +13,7 @@ First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.
 Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command and rename installed binary in `$GOPATH/bin`:
 
 ```bash
-go install github.com/create-go-app/cli/cmd/cgapp@latest
+go install github.com/create-go-app/cli/v2/cmd/cgapp
 ```
 
 Also, macOS and GNU/Linux users available way to install via [Homebrew](https://brew.sh/):
