@@ -1,0 +1,51 @@
+# Ansible role for deploy a frontend of the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+---
+#
+# Check, if local ./frontend directory is exists.
+#
+- name: Check, if local ./frontend directory is exists
+  stat:
+    path: ./frontend
+  register: frontend_folder
+
+#
+# The frontend role block.
+#
+- name: Block with frontend
+  block:
+    #
+    # Delete frontend files.
+    #
+    - name: Delete previous frontend files
+      file:
+        state: absent
+        path: "{{ server_dir }}/frontend"
+
+    #
+    # Copy `./frontend` folder to the remote server.
+    #
+    - name: Copy a new frontend files
+      synchronize:
+        src: ./frontend
+        dest: "{{ server_dir }}"
+        rsync_opts:
+          - "--exclude=.git,.github,build,*.md"
+
+    #
+    # Build frontend Docker container.
+    #
+    - name: Build Docker image for frontend
+      docker_image:
+        name: cgapp_frontend # name of the frontend image
+        build:
+          path: "{{ server_dir }}/frontend" # folder with Dockerfile
+          pull: yes
+        source: build
+
+  #
+  # Skip this role if directory is not exists.
+  #
+  when: frontend_folder.stat.exists and frontend_folder.stat.isdir

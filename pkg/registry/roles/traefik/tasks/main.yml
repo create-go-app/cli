@@ -1,8 +1,16 @@
-# Ansible role for deploy the Create Go App project.
+# Ansible role for deploy the Traefik Proxy for the Create Go App project.
 # Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
 # For more information, please visit https://create-go.app/
 
 ---
+#
+# Delete webserver files.
+#
+- name: Delete previous webserver files
+  file:
+    state: absent
+    path: "{{ server_dir }}/webserver"
+
 #
 # Create folder for Traefik.
 #
@@ -10,8 +18,8 @@
   file:
     state: directory
     path: "{{ server_dir }}/webserver"
-    owner: "{{ system_user }}"
-    group: "{{ system_group }}"
+    owner: "{{ server_user }}"
+    group: "{{ server_group }}"
 
 #
 # Create file for ACME challenge.
@@ -41,9 +49,40 @@
     mode: 0600
 
 #
-# Run official Traefik Docker container with specified version.
+# Run official Traefik Docker container
+# WITHOUT dashboard (Traefik Web UI) and specified version.
 #
-- name: Run Traefik container
+- name: Run Traefik container without dashboard (Traefik Web UI)
+  docker_container:
+    name: cgapp-traefik
+    image: "traefik:{{ traefik_version }}"
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "{{ server_dir }}/webserver/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "{{ server_dir }}/webserver/acme.json:/acme.json:rw"
+      - "{{ server_dir }}/webserver/traefik.log:/traefik.log:rw"
+    #
+    # Don't forget to set environment variables, if your choose DNS way to getting SSL cert.
+    # See: https://doc.traefik.io/traefik/https/acme/#providers
+    #
+    # env:
+    #   # For example, auth token for DigitalOcean DNS provider:
+    #   DO_AUTH_TOKEN: "{{ do_auth_token }}"
+    #
+    when: (traefik_dashboard_url is not defined) or (traefik_dashboard_url|length == 0)
+
+#
+# Run official Traefik Docker container
+# WITH dashboard (Traefik Web UI) and specified version.
+#
+- name: Run Traefik container with dashboard (Traefik Web UI)
   docker_container:
     name: cgapp-traefik
     image: "traefik:{{ traefik_version }}"
@@ -71,5 +110,7 @@
     # See: https://doc.traefik.io/traefik/https/acme/#providers
     #
     # env:
-    #   DO_AUTH_TOKEN: "{{ do_auth_token }}" # for example, auth token for DigitalOcean DNS provider
+    #   # For example, auth token for DigitalOcean DNS provider:
+    #   DO_AUTH_TOKEN: "{{ do_auth_token }}"
     #
+    when: (traefik_dashboard_url is defined) or (traefik_dashboard_url|length > 0)

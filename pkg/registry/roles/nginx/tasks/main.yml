@@ -1,8 +1,16 @@
-# Ansible role for deploy the Create Go App project.
+# Ansible role for deploy the Nginx for the Create Go App project.
 # Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
 # For more information, please visit https://create-go.app/
 
 ---
+#
+# Delete webserver files.
+#
+- name: Delete previous webserver files
+  file:
+    state: absent
+    path: "{{ server_dir }}/webserver"
+
 #
 # Create folder for Nginx.
 #
@@ -10,8 +18,8 @@
   file:
     state: directory
     path: "{{ server_dir }}/webserver"
-    owner: "{{ system_user }}"
-    group: "{{ system_group }}"
+    owner: "{{ server_user }}"
+    group: "{{ server_group }}"
 
 #
 # Create Nginx config.

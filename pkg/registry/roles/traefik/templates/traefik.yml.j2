@@ -6,10 +6,10 @@ log:
   level: "{{ traefik_log_level }}"
   format: "{{ traefik_log_format }}"
   filePath: traefik.log
-
+{% if traefik_dashboard_url|length > 0 %}
 api:
   dashboard: true
-
+{% endif %}
 entryPoints:
   web:
     address: :80

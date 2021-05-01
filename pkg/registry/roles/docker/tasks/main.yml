@@ -39,15 +39,15 @@
 #
 - name: Create a new Docker group
   group:
-    name: "{{ system_group }}"
+    name: "{{ server_group }}"
 
 #
 # Create a new system user for Docker.
 #
 - name: Add the default user to the Docker group
   user:
-    name: "{{ system_user }}"
-    group: "{{ system_group }}"
+    name: "{{ server_user }}"
+    group: "{{ server_group }}"
 
 #
 # Create a new Docker network for connect all project elements into one network.

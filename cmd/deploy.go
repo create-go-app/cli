@@ -32,9 +32,6 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		true, true,
 	)
 
-	// Start timer.
-	startTimer := time.Now()
-
 	// Set Ansible playbook and inventory files.
 	if askBecomePass {
 		// With entering password.
@@ -50,6 +47,9 @@ var runDeployCmd = func(cmd *cobra.Command, args []string) {
 		"Ansible playbook for deploy your project is running. Please wait for completion!",
 		false, false,
 	)
+
+	// Start timer.
+	startTimer := time.Now()
 
 	// Run execution for Ansible playbook.
 	if err := cgapp.ExecCommand("ansible-playbook", options, false); err != nil {

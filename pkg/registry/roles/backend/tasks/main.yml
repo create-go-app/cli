@@ -1,4 +1,4 @@
-# Ansible role for deploy the Create Go App project.
+# Ansible role for deploy a backend of the Create Go App project.
 # Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
 # For more information, please visit https://create-go.app/
 

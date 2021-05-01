@@ -34,9 +34,6 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		true, true,
 	)
 
-	// Start timer.
-	startTimer := time.Now()
-
 	// Start survey.
 	if err := survey.Ask(
 		registry.CreateQuestions, &createAnswers, survey.WithIcons(surveyIconsConfig),
@@ -56,7 +53,14 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		)
 	}
 
-	// Create backend files.
+	// Start timer.
+	startTimer := time.Now()
+
+	/*
+		The project's backend part creation.
+	*/
+
+	// Clone backend files from git repository.
 	if err := cgapp.GitClone(
 		"backend",
 		fmt.Sprintf("github.com/create-go-app/%v-go-template", backend),
@@ -73,6 +77,10 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		fmt.Sprintf("Backend was created with template `%v`!", backend),
 		true, false,
 	)
+
+	/*
+		The project's frontend part creation.
+	*/
 
 	if frontend != "none" {
 		// Create frontend files.
@@ -94,6 +102,10 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			false, false,
 		)
 	}
+
+	/*
+		The project's webserver part creation.
+	*/
 
 	if proxy != "none" {
 		// Copy Ansible roles from embedded file system.
@@ -132,23 +144,39 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 			log.Fatal(cgapp.ShowError(err.Error()))
 		}
 
-		// Delete unused proxy roles.
-		if proxy == "traefik" {
+		// Set unused proxy roles.
+		if proxy == "traefik" || proxy == "traefik-acme-dns" {
 			proxyList = []string{"nginx"}
 		} else if proxy == "nginx" {
 			proxyList = []string{"traefik"}
 		}
+
+		// Set unused proxy role.
+		if frontend == "none" {
+			proxyList = append(proxyList, "frontend")
+		}
+
+		// Delete unused proxy and/or frontend roles.
 		cgapp.RemoveFolders("roles", proxyList)
 
-		// Success message.
+		// Success messages.
 		cgapp.ShowMessage(
 			"success",
-			fmt.Sprintf("Ansible inventory, playbook and roles for `%v` was created!", proxy),
+			fmt.Sprintf("Web/Proxy server configuration for `%v` was created!", proxy),
+			false, false,
+		)
+		cgapp.ShowMessage(
+			"success",
+			"Ansible inventory, playbook and roles for deploying was created!",
 			false, false,
 		)
 	}
 
-	// Copy misc files from embedded file system.
+	/*
+		The project's misc files part creation.
+	*/
+
+	// Copy from embedded file system.
 	if err := cgapp.CopyFromEmbeddedFS(
 		&cgapp.EmbeddedFileSystem{
 			Name:       registry.EmbedMiscFiles,
