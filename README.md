@@ -61,7 +61,7 @@ A short video screencast to introduce main features of the Create Go App CLI.
 
 ## 📖 Official Documentation
 
-The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Wiki](https://github.com/create-go-app/cli/wiki) and take part in [Discussions](https://github.com/create-go-app/cli/discussions). We've put together a subject index specifically for you, so you can find any answer you want in seconds!
+The best way to better explore all the features of the **Create Go App CLI** is to read the [Official Wiki](https://github.com/create-go-app/cli/wiki) and take part in [Discussions](https://github.com/create-go-app/cli/discussions) and/or [Issues](https://github.com/create-go-app/cli/issues).
 
 ## ⚙️ Commands & Options
 
@@ -74,7 +74,7 @@ cgapp create
 ```
 
 - 📺 Preview: https://recordit.co/OQAwkZBrjN
-- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#create
+- 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-create
 
 ### `deploy`
 
@@ -91,7 +91,7 @@ cgapp deploy [OPTION]
 | `-K`   | Prompt you to provide the remote user sudo password (_a standard Ansible `--ask-become-pass` option_). | `boolean` | `false` | No        |
 
 - 📺 Preview: https://recordit.co/ishTf0Au1x
-- 📖 Docs: https://create-go.app/detailed-guides/commands-and-options/#deploy
+- 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-deploy
 
 ## 📝 Production-ready project templates
 
@@ -210,4 +210,4 @@ Together, we can make this project **better** every day! 😘
 
 ## ⚠️ License
 
-`Create Go App CLI` is free and open-source software licensed under the [Apache 2.0 License](https://github.com/create-go-app/cli/blob/master/LICENSE). Official logo was created by [Vic Shóstak](https://shostak.dev/) and distributed under [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/) license (CC BY-SA 4.0 International).
+`Create Go App CLI` is free and open-source software licensed under the [Apache 2.0 License](https://github.com/create-go-app/cli/blob/master/LICENSE). Official [logo](https://github.com/create-go-app/cli/wiki/Logo) was created by [Vic Shóstak](https://shostak.dev/) and distributed under [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/) license (CC BY-SA 4.0 International).
