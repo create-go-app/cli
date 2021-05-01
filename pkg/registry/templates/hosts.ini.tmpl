@@ -41,9 +41,6 @@ server_group=docker
 # Project configuration:
 #
 
-# Choose entrypoint for project,
-# REQUIRED string `backend` or `frontend`
-project_entrypoint=backend
 # Set your project domain
 project_domain=example.com
 
@@ -54,14 +51,6 @@ project_domain=example.com
 # Set backend port number,
 # MUST BE MATCH to the port that is listed in your `./backend/.env` file!
 backend_port=5000
-
-#
-# Frontend configuration:
-#
-
-# Set frontend port number,
-# MUST BE MATCH to the port that is listed in your `./frontend/.env` file!
-frontend_port=3000
 
 {{ if eq .Proxy "traefik" }}#
 # Traefik Proxy configuration:
@@ -76,12 +65,13 @@ traefik_log_format=json
 # Set URL for Traefik admin dashboard,
 # if you DO NOT NEED dashboard (Web UI), just leave it blank
 traefik_dashboard_url=cp.example.com
-# Set username for Traefik admin dashboard
+# Set username for Traefik admin dashboard,
+# DO NOT FORGET to set this setting, if `traefik_dashboard_url` variable IS NOT empty!
 traefik_dashboard_user=admin
 # Set hashed password for Traefik admin dashboard,
 # DO NOT FORGET to set this setting, if `traefik_dashboard_url` variable IS NOT empty!
 # See: https://doc.traefik.io/traefik/middlewares/basicauth/#users
-traefik_dashboard_password=
+traefik_dashboard_password=admin:$$apr1$$WpxRpfMZ$$TMTfGB37C9xAHiPIDiFiB1
 
 #
 # ACME configuration (Let's Encrypt):

@@ -195,17 +195,24 @@ var runCreateCmd = func(cmd *cobra.Command, args []string) {
 		true, true,
 	)
 
-	// Ending message.
+	// Ending messages.
 	if proxy != "none" {
 		cgapp.ShowMessage(
 			"",
-			"Please put credentials into the Ansible inventory file (`hosts.ini`) before you start deploying a project!",
+			"* Please put credentials into the Ansible inventory file (`hosts.ini`) before you start deploying a project!",
+			false, false,
+		)
+	}
+	if frontend != "none" {
+		cgapp.ShowMessage(
+			"",
+			fmt.Sprintf("* Visit https://vitejs.dev/guide/ for more information about using the `%v` frontend template!", frontend),
 			false, false,
 		)
 	}
 	cgapp.ShowMessage(
 		"",
-		"A helpful documentation and next steps -> https://create-go.app/",
+		"* A helpful documentation and next steps -> https://create-go.app/",
 		false, true,
 	)
 	cgapp.ShowMessage(
