@@ -134,7 +134,7 @@ cgapp deploy [OPTION]
 
 ### Database
 
-- Roles for run Docker container with [PostgreSQl](https://postgresql.org/):
+- Roles for run Docker container with [PostgreSQL](https://postgresql.org/):
   - `postgres` — configured PostgreSQL container with apply migrations for backend.
 
 ### Cache (key-value storage)
