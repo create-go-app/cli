@@ -60,9 +60,6 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 		return cgapp.ShowError(err.Error())
 	}
 
-	// Cleanup project.
-	cgapp.RemoveFolders("backend", []string{".git", ".github"})
-
 	// Show success report.
 	cgapp.ShowMessage(
 		"success",
@@ -96,65 +93,59 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 		The project's webserver part creation.
 	*/
 
-	if proxy != "none" {
-		// Copy Ansible roles from embedded file system.
-		if err := cgapp.CopyFromEmbeddedFS(
-			&cgapp.EmbeddedFileSystem{
-				Name:       registry.EmbedRoles,
-				RootFolder: "roles",
-				SkipDir:    false,
-			},
-		); err != nil {
-			return cgapp.ShowError(err.Error())
-		}
-
-		// Copy Ansible playbook, inventory and roles from embedded file system.
-		if err := cgapp.CopyFromEmbeddedFS(
-			&cgapp.EmbeddedFileSystem{
-				Name:       registry.EmbedTemplates,
-				RootFolder: "templates",
-				SkipDir:    true,
-			},
-		); err != nil {
-			return cgapp.ShowError(err.Error())
-		}
-
-		// Set template variables for Ansible playbook and inventory files.
-		inventory = registry.AnsibleInventoryVariables[proxy].List
-		playbook = registry.AnsiblePlaybookVariables[proxy].List
-
-		// Generate Ansible inventory file.
-		if err := cgapp.GenerateFileFromTemplate("hosts.ini.tmpl", inventory); err != nil {
-			return cgapp.ShowError(err.Error())
-		}
-
-		// Generate Ansible playbook file.
-		if err := cgapp.GenerateFileFromTemplate("playbook.yml.tmpl", playbook); err != nil {
-			return cgapp.ShowError(err.Error())
-		}
-
-		// Set unused proxy roles.
-		if proxy == "traefik" || proxy == "traefik-acme-dns" {
-			proxyList = []string{"nginx"}
-		} else if proxy == "nginx" {
-			proxyList = []string{"traefik"}
-		}
-
-		// Delete unused proxy and/or frontend roles.
-		cgapp.RemoveFolders("roles", proxyList)
-
-		// Success messages.
-		cgapp.ShowMessage(
-			"success",
-			fmt.Sprintf("Web/Proxy server configuration for `%v` was created!", proxy),
-			false, false,
-		)
-		cgapp.ShowMessage(
-			"success",
-			"Ansible inventory, playbook and roles for deploying was created!",
-			false, false,
-		)
+	// Copy Ansible playbook, inventory and roles from embedded file system.
+	if err := cgapp.CopyFromEmbeddedFS(
+		&cgapp.EmbeddedFileSystem{
+			Name:       registry.EmbedTemplates,
+			RootFolder: "templates",
+			SkipDir:    true,
+		},
+	); err != nil {
+		return cgapp.ShowError(err.Error())
 	}
+
+	// Set template variables for Ansible playbook and inventory files.
+	inventory = registry.AnsibleInventoryVariables[proxy].List
+	playbook = registry.AnsiblePlaybookVariables[proxy].List
+
+	// Generate Ansible inventory file.
+	if err := cgapp.GenerateFileFromTemplate("hosts.ini.tmpl", inventory); err != nil {
+		return cgapp.ShowError(err.Error())
+	}
+
+	// Generate Ansible playbook file.
+	if err := cgapp.GenerateFileFromTemplate("playbook.yml.tmpl", playbook); err != nil {
+		return cgapp.ShowError(err.Error())
+	}
+
+	// Show success report.
+	cgapp.ShowMessage(
+		"success",
+		fmt.Sprintf("Web/Proxy server configuration for `%v` was created!", proxy),
+		false, false,
+	)
+
+	/*
+		The project's Ansible roles part creation.
+	*/
+
+	// Copy Ansible roles from embedded file system.
+	if err := cgapp.CopyFromEmbeddedFS(
+		&cgapp.EmbeddedFileSystem{
+			Name:       registry.EmbedRoles,
+			RootFolder: "roles",
+			SkipDir:    false,
+		},
+	); err != nil {
+		return cgapp.ShowError(err.Error())
+	}
+
+	// Show success report.
+	cgapp.ShowMessage(
+		"success",
+		"Ansible inventory, playbook and roles for deploying was created!",
+		false, false,
+	)
 
 	/*
 		The project's misc files part creation.
@@ -171,6 +162,23 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 		return cgapp.ShowError(err.Error())
 	}
 
+	/*
+		Cleanup project.
+	*/
+
+	// Set unused proxy roles.
+	if proxy == "traefik" || proxy == "traefik-acme-dns" {
+		proxyList = []string{"nginx"}
+	} else if proxy == "nginx" {
+		proxyList = []string{"traefik"}
+	} else {
+		proxyList = []string{"traefik", "nginx"}
+	}
+
+	// Delete unused roles and backend files.
+	cgapp.RemoveFolders("roles", proxyList)
+	cgapp.RemoveFolders("backend", []string{".git", ".github"})
+
 	// Stop timer.
 	stopTimer := cgapp.CalculateDurationTime(startTimer)
 	cgapp.ShowMessage(
@@ -180,13 +188,11 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	)
 
 	// Ending messages.
-	if proxy != "none" {
-		cgapp.ShowMessage(
-			"",
-			"* Please put credentials into the Ansible inventory file (`hosts.ini`) before you start deploying a project!",
-			false, false,
-		)
-	}
+	cgapp.ShowMessage(
+		"",
+		"* Please put credentials into the Ansible inventory file (`hosts.ini`) before you start deploying a project!",
+		false, false,
+	)
 	if frontend != "none" {
 		cgapp.ShowMessage(
 			"",
