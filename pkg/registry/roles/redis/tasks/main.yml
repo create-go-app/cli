@@ -18,7 +18,7 @@
 #
 - name: Run Redis container
   community.docker.docker_container:
-    name: cgapp-redis
+    name: "{{ redis_container_name }}"
     image: "redis:{{ redis_version }}"
     restart_policy: unless-stopped
     recreate: true

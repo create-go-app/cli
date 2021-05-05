@@ -56,6 +56,9 @@ backend_port=5000
 # PostgreSQL configuration (backend DB):
 #
 
+# Set PostgreSQL container name
+# MUST BE MATCH to the port that is listed in your `./backend/.env` file!
+postgres_container_name=cgapp-postgres
 # Set PostgreSQL version (for example, 13.2)
 postgres_version=latest
 # Set PostgreSQL port number,
@@ -75,7 +78,7 @@ postgres_db=postgres
 postgres_ssl_mode=disable
 
 #
-# Go-Migrate configuration:
+# Go-Migrate configuration (DB migrations):
 #
 
 # Set migration number,
@@ -87,6 +90,9 @@ migrate_number=1
 # Redis configuration (backend cache):
 #
 
+# Set Redis container name
+# MUST BE MATCH to the port that is listed in your `./backend/.env` file!
+redis_container_name=cgapp-redis
 # Set Redis version (for example, 6.2)
 redis_version=latest
 # Set Redis port number,

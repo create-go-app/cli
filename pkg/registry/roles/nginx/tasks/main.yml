@@ -54,7 +54,7 @@
       - "80:80"
     volumes:
       - "{{ server_dir }}/webserver/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "{{ server_dir }}/webserver/default.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "{{ server_dir }}/webserver/default.conf:/etc/nginx/conf.d/default.conf"
   when: nginx_use_only_https == 'no'
 
 #
@@ -73,5 +73,5 @@
       - "443:443"
     volumes:
       - "{{ server_dir }}/webserver/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "{{ server_dir }}/webserver/default.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "{{ server_dir }}/webserver/default.conf:/etc/nginx/conf.d/default.conf"
   when: nginx_use_only_https == 'yes'
