@@ -40,9 +40,9 @@
     mode: 0600
 
 #
-# Run official Nginx Docker container with specified version.
+# Run official Nginx Docker container (for HTTP only) with specified version.
 #
-- name: Run Nginx container
+- name: Run Nginx container (for HTTP)
   community.docker.docker_container:
     name: cgapp-nginx
     image: "nginx:{{ nginx_version }}"
@@ -51,7 +51,27 @@
     networks:
       - name: "{{ docker_network }}"
     ports:
-      - ["80:80", "{{ '443:443' if nginx_use_only_https == 'yes' }}"]
+      - "80:80"
     volumes:
       - "{{ server_dir }}/webserver/nginx.conf:/etc/nginx/nginx.conf:ro"
       - "{{ server_dir }}/webserver/default.conf:/etc/nginx/conf.d/default.conf:ro"
+  when: nginx_use_only_https == 'no'
+
+#
+# Run official Nginx Docker container (for HTTPS only) with specified version.
+#
+- name: Run Nginx container (for HTTPS only)
+  community.docker.docker_container:
+    name: cgapp-nginx
+    image: "nginx:{{ nginx_version }}"
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "{{ server_dir }}/webserver/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "{{ server_dir }}/webserver/default.conf:/etc/nginx/conf.d/default.conf:ro"
+  when: nginx_use_only_https == 'yes'
