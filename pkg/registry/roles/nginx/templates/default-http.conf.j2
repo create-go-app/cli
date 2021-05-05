@@ -14,8 +14,8 @@ server {
 
 # Main server
 server {
-  listen      80 default_server;
-  listen      [::]:80 default_server;
+  listen      80;
+  listen      [::]:80;
 {% if nginx_redirect_to_non_www %}
   server_name {{ project_domain }};
 {% else %}

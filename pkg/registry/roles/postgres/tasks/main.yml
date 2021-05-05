@@ -18,7 +18,7 @@
 #
 - name: Run PostgreSQL container
   community.docker.docker_container:
-    name: cgapp-postgres
+    name: "{{ postgres_container_name }}"
     image: "postgres:{{ postgres_version }}"
     restart_policy: unless-stopped
     recreate: true
@@ -26,6 +26,10 @@
       - name: "{{ docker_network }}"
     ports:
       - "{{ postgres_port }}:{{ postgres_port }}"
+    env:
+      POSTGRES_USER: "{{ postgres_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
+      POSTGRES_DB: "{{ postgres_db }}"
     volumes:
       - "{{ server_dir }}/database/data/:/var/lib/postgresql/data"
 
@@ -44,7 +48,7 @@
         "-path",
         "/migrations",
         "-database",
-        "postgres://{{ postgres_user }}:{{ postgres_password }}@localhost:{{ postgres_port }}/{{ postgres_db }}?sslmode={{ postgres_ssl_mode }}",
+        "postgres://{{ postgres_user }}:{{ postgres_password }}@{{ postgres_container_name }}:{{ postgres_port }}/{{ postgres_db }}?sslmode={{ postgres_ssl_mode }}",
         "up",
         "{{ migrate_number }}",
       ]
