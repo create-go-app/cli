@@ -53,5 +53,5 @@
 # Create a new Docker network for connect all project elements into one network.
 #
 - name: Create a new Docker network
-  docker_network:
+  community.docker.docker_network:
     name: "{{ docker_network }}"

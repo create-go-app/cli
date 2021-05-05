@@ -14,5 +14,7 @@
   #
   roles:
     - { role: docker, tags: [docker] }
-    - { role: {{.Proxy}}, tags: [{{.Proxy}}] }
     - { role: backend, tags: [backend] }
+    - { role: redis, tags: [redis] }
+    - { role: postgres, tags: [postgres] }
+{{ if ne .Proxy "none" }}    - { role: {{.Proxy}}, tags: [{{.Proxy}}] }{{ end }}

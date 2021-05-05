@@ -11,7 +11,7 @@ import (
 )
 
 // CLIVersion version of Create Go App CLI.
-const CLIVersion string = "2.0.0"
+const CLIVersion string = "2.1.0"
 
 // Variables struct for Ansible variables (inventory, hosts).
 type Variables struct {
@@ -103,6 +103,11 @@ var (
 
 	// AnsibleInventoryVariables list of variables for inventory.
 	AnsibleInventoryVariables = map[string]*Variables{
+		"none": {
+			List: map[string]interface{}{
+				"Proxy": "none",
+			},
+		},
 		"traefik": {
 			List: map[string]interface{}{
 				"Proxy":    "traefik",
@@ -124,6 +129,11 @@ var (
 
 	// AnsiblePlaybookVariables list of variables for playbook.
 	AnsiblePlaybookVariables = map[string]*Variables{
+		"none": {
+			List: map[string]interface{}{
+				"Proxy": "none",
+			},
+		},
 		"traefik": {
 			List: map[string]interface{}{
 				"Proxy": "traefik",

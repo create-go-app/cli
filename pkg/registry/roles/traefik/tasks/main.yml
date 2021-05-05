@@ -53,7 +53,7 @@
 # WITHOUT dashboard (Traefik Web UI) and specified version.
 #
 - name: Run Traefik container without dashboard (Traefik Web UI)
-  docker_container:
+  community.docker.docker_container:
     name: cgapp-traefik
     image: "traefik:{{ traefik_version }}"
     restart_policy: unless-stopped
@@ -83,7 +83,7 @@
 # WITH dashboard (Traefik Web UI) and specified version.
 #
 - name: Run Traefik container with dashboard (Traefik Web UI)
-  docker_container:
+  community.docker.docker_container:
     name: cgapp-traefik
     image: "traefik:{{ traefik_version }}"
     restart_policy: unless-stopped

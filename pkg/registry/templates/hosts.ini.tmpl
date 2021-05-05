@@ -20,13 +20,6 @@ ansible_connection=ssh
 ansible_python_interpreter=/usr/bin/python3
 
 #
-# Docker configuration:
-#
-
-# Set Docker network name
-docker_network=cgapp_network
-
-#
 # Remote server configuration:
 #
 
@@ -45,12 +38,60 @@ server_group=docker
 project_domain=example.com
 
 #
+# Docker configuration:
+#
+
+# Set Docker network name
+docker_network=cgapp_network
+
+#
 # Backend configuration:
 #
 
 # Set backend port number,
 # MUST BE MATCH to the port that is listed in your `./backend/.env` file!
 backend_port=5000
+
+#
+# PostgreSQL configuration (backend DB):
+#
+
+# Set PostgreSQL version (for example, 13.2)
+postgres_version=latest
+# Set PostgreSQL port number,
+# MUST BE MATCH to the port that is listed in your `./backend/.env` file!
+postgres_port=5432
+# Set PostgreSQL user name,
+# MUST BE MATCH to the user name that is listed in your `./backend/.env` file!
+postgres_user=postgres
+# Set PostgreSQL password,
+# MUST BE MATCH to the password that is listed in your `./backend/.env` file!
+postgres_password=password
+# Set PostgreSQL DB name,
+# MUST BE MATCH to the DB name that is listed in your `./backend/.env` file!
+postgres_db=postgres
+# Set PostgreSQL SSL mode state ('enabled' or 'disabled'),
+# MUST BE MATCH to the SSL mode state that is listed in your `./backend/.env` file!
+postgres_ssl_mode=disable
+
+#
+# Go-Migrate configuration:
+#
+
+# Set migration number,
+# if you WANT to migrate all of your migrations, just leave it blank,
+# for only initial migration set it to '1'
+migrate_number=1
+
+#
+# Redis configuration (backend cache):
+#
+
+# Set Redis version (for example, 6.2)
+redis_version=latest
+# Set Redis port number,
+# MUST BE MATCH to the port that is listed in your `./backend/.env` file!
+redis_port=6379
 
 {{ if eq .Proxy "traefik" }}#
 # Traefik Proxy configuration:

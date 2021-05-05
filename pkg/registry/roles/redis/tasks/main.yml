@@ -1,0 +1,30 @@
+# Ansible role for deploy the Redis for the Create Go App project.
+# Author: Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+# For more information, please visit https://create-go.app/
+
+---
+#
+# Create folder for Redis cache.
+#
+- name: Ensures Redis dir exists
+  file:
+    state: directory
+    path: "{{ server_dir }}/cache"
+    owner: "{{ server_user }}"
+    group: "{{ server_group }}"
+
+#
+# Run official Redis Docker container with specified version.
+#
+- name: Run Redis container
+  community.docker.docker_container:
+    name: cgapp-redis
+    image: "redis:{{ redis_version }}"
+    restart_policy: unless-stopped
+    recreate: true
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - "{{ redis_port }}:{{ redis_port }}"
+    volumes:
+      - "{{ server_dir }}/cache/data/:/data"

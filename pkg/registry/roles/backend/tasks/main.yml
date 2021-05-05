@@ -25,7 +25,7 @@
 # Build backend Docker container.
 #
 - name: Build Docker image for backend
-  docker_image:
+  community.docker.docker_image:
     name: cgapp_backend # name of the backend image
     build:
       path: "{{ server_dir }}/backend" # folder with Dockerfile
@@ -36,7 +36,7 @@
 # Run backend container (for Traefik Proxy).
 #
 - name: Run Docker container with backend (for Traefik Proxy)
-  docker_container:
+  community.docker.docker_container:
     name: cgapp-backend # name of the backend container
     image: cgapp_backend:latest
     restart_policy: unless-stopped
@@ -55,7 +55,7 @@
 # Run backend container (for Nginx).
 #
 - name: Run Docker container with backend (for Nginx)
-  docker_container:
+  community.docker.docker_container:
     name: cgapp-backend # name of the backend container
     image: cgapp_backend:latest
     restart_policy: unless-stopped
