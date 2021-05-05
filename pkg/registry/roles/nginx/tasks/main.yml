@@ -43,7 +43,7 @@
 # Run official Nginx Docker container with specified version.
 #
 - name: Run Nginx container
-  docker_container:
+  community.docker.docker_container:
     name: cgapp-nginx
     image: "nginx:{{ nginx_version }}"
     restart_policy: unless-stopped

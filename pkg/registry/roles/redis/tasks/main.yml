@@ -17,7 +17,7 @@
 # Run official Redis Docker container with specified version.
 #
 - name: Run Redis container
-  docker_container:
+  community.docker.docker_container:
     name: cgapp-redis
     image: "redis:{{ redis_version }}"
     restart_policy: unless-stopped
