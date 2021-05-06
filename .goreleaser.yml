@@ -49,7 +49,7 @@ brews:
 
     # Caveats for the user of your binary.
     # Default is empty.
-    caveats: "Create a new project via interactive console UI into current folder by using `cgapp create` command."
+    caveats: "Create a new project via interactive console UI into current folder by using `cgapp create` command. A helpful documentation and next steps with your project is here https://create-go.app/"
 
     # Your app's homepage.
     # Default is empty.
