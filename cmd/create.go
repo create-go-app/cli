@@ -38,7 +38,10 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	// Start message.
 	cgapp.ShowMessage(
 		"",
-		fmt.Sprintf("Create a new project via Create Go App CLI v%v...", registry.CLIVersion),
+		fmt.Sprintf(
+			"Create a new project via Create Go App CLI v%v...",
+			registry.CLIVersion,
+		),
 		true, true,
 	)
 
@@ -46,7 +49,9 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	if useCustomTemplate {
 		// Custom survey.
 		if err := survey.Ask(
-			registry.CustomCreateQuestions, &customCreateAnswers, survey.WithIcons(surveyIconsConfig),
+			registry.CustomCreateQuestions,
+			&customCreateAnswers,
+			survey.WithIcons(surveyIconsConfig),
 		); err != nil {
 			return cgapp.ShowError(err.Error())
 		}
@@ -58,7 +63,9 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	} else {
 		// Default survey.
 		if err := survey.Ask(
-			registry.CreateQuestions, &createAnswers, survey.WithIcons(surveyIconsConfig),
+			registry.CreateQuestions,
+			&createAnswers,
+			survey.WithIcons(surveyIconsConfig),
 		); err != nil {
 			return cgapp.ShowError(err.Error())
 		}
