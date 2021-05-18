@@ -15,6 +15,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func init() {
+	rootCmd.AddCommand(createCmd)
+	createCmd.Flags().BoolVarP(
+		&useCustomTemplate,
+		"template", "t", false,
+		"enables to use custom backend and frontend templates",
+	)
+}
+
 // createCmd represents the `create` command.
 var createCmd = &cobra.Command{
 	Use:     "create",
@@ -29,21 +38,46 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	// Start message.
 	cgapp.ShowMessage(
 		"",
-		fmt.Sprintf("Create a new project via Create Go App CLI v%v...", registry.CLIVersion),
+		fmt.Sprintf(
+			"Create a new project via Create Go App CLI v%v...",
+			registry.CLIVersion,
+		),
 		true, true,
 	)
 
 	// Start survey.
-	if err := survey.Ask(
-		registry.CreateQuestions, &createAnswers, survey.WithIcons(surveyIconsConfig),
-	); err != nil {
-		return cgapp.ShowError(err.Error())
-	}
+	if useCustomTemplate {
+		// Custom survey.
+		if err := survey.Ask(
+			registry.CustomCreateQuestions,
+			&customCreateAnswers,
+			survey.WithIcons(surveyIconsConfig),
+		); err != nil {
+			return cgapp.ShowError(err.Error())
+		}
 
-	// Define variables for better display.
-	backend = strings.Replace(createAnswers.Backend, "/", "_", -1)
-	frontend = createAnswers.Frontend
-	proxy = createAnswers.Proxy
+		// Define variables for better display.
+		backend = customCreateAnswers.Backend
+		frontend = customCreateAnswers.Frontend
+		proxy = customCreateAnswers.Proxy
+	} else {
+		// Default survey.
+		if err := survey.Ask(
+			registry.CreateQuestions,
+			&createAnswers,
+			survey.WithIcons(surveyIconsConfig),
+		); err != nil {
+			return cgapp.ShowError(err.Error())
+		}
+
+		// Define variables for better display.
+		backend = fmt.Sprintf(
+			"github.com/create-go-app/%v-go-template",
+			strings.Replace(createAnswers.Backend, "/", "_", -1),
+		)
+		frontend = createAnswers.Frontend
+		proxy = createAnswers.Proxy
+	}
 
 	// Start timer.
 	startTimer := time.Now()
@@ -53,10 +87,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	*/
 
 	// Clone backend files from git repository.
-	if err := cgapp.GitClone(
-		"backend",
-		fmt.Sprintf("github.com/create-go-app/%v-go-template", backend),
-	); err != nil {
+	if err := cgapp.GitClone("backend", backend); err != nil {
 		return cgapp.ShowError(err.Error())
 	}
 
@@ -72,13 +103,21 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	*/
 
 	if frontend != "none" {
-		// Create frontend files.
-		if err := cgapp.ExecCommand(
-			"npm",
-			[]string{"init", "@vitejs/app", "frontend", "--", "--template", frontend},
-			true,
-		); err != nil {
-			return cgapp.ShowError(err.Error())
+		// Checking, if use custom templates.
+		if useCustomTemplate {
+			// Clone frontend files from git repository.
+			if err := cgapp.GitClone("frontend", frontend); err != nil {
+				return cgapp.ShowError(err.Error())
+			}
+		} else {
+			// Create a default frontend template from Vite.js.
+			if err := cgapp.ExecCommand(
+				"npm",
+				[]string{"init", "@vitejs/app", "frontend", "--", "--template", frontend},
+				true,
+			); err != nil {
+				return cgapp.ShowError(err.Error())
+			}
 		}
 
 		// Show success report.
@@ -119,11 +158,13 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	}
 
 	// Show success report.
-	cgapp.ShowMessage(
-		"success",
-		fmt.Sprintf("Web/Proxy server configuration for `%v` was created!", proxy),
-		false, false,
-	)
+	if proxy != "none" {
+		cgapp.ShowMessage(
+			"success",
+			fmt.Sprintf("Web/Proxy server configuration for `%v` was created!", proxy),
+			false, false,
+		)
+	}
 
 	/*
 		The project's Ansible roles part creation.
@@ -143,7 +184,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	// Show success report.
 	cgapp.ShowMessage(
 		"success",
-		"Ansible inventory, playbook and roles for deploying was created!",
+		"Ansible inventory, playbook and roles for deploying your project was created!",
 		false, false,
 	)
 
@@ -175,9 +216,10 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 		proxyList = []string{"traefik", "nginx"}
 	}
 
-	// Delete unused roles and backend files.
+	// Delete unused roles, backend and frontend files.
 	cgapp.RemoveFolders("roles", proxyList)
 	cgapp.RemoveFolders("backend", []string{".git", ".github"})
+	cgapp.RemoveFolders("frontend", []string{".git", ".github"})
 
 	// Stop timer.
 	stopTimer := cgapp.CalculateDurationTime(startTimer)
@@ -193,7 +235,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 		"* Please put credentials into the Ansible inventory file (`hosts.ini`) before you start deploying a project!",
 		false, false,
 	)
-	if frontend != "none" {
+	if !useCustomTemplate && frontend != "none" {
 		cgapp.ShowMessage(
 			"",
 			fmt.Sprintf("* Visit https://vitejs.dev/guide/ for more info about using the `%v` frontend template!", frontend),
@@ -202,7 +244,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	}
 	cgapp.ShowMessage(
 		"",
-		"* A helpful documentation and next steps with your project is here https://create-go.app/",
+		"* A helpful documentation and next steps with your project is here https://create-go.app/wiki",
 		false, true,
 	)
 	cgapp.ShowMessage(
@@ -212,8 +254,4 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	)
 
 	return nil
-}
-
-func init() {
-	rootCmd.AddCommand(createCmd)
 }
