@@ -13,6 +13,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func init() {
+	rootCmd.AddCommand(deployCmd)
+	deployCmd.Flags().BoolVarP(
+		&askBecomePass,
+		"ask-become-pass", "k", false,
+		"prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option)",
+	)
+}
+
 // deployCmd represents the `deploy` command.
 var deployCmd = &cobra.Command{
 	Use:     "deploy",
@@ -71,13 +80,4 @@ func runDeployCmd(cmd *cobra.Command, args []string) error {
 	)
 
 	return nil
-}
-
-func init() {
-	rootCmd.AddCommand(deployCmd)
-	deployCmd.PersistentFlags().BoolVarP(
-		&askBecomePass,
-		"", "K", false,
-		"prompt you to provide the remote user sudo password (standard Ansible `--ask-become-pass` option)",
-	)
 }

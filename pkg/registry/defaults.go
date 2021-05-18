@@ -11,7 +11,7 @@ import (
 )
 
 // CLIVersion version of Create Go App CLI.
-const CLIVersion string = "2.1.1"
+const CLIVersion string = "2.2.0"
 
 // Variables struct for Ansible variables (inventory, hosts).
 type Variables struct {
@@ -76,6 +76,47 @@ var (
 				},
 				Default:  "none",
 				PageSize: 13,
+			},
+		},
+		{
+			Name: "proxy",
+			Prompt: &survey.Select{
+				Message: "Choose a web/proxy server:",
+				Options: []string{
+					"none",
+					"traefik",
+					"traefik-acme-dns",
+					"nginx",
+				},
+				Default:  "none",
+				PageSize: 4,
+			},
+		},
+		{
+			Name: "agree",
+			Prompt: &survey.Confirm{
+				Message: "If everything is okay, can I create this project for you? ;)",
+				Default: true,
+			},
+		},
+	}
+
+	// CustomCreateQuestions survey's questions for `create -c` command.
+	CustomCreateQuestions = []*survey.Question{
+		{
+			Name: "backend",
+			Prompt: &survey.Input{
+				Message: "Enter URL to the custom backend repository:",
+				Help:    "No need to specify `http://` or `https://` protocol.",
+			},
+			Validate: survey.Required,
+		},
+		{
+			Name: "frontend",
+			Prompt: &survey.Input{
+				Message: "Enter URL to the custom frontend repository:",
+				Help:    "No need to specify `http://` or `https://` protocol.",
+				Default: "none",
 			},
 		},
 		{
