@@ -113,7 +113,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 			// Create a default frontend template from Vite.js.
 			if err := cgapp.ExecCommand(
 				"npm",
-				[]string{"init", "@vitejs/app", "frontend", "--", "--template", frontend},
+				[]string{"init", "vite@latest", "frontend", "--", "--template", frontend},
 				true,
 			); err != nil {
 				return cgapp.ShowError(err.Error())
