@@ -3,7 +3,7 @@ module github.com/create-go-app/cli/v2
 go 1.16
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.2.13
+	github.com/AlecAivazis/survey/v2 v2.2.14
 	github.com/go-git/go-git/v5 v5.4.2
-	github.com/spf13/cobra v1.1.3
+	github.com/spf13/cobra v1.2.1
 )
