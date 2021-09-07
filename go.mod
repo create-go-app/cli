@@ -4,7 +4,6 @@ go 1.17
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.1
-	github.com/create-go-app/cli/v2 v2.2.8
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/spf13/cobra v1.2.1
 )
