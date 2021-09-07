@@ -10,7 +10,7 @@
 
 First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.17` or higher is required.
 
-> If you are looking for the Go `1.16` version, it is [here](https://github.com/create-go-app/cli/tree/v2).
+> If you're looking for the **Create Go App CLI** for Go `1.16`, you can find it [here](https://github.com/create-go-app/cli/tree/v2).
 
 Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies) command and rename installed binary in `$GOPATH/bin`:
 
@@ -126,9 +126,7 @@ cgapp deploy [OPTION]
 
 > ☝️ Frontend part will be generate using awesome tool [Vite.js](https://vitejs.dev/) under the hood. So, you'll always get the latest version of `React`, `Preact`, `Vue`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates for your project!
 >
-> Please make sure that you have `npm` version `7` or higher installed in order to create the frontend part of the project correctly.
->
-> If you run the `cgapp create` command using our [Docker image](https://hub.docker.com/r/koddr/cgapp), `npm` of the correct version is **already** included.
+> Please make sure that you have `npm` version `7` or higher installed in order to create the frontend part of the project correctly. If you run the `cgapp create` command using our [Docker image](https://hub.docker.com/r/koddr/cgapp), `npm` of the correct version is **already** included.
 
 ## 🚚 Pre-configured Ansible roles
 
