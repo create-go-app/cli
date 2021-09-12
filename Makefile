@@ -27,4 +27,4 @@ delete-tag:
 	git tag --delete $(VERSION)
 
 update-pkg-cache:
-	curl -i https://proxy.golang.org/github.com/create-go-app/cli/v2/@v/$(VERSION).info
+	curl -i https://proxy.golang.org/github.com/create-go-app/cli/v3/@v/$(VERSION).info
