@@ -35,7 +35,7 @@ func ExecCommand(command string, options []string, silentMode bool) error {
 
 	// Start executing command.
 	if errStart := cmd.Start(); errStart != nil {
-		return ShowError(stderr.String())
+		return ShowError(errStart.Error())
 	}
 
 	// Create a new scanner and run goroutine func with output, if not in silent mode.
@@ -50,7 +50,7 @@ func ExecCommand(command string, options []string, silentMode bool) error {
 
 	// Wait for executing command.
 	if errWait := cmd.Wait(); errWait != nil {
-		return ShowError(stderr.String())
+		return ShowError(errWait.Error())
 	}
 
 	return nil
