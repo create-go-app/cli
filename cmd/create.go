@@ -116,7 +116,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 				[]string{"init", "vite@latest", "frontend", "--", "--template", frontend},
 				true,
 			); err != nil {
-				return cgapp.ShowError(err.Error())
+				return err
 			}
 		}
 
