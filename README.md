@@ -159,6 +159,8 @@ If you want to say **thank you** or/and support active development of `Create Go
 - Write interesting articles about project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or personal blog.
 - Join DigitalOcean at our [referral link](https://m.do.co/c/b41859fa9b6e) (your profit is **$100** and we get $25).
 
+<a href="https://www.producthunt.com/posts/create-go-app?utm_source=badge-review&utm_medium=badge&utm_souce=badge-create-go-app#discussion-body" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/review.svg?post_id=316086&theme=light" alt="Create Go App - Create a new production-ready project by one CLI command | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 Together, we can make this project **better** every day! 😘
 
 ## ⚠️ License
