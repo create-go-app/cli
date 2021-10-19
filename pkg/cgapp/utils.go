@@ -11,7 +11,10 @@ import (
 	"github.com/mattn/go-colorable"
 )
 
-var out = colorable.NewColorableStdout()
+var (
+	Stdout = colorable.NewColorableStdout()
+	Stderr = colorable.NewColorableStderr()
+)
 
 func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 	// Define variables.
@@ -25,7 +28,7 @@ func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 		endLine = "\n" // set a new line
 	}
 
-	fmt.Fprintln(out, startLine+colorizeLevel(level)+text+endLine)
+	fmt.Fprintln(Stdout, startLine+colorizeLevel(level)+text+endLine)
 }
 
 // ShowError function for send error message to output.

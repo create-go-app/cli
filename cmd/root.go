@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/create-go-app/cli/v3/pkg/cgapp"
 	"github.com/create-go-app/cli/v3/pkg/registry"
 	"github.com/spf13/cobra"
 )
@@ -46,6 +47,11 @@ frontend (JavaScript, TypeScript) and deploy automation
 <- The Create Go App CLI will take care of the rest.
 
 A helpful documentation and next steps -> https://create-go.app/`,
+}
+
+func init() {
+	rootCmd.SetOut(cgapp.Stdout)
+	rootCmd.SetErr(cgapp.Stderr)
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
