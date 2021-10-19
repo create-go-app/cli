@@ -7,9 +7,12 @@ package cgapp
 import (
 	"fmt"
 	"time"
+
+	"github.com/mattn/go-colorable"
 )
 
-// ShowMessage function for send message to output.
+var out = colorable.NewColorableStdout()
+
 func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 	// Define variables.
 	var startLine, endLine string
@@ -22,7 +25,7 @@ func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 		endLine = "\n" // set a new line
 	}
 
-	fmt.Println(startLine + colorizeLevel(level) + text + endLine)
+	fmt.Fprintln(out, startLine+colorizeLevel(level)+text+endLine)
 }
 
 // ShowError function for send error message to output.
