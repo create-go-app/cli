@@ -33,7 +33,7 @@ func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 
 // ShowError function for send error message to output.
 func ShowError(text string) error {
-	return fmt.Errorf(colorizeLevel("error") + text)
+	return fmt.Errorf("%s", colorizeLevel("error")+text)
 }
 
 // CalculateDurationTime func to calculate duration time.
