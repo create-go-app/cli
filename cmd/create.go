@@ -73,7 +73,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 		// Define variables for better display.
 		backend = fmt.Sprintf(
 			"github.com/create-go-app/%v-go-template",
-			strings.Replace(createAnswers.Backend, "/", "_", -1),
+			strings.ReplaceAll(createAnswers.Backend, "/", "_"),
 		)
 		frontend = createAnswers.Frontend
 		proxy = createAnswers.Proxy
@@ -208,11 +208,12 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	*/
 
 	// Set unused proxy roles.
-	if proxy == "traefik" || proxy == "traefik-acme-dns" {
+	switch proxy {
+	case "traefik", "traefik-acme-dns":
 		proxyList = []string{"nginx"}
-	} else if proxy == "nginx" {
-		proxyList = []string{"traefik"}
-	} else {
+	case "nginx":
+		proxyList = []string{"nginx"}
+	default:
 		proxyList = []string{"traefik", "nginx"}
 	}
 

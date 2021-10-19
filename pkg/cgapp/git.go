@@ -30,7 +30,7 @@ func GitClone(templateType, templateURL string) error {
 		folder,
 		false,
 		&git.CloneOptions{
-			URL: "https://" + templateURL,
+			URL: fmt.Sprintf("https://%s", templateURL),
 		},
 	)
 	if errPlainClone != nil {

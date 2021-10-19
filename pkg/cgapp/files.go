@@ -89,7 +89,7 @@ func GenerateFileFromTemplate(fileName string, variables map[string]interface{})
 	_ = file.Close()
 
 	// Rename output file.
-	newFileName := strings.Replace(fileName, ".tmpl", "", -1)
+	newFileName := strings.ReplaceAll(fileName, ".tmpl", "")
 	if errRename := os.Rename(fileName, newFileName); errRename != nil {
 		return ShowError(errRename.Error())
 	}
