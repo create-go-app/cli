@@ -89,7 +89,7 @@ func TestMakeFolder(t *testing.T) {
 		},
 	}
 
-	_ = os.Mkdir("cgapp-project", 0750)
+	_ = os.Mkdir("cgapp-project", 0o750)
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -121,7 +121,7 @@ func TestRemoveFolders(t *testing.T) {
 		},
 	}
 
-	_ = os.MkdirAll("../../tmp/folder-1", 0750)
+	_ = os.MkdirAll("../../tmp/folder-1", 0o750)
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -219,7 +219,7 @@ func TestGenerateFileFromTemplate(t *testing.T) {
 		},
 	}
 
-	_ = os.Mkdir("../../tmp", 0750)
+	_ = os.Mkdir("../../tmp", 0o750)
 	_, _ = os.Create("../../tmp/test.txt")
 
 	for _, tt := range tests {
