@@ -7,9 +7,16 @@ package cgapp
 import (
 	"fmt"
 	"time"
+
+	"github.com/mattn/go-colorable"
 )
 
-// ShowMessage function for send message to output.
+var (
+	Stdout = colorable.NewColorableStdout() // add a colorable std out
+	Stderr = colorable.NewColorableStderr() // add a colorable std err
+)
+
+// ShowMessage function for showing output messages.
 func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 	// Define variables.
 	var startLine, endLine string
@@ -22,12 +29,16 @@ func ShowMessage(level, text string, startWithNewLine, endWithNewLine bool) {
 		endLine = "\n" // set a new line
 	}
 
-	fmt.Println(startLine + colorizeLevel(level) + text + endLine)
+	// Formatting message.
+	message := fmt.Sprintf("%s %s %s %s", startLine, colorizeLevel(level), text, endLine)
+
+	// Return output.
+	fmt.Fprintln(Stdout, message)
 }
 
 // ShowError function for send error message to output.
 func ShowError(text string) error {
-	return fmt.Errorf(colorizeLevel("error") + text)
+	return fmt.Errorf("%s%s", colorizeLevel("error"), text)
 }
 
 // CalculateDurationTime func to calculate duration time.
@@ -50,17 +61,17 @@ func colorizeLevel(level string) string {
 	switch level {
 	case "success":
 		color = green
-		icon = "[OK] "
+		icon = "[OK]"
 	case "error":
 		color = red
-		icon = "[ERROR] "
+		icon = "[ERROR]"
 	case "info":
 		color = yellow
-		icon = "[INFO] "
+		icon = "[INFO]"
 	default:
 		color = noColor
 	}
 
 	// Send common or colored caption.
-	return color + icon + noColor
+	return fmt.Sprintf("%s%s%s", color, icon, noColor)
 }

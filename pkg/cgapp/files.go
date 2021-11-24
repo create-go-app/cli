@@ -8,7 +8,6 @@ import (
 	"embed"
 	"fmt"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -89,7 +88,7 @@ func GenerateFileFromTemplate(fileName string, variables map[string]interface{})
 	_ = file.Close()
 
 	// Rename output file.
-	newFileName := strings.Replace(fileName, ".tmpl", "", -1)
+	newFileName := strings.ReplaceAll(fileName, ".tmpl", "")
 	if errRename := os.Rename(fileName, newFileName); errRename != nil {
 		return ShowError(errRename.Error())
 	}
@@ -100,7 +99,7 @@ func GenerateFileFromTemplate(fileName string, variables map[string]interface{})
 // MakeFile function for single file create.
 func MakeFile(fileName string, fileData []byte) error {
 	// Write to created file.
-	if err := ioutil.WriteFile(fileName, fileData, 0600); err != nil {
+	if err := os.WriteFile(fileName, fileData, 0o600); err != nil {
 		return err
 	}
 
@@ -110,7 +109,7 @@ func MakeFile(fileName string, fileData []byte) error {
 // MakeFolder function for create folder.
 func MakeFolder(folderName string) error {
 	// Check if folder exists, fail if it does.
-	if err := os.Mkdir(folderName, 0750); err != nil {
+	if err := os.Mkdir(folderName, 0o750); err != nil {
 		return err
 	}
 

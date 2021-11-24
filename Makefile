@@ -1,25 +1,28 @@
-.PHONY: clean test security install build release
+.PHONY: clean lint security critic test install build release
 
 clean:
 	rm -rf ./tmp coverage.out
 
-test: clean
-	go test -coverprofile=coverage.out ./...
-	go tool cover -func=coverage.out
-
 lint:
-	golangci-lint run
+	golangci-lint run ./...
 
 security:
 	gosec -quiet ./...
 
-install: security lint test
+critic:
+	gocritic check -enableAll ./...
+
+test: clean lint security critic
+	go test -coverprofile=coverage.out ./...
+	go tool cover -func=coverage.out
+
+install: test
 	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp ./cmd/cgapp/main.go
 
-build: security test
+build: test
 	goreleaser --snapshot --skip-publish --rm-dist
 
-release: security test
+release: test
 	git tag -a $(VERSION) -m "$(VERSION)"
 	goreleaser --snapshot --skip-publish --rm-dist
 
