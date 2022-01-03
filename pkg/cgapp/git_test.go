@@ -53,6 +53,9 @@ func TestGitClone(t *testing.T) {
 		})
 
 		// Clean
-		os.RemoveAll("../../tmp")
+		err := os.RemoveAll("../../tmp")
+		if err != nil {
+			return
+		}
 	}
 }

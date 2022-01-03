@@ -14,7 +14,7 @@ import (
 	"text/template"
 )
 
-// EmbeddedFileSystems struct contains embedded file system fields.
+// EmbeddedFileSystem struct contains embedded file system fields.
 type EmbeddedFileSystem struct {
 	Name       embed.FS
 	RootFolder string

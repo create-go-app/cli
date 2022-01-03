@@ -6,9 +6,10 @@ package cmd
 
 import (
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/spf13/cobra"
+
 	"github.com/create-go-app/cli/v3/pkg/cgapp"
 	"github.com/create-go-app/cli/v3/pkg/registry"
-	"github.com/spf13/cobra"
 )
 
 var (
@@ -39,8 +40,8 @@ var rootCmd = &cobra.Command{
 	Long: `
 A powerful CLI for the Create Go App project.
 
-Create a new production-ready project with backend (Golang), 
-frontend (JavaScript, TypeScript) and deploy automation 
+Create a new production-ready project with backend (Golang),
+frontend (JavaScript, TypeScript) and deploy automation
 (Ansible, Docker) by running one CLI command.
 
 -> Focus on writing code and thinking of business logic!

@@ -16,7 +16,7 @@ import (
 func GitClone(templateType, templateURL string) error {
 	// Checking for nil.
 	if templateType == "" || templateURL == "" {
-		return fmt.Errorf("Project template not found!")
+		return fmt.Errorf("project template not found")
 	}
 
 	// Get current directory.

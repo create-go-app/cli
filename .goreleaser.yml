@@ -33,7 +33,7 @@ brews:
       owner: create-go-app
       name: homebrew-cli
 
-    # Template for the url which is determined by the given Token (github or gitlab)
+    # Template for the url which is determined by the given Token (GitHub or gitlab)
     # Default for github is "https://github.com/<repo_owner>/<repo_name>/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
     url_template: "https://github.com/create-go-app/cli/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
 
