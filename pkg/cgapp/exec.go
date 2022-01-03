@@ -15,7 +15,7 @@ import (
 func ExecCommand(command string, options []string, silentMode bool) error {
 	// Checking for nil.
 	if command == "" || options == nil {
-		return fmt.Errorf("No command to execute!")
+		return fmt.Errorf("no command to execute")
 	}
 
 	// Create buffer for stderr.

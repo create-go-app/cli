@@ -53,7 +53,10 @@ func TestMakeFile(t *testing.T) {
 		})
 
 		// Clean
-		os.RemoveAll("Makefile")
+		err := os.RemoveAll("Makefile")
+		if err != nil {
+			return
+		}
 	}
 }
 
@@ -99,7 +102,10 @@ func TestMakeFolder(t *testing.T) {
 		})
 
 		// Clean
-		os.RemoveAll(tt.args.folderName)
+		err := os.RemoveAll(tt.args.folderName)
+		if err != nil {
+			return
+		}
 	}
 }
 
