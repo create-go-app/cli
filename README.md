@@ -102,6 +102,9 @@ cgapp deploy [OPTION]
   - [`net/http`](https://github.com/create-go-app/net_http-go-template) — simple REST API with CRUD and JWT auth.
 - Backend template with [Fiber](https://github.com/gofiber/fiber):
   - [`fiber`](https://github.com/create-go-app/fiber-go-template) — complex REST API with CRUD, JWT auth with renew token, DB and cache.
+- Backend template with [go-chi](https://github.com/go-chi/chi):
+  - [`chi`](https://github.com/create-go-app/chi-go-template) — a basic application with health
+    check.
 
 ### Frontend
 
