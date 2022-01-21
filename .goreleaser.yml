@@ -25,6 +25,9 @@ builds:
       - CGO_ENABLED=0
     ldflags:
       - -s -w
+    hooks:
+      post:
+        - upx --brute "{{ .Path }}"
 
 # .goreleaser.yml
 brews:
@@ -65,6 +68,7 @@ brews:
 
     # Packages your package depends on.
     dependencies:
+      - name: npm
       - name: git
       - name: go
 
