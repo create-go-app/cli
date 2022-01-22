@@ -111,13 +111,39 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 				return cgapp.ShowError(err.Error())
 			}
 		} else {
-			// Create a default frontend template from Vite.js.
-			if err := cgapp.ExecCommand(
-				"npm",
-				[]string{"init", "vite@latest", "frontend", "--", "--template", frontend},
-				true,
-			); err != nil {
-				return err
+
+			if frontend == "next" || frontend == "next-ts" {
+				cgapp.ShowMessage(
+					"success",
+					fmt.Sprintf("Creating frontend with Next.js!"),
+					true, false,
+				)
+				if frontend == "next-ts" {
+					if err := cgapp.ExecCommand(
+						"npx",
+						[]string{"create-next-app@latest", "frontend", "--typescript"},
+						true,
+					); err != nil {
+						return err
+					}
+				} else {
+					if err := cgapp.ExecCommand(
+						"npx",
+						[]string{"create-next-app@latest", "frontend"},
+						true,
+					); err != nil {
+						return err
+					}
+				}
+
+			} else { // Create a default frontend template from Vite.js.
+				if err := cgapp.ExecCommand(
+					"npm",
+					[]string{"init", "vite@latest", "frontend", "--", "--template", frontend},
+					true,
+				); err != nil {
+					return err
+				}
 			}
 		}
 

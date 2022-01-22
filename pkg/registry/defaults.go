@@ -68,6 +68,8 @@ var (
 					"react-ts",
 					"preact",
 					"preact-ts",
+					"next",
+					"next-ts",
 					"vue",
 					"vue-ts",
 					"svelte",
