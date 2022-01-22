@@ -115,7 +115,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 			if frontend == "next" || frontend == "next-ts" {
 				cgapp.ShowMessage(
 					"success",
-					fmt.Sprintf("Creating frontend with Next.js!"),
+					"Creating frontend with Next.js!",
 					true, false,
 				)
 				if frontend == "next-ts" {
