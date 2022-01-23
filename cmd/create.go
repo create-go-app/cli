@@ -111,36 +111,30 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 				return cgapp.ShowError(err.Error())
 			}
 		} else {
-
-			if frontend == "next" || frontend == "next-ts" {
-				cgapp.ShowMessage(
-					"success",
-					"Creating frontend with Next.js!",
-					true, false,
-				)
+			switch {
+			case frontend == "next" || frontend == "next-ts":
+				var isTypeScript string
 				if frontend == "next-ts" {
-					if err := cgapp.ExecCommand(
-						"npx",
-						[]string{"create-next-app@latest", "frontend", "--typescript"},
-						true,
-					); err != nil {
-						return err
-					}
-				} else {
-					if err := cgapp.ExecCommand(
-						"npx",
-						[]string{"create-next-app@latest", "frontend"},
-						true,
-					); err != nil {
-						return err
-					}
+					isTypeScript = "--typescript"
 				}
-
-			} else { // Create a default frontend template from Vite.js.
+				
+				// Create a default frontend template with Next.js (React).
 				if err := cgapp.ExecCommand(
-					"npm",
-					[]string{"init", "vite@latest", "frontend", "--", "--template", frontend},
-					true,
+					"npx", []string{"create-next-app@latest", "frontend", isTypeScript}, true,
+				); err != nil {
+					return err
+				}
+			case frontend == "nuxt3":
+				// Create a default frontend template with Nuxt 3 (Vue.js 3, TypeScript).
+				if err := cgapp.ExecCommand(
+					"npx", []string{"nuxi", "init", "frontend"}, true,
+				); err != nil {
+					return err
+				}
+			default:
+				// Create a default frontend template from Vite (Pure JS/TS, React, Preact, Vue, Svelte, Lit).
+				if err := cgapp.ExecCommand(
+					"npm", []string{"init", "vite@latest", "frontend", "--", "--template", frontend}, true,
 				); err != nil {
 					return err
 				}
