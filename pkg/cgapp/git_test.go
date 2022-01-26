@@ -59,3 +59,44 @@ func TestGitClone(t *testing.T) {
 		}
 	}
 }
+
+func Test_getAbsoluteURL(t *testing.T) {
+	type args struct {
+		templateURL   string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want string
+	}{
+		{
+			"successfully get absolute url from url with scheme",
+			args{
+				templateURL: "https://github.com/create-go-app/net_http-go-template",
+			},
+			"https://github.com/create-go-app/net_http-go-template",
+		},
+		{
+			"successfully get absolute url from url without scheme",
+			args{
+				templateURL: "github.com/create-go-app/net_http-go-template",
+			},
+			"https://github.com/create-go-app/net_http-go-template",
+		},
+		{
+			"successfully get absolute url from url starting space",
+			args{
+				templateURL: " github.com/create-go-app/net_http-go-template",
+			},
+			"https://github.com/create-go-app/net_http-go-template",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := getAbsoluteURL(tt.args.templateURL); got != tt.want {
+				t.Errorf("getAbsoluteURL() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
