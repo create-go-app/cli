@@ -72,23 +72,23 @@ brews:
       - name: git
       - name: go
 
-dockers:
-  - # GOOS of the built binary that should be used.
-    goos: linux
-    goarch: amd64
-
-    # Name templates of the built binaries that should be used.
-    ids: ["cgapp"]
-
-    # Templates of the Docker image names.
-    image_templates:
-      - "koddr/cgapp:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
-      - "koddr/cgapp:{{ .Major }}.{{ .Minor }}"
-      - "koddr/cgapp:{{ .Major }}"
-      - "koddr/cgapp:latest"
-
-    # Path to the Dockerfile (from the project root).
-    dockerfile: Dockerfile
+#dockers:
+#  - # GOOS of the built binary that should be used.
+#    goos: linux
+#    goarch: amd64
+#
+#    # Name templates of the built binaries that should be used.
+#    ids: ["cgapp"]
+#
+#    # Templates of the Docker image names.
+#    image_templates:
+#      - "koddr/cgapp:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+#      - "koddr/cgapp:{{ .Major }}.{{ .Minor }}"
+#      - "koddr/cgapp:{{ .Major }}"
+#      - "koddr/cgapp:latest"
+#
+#    # Path to the Dockerfile (from the project root).
+#    dockerfile: Dockerfile.goreleaser
 
 archives:
   - # Replacements for GOOS and GOARCH in the archive name.
