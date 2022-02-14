@@ -10,7 +10,7 @@ frontend (JavaScript, TypeScript) and deploy automation
 
 A helpful documentation and next steps -> https://create-go.app/
 
-Copyright (c) 2019-present Vic Shóstak <vic@shostak.dev> (https://shostak.dev)
+Copyright 2022 Vic Shóstak and Create Go App Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

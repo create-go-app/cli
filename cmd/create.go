@@ -1,4 +1,4 @@
-// Copyright 2019-present Vic Shóstak. All rights reserved.
+// Copyright 2022 Vic Shóstak and Create Go App Contributors. All rights reserved.
 // Use of this source code is governed by Apache 2.0 license
 // that can be found in the LICENSE file.
 
@@ -117,7 +117,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 				if frontend == "next-ts" {
 					isTypeScript = "--typescript"
 				}
-				
+
 				// Create a default frontend template with Next.js (React).
 				if err := cgapp.ExecCommand(
 					"npx", []string{"create-next-app@latest", "frontend", isTypeScript}, true,

@@ -1,4 +1,4 @@
-// Copyright 2019-present Vic Shóstak. All rights reserved.
+// Copyright 2022 Vic Shóstak and Create Go App Contributors. All rights reserved.
 // Use of this source code is governed by Apache 2.0 license
 // that can be found in the LICENSE file.
 
@@ -47,11 +47,12 @@ func GitClone(templateType, templateURL string) error {
 	return nil
 }
 
+// getAbsolutURL func for help define correct HTTP protocol.
 func getAbsoluteURL(templateURL string) string {
 	templateURL = strings.TrimSpace(templateURL)
 	u, _ := url.Parse(templateURL)
 
-	if len(u.Scheme) == 0 {
+	if u.Scheme == "" {
 		u.Scheme = "https"
 	}
 

@@ -1,4 +1,4 @@
-// Copyright 2019-present Vic Shóstak. All rights reserved.
+// Copyright 2022 Vic Shóstak and Create Go App Contributors. All rights reserved.
 // Use of this source code is governed by Apache 2.0 license
 // that can be found in the LICENSE file.
 
@@ -69,14 +69,24 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 
 // GenerateFileFromTemplate func to generate files from templates.
 func GenerateFileFromTemplate(fileName string, variables map[string]interface{}) error {
+	// Checking file name.
+	if fileName == "" {
+		return ShowError(
+			fmt.Sprintf("Not correct or empty file name (given: `%s`)!", fileName),
+		)
+	}
+
+	// Clean file name.
+	cleanFileName := filepath.Clean(fileName)
+
 	// Parse template.
-	tmpl, errParseFiles := template.ParseFiles(fileName)
+	tmpl, errParseFiles := template.ParseFiles(cleanFileName)
 	if errParseFiles != nil {
 		return ShowError(errParseFiles.Error())
 	}
 
 	// Create a new file with template data.
-	file, errCreate := os.Create(fileName)
+	file, errCreate := os.Create(cleanFileName)
 	if errCreate != nil {
 		return ShowError(errCreate.Error())
 	}
@@ -88,8 +98,8 @@ func GenerateFileFromTemplate(fileName string, variables map[string]interface{})
 	_ = file.Close()
 
 	// Rename output file.
-	newFileName := strings.ReplaceAll(fileName, ".tmpl", "")
-	if errRename := os.Rename(fileName, newFileName); errRename != nil {
+	newFileName := strings.ReplaceAll(cleanFileName, ".tmpl", "")
+	if errRename := os.Rename(cleanFileName, newFileName); errRename != nil {
 		return ShowError(errRename.Error())
 	}
 
