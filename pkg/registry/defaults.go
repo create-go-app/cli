@@ -111,7 +111,6 @@ var (
 			Name: "backend",
 			Prompt: &survey.Input{
 				Message: "Enter URL to the custom backend repository:",
-				Help:    "No need to specify `http://` or `https://` protocol.",
 			},
 			Validate: survey.Required,
 		},
@@ -119,7 +118,6 @@ var (
 			Name: "frontend",
 			Prompt: &survey.Input{
 				Message: "Enter URL to the custom frontend repository:",
-				Help:    "No need to specify `http://` or `https://` protocol.",
 				Default: "none",
 			},
 		},

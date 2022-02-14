@@ -6,8 +6,10 @@ package cgapp
 
 import (
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/go-git/go-git/v5"
 )
@@ -30,7 +32,7 @@ func GitClone(templateType, templateURL string) error {
 		folder,
 		false,
 		&git.CloneOptions{
-			URL: fmt.Sprintf("https://%s", templateURL),
+			URL: getAbsoluteURL(templateURL),
 		},
 	)
 	if errPlainClone != nil {
@@ -43,4 +45,15 @@ func GitClone(templateType, templateURL string) error {
 	RemoveFolders(folder, []string{".git", ".github"})
 
 	return nil
+}
+
+func getAbsoluteURL(templateURL string) string {
+	templateURL = strings.TrimSpace(templateURL)
+	u, _ := url.Parse(templateURL)
+
+	if len(u.Scheme) == 0 {
+		u.Scheme = "https"
+	}
+
+	return u.String()
 }
