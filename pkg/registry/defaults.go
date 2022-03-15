@@ -11,7 +11,7 @@ import (
 )
 
 // CLIVersion version of Create Go App CLI.
-const CLIVersion string = "3.6.0"
+const CLIVersion string = "3.6.1"
 
 // Variables struct for Ansible variables (inventory, hosts).
 type Variables struct {
