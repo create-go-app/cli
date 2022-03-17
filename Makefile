@@ -23,7 +23,7 @@ build: test
 	goreleaser --snapshot --skip-publish --rm-dist
 
 release: test
-	git tag -a v$(VERSION) -m "v$(VERSION)"
+	git tag -a v$(VERSION) -m "$(VERSION)"
 	goreleaser --snapshot --skip-publish --rm-dist
 
 build-and-push-images: test
