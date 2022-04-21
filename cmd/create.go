@@ -233,7 +233,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	case "traefik", "traefik-acme-dns":
 		proxyList = []string{"nginx"}
 	case "nginx":
-		proxyList = []string{"nginx"}
+		proxyList = []string{"traefik"}
 	default:
 		proxyList = []string{"traefik", "nginx"}
 	}
