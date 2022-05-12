@@ -80,6 +80,15 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 		proxy = createAnswers.Proxy
 	}
 
+	if !createAnswers.AgreeCreation {
+		cgapp.ShowMessage(
+			"",
+			"Oh no! You said \"no\", so I won't create anything. Hope to see you soon!",
+			true, true,
+		)
+		return nil
+	}
+
 	// Start timer.
 	startTimer := time.Now()
 
