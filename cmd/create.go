@@ -80,6 +80,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 		proxy = createAnswers.Proxy
 	}
 
+	// Catch the cancel action (hit "n" in the last question).
 	if !createAnswers.AgreeCreation {
 		cgapp.ShowMessage(
 			"",
