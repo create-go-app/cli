@@ -81,7 +81,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	}
 
 	// Catch the cancel action (hit "n" in the last question).
-	if !createAnswers.AgreeCreation {
+	if (!createAnswers.AgreeCreation && !useCustomTemplate) || (!customCreateAnswers.AgreeCreation && useCustomTemplate) {
 		cgapp.ShowMessage(
 			"",
 			"Oh no! You said \"no\", so I won't create anything. Hope to see you soon!",
