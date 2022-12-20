@@ -9,6 +9,13 @@ target="_blank"><img src="https://img.shields.io/badge/Go-1.17+-00ADD8?style=for
 
 ## ⚡️ Quick start
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)][github-workspace]
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)][gitpod]
+
+[github-workspace]: https://github.com/create-go-app/cli
+[gitpod]:"https://github.com/create-go-app/cli
+
+
 First, [download](https://golang.org/dl/) and install **Go**. Version `1.17` or higher is required.
 
 > If you're looking for the **Create Go App CLI** for Go `1.16`, you can find it [here](https://github.com/create-go-app/cli/tree/v2).
