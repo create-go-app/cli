@@ -1,14 +1,35 @@
-# macOS
-**/.DS_Store
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
 
-# IDE
-.vscode/
-.idea/
+# Test dir and binary, built with `go test -c`
+tests/
+*.test
 
-# Dev builds
-**/build/
-**/dist/
-
-# Tests
-**/tmp/
+# Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Go workspace file
+go.work
+
+# macOS files
+.DS_Store
+
+# IDE config directories (remove the comment below to include it)
+.idea/
+.vscode/
+
+# Dependency directories (remove the comment below to include it)
+vendor/
+
+# Binary directories
+bin/
+
+# GoReleaser directories
+dist/
+
+# Go generate files
+*_gen.go

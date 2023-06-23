@@ -1,43 +1,46 @@
 ---
 name: Bug report
-about: Create a bug report to help us improve.
-title: ""
-labels: "bug"
-assignees: "koddr"
+about: Create a report to help us improve
+title: ''
+labels: bug, help wanted
+assignees: koddr
 ---
+
+<!-- ⚡️ Please find a similar issue BEFORE submitting! ⚡️ -->
 
 **Required check list:**
 
-- [x] I'm gonna mark the checkboxes like this.
-- [ ] I didn't find in the Create Go App CLI repository's issues section similar bug.
-- [ ] I understand, that the Create Go App CLI is Open Source and not-for-profit product.
-- [ ] This is not about third-party project, framework, package or technology.
+- [ ] I didn't find in the repository's issues section a similar bug.
+- [ ] I understand, this is an Open Source and not-for-profit product.
+- [ ] This is not about a third-party project, framework, or technology.
 
 **My environment:**
 
 - OS (`uname -a`):
-- Golang (`go version`):
-- Create Go App CLI (`cgapp -v`):
+- Go (`go version`):
 
 **Describe the bug:**
+_A clear and concise description of what the bug is._
 
-<!-- A clear and concise description of what the bug is. -->
+...
 
 **Steps to reproduce the behavior:**
 
-1. Go to ...
-2. Click on ...
+1. ...
+2. ...
 3. ...
-4. See error
 
 **Expected behavior:**
+_A clear and concise description of what you expected to happen._
 
-<!-- A clear and concise description of what you expected to happen. -->
+...
 
 **Screenshots:**
+_If applicable, add screenshots to help explain your problem._
 
-<!-- If applicable, add screenshots to help explain your problem. -->
+...
 
 **Additional context:**
+_Any other context about the issue here._
 
-<!-- Add any other context about the problem here. -->
+...

@@ -1,16 +1,9 @@
 version: 2
+
 updates:
   - package-ecosystem: gomod
     directory: "/"
     schedule:
       interval: daily
-      time: "11:00"
+      time: "06:00"
     open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: github.com/AlecAivazis/survey/v2
-        versions:
-          - 2.2.8
-          - 2.2.9
-      - dependency-name: github.com/spf13/cobra
-        versions:
-          - 1.1.2
