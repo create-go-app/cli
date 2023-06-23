@@ -1,4 +1,4 @@
-// Copyright 2022 Vic Shóstak and Create Go App Contributors. All rights reserved.
+// Copyright 2023 Vic Shóstak and Create Go App Contributors. All rights reserved.
 // Use of this source code is governed by Apache 2.0 license
 // that can be found in the LICENSE file.
 

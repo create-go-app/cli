@@ -5,18 +5,18 @@ Create a new production-ready project with backend (Golang),
 frontend (JavaScript, TypeScript) and deploy automation
 (Ansible, Docker) by running one CLI command.
 
--> Focus on writing code and thinking of business logic!
-<- The Create Go App CLI will take care of the rest.
+Focus on writing your code and thinking of the business logic!
+The Create Go App CLI will take care of the rest.
 
-A helpful documentation and next steps -> https://create-go.app/
+A helpful documentation and next steps -> https://github.com/create-go-app/cli
 
-Copyright 2022 Vic Shóstak and Create Go App Contributors
+# Copyright 2023 Vic Shóstak and Create Go App Contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,7 +26,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/create-go-app/cli/v3/cmd"
+import "github.com/create-go-app/cli/v4/cmd"
 
 func main() {
 	cmd.Execute()
