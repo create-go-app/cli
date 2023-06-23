@@ -11,6 +11,7 @@ before:
 #    - go run github.com/google/wire/cmd/wire@latest
     - go run github.com/securego/gosec/v2/cmd/gosec@latest -quiet ./...
     - go run github.com/go-critic/go-critic/cmd/gocritic@latest check -enableAll ./...
+    - go test -race ./...
 
 builds:
   -
@@ -105,11 +106,13 @@ brews:
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
     folder: Formula
     caveats: |
-      Let's create a new project via interactive console UI (or CUI for short) in current folder:
+      After install cgapp, let's create a new project via interactive console UI (or CUI for short) in current folder:
   
       $ cgapp create
       
-      Next, open the generated Ansible inventory file (called hosts.ini) and fill in the variables according to your server configuration. And you're ready to automatically deploy this project:
+      Next, open the generated Ansible inventory file (called hosts.ini) and fill in the variables according to your server configuration. 
+      
+      And you're ready to automatically deploy this project:
       
       $ cgapp deploy
       
@@ -120,8 +123,9 @@ brews:
       Focus on writing code and thinking of business-logic! The CLI will take care of the rest.
     license: Apache 2.0
     skip_upload: false
-#    dependencies:
-#      - name: git
+    dependencies:
+      - name: git
+      - name: npm
 
 dockers:
   -
@@ -152,7 +156,7 @@ nfpms:
     homepage: "https://github.com/create-go-app/cli"
     license: Apache 2.0
     formats: [ deb, rpm, apk, archlinux ]
-#    dependencies: [ git ]
+    dependencies: [ git, npm ]
 
 archives:
   -
