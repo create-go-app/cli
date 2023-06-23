@@ -62,11 +62,11 @@ func TestGitClone(t *testing.T) {
 
 func Test_getAbsoluteURL(t *testing.T) {
 	type args struct {
-		templateURL   string
+		templateURL string
 	}
 	tests := []struct {
-		name    string
-		args    args
+		name string
+		args args
 		want string
 	}{
 		{
