@@ -16,16 +16,6 @@ Installation is done by using the [`go install`](https://golang.org/cmd/go/#hdr-
 go install github.com/create-go-app/cli/v2/cmd/cgapp
 ```
 
-Also, macOS and GNU/Linux users available way to install via [Homebrew](https://brew.sh/):
-
-```bash
-# Tap a new formula:
-brew tap create-go-app/cli
-
-# Installation:
-brew install create-go-app/cli/cgapp
-```
-
 Let's create a new project via **interactive console UI** (or **CUI** for short) in current folder:
 
 ```bash
