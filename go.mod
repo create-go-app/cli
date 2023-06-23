@@ -3,7 +3,7 @@ module github.com/create-go-app/cli/v3
 go 1.17
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.3.4
+	github.com/AlecAivazis/survey/v2 v2.3.7
 	github.com/go-git/go-git/v5 v5.7.0
 	github.com/mattn/go-colorable v0.1.13
 	github.com/spf13/cobra v1.4.0
