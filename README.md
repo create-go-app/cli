@@ -158,8 +158,8 @@ cgapp deploy [OPTION]
   - `svelte` — generated template with a common Svelte app.
   - `svelte-ts` — generated template with a TypeScript version of the Svelte app.
 - Frontend template with [Lit][lit_url] web components:
-  - `lit-element` — generated template with a common Lit app.
-  - `lit-element-ts` — generated template a TypeScript version of the Lit app.
+  - `lit` — generated template with a common Lit app.
+  - `lit-ts` — generated template a TypeScript version of the Lit app.
 
 > ☝️ Frontend part will be generated using awesome tool [Vite.js][vitejs_url] 
 > under the hood. So, you'll always get the latest version of `React`, 
