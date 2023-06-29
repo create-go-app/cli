@@ -11,6 +11,7 @@ before:
 #    - go run github.com/google/wire/cmd/wire@latest
     - go run github.com/securego/gosec/v2/cmd/gosec@latest -quiet ./...
     - go run github.com/go-critic/go-critic/cmd/gocritic@latest check -enableAll ./...
+    - go run github.com/google/osv-scanner/cmd/osv-scanner@latest -r .
     - go test -race ./...
 
 builds:
@@ -18,15 +19,7 @@ builds:
     id: default
     main: ./cmd/cgapp/main.go
     env: [ CGO_ENABLED=0 ]
-    goos: [ linux, windows ]
-    goarch: [ amd64, arm64 ]
-#    skip: true # useful for library projects
-
-  - # HACK for macOS Ventura (13.x), which not supported UPX
-    id: macOS_only
-    main: ./cmd/cgapp/main.go
-    env: [ CGO_ENABLED=0 ]
-    goos: [ darwin ]
+    goos: [ linux, windows, darwin ]
     goarch: [ amd64, arm64 ]
 
 upx:
@@ -36,10 +29,11 @@ upx:
     compress: best
     lzma: true
     brute: true
-#    goos: [ darwin ] # wait for v1.19
+    goos: [ linux, windows ] # skip darwin (macOS 13.x Ventura is not support now)
+    goarch: [ amd64, arm64 ]
 
 release:
-  ids: [ default, macOS_only ]
+  ids: [ default ]
   draft: true
   replace_existing_draft: true
   target_commitish: "{{ .Commit }}"
@@ -89,14 +83,13 @@ release:
 
 brews:
   -
-    tap:
+    repository:
       owner: create-go-app
       name: homebrew-tap
       branch: main
       token: "{{ .Env.GITHUB_TOKEN }}"
       pull_request:
         enabled: true
-#        draft: true # wait for v1.19
       git:
         url: "git@github.com:create-go-app/homebrew-tap.git"
         private_key: "{{ .Env.PRIVATE_KEY_PATH }}"
@@ -106,7 +99,7 @@ brews:
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
     folder: Formula
     caveats: |
-      After install cgapp, let's create a new project via interactive console UI (or CUI for short) in current folder:
+      After install (or update) cgapp, let's create a new project via interactive console UI in current folder:
   
       $ cgapp create
       
@@ -164,7 +157,6 @@ archives:
       - goos: windows
         format: zip
     files: [ LICENSE, README.md ]
-    rlcp: true
 
 checksum:
   name_template: "checksums.txt"
