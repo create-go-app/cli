@@ -2,13 +2,15 @@
 // Use of this source code is governed by Apache 2.0 license
 // that can be found in the LICENSE file.
 
-package cgapp
+package executor
 
 import (
 	"bufio"
 	"bytes"
 	"fmt"
 	"os/exec"
+
+	"github.com/create-go-app/cli/v4/internal/helpers"
 )
 
 // ExecCommand function to execute a given command.
@@ -30,12 +32,12 @@ func ExecCommand(command string, options []string, silentMode bool) error {
 	// Create a new reader.
 	cmdReader, errStdoutPipe := cmd.StdoutPipe()
 	if errStdoutPipe != nil {
-		return ShowError(errStdoutPipe.Error())
+		return helpers.ShowError(errStdoutPipe.Error())
 	}
 
 	// Start executing command.
 	if errStart := cmd.Start(); errStart != nil {
-		return ShowError(errStart.Error())
+		return helpers.ShowError(errStart.Error())
 	}
 
 	// Create a new scanner and run goroutine func with output, if not in silent mode.
@@ -43,14 +45,14 @@ func ExecCommand(command string, options []string, silentMode bool) error {
 		scanner := bufio.NewScanner(cmdReader)
 		go func() {
 			for scanner.Scan() {
-				ShowMessage("", scanner.Text(), false, false)
+				helpers.ShowMessage("", scanner.Text(), false, false)
 			}
 		}()
 	}
 
 	// Wait for executing command.
 	if errWait := cmd.Wait(); errWait != nil {
-		return ShowError(errWait.Error())
+		return helpers.ShowError(errWait.Error())
 	}
 
 	return nil

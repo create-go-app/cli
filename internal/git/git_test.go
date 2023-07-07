@@ -1,4 +1,4 @@
-package cgapp
+package git
 
 import (
 	"os"
@@ -47,8 +47,8 @@ func TestGitClone(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := GitClone(tt.args.rootFolder, tt.args.templateName); (err != nil) != tt.wantErr {
-				t.Errorf("GitClone() error = %v, wantErr %v", err, tt.wantErr)
+			if err := Clone(tt.args.rootFolder, tt.args.templateName); (err != nil) != tt.wantErr {
+				t.Errorf("Clone() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 

@@ -2,7 +2,7 @@
 // Use of this source code is governed by Apache 2.0 license
 // that can be found in the LICENSE file.
 
-package cgapp
+package git
 
 import (
 	"fmt"
@@ -12,10 +12,13 @@ import (
 	"strings"
 
 	"github.com/go-git/go-git/v5"
+
+	"github.com/create-go-app/cli/v4/internal/file"
+	"github.com/create-go-app/cli/v4/internal/helpers"
 )
 
-// GitClone function for `git clone` defined project template.
-func GitClone(templateType, templateURL string) error {
+// Clone function for `git clone` defined project template.
+func Clone(templateType, templateURL string) error {
 	// Checking for nil.
 	if templateType == "" || templateURL == "" {
 		return fmt.Errorf("project template not found")
@@ -36,13 +39,13 @@ func GitClone(templateType, templateURL string) error {
 		},
 	)
 	if errPlainClone != nil {
-		return ShowError(
+		return helpers.ShowError(
 			fmt.Sprintf("Repository `%v` was not cloned!", templateURL),
 		)
 	}
 
 	// Cleanup project.
-	RemoveFolders(folder, []string{".git", ".github"})
+	file.RemoveFolders(folder, []string{".git", ".github"})
 
 	return nil
 }

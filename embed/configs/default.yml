@@ -1,0 +1,119 @@
+# Author: Vic Shóstak <koddr.me@gmail.com> (https://github.com/koddr)
+# For more information, please visit https://github.com/create-go-app/cli
+
+#
+project:
+
+  #
+  name: cgapp-project
+
+#
+backend:
+
+  #
+  template: fiber
+
+#  #
+#  repository:
+#    url: git@github.com:create-go-app/fiber-go-template.git
+#    private:
+#      key: '{{ CGAPP_BACKEND_REPOSITORY_PRIVATE_KEY }}'
+
+#
+frontend:
+
+  #
+  template: vue-ts
+
+#  #
+#  repository:
+#    url: git@github.com:create-go-app/vue-ts-template.git
+#    private:
+#      key: '{{ CGAPP_FRONTEND_REPOSITORY_PRIVATE_KEY }}'
+
+#
+proxy:
+
+  #
+  template: nginx
+
+#  #
+#  repository:
+#    url: git@github.com:create-go-app/nginx-ansible-template.git
+#    private:
+#      key: '{{ CGAPP_PROXY_REPOSITORY_PRIVATE_KEY }}'
+
+#
+containers:
+
+  #
+  golang:
+    name: cgapp-golang
+    version: latest
+    options:
+      port: 5000
+
+  #
+  postgres:
+    name: cgapp-postgres
+    version: latest
+    credentials:
+      user: '{{ CGAPP_CONTAINERS_POSTGRES_CREDENTIALS_USER }}'
+      password: '{{ CGAPP_CONTAINERS_POSTGRES_CREDENTIALS_PASSWORD }}'
+      database: postgres
+    options:
+      port: 5432
+      ssl_mode: disable
+
+  #
+  redis:
+    name: cgapp-redis
+    version: latest
+    credentials:
+      user: '{{ CGAPP_CONTAINERS_REDIS_CREDENTIALS_USER }}'
+      password: '{{ CGAPP_CONTAINERS_REDIS_CREDENTIALS_PASSWORD }}'
+      database: redis
+    options:
+      port: 6379
+
+  #
+  nodejs:
+    name: cgapp-nodejs
+    version: latest
+    options:
+      port: 3000
+
+  #
+  nginx:
+    name: cgapp-nginx
+    version: latest
+    options:
+      use_only_https: true
+      redirect_to_non_www: true
+
+#
+deploy:
+
+  #
+  ansible:
+    become_sudo_user: true
+    connection: ssh
+    host:
+      ip: '{{ CGAPP_DEPLOY_ANSIBLE_HOST_IP }}'
+      user: root
+      group: docker
+      python_interpreter_path: /usr/bin/python3
+      project_folder_path: /var/www/cgapp-project
+
+  #
+  docker:
+    network:
+      name: cgapp-docker-network
+
+  #
+  lets_encrypt:
+    domain: example.com
+    wildcard: true
+    acme:
+      email: mail@example.com
+      staging: false

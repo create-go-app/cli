@@ -1,4 +1,4 @@
-package cgapp
+package executor
 
 import "testing"
 

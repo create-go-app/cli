@@ -17,45 +17,59 @@ will take care of the rest.
 
 ## ⚡️ Quick start
 
-First, [download][go_download_url] and install **Go**. Version `1.20` or 
-higher is required.
+First, GNU/Linux and macOS users available way to easily install via
+[Homebrew][brew_url].
 
-> ❗️ Note: If you're looking for the **Create Go App CLI** for other Go 
-> versions: [`1.16`][repo_v2_url], [`1.17`][repo_v3_url].
+Tap a new formula:
 
-Installation is done by using the [`go install`][go_install_url] command:
-
-```bash
-go install github.com/create-go-app/cli/v4/cmd/cgapp@latest
-```
-
-Or see the repository's [Release page][repo_releases_url], if you want to 
-download a ready-made `deb`, `rpm`, `apk` or `Arch Linux` package.
-
-Also, GNU/Linux and macOS users available way to install via
-[Homebrew][brew_url]:
-
-```bash
-# Tap a new formula:
+```console
 brew tap create-go-app/tap
-
-# Installation:
-brew install create-go-app/tap/cgapp
 ```
 
-Let's create a new project via **interactive console UI** (or **CUI** for 
-short) in current folder:
+Install the latest `cgapp` version:
 
-```bash
-cgapp create
+```console
+brew install create-go-app/tap/cli
 ```
 
-Next, open the generated Ansible inventory file (called `hosts.ini`) and 
-fill in the variables according to your server configuration. And you're 
-ready to **automatically deploy** this project:
+Or upgrade to the latest `cgapp` version:
 
-```bash
-cgapp deploy
+```console
+brew upgrade create-go-app/tap/cli
+```
+
+> 💡 Hint: see the repository's [Release page][repo_releases_url], if you 
+> want to download a ready-made `deb`, `rpm`, `apk` or `Arch Linux` package 
+> or MS Windows `exe` files.
+
+An alternative way to install is to do a native installation using Go 
+(version `1.20` or higher is required) with the following command:
+
+```console
+go install github.com/create-go-app/cli/v5/cmd/cgapp@latest
+```
+
+Next, generate an example configuration file:
+
+```console
+cgapp -init
+```
+
+Open this configuration file `.cgapp.yml` and fill out your information. You 
+can always refer to our [Wiki page][repo_wiki_url] to set the configuration 
+correctly.
+
+OK! Let's create a new project in current dir:
+
+```console
+cgapp -new
+```
+
+Now, open the generated project, make something awesome, and you're 
+ready to **automatically deploy** project to your remote host:
+
+```console
+cgapp -deploy
 ```
 
 That's all you need to know to start! 🎉
@@ -66,11 +80,11 @@ If you don't want to install Create Go App CLI to your system, you feel free
 to using our official [Docker image][docker_url] and run CLI from isolated 
 container:
 
-```bash
+```console
 docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest [COMMAND]
 ```
 
-> 🔔 Please note: the `deploy` command is currently **unavailable** in this 
+> ❗️ Warning: the `-deploy` command is currently **unavailable** in this 
 > image.
 
 ## 📖 Project Wiki
@@ -84,38 +98,48 @@ Yes, the most frequently asked questions (FAQ) are also
 
 ## ⚙️ Commands & Options
 
-### `create`
+### `-init`
 
-CLI command for create a new project with the interactive console UI.
+CLI command for create configuration file called `.cgapp.yml` with the example 
+config data in the current dir.
 
-```bash
-cgapp create [OPTION]
+```console
+cgapp -init
 ```
 
-| Option | Description                                              | Type   | Default | Required? |
-|--------|----------------------------------------------------------|--------|---------|-----------|
-| `-t`   | Enables to define custom backend and frontend templates. | `bool` | `false` | No        |
+### `-new`
+
+CLI command for create a new project with the configuration file in the 
+current dir.
+
+```console
+cgapp -new [OPTION]
+```
+
+| Option    | Description                                                   | Type     | Default        | Required? |
+|-----------|---------------------------------------------------------------|----------|----------------|-----------|
+| `-config` | Enables to define a path (or URL) for the configuration file. | `string` | `".cgapp.yml"` | No        |
 
 ![cgapp_create][cgapp_create_gif]
 
 - 📺 Full demo video: https://recordit.co/OQAwkZBrjN
 - 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-create
 
-### `deploy`
+### `-deploy`
 
 CLI command for deploy Docker containers with your project via Ansible to 
-the remote server.
+the remote host.
 
-> 🔔 Make sure that you have [Python 3.8+][python_url] and 
-> [Ansible 2.9+][ansible_url] installed on your computer.
-
-```bash
-cgapp deploy [OPTION]
+```console
+cgapp -deploy [OPTION]
 ```
 
-| Option | Description                                                                                            | Type   | Default | Required? |
-|--------|--------------------------------------------------------------------------------------------------------|--------|---------|-----------|
-| `-k`   | Prompt you to provide the remote user sudo password (_a standard Ansible `--ask-become-pass` option_). | `bool` | `false` | No        |
+Make sure that you have [Python 3.8+][python_url] and
+[Ansible 2.9+][ansible_url] installed on your computer.
+
+| Option    | Description                                                   | Type     | Default        | Required? |
+|-----------|---------------------------------------------------------------|----------|----------------|-----------|
+| `-config` | Enables to define a path (or URL) for the configuration file. | `string` | `".cgapp.yml"` | No        |
 
 ![cgapp_deploy][cgapp_deploy_gif]
 
@@ -236,8 +260,6 @@ created by [Vic Shóstak][author] and distributed under
 
 <!-- Go -->
 
-[go_download_url]: https://golang.org/dl/
-[go_install_url]: https://golang.org/cmd/go/#hdr-Compile_and_install_packages_and_dependencies
 [go_version_img]: https://img.shields.io/badge/Go-1.20+-00ADD8?style=for-the-badge&logo=go
 [go_report_img]: https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none
 [go_report_url]: https://goreportcard.com/report/github.com/create-go-app/cli

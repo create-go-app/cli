@@ -2,7 +2,7 @@
 // Use of this source code is governed by Apache 2.0 license
 // that can be found in the LICENSE file.
 
-package cgapp
+package file
 
 import (
 	"embed"
@@ -12,6 +12,8 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/create-go-app/cli/v4/internal/helpers"
 )
 
 // EmbeddedFileSystem struct contains embedded file system fields.
@@ -27,7 +29,7 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 	if err := fs.WalkDir(efs.Name, efs.RootFolder, func(path string, entry fs.DirEntry, err error) error {
 		// Checking embed path.
 		if err != nil {
-			return ShowError(
+			return helpers.ShowError(
 				fmt.Sprintf("Can't copy files from embedded path `%v`!", efs.RootFolder),
 			)
 		}
@@ -71,7 +73,7 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 func GenerateFileFromTemplate(fileName string, variables map[string]interface{}) error {
 	// Checking file name.
 	if fileName == "" {
-		return ShowError(
+		return helpers.ShowError(
 			fmt.Sprintf("Not correct or empty file name (given: `%s`)!", fileName),
 		)
 	}
@@ -82,25 +84,25 @@ func GenerateFileFromTemplate(fileName string, variables map[string]interface{})
 	// Parse template.
 	tmpl, errParseFiles := template.ParseFiles(cleanFileName)
 	if errParseFiles != nil {
-		return ShowError(errParseFiles.Error())
+		return helpers.ShowError(errParseFiles.Error())
 	}
 
 	// Create a new file with template data.
 	file, errCreate := os.Create(cleanFileName)
 	if errCreate != nil {
-		return ShowError(errCreate.Error())
+		return helpers.ShowError(errCreate.Error())
 	}
 
 	// Execute template with variables.
 	if errExecute := tmpl.Execute(file, variables); errExecute != nil {
-		return ShowError(errExecute.Error())
+		return helpers.ShowError(errExecute.Error())
 	}
 	_ = file.Close()
 
 	// Rename output file.
 	newFileName := strings.ReplaceAll(cleanFileName, ".tmpl", "")
 	if errRename := os.Rename(cleanFileName, newFileName); errRename != nil {
-		return ShowError(errRename.Error())
+		return helpers.ShowError(errRename.Error())
 	}
 
 	return nil
