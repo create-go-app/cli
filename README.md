@@ -169,8 +169,8 @@ Make sure that you have [Python 3.8+][python_url] and
 - Frontend template with [Next.js][nextjs_url]:
   - `next` — generated template with a common Next.js app.
   - `next-ts` — generated template with a TypeScript version of the Next.js app.
-- Frontend template with [Nuxt 3][nuxt3_url]:
-  - `nuxt3` — generated template with a common Nuxt 3 app.
+- Frontend template with [Nuxt][nuxt_url]:
+  - `nuxt` — generated template with a common Nuxt v3 app.
 - Frontend template with [Vue.js][vuejs_url]:
   - `vue` — generated template with a common Vue.js app.
   - `vue-ts` — generated template with a TypeScript version of the Vue.js app.
@@ -184,8 +184,10 @@ Make sure that you have [Python 3.8+][python_url] and
 > ☝️ Frontend part will be generated using awesome tool [Vite.js][vitejs_url] 
 > under the hood. So, you'll always get the latest version of `React`, 
 > `Preact`, `Vue`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates 
-> for your project! And the `Next.js` and `Nuxt 3` frontend parts will be 
-> generated using the `create-next-app` and `nuxi` utilities.
+> for your project! 
+> 
+> The `Next.js` and `Nuxt` frontend parts will be generated using the 
+> `create-next-app` and `nuxi` utilities.
 >
 > Please make sure that you have `npm` version `7` or higher installed to 
 > create the frontend part of the project correctly. If you run the 
@@ -308,7 +310,7 @@ created by [Vic Shóstak][author] and distributed under
 [react_url]: https://reactjs.org/
 [preact_url]: https://preactjs.com/
 [nextjs_url]: https://nextjs.org/
-[nuxt3_url]: https://v3.nuxtjs.org/
+[nuxt_url]: https://nuxt.com/
 [svelte_url]: https://svelte.dev/
 [lit_url]: https://lit.dev/
 [chi_url]: https://github.com/go-chi/chi
