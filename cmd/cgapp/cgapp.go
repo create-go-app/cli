@@ -37,10 +37,10 @@ import (
 
 func main() {
 	// Define and parse app flags.
-	initDefaultConfig := flag.Bool("init", false, "generate a new 'config.yml' file")
-	newProject := flag.Bool("new", false, "create a new project in the current dir")
+	initDefaultConfig := flag.Bool("init", false, "generate an example config file ('.cgapp.yml') file in the current dir")
+	createProject := flag.Bool("create", false, "create a new project in the current dir")
 	deployProject := flag.Bool("deploy", false, "deploy your project to the remote host")
-	configPath := flag.String("config", "", "set a path (or URL) to the config file")
+	configPath := flag.String("p", "", "set a path (or URL) to the config file")
 	flag.Parse()
 
 	helpers.PrintStyled("👋 Hello and welcome to the Create Go App CLI!", "", "margin-top")
@@ -117,7 +117,7 @@ func main() {
 	helpers.PrintStyled(fmt.Sprintf("Successfully initialized '%s' project with the given configuration file...", app.Config.Project.Name), "success", "margin-top")
 
 	// Check, if '-new' flag is true.
-	if *newProject {
+	if *createProject {
 		helpers.PrintStyled("Start creating project... please, wait!", "info", "margin-top")
 
 		// Create a new project.

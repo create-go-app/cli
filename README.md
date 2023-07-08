@@ -1,6 +1,6 @@
 [![Create Go App][repo_logo_img]][repo_url]
 
-# Create Go App CLI
+# Create Go App CLI – Create a new production-ready project
 
 [![Go version][go_version_img]][go_dev_url]
 [![Go report][go_report_img]][go_report_url]
@@ -8,16 +8,17 @@
 [![Wiki][repo_wiki_img]][repo_wiki_url]
 [![License][repo_license_img]][repo_license_url]
 
-Create a new production-ready project with **backend** (Golang),
-**frontend** (JavaScript, TypeScript) and **deploy automation** (Ansible,
-Docker) by running only one CLI command.
+Create Go App (or `cgapp` for a short) is a **complete** and **self-contained** 
+solution for developers of **any qualification** to create a production-ready 
+project with **backend** (Go), **frontend** (JavaScript, TypeScript) and 
+**deploy automation** (Ansible, Docker) by running **only one** CLI command.
 
 Focus on **writing your code** and **thinking of the business-logic**! The CLI 
 will take care of the rest.
 
 ## ⚡️ Quick start
 
-First, GNU/Linux and macOS users available way to easily install via
+First, all GNU/Linux and macOS users available way to easily install `cgapp` via
 [Homebrew][brew_url].
 
 Tap a new formula:
@@ -32,18 +33,12 @@ Install the latest `cgapp` version:
 brew install create-go-app/tap/cli
 ```
 
-Or upgrade to the latest `cgapp` version:
-
-```console
-brew upgrade create-go-app/tap/cli
-```
-
 > 💡 Hint: see the repository's [Release page][repo_releases_url], if you 
-> want to download a ready-made `deb`, `rpm`, `apk` or `Arch Linux` package 
-> or MS Windows `exe` files.
+> want to download MS Windows `exe` files, ready-made `deb`, `rpm`, `apk` 
+> or `Arch Linux` packages.
 
-An alternative way to install is to do a native installation using Go 
-(version `1.20` or higher is required) with the following command:
+An alternative way is a native installation using Go (version `1.20` or 
+higher is required) with the following command:
 
 ```console
 go install github.com/create-go-app/cli/v5/cmd/cgapp@latest
@@ -55,18 +50,19 @@ Next, generate an example configuration file:
 cgapp -init
 ```
 
-Open this configuration file `.cgapp.yml` and fill out your information. You 
-can always refer to our [Wiki page][repo_wiki_url] to set the configuration 
-correctly.
+Open this configuration file `.cgapp.yml` and fill out your information. 
 
-OK! Let's create a new project in current dir:
+> 💡 Hint: you can always refer to our [Wiki page][repo_wiki_url] to set the 
+> configuration correctly.
+
+OK! Let's create a new project from the config file in the current dir:
 
 ```console
-cgapp -new
+cgapp -create
 ```
 
 Now, open the generated project, make something awesome, and you're 
-ready to **automatically deploy** project to your remote host:
+ready to automatically deploy project to your remote host:
 
 ```console
 cgapp -deploy
@@ -107,18 +103,18 @@ config data in the current dir.
 cgapp -init
 ```
 
-### `-new`
+### `-create`
 
 CLI command for create a new project with the configuration file in the 
 current dir.
 
 ```console
-cgapp -new [OPTION]
+cgapp -create [OPTION]
 ```
 
-| Option    | Description                                                   | Type     | Default        | Required? |
-|-----------|---------------------------------------------------------------|----------|----------------|-----------|
-| `-config` | Enables to define a path (or URL) for the configuration file. | `string` | `".cgapp.yml"` | No        |
+| Option | Description                                                   | Type     | Default        | Required? |
+|--------|---------------------------------------------------------------|----------|----------------|-----------|
+| `-p`   | Enables to define a path (or URL) for the configuration file. | `string` | `".cgapp.yml"` | No        |
 
 ![cgapp_create][cgapp_create_gif]
 
@@ -137,9 +133,9 @@ cgapp -deploy [OPTION]
 Make sure that you have [Python 3.8+][python_url] and
 [Ansible 2.9+][ansible_url] installed on your computer.
 
-| Option    | Description                                                   | Type     | Default        | Required? |
-|-----------|---------------------------------------------------------------|----------|----------------|-----------|
-| `-config` | Enables to define a path (or URL) for the configuration file. | `string` | `".cgapp.yml"` | No        |
+| Option | Description                                                   | Type     | Default        | Required? |
+|--------|---------------------------------------------------------------|----------|----------------|-----------|
+| `-p`   | Enables to define a path (or URL) for the configuration file. | `string` | `".cgapp.yml"` | No        |
 
 ![cgapp_deploy][cgapp_deploy_gif]
 
