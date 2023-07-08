@@ -1,6 +1,6 @@
 [![Create Go App][repo_logo_img]][repo_url]
 
-# Create Go App CLI – Create a new production-ready project
+# Create Go App CLI – Create a new production-ready project by running one command
 
 [![Go version][go_version_img]][go_dev_url]
 [![Go report][go_report_img]][go_report_url]
