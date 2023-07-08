@@ -38,7 +38,7 @@ brew install create-go-app/tap/cli
 > or `Arch Linux` packages.
 
 An alternative way is a native installation using Go (version `1.20` or 
-higher is required) with the following command:
+higher is required):
 
 ```console
 go install github.com/create-go-app/cli/v5/cmd/cgapp@latest
@@ -96,8 +96,8 @@ Yes, the most frequently asked questions (FAQ) are also
 
 ### `-init`
 
-CLI command for create configuration file called `.cgapp.yml` with the example 
-config data in the current dir.
+CLI command for generate an example config file (called `.cgapp.yml`) in the 
+current dir.
 
 ```console
 cgapp -init
@@ -105,8 +105,7 @@ cgapp -init
 
 ### `-create`
 
-CLI command for create a new project with the configuration file in the 
-current dir.
+CLI command for create a new project in the current dir.
 
 ```console
 cgapp -create [OPTION]
@@ -146,7 +145,7 @@ Make sure that you have [Python 3.8+][python_url] and
 
 ### Backend
 
-- Backend template with Golang built-in [net/http][net_http_url] package:
+- Backend template with Go built-in [net/http][net_http_url] package:
   - [`net/http`][cgapp_net-http-template_url] — simple REST API with CRUD 
     and JWT auth.
 - Backend template with [Fiber][fiber_url]:
@@ -189,7 +188,7 @@ Make sure that you have [Python 3.8+][python_url] and
 >
 > Please make sure that you have `npm` version `7` or higher installed to 
 > create the frontend part of the project correctly. If you run the `cgapp 
-> create` command using our [Docker image][docker_url], `npm` of the correct 
+> -create` command using our [Docker image][docker_url], `npm` of the correct 
 > version is **already** included.
 
 ## 🚚 Pre-configured Ansible roles
