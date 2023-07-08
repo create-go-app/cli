@@ -44,7 +44,7 @@ higher is required):
 go install github.com/create-go-app/cli/v5/cmd/cgapp@latest
 ```
 
-Next, generate an example configuration file:
+Next, generate an example configuration file in the current dir:
 
 ```console
 cgapp -init
@@ -56,14 +56,14 @@ out your information.
 > 💡 Hint: you can always refer to our [Wiki page][repo_wiki_url] to set the 
 > configuration correctly.
 
-Let's create a new project from the config file in the current dir:
+Let's create a new project:
 
 ```console
 cgapp -create
 ```
 
 Now, open the generated project, make something awesome, and you're 
-ready to automatically deploy project to your remote host:
+ready to automatically deploy to the remote host:
 
 ```console
 cgapp -deploy
