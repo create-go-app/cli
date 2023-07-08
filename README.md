@@ -50,12 +50,13 @@ Next, generate an example configuration file:
 cgapp -init
 ```
 
-Open this configuration file `.cgapp.yml` and fill out your information. 
+When the generation process is finished, open the `.cgapp.yml` file and fill 
+out your information.
 
 > 💡 Hint: you can always refer to our [Wiki page][repo_wiki_url] to set the 
 > configuration correctly.
 
-OK! Let's create a new project from the config file in the current dir:
+Let's create a new project from the config file in the current dir:
 
 ```console
 cgapp -create
