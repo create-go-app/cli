@@ -13,8 +13,8 @@ import (
 
 	"github.com/go-git/go-git/v5"
 
-	"github.com/create-go-app/cli/v4/internal/file"
-	"github.com/create-go-app/cli/v4/internal/helpers"
+	"github.com/create-go-app/cli/v5/internal/file"
+	"github.com/create-go-app/cli/v5/internal/helpers"
 )
 
 // Clone function for `git clone` defined project template.

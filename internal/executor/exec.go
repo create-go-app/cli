@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/create-go-app/cli/v4/internal/helpers"
+	"github.com/create-go-app/cli/v5/internal/helpers"
 )
 
 // ExecCommand function to execute a given command.

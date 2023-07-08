@@ -1,8 +1,8 @@
 package app
 
 import (
-	"github.com/create-go-app/cli/v4/embed"
-	"github.com/create-go-app/cli/v4/internal/config"
+	"github.com/create-go-app/cli/v5/embed"
+	"github.com/create-go-app/cli/v5/internal/config"
 )
 
 // App ...

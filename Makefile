@@ -19,7 +19,7 @@ test: clean lint security critic
 	rm -rf ./tests
 
 install: test
-	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp ./cmd/cgapp/main.go
+	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp ./cmd/cgapp/cgapp.go
 
 build: test
 	$(GOPATH)/bin/goreleaser --snapshot --skip-publish --rm-dist
@@ -36,7 +36,7 @@ build-and-push-images: test
 	docker image rm docker.io/koddr/cgapp:$(VERSION)
 
 update-pkg-cache:
-	curl -i https://proxy.golang.org/github.com/create-go-app/cli/v4/@v/v$(VERSION).info
+	curl -i https://proxy.golang.org/github.com/create-go-app/cli/v5/@v/v$(VERSION).info
 
 delete-tag:
 	git tag --delete v$(VERSION)

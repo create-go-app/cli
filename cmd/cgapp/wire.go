@@ -5,9 +5,9 @@ package main
 import (
 	"github.com/google/wire"
 
-	"github.com/create-go-app/cli/v4/embed"
-	"github.com/create-go-app/cli/v4/internal/app"
-	"github.com/create-go-app/cli/v4/internal/config"
+	"github.com/create-go-app/cli/v5/embed"
+	"github.com/create-go-app/cli/v5/internal/app"
+	"github.com/create-go-app/cli/v5/internal/config"
 )
 
 // initialize provides dependency injection process by the "google/wire" package.

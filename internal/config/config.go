@@ -3,8 +3,8 @@ package config
 import (
 	"github.com/koddr/gosl"
 
-	"github.com/create-go-app/cli/v4/internal/config/containers"
-	"github.com/create-go-app/cli/v4/internal/config/tools"
+	"github.com/create-go-app/cli/v5/internal/config/containers"
+	"github.com/create-go-app/cli/v5/internal/config/tools"
 )
 
 // Config ...

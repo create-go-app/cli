@@ -259,7 +259,7 @@ created by [Vic Shóstak][author] and distributed under
 [go_report_img]: https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none
 [go_report_url]: https://goreportcard.com/report/github.com/create-go-app/cli
 [go_code_coverage_img]: https://img.shields.io/badge/code_coverage-88%25-success?style=for-the-badge&logo=none
-[go_dev_url]: https://pkg.go.dev/github.com/create-go-app/cli/v4
+[go_dev_url]: https://pkg.go.dev/github.com/create-go-app/cli/v5
 
 <!-- Repository -->
 

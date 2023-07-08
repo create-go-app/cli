@@ -31,8 +31,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/create-go-app/cli/v4/embed"
-	"github.com/create-go-app/cli/v4/internal/helpers"
+	"github.com/create-go-app/cli/v5/embed"
+	"github.com/create-go-app/cli/v5/internal/helpers"
 )
 
 func main() {

@@ -13,7 +13,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/create-go-app/cli/v4/internal/helpers"
+	"github.com/create-go-app/cli/v5/internal/helpers"
 )
 
 // EmbeddedFileSystem struct contains embedded file system fields.
