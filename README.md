@@ -62,7 +62,7 @@ Let's create a new project:
 cgapp -create
 ```
 
-Now, open the generated project, make something awesome, and you're 
+Now, make something awesome in the `backend` and `frontend` dirs, and you're 
 ready to automatically deploy to the remote host:
 
 ```console
