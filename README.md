@@ -111,9 +111,9 @@ CLI command for create a new project in the current dir.
 cgapp -create [OPTION]
 ```
 
-| Option | Description                                                   | Type     | Default        | Required? |
-|--------|---------------------------------------------------------------|----------|----------------|-----------|
-| `-p`   | Enables to define a path (or URL) for the configuration file. | `string` | `".cgapp.yml"` | No        |
+| Option | Description                                            | Type     | Default        | Required? |
+|--------|--------------------------------------------------------|----------|----------------|-----------|
+| `-p`   | Enables to define a path (or URL) for the config file. | `string` | `".cgapp.yml"` | No        |
 
 ![cgapp_create][cgapp_create_gif]
 
@@ -132,9 +132,9 @@ cgapp -deploy [OPTION]
 Make sure that you have [Python 3.8+][python_url] and
 [Ansible 2.9+][ansible_url] installed on your computer.
 
-| Option | Description                                                   | Type     | Default        | Required? |
-|--------|---------------------------------------------------------------|----------|----------------|-----------|
-| `-p`   | Enables to define a path (or URL) for the configuration file. | `string` | `".cgapp.yml"` | No        |
+| Option | Description                                            | Type     | Default        | Required? |
+|--------|--------------------------------------------------------|----------|----------------|-----------|
+| `-p`   | Enables to define a path (or URL) for the config file. | `string` | `".cgapp.yml"` | No        |
 
 ![cgapp_deploy][cgapp_deploy_gif]
 
