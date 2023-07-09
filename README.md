@@ -90,8 +90,7 @@ The best way to better explore all the features of the **Create Go App CLI**
 is to read the project [Wiki][repo_wiki_url] and take part in 
 [Discussions][repo_discussions_url] and/or [Issues][repo_issues_url]. 
 
-Yes, the most frequently asked questions (FAQ) are also 
-[here][repo_wiki_faq_url].
+Also, the most frequently asked questions (FAQ) is [here][repo_wiki_faq_url].
 
 ## ⚙️ Commands & Options
 
