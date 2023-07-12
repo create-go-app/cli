@@ -19,7 +19,8 @@ type Config struct {
 
 // Project ...
 type Project struct {
-	Name string `koanf:"name"`
+	Name   string `koanf:"name"`
+	Domain string `koanf:"domain"`
 }
 
 // Template ...
@@ -51,10 +52,9 @@ type Containers struct {
 
 // Deploy ...
 type Deploy struct {
-	Ansible     *tools.Ansible     `koanf:"ansible"`
-	Terraform   *tools.Terraform   `koanf:"terraform"`
-	Docker      *tools.Docker      `koanf:"docker"`
-	LetsEncrypt *tools.LetsEncrypt `koanf:"lets_encrypt"`
+	Ansible *tools.Ansible `koanf:"ansible"`
+	Docker  *tools.Docker  `koanf:"docker"`
+	SSL     *tools.SSL     `koanf:"ssl"`
 }
 
 // New ...

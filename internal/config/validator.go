@@ -32,8 +32,8 @@ func (c *Config) Validate() error {
 		notSetContainers = errors.New("'containers' section is not set, but 'deploy' section was configured")
 
 		// Deploy section errors.
-		notSetDeployAnsibleOrTerraform = errors.New("'ansible' or 'terraform' settings in the 'deploy' section is not set")
-		notSetDeployDocker             = errors.New("'docker' settings in the 'deploy' section is not set")
+		notSetDeployAnsible = errors.New("'ansible' settings in the 'deploy' section is not set")
+		notSetDeployDocker  = errors.New("'docker' settings in the 'deploy' section is not set")
 	)
 
 	// Create a new slice for join errors.
@@ -105,9 +105,9 @@ func (c *Config) Validate() error {
 			errs = append(errs, notSetContainers)
 		}
 
-		// Check, if 'ansible' or 'terraform' settings in the 'deploy' section is set.
-		if c.Deploy.Ansible == nil && c.Deploy.Terraform == nil {
-			errs = append(errs, notSetDeployAnsibleOrTerraform)
+		// Check, if 'ansible' settings in the 'deploy' section is set.
+		if c.Deploy.Ansible == nil {
+			errs = append(errs, notSetDeployAnsible)
 		}
 
 		// Check, if 'docker' settings in the 'deploy' section is set.

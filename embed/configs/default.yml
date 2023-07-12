@@ -6,6 +6,7 @@ project:
 
   #
   name: cgapp-project
+  domain: example.com
 
 #
 backend:
@@ -111,9 +112,7 @@ deploy:
       name: cgapp-docker-network
 
   #
-  lets_encrypt:
-    domain: example.com
+  ssl:
+    email: '{{ CGAPP_DEPLOY_SSL_EMAIL }}'
     wildcard: true
-    acme:
-      email: mail@example.com
-      staging: false
+    staging: false
