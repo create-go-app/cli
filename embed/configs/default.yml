@@ -36,7 +36,7 @@ frontend:
 proxy:
 
   #
-  template: nginx
+  template: traefik
 
 #  #
 #  repository:
@@ -85,10 +85,30 @@ containers:
       port: 3000
 
   #
+  traefik:
+    name: cgapp-traefik
+    version: latest
+    credentials:
+      user: admin
+      password: '{{ CGAPP_CONTAINERS_TRAEFIK_CREDENTIALS_PASSWORD }}'
+    options:
+      port: 8080
+      dashboard_url: cp.example.com
+      wildcard: true
+      staging: false
+      log:
+        level: ERROR
+        format: json
+      acme:
+        provider: digitalocean
+        token: '{{ CGAPP_CONTAINERS_TRAEFIK_OPTIONS_ACME_TOKEN }}'
+
+  #
   nginx:
     name: cgapp-nginx
     version: latest
     options:
+      port: 8080
       use_only_https: true
       redirect_to_non_www: true
 
@@ -114,5 +134,3 @@ deploy:
   #
   ssl:
     email: '{{ CGAPP_DEPLOY_SSL_EMAIL }}'
-    wildcard: true
-    staging: false

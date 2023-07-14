@@ -111,6 +111,6 @@
     #
     # env:
     #   # For example, auth token for DigitalOcean DNS provider:
-    #   DO_AUTH_TOKEN: "{{ do_auth_token }}"
+    #   DO_AUTH_TOKEN: "{{ acme_auth_token }}"
     #
     when: (traefik_dashboard_url is defined) or (traefik_dashboard_url|length > 0)

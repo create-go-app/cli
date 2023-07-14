@@ -4,149 +4,137 @@
 # Author: Vic Shóstak <koddr.me@gmail.com> (https://github.com/koddr)
 # For more information, please visit https://github.com/create-go-app/cli
 
+# WARNING! This file may contain security data for your application.
+# Make sure you add the 'hosts.ini' to the '.gitignore' file of the project.
+
 [{{ .Project.Name }}]
-{{ if .Deploy.Ansible.Host.IP }}{{ .Deploy.Ansible.Host.IP }}{{ else }}127.0.0.1{{ end }}
+{{ .Deploy.Ansible.Host.IP }}
 
 [{{ .Project.Name }}:vars]
-#
 # Ansible default variables to start playbook:
-#
 
 # Set remote sudo username
-ansible_user={{ if .Deploy.Ansible.Host.User }}{{ .Deploy.Ansible.Host.User }}{{ else }}root{{ end }}
+ansible_user={{ .Deploy.Ansible.Host.User }}
 # Ask become password for remote sudo user
 ansible_become={{ if .Deploy.Ansible.BecomeSudoUser }}yes{{ else }}no{{ end }}
 # Set connection type to remote server (usually, 'ssh')
-ansible_connection={{ if .Deploy.Ansible.Connection }}{{ .Deploy.Ansible.Connection }}{{ else }}ssh{{ end }}
+ansible_connection={{ .Deploy.Ansible.Connection }}
 # Set Python 3 default path
-ansible_python_interpreter={{ if .Deploy.Ansible.Host.PythonInterpreterPath }}{{ .Deploy.Ansible.Host.PythonInterpreterPath }}{{ else }}/usr/bin/python3{{ end }}
+ansible_python_interpreter={{ .Deploy.Ansible.Host.PythonInterpreterPath }}
 
-#
 # Remote server configuration:
-#
 
 # Set directory on your remote server for store project files
-server_dir={{ if .Deploy.Ansible.Host.ProjectFolderPath }}{{ .Deploy.Ansible.Host.ProjectFolderPath }}{{ else }}/var/www/{{ .Project.Name }}{{ end }}
+server_dir={{ .Deploy.Ansible.Host.ProjectFolderPath }}
 # Set user (owner of files/folders) name
-server_user=root
+server_user={{ .Deploy.Ansible.Host.User }}
 # Set group name
-server_group=docker
+server_group={{ .Deploy.Ansible.Host.Group }}
 
-#
 # Project configuration:
-#
 
 # Set your project domain
-project_domain=example.com
+project_domain={{ .Project.Domain }}
 
-#
 # Docker configuration:
-#
 
 # Set Docker network name
-docker_network=cgapp_network
+docker_network={{ .Deploy.Docker.Network.Name }}
 
-#
 # Backend configuration:
-#
 
 # Set backend port number,
 # MUST BE MATCH to the port that is listed in your `./backend/.env` file!
-backend_port=5000
+backend_port={{ .Containers.Golang.Options.Port }}
 
-#
 # PostgreSQL configuration (backend DB):
-#
 
 # Set PostgreSQL container name
 # MUST BE MATCH to the port that is listed in your `./backend/.env` file!
-postgres_container_name=cgapp-postgres
+postgres_container_name={{ .Containers.Postgres.Name }}
 # Set PostgreSQL version (for example, 13.2)
-postgres_version=latest
+postgres_version={{ .Containers.Postgres.Version }}
 # Set PostgreSQL port number,
 # MUST BE MATCH to the port that is listed in your `./backend/.env` file!
-postgres_port=5432
+postgres_port={{ .Containers.Postgres.Options.Port }}
 # Set PostgreSQL user name,
 # MUST BE MATCH to the user name that is listed in your `./backend/.env` file!
-postgres_user=postgres
+postgres_user={{ .Containers.Postgres.Credentials.User }}
 # Set PostgreSQL password,
 # MUST BE MATCH to the password that is listed in your `./backend/.env` file!
-postgres_password=password
+postgres_password={{ .Containers.Postgres.Credentials.Password }}
 # Set PostgreSQL DB name,
 # MUST BE MATCH to the DB name that is listed in your `./backend/.env` file!
-postgres_db=postgres
+postgres_db={{ .Containers.Postgres.Credentials.Database }}
 # Set PostgreSQL SSL mode state ('enabled' or 'disabled'),
 # MUST BE MATCH to the SSL mode state that is listed in your `./backend/.env` file!
-postgres_ssl_mode=disable
+postgres_ssl_mode={{ .Containers.Postgres.Options.SSLMode }}
 
-#
 # Go-Migrate configuration (DB migrations):
-#
 
 # Set migration number,
 # if you WANT to migrate all of your migrations, just leave it blank,
 # for only initial migration set it to '1'
 migrate_number=1
 
-#
 # Redis configuration (backend cache):
-#
 
 # Set Redis container name
 # MUST BE MATCH to the port that is listed in your `./backend/.env` file!
-redis_container_name=cgapp-redis
+redis_container_name={{ .Containers.Redis.Name }}
 # Set Redis version (for example, 6.2)
-redis_version=latest
+redis_version={{ .Containers.Redis.Version }}
 # Set Redis port number,
 # MUST BE MATCH to the port that is listed in your `./backend/.env` file!
-redis_port=6379
+redis_port={{ .Containers.Redis.Options.Port }}
 
-{{ if eq .Proxy.Name "traefik" }}#
-# Traefik Proxy configuration:
-#
+{{ if eq .Proxy.Name "traefik" }}# Traefik Proxy configuration:
 
+# Set Traefik container name
+traefik_container_name={{ .Containers.Traefik.Name }}
 # Set Traefik version (for example, v2.4)
-traefik_version=latest
+traefik_version={{ .Containers.Traefik.Version }}
 # Set log level in capital letters (DEBUG, PANIC, FATAL, ERROR, WARN, INFO)
-traefik_log_level=ERROR
+traefik_log_level={{ .Containers.Traefik.Options.Log.Level }}
 # Set log format between json and common
-traefik_log_format=json
+traefik_log_format={{ .Containers.Traefik.Options.Log.Format }}
 # Set URL for Traefik admin dashboard,
 # if you DO NOT NEED dashboard (Web UI), just leave it blank
-traefik_dashboard_url=cp.example.com
+traefik_dashboard_url={{ .Containers.Traefik.Options.DashboardURL }}
 # Set username for Traefik admin dashboard,
 # DO NOT FORGET to set this setting, if `traefik_dashboard_url` variable IS NOT empty!
-traefik_dashboard_user=admin
+traefik_dashboard_user={{ .Containers.Traefik.Credentials.User }}
 # Set hashed password for Traefik admin dashboard,
 # DO NOT FORGET to set this setting, if `traefik_dashboard_url` variable IS NOT empty!
 # See: https://doc.traefik.io/traefik/middlewares/basicauth/#users
-traefik_dashboard_password=admin:$$apr1$$WpxRpfMZ$$TMTfGB37C9xAHiPIDiFiB1
+traefik_dashboard_password={{ .Containers.Traefik.Credentials.User }}:{{ .Containers.Traefik.Credentials.Password }}
 
-#
 # ACME configuration (Let's Encrypt):
-#
 
 # Set your email address for SSL cert
-acme_email=mail@example.com
-{{ if .Wildcard }}
+acme_email={{ .Deploy.SSL.Email }}
+{{ if .Containers.Traefik.Options.Wildcard }}
 # You choose a DNS way to getting SSL cert,
 # DO NOT FORGET to set this variable here as well as in `./roles/traefik/tasks/main.yml` file!
 
 # Set DNS provider
 # See: https://doc.traefik.io/traefik/https/acme/#providers
-acme_dns_provider=digitalocean
+acme_dns_provider={{ .Containers.Traefik.Options.ACME.Provider }}
 # Set environment variable(s) for a DNS provider,
 # for example, auth token for DigitalOcean
-do_auth_token=XXXXXXXXXXX
-{{ else }}# Change to 'no' for getting a real SSL cert
-acme_staging=yes{{ end }}
-{{ else if eq .Proxy.Name "nginx" }}#
-# Nginx configuration:
-#
+acme_auth_token={{ .Containers.Traefik.Options.ACME.Token }}
+{{ else }}
+# Getting the SSL cert ('yes' for real cert or 'no' for fake)
+acme_staging={{ if .Containers.Traefik.Options.Staging }}yes{{ else }}no{{ end }}
+{{ end }}
+{{ else if eq .Proxy.Name "nginx" }}# Nginx configuration:
 
+# Set Nginx container name
+nginx_container_name={{ .Containers.Nginx.Name }}
 # Set Nginx version (for example, 1.20-alpine)
-nginx_version=alpine
+nginx_version={{ .Containers.Nginx.Version }}
 # Set redirect from HTTP to HTTPS for default server
-nginx_use_only_https=yes
+nginx_use_only_https={{ if .Containers.Nginx.Options.UseOnlyHTTPS }}yes{{ else }}no{{ end }}
 # Set redirect from WWW to non-WWW domain for default server
-nginx_redirect_to_non_www=yes{{ end }}
+nginx_redirect_to_non_www={{ if .Containers.Nginx.Options.RedirectToNonWWW }}yes{{ else }}no{{ end }}
+{{ end }}

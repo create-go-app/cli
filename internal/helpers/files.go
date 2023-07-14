@@ -10,8 +10,6 @@ import (
 	"html/template"
 	"io/fs"
 	"os"
-
-	"github.com/create-go-app/cli/v5/internal/config"
 )
 
 // EmbeddedFileSystem struct contains embedded file system fields.
@@ -65,8 +63,8 @@ func CopyFromEmbeddedFS(efs *EmbeddedFileSystem) error {
 	return nil
 }
 
-// GenerateFileFromTemplate func to generate files from templates.
-func GenerateFileFromTemplate(fs embed.FS, templateName, outputName string, vars *config.Config) error {
+// GenerateFileFromTemplate func for generate files from templates.
+func GenerateFileFromTemplate[T any](fs embed.FS, templateName, outputName string, vars *T) error {
 	// Checking template and output file names.
 	if templateName == "" || outputName == "" {
 		return errors.New("empty template or output file name")

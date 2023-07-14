@@ -13,5 +13,7 @@ type nginxCredentials struct{}
 
 // nginxOptions ...
 type nginxOptions struct {
-	Port int `koanf:"port"`
+	UseOnlyHTTPS     bool `koanf:"use_only_https"`
+	RedirectToNonWWW bool `koanf:"redirect_to_non_www"`
+	Port             int  `koanf:"port"`
 }
