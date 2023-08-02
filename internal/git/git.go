@@ -5,6 +5,7 @@
 package git
 
 import (
+	"errors"
 	"fmt"
 	"net/url"
 	"os"
@@ -13,7 +14,6 @@ import (
 
 	"github.com/go-git/go-git/v5"
 
-	"github.com/create-go-app/cli/v5/internal/file"
 	"github.com/create-go-app/cli/v5/internal/helpers"
 )
 
@@ -21,7 +21,7 @@ import (
 func Clone(templateType, templateURL string) error {
 	// Checking for nil.
 	if templateType == "" || templateURL == "" {
-		return fmt.Errorf("project template not found")
+		return errors.New("project template not found")
 	}
 
 	// Get current directory.
@@ -39,13 +39,12 @@ func Clone(templateType, templateURL string) error {
 		},
 	)
 	if errPlainClone != nil {
-		return helpers.ShowError(
-			fmt.Sprintf("Repository `%v` was not cloned!", templateURL),
-		)
+		return fmt.Errorf("repository '%v' was not cloned", templateURL)
+
 	}
 
 	// Cleanup project.
-	file.RemoveFolders(folder, []string{".git", ".github"})
+	helpers.RemoveFolders([]string{".git", ".github"})
 
 	return nil
 }

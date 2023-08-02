@@ -1,14 +1,15 @@
 /*
 Package main includes call for the Create Go App CLI.
 
-Create a new production-ready project with backend (Golang),
+Create a new production-ready project with backend (Go),
 frontend (JavaScript, TypeScript) and deploy automation
-(Ansible, Docker) by running one CLI command.
+(Ansible, Terraform, Docker) by running one CLI command.
 
 Focus on writing your code and thinking of the business logic!
 The Create Go App CLI will take care of the rest.
 
-A helpful documentation and next steps -> https://github.com/create-go-app/cli
+A helpful documentation and next steps:
+https://github.com/create-go-app/cli
 
 # Copyright 2023 Vic Shóstak and Create Go App Contributors
 
@@ -47,7 +48,7 @@ func main() {
 
 	// Check, if '-init' flag is true.
 	if *initDefaultConfig {
-		// Check, if the default config file ('.cgapp.yml') is exists in the current dir.
+		// Check, if the default config file ('.cgapp.yml') is existing in the current dir.
 		_, err := os.Stat(".cgapp.yml")
 		if err == nil {
 			// If exists, skip a generation process.
@@ -89,7 +90,7 @@ func main() {
 	if *configPath == "" {
 		helpers.PrintStyled("Config path (or URL) is not set, try to found '.cgapp.yml' file in the current dir...", "info", "margin-top")
 
-		// Check, if the default config file ('.cgapp.yml') is exists in the current dir.
+		// Check, if the default config file ('.cgapp.yml') is existing in the current dir.
 		_, err := os.Stat(".cgapp.yml")
 		if err != nil {
 			// If not exists, skip an initialization process.

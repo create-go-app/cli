@@ -24,11 +24,11 @@ backend:
 frontend:
 
   #
-  template: vue-ts
+  template: next-ts
 
 #  #
 #  repository:
-#    url: git@github.com:create-go-app/vue-ts-template.git
+#    url: git@github.com:create-go-app/next-ts-template.git
 #    private:
 #      key: '{{ CGAPP_FRONTEND_REPOSITORY_PRIVATE_KEY }}'
 
