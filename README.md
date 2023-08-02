@@ -11,7 +11,8 @@
 Create Go App (or `cgapp` for a short) is a **complete** and **self-contained** 
 solution for developers of **any qualification** to create a production-ready 
 project with **backend** (Go), **frontend** (JavaScript, TypeScript) and 
-**deploy automation** (Ansible, Docker) by running **only one** CLI command.
+**deploy automation** (Ansible, Terraform, Docker) by running **only one** CLI 
+command.
 
 Focus on **writing your code** and **thinking of the business-logic**! The CLI 
 will take care of the rest.
@@ -257,7 +258,7 @@ created by [Vic Shóstak][author] and distributed under
 
 <!-- Go -->
 
-[go_version_img]: https://img.shields.io/badge/Go-1.20+-00ADD8?style=for-the-badge&logo=go
+[go_version_img]: https://img.shields.io/badge/Go-1.21+-00ADD8?style=for-the-badge&logo=go
 [go_report_img]: https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none
 [go_report_url]: https://goreportcard.com/report/github.com/create-go-app/cli
 [go_code_coverage_img]: https://img.shields.io/badge/code_coverage-88%25-success?style=for-the-badge&logo=none

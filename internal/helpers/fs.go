@@ -6,7 +6,7 @@ import (
 
 // MakeFile function for single file create.
 func MakeFile(name string, data []byte) error {
-	// Check, if file is exists.
+	// Check, if file is existing.
 	fileInfo, err := os.Stat(name)
 	if err != nil && !fileInfo.IsDir() {
 		return err
@@ -22,7 +22,7 @@ func MakeFile(name string, data []byte) error {
 
 // MakeFolder function for create folder.
 func MakeFolder(name string) error {
-	// Check, if folder is exists.
+	// Check, if folder is existing.
 	folderInfo, err := os.Stat(name)
 	if err != nil && folderInfo.IsDir() {
 		return err

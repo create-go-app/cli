@@ -7,10 +7,9 @@ package executor
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"fmt"
 	"os/exec"
-
-	"github.com/create-go-app/cli/v5/internal/helpers"
 )
 
 // ExecCommand function to execute a given command.
@@ -24,7 +23,7 @@ func ExecCommand(command string, options []string, silentMode bool) error {
 	stderr := &bytes.Buffer{}
 
 	// Collect command line.
-	cmd := exec.Command(command, options...) // #nosec G204
+	cmd := exec.Command(command, options...)
 
 	// Set buffer for stderr from cmd.
 	cmd.Stderr = stderr
@@ -32,12 +31,12 @@ func ExecCommand(command string, options []string, silentMode bool) error {
 	// Create a new reader.
 	cmdReader, errStdoutPipe := cmd.StdoutPipe()
 	if errStdoutPipe != nil {
-		return helpers.ShowError(errStdoutPipe.Error())
+		return errors.New(errStdoutPipe.Error())
 	}
 
 	// Start executing command.
 	if errStart := cmd.Start(); errStart != nil {
-		return helpers.ShowError(errStart.Error())
+		return errors.New(errStart.Error())
 	}
 
 	// Create a new scanner and run goroutine func with output, if not in silent mode.
@@ -45,14 +44,14 @@ func ExecCommand(command string, options []string, silentMode bool) error {
 		scanner := bufio.NewScanner(cmdReader)
 		go func() {
 			for scanner.Scan() {
-				helpers.ShowMessage("", scanner.Text(), false, false)
+				errors.New(scanner.Text())
 			}
 		}()
 	}
 
 	// Wait for executing command.
 	if errWait := cmd.Wait(); errWait != nil {
-		return helpers.ShowError(errWait.Error())
+		return errors.New(errWait.Error())
 	}
 
 	return nil
