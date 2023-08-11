@@ -33,19 +33,25 @@ func PrintStyled(s, state, style string) {
 	// Switch between styles.
 	switch style {
 	case "margin-top-bottom":
-		s = gosl.RenderStyled(gosl.Concat(state, s), lg.MarginTop(1).MarginBottom(1))
+		s = renderStyled(gosl.Concat(state, s), lg.MarginTop(1).MarginBottom(1))
 	case "margin-top":
-		s = gosl.RenderStyled(gosl.Concat(state, s), lg.MarginTop(1))
+		s = renderStyled(gosl.Concat(state, s), lg.MarginTop(1))
 	case "margin-bottom":
-		s = gosl.RenderStyled(gosl.Concat(state, s), lg.MarginBottom(1))
+		s = renderStyled(gosl.Concat(state, s), lg.MarginBottom(1))
 	case "margin-left":
-		s = gosl.RenderStyled(gosl.Concat(state, s), lg.MarginLeft(1))
+		s = renderStyled(gosl.Concat(state, s), lg.MarginLeft(1))
 	case "margin-left-2":
-		s = gosl.RenderStyled(gosl.Concat(state, s), lg.MarginLeft(2))
+		s = renderStyled(gosl.Concat(state, s), lg.MarginLeft(2))
 	default:
 		s = gosl.Concat(state, s)
 	}
 
 	// Print styled output.
 	fmt.Println(s)
+}
+
+// RenderStyled render a styled string with a given lipgloss.Style template
+// using "charmbracelet/lipgloss" package.
+func renderStyled(str string, template lipgloss.Style) string {
+	return template.Render(str)
 }

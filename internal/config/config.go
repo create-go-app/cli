@@ -1,10 +1,9 @@
 package config
 
 import (
-	"github.com/koddr/gosl"
-
 	"github.com/create-go-app/cli/v5/internal/config/containers"
 	"github.com/create-go-app/cli/v5/internal/config/tools"
+	"github.com/create-go-app/cli/v5/internal/helpers"
 )
 
 // Config ...
@@ -60,7 +59,7 @@ type Deploy struct {
 // New ...
 func New(path string) (*Config, error) {
 	// Parse the given config to a struct.
-	cfg, err := gosl.ParseFileWithEnvToStruct(path, "CGAPP", &Config{})
+	cfg, err := helpers.ParseFileWithEnvToStruct(path, "CGAPP", &Config{})
 	if err != nil {
 		return nil, err
 	}
