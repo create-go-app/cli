@@ -2,8 +2,7 @@ package config
 
 import (
 	"errors"
-
-	"github.com/koddr/gosl"
+	"slices"
 )
 
 // Validate ...
@@ -57,7 +56,7 @@ func (c *Config) Validate() error {
 		}
 
 		// Check, if 'backend' template name was set and not contains in the templates index.
-		if c.Backend.Name != "" && !gosl.ContainsInSlice(BackendTemplates, c.Backend.Name) {
+		if c.Backend.Name != "" && !slices.Contains(BackendTemplates, c.Backend.Name) {
 			errs = append(errs, notFoundBackendTemplateName)
 		}
 	}
@@ -75,7 +74,7 @@ func (c *Config) Validate() error {
 		}
 
 		// Check, if 'frontend' template name was set and not contains in the templates index.
-		if c.Frontend.Name != "" && !gosl.ContainsInSlice(FrontendTemplates, c.Frontend.Name) {
+		if c.Frontend.Name != "" && !slices.Contains(FrontendTemplates, c.Frontend.Name) {
 			errs = append(errs, notFoundFrontendTemplateName)
 		}
 	}
@@ -93,7 +92,7 @@ func (c *Config) Validate() error {
 		}
 
 		// Check, if 'proxy' template name was set and not contains in the templates index.
-		if c.Proxy.Name != "" && !gosl.ContainsInSlice(ProxyTemplates, c.Proxy.Name) {
+		if c.Proxy.Name != "" && !slices.Contains(ProxyTemplates, c.Proxy.Name) {
 			errs = append(errs, notFoundProxyTemplateName)
 		}
 	}

@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/koddr/gosl"
 )
 
 // PrintStyled prints styled output for the given string by a lipgloss.Style template.
@@ -33,17 +32,17 @@ func PrintStyled(s, state, style string) {
 	// Switch between styles.
 	switch style {
 	case "margin-top-bottom":
-		s = renderStyled(gosl.Concat(state, s), lg.MarginTop(1).MarginBottom(1))
+		s = renderStyled(Concat(state, s), lg.MarginTop(1).MarginBottom(1))
 	case "margin-top":
-		s = renderStyled(gosl.Concat(state, s), lg.MarginTop(1))
+		s = renderStyled(Concat(state, s), lg.MarginTop(1))
 	case "margin-bottom":
-		s = renderStyled(gosl.Concat(state, s), lg.MarginBottom(1))
+		s = renderStyled(Concat(state, s), lg.MarginBottom(1))
 	case "margin-left":
-		s = renderStyled(gosl.Concat(state, s), lg.MarginLeft(1))
+		s = renderStyled(Concat(state, s), lg.MarginLeft(1))
 	case "margin-left-2":
-		s = renderStyled(gosl.Concat(state, s), lg.MarginLeft(2))
+		s = renderStyled(Concat(state, s), lg.MarginLeft(2))
 	default:
-		s = gosl.Concat(state, s)
+		s = Concat(state, s)
 	}
 
 	// Print styled output.
