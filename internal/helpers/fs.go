@@ -7,14 +7,12 @@ import (
 // MakeFile function for single file create.
 func MakeFile(name string, data []byte) error {
 	// Check, if file is existing.
-	fileInfo, err := os.Stat(name)
-	if err != nil && !fileInfo.IsDir() {
-		return err
-	}
-
-	// Write to created file.
-	if err = os.WriteFile(name, data, 0o644); err != nil {
-		return err
+	_, err := os.Stat(name)
+	if err != nil {
+		// Write to created file.
+		if err = os.WriteFile(name, data, 0o644); err != nil {
+			return err
+		}
 	}
 
 	return nil

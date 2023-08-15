@@ -42,7 +42,7 @@ func main() {
 	configPath := flag.String("p", "", "set a path (or URL) to the config file")
 	flag.Parse()
 
-	helpers.PrintStyled("👋 Hello and welcome to the Create Go App CLI!", "", "margin-top")
+	helpers.PrintStyled("👋 Hello and welcome to the Create Go App CLI (v5)!", "", "margin-top")
 
 	// Check, if '-init' flag is true.
 	if *initDefaultConfig {
@@ -50,7 +50,7 @@ func main() {
 		_, err := os.Stat(".cgapp.yml")
 		if err == nil {
 			// If exists, skip a generation process.
-			helpers.PrintStyled("Please, fix errors:", "error", "margin-top-bottom")
+			helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
 			helpers.PrintStyled("the configuration file '.cgapp.yml' is found in the current dir, cannot be overwritten (data erasure protection)", "", "margin-left")
 			helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
 			os.Exit(1)
@@ -59,7 +59,7 @@ func main() {
 		// If not exists, get data from embed files.
 		embedDefaultConfig, err := embed.ConfigsFiles.ReadFile("configs/default.yml")
 		if err != nil {
-			helpers.PrintStyled("Please, fix errors:", "error", "margin-top-bottom")
+			helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
 			helpers.PrintStyled(err.Error(), "", "margin-left")
 			helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
 			os.Exit(1)
@@ -67,13 +67,13 @@ func main() {
 
 		// Create a new config file.
 		if err = helpers.MakeFile(".cgapp.yml", embedDefaultConfig); err != nil {
-			helpers.PrintStyled("Please, fix errors:", "error", "margin-top-bottom")
+			helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
 			helpers.PrintStyled(err.Error(), "", "margin-left")
 			helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
 			os.Exit(1)
 		}
 
-		helpers.PrintStyled("Successfully generated '.cgapp.yml' config file in the current dir!", "success", "margin-top-bottom")
+		helpers.PrintStyled("Successfully generated '.cgapp.yml' config file in the current dir!", "success", "margin-bottom")
 		helpers.PrintStyled("Next steps:", "info", "margin-left")
 		helpers.PrintStyled("Edit config file with your options and parameters", "info", "margin-left-2")
 		helpers.PrintStyled("Make awesome backend, frontend and setting up proxy", "info", "margin-left-2")
@@ -82,9 +82,19 @@ func main() {
 		os.Exit(0)
 	}
 
+	// Check, if required tools (git, npm, docker) was installed on the local system.
+	if err := helpers.CheckCLITools([]string{"git", "npm", "docker"}); err != nil {
+		// If not installed, skip a generation process.
+		helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
+		helpers.PrintStyled(err.Error(), "", "margin-left")
+		helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
+		os.Exit(1)
+	}
+
+	helpers.PrintStyled("Successfully checked required tools (git, npm, docker) on your local system!", "success", "margin-top")
 	helpers.PrintStyled(fmt.Sprintf("Analyzing the given configuration file ('%s')...", *configPath), "info", "margin-top")
 
-	// Check, if '-config' flag has path (or URL).
+	// Check, if '-p' flag has path (or URL).
 	if *configPath == "" {
 		helpers.PrintStyled("Config path (or URL) is not set, try to found '.cgapp.yml' file in the current dir...", "info", "margin-top")
 
@@ -92,7 +102,7 @@ func main() {
 		_, err := os.Stat(".cgapp.yml")
 		if err != nil {
 			// If not exists, skip an initialization process.
-			helpers.PrintStyled("Please, fix errors:", "error", "margin-top-bottom")
+			helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
 			helpers.PrintStyled("the configuration file '.cgapp.yml' is not found", "", "margin-left")
 			helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
 			os.Exit(1)
@@ -107,7 +117,7 @@ func main() {
 	// Initialize app with config path.
 	app, err := initialize(*configPath)
 	if err != nil {
-		helpers.PrintStyled("Please, fix errors:", "error", "margin-top-bottom")
+		helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
 		helpers.PrintStyled(err.Error(), "", "margin-left")
 		helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
 		os.Exit(1)
@@ -121,12 +131,17 @@ func main() {
 
 		// Create a new project.
 		if err = app.Create(); err != nil {
-			helpers.PrintStyled("Please, fix errors:", "error", "margin-top-bottom")
+			helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
 			helpers.PrintStyled(err.Error(), "", "margin-left")
 			helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
 			os.Exit(1)
 		}
 
+		helpers.PrintStyled("Successfully created project in the current dir!", "success", "margin-top-bottom")
+		helpers.PrintStyled("Next steps:", "info", "margin-left")
+		helpers.PrintStyled("Make awesome backend, frontend and setting up proxy", "info", "margin-left-2")
+		helpers.PrintStyled("Run deploy process for your project", "info", "margin-left-2")
+		helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
 		os.Exit(0)
 	}
 
@@ -136,12 +151,13 @@ func main() {
 
 		// Deploy project to your remote host.
 		if err = app.Deploy(); err != nil {
-			helpers.PrintStyled("Please, fix errors:", "error", "margin-top-bottom")
+			helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
 			helpers.PrintStyled(err.Error(), "", "margin-left")
 			helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
 			os.Exit(1)
 		}
 
+		helpers.PrintStyled("Successfully deployed project to the remote server!", "success", "margin-top-bottom")
 		os.Exit(0)
 	}
 }
