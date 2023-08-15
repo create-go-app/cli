@@ -125,7 +125,7 @@ func main() {
 
 	helpers.PrintStyled(fmt.Sprintf("Successfully initialized '%s' project with the given configuration file...", app.Config.Project.Name), "success", "margin-top")
 
-	// Check, if '-new' flag is true.
+	// Check, if '-create' flag is true.
 	if *createProject {
 		helpers.PrintStyled("Start creating project... please, wait!", "info", "margin-top")
 
