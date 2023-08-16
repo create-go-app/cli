@@ -73,7 +73,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		helpers.PrintStyled("Successfully generated '.cgapp.yml' config file in the current dir!", "success", "margin-bottom")
+		helpers.PrintStyled("Successfully generated '.cgapp.yml' config file in the current dir!", "success", "margin-top-bottom")
 		helpers.PrintStyled("Next steps:", "info", "margin-left")
 		helpers.PrintStyled("Edit config file with your options and parameters", "info", "margin-left-2")
 		helpers.PrintStyled("Make awesome backend, frontend and setting up proxy", "info", "margin-left-2")

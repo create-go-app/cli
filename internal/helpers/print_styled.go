@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/charmbracelet/lipgloss"
 )
@@ -29,20 +30,23 @@ func PrintStyled(s, state, style string) {
 		state = lg.Foreground(warningColor).SetString("‼ ").String()
 	}
 
+	// Concat state with the given string.
+	concatStrings := strings.Join([]string{state, s}, "")
+
 	// Switch between styles.
 	switch style {
 	case "margin-top-bottom":
-		s = renderStyled(Concat(state, s), lg.MarginTop(1).MarginBottom(1))
+		s = renderStyled(concatStrings, lg.MarginTop(1).MarginBottom(1))
 	case "margin-top":
-		s = renderStyled(Concat(state, s), lg.MarginTop(1))
+		s = renderStyled(concatStrings, lg.MarginTop(1))
 	case "margin-bottom":
-		s = renderStyled(Concat(state, s), lg.MarginBottom(1))
+		s = renderStyled(concatStrings, lg.MarginBottom(1))
 	case "margin-left":
-		s = renderStyled(Concat(state, s), lg.MarginLeft(1))
+		s = renderStyled(concatStrings, lg.MarginLeft(1))
 	case "margin-left-2":
-		s = renderStyled(Concat(state, s), lg.MarginLeft(2))
+		s = renderStyled(concatStrings, lg.MarginLeft(2))
 	default:
-		s = Concat(state, s)
+		s = concatStrings
 	}
 
 	// Print styled output.
