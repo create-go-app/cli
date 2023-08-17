@@ -11,8 +11,7 @@
 Create Go App (or `cgapp` for a short) is a **complete** and **self-contained** 
 solution for developers of **any qualification** to create a production-ready 
 project with **backend** (Go), **frontend** (JavaScript, TypeScript) and 
-**deploy automation** (Ansible, Terraform, Docker) by running **only one** CLI 
-command.
+**deploy automation** (Ansible, Docker) by running **only one** CLI command.
 
 Focus on **writing your code** and **thinking of the business-logic**! The CLI 
 will take care of the rest.
@@ -38,7 +37,7 @@ brew install create-go-app/tap/cli
 > want to download MS Windows `exe` files, ready-made `deb`, `rpm`, `apk` 
 > or `Arch Linux` packages.
 
-An alternative way is a native installation using Go (version `1.20` or 
+An alternative way is a native installation using Go (version `1.21.0` or 
 higher is required):
 
 ```console
@@ -52,8 +51,12 @@ cgapp -init
 ```
 
 When the generation process is finished, open the `.cgapp.yml` file and fill 
-out your information.
+out your credentials and other info.
 
+> ❗️ Please be careful: please **do not** specify secret data in plain text
+> in the configuration file! There are environment variables (`env`) for this,
+> which you can use in the `.cgapp.yml` file for absolutely any settings.
+> 
 > 💡 Hint: you can always refer to our [Wiki page][repo_wiki_url] to set the 
 > configuration correctly.
 
@@ -234,7 +237,7 @@ If you want to say **thank you** or/and support active development of
 - Write interesting articles about project on [Dev.to][dev_to_url], or 
   personal blog.
 - Join DigitalOcean at our [referral link][author_do_ref_url] (your profit is 
-  **$100** and we get $25).
+  **$100**, and we get $25).
 - Leave a review on our [ProductHunt][cgapp_product-hunt_url] page.
 
 [![Product Hunt][cgapp_product-hunt_img]][cgapp_product-hunt_url]
