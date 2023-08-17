@@ -166,28 +166,35 @@ Make sure that you have [Python 3.8+][python_url] and
 - Frontend template with [React][react_url]:
   - `react` — generated template with a common React app.
   - `react-ts` — generated template with a TypeScript version of the React app.
+  - `react-swc` — generated template with a common React app with SWC.
+  - `react-swc-ts` — generated template with a TypeScript version of the React app with SWC.
 - Frontend template with [Preact][preact_url]:
   - `preact` — generated template with a common Preact app.
   - `preact-ts` — generated template with a TypeScript version of the Preact app.
-- Frontend template with [Next.js][nextjs_url]:
-  - `next` — generated template with a common Next.js app.
-  - `next-ts` — generated template with a TypeScript version of the Next.js app.
-- Frontend template with [Nuxt][nuxt_url]:
-  - `nuxt` — generated template with a common Nuxt v3 app.
 - Frontend template with [Vue.js][vuejs_url]:
   - `vue` — generated template with a common Vue.js app.
   - `vue-ts` — generated template with a TypeScript version of the Vue.js app.
 - Frontend template with [Svelte][svelte_url]:
   - `svelte` — generated template with a common Svelte app.
   - `svelte-ts` — generated template with a TypeScript version of the Svelte app.
+- Frontend template with [Solid][solid_url]:
+  - `solid` — generated template with a common Solid app.
+  - `solid-ts` — generated template with a TypeScript version of the Solid app.
 - Frontend template with [Lit][lit_url] web components:
   - `lit` — generated template with a common Lit app.
   - `lit-ts` — generated template a TypeScript version of the Lit app.
+- Frontend template with [Qwik][qwik_url] web components:
+  - `qwik` — generated template with a common Qwik app.
+  - `qwik-ts` — generated template a TypeScript version of the Qwik app.
+- Frontend template with [Next.js][nextjs_url]:
+  - `next` — running interactive wizard for generate the Next.js app.
+- Frontend template with [Nuxt][nuxt_url]:
+  - `nuxt` — running interactive wizard for generate the Nuxt v3 app.
 
 > ☝️ Frontend part will be generated using awesome tool [Vite.js][vitejs_url] 
 > under the hood. So, you'll always get the latest version of `React`, 
-> `Preact`, `Vue`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates 
-> for your project! 
+> `Preact`, `Vue`, `Svelte`, `Solid`, `Lit`, `Qwik`, or pure 
+> JavaScript/TypeScript templates for your project!
 > 
 > The `Next.js` and `Nuxt` frontend parts will be generated using the 
 > `create-next-app` and `nuxi` utilities.
@@ -315,7 +322,9 @@ created by [Vic Shóstak][author] and distributed under
 [nextjs_url]: https://nextjs.org/
 [nuxt_url]: https://nuxt.com/
 [svelte_url]: https://svelte.dev/
+[solid_url]: https://github.com/solidjs/solid
 [lit_url]: https://lit.dev/
+[qwik_url]: https://github.com/BuilderIO/qwik
 [chi_url]: https://github.com/go-chi/chi
 [fiber_url]: https://github.com/gofiber/fiber
 [net_http_url]: https://golang.org/pkg/net/http/
