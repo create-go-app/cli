@@ -156,7 +156,7 @@ Make sure that you have [Python 3.8+][python_url] and
   - [`fiber`][cgapp_fiber-template_url] — complex REST API with CRUD, JWT auth 
     with renew token, DB and cache.
 - Backend template with [go-chi][chi_url]:
-  - [`chi`][cgapp_chi-template_url] — a basic application with health check.
+  - [`go-chi`][cgapp_chi-template_url] — a basic application with health check.
 
 ### Frontend
 
