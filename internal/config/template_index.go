@@ -1,5 +1,11 @@
 package config
 
+const (
+	FiberGoTemplateURL   = "https://github.com/create-go-app/fiber-go-template.git"
+	NetHttpGoTemplateURL = "https://github.com/create-go-app/net_http-go-template.git"
+	ChiGoTemplateURL     = "https://github.com/create-go-app/chi-go-template.git"
+)
+
 var (
 	// BackendTemplates ...
 	BackendTemplates = []string{
@@ -10,21 +16,16 @@ var (
 
 	// FrontendTemplates ...
 	FrontendTemplates = []string{
-		"vanilla",
-		"vanilla-ts",
-		"react",
-		"react-ts",
-		"preact",
-		"preact-ts",
-		"next",
-		"next-ts",
-		"nuxt",
-		"vue",
-		"vue-ts",
-		"svelte",
-		"svelte-ts",
-		"lit",
-		"lit-ts",
+		"vanilla", "vanilla-ts",
+		"vue", "vue-ts",
+		"react", "react-ts",
+		"react-swc", "react-swc-ts",
+		"preact", "preact-ts",
+		"lit", "lit-ts",
+		"svelte", "svelte-ts",
+		"solid", "solid-ts",
+		"qwik", "qwik-ts",
+		"next", "nuxt",
 	}
 
 	// ProxyTemplates ...

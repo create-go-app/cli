@@ -16,7 +16,7 @@ backend:
 
 #  #
 #  repository:
-#    url: git@github.com:create-go-app/fiber-go-template.git
+#    url: https://github.com/user/backend-template.git
 #    private:
 #      key: '{{ CGAPP_BACKEND_REPOSITORY_PRIVATE_KEY }}'
 
@@ -24,11 +24,11 @@ backend:
 frontend:
 
   #
-  template: next-ts
+  template: next
 
 #  #
 #  repository:
-#    url: git@github.com:create-go-app/next-ts-template.git
+#    url: https://github.com/user/frontend-template.git
 #    private:
 #      key: '{{ CGAPP_FRONTEND_REPOSITORY_PRIVATE_KEY }}'
 
@@ -40,7 +40,7 @@ proxy:
 
 #  #
 #  repository:
-#    url: git@github.com:create-go-app/nginx-ansible-template.git
+#    url: https://github.com/user/proxy-template.git
 #    private:
 #      key: '{{ CGAPP_PROXY_REPOSITORY_PRIVATE_KEY }}'
 

@@ -29,6 +29,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/create-go-app/cli/v5/embed"
 	"github.com/create-go-app/cli/v5/internal/helpers"
@@ -41,6 +42,9 @@ func main() {
 	deployProject := flag.Bool("deploy", false, "deploy your project to the remote host")
 	configPath := flag.String("p", "", "set a path (or URL) to the config file")
 	flag.Parse()
+
+	// Start timer.
+	start := time.Now()
 
 	helpers.PrintStyled("👋 Hello and welcome to the Create Go App CLI (v5)!", "", "margin-top")
 
@@ -73,7 +77,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		helpers.PrintStyled("Successfully generated '.cgapp.yml' config file in the current dir!", "success", "margin-top-bottom")
+		helpers.PrintStyled(fmt.Sprintf("Successfully generated '.cgapp.yml' config file in the current dir! Time elapsed: %.2fs", time.Since(start).Seconds()), "success", "margin-top-bottom")
 		helpers.PrintStyled("Next steps:", "info", "margin-left")
 		helpers.PrintStyled("Edit config file with your options and parameters", "info", "margin-left-2")
 		helpers.PrintStyled("Make awesome backend, frontend and setting up proxy", "info", "margin-left-2")
@@ -137,7 +141,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		helpers.PrintStyled("Successfully created project in the current dir!", "success", "margin-top-bottom")
+		helpers.PrintStyled(fmt.Sprintf("Successfully created project in the current dir! Time elapsed: %.2fs", time.Since(start).Seconds()), "success", "margin-top-bottom")
 		helpers.PrintStyled("Next steps:", "info", "margin-left")
 		helpers.PrintStyled("Make awesome backend, frontend and setting up proxy", "info", "margin-left-2")
 		helpers.PrintStyled("Run deploy process for your project", "info", "margin-left-2")
@@ -157,7 +161,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		helpers.PrintStyled("Successfully deployed project to the remote server!", "success", "margin-top-bottom")
+		helpers.PrintStyled(fmt.Sprintf("Successfully deployed project to the remote server! Time elapsed: %.2fs", time.Since(start).Seconds()), "success", "margin-top-bottom")
 		os.Exit(0)
 	}
 }

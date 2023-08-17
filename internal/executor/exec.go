@@ -5,53 +5,24 @@
 package executor
 
 import (
-	"bufio"
-	"bytes"
 	"errors"
 	"fmt"
 	"os/exec"
 )
 
-// ExecCommand function to execute a given command.
-func ExecCommand(command string, options []string, silentMode bool) error {
+// Execute function to execute a given command with options.
+func Execute(command string, options ...string) error {
 	// Checking for nil.
 	if command == "" || options == nil {
-		return fmt.Errorf("no command to execute")
+		return errors.New("no command or options to execute")
 	}
 
-	// Create buffer for stderr.
-	stderr := &bytes.Buffer{}
-
-	// Collect command line.
+	// Create a process for execute the current command.
 	cmd := exec.Command(command, options...)
 
-	// Set buffer for stderr from cmd.
-	cmd.Stderr = stderr
-
-	// Create a new reader.
-	cmdReader, errStdoutPipe := cmd.StdoutPipe()
-	if errStdoutPipe != nil {
-		return errors.New(errStdoutPipe.Error())
-	}
-
-	// Start executing command.
-	if errStart := cmd.Start(); errStart != nil {
-		return errors.New(errStart.Error())
-	}
-
-	// Create a new scanner and run goroutine func with output, if not in silent mode.
-	if !silentMode {
-		scanner := bufio.NewScanner(cmdReader)
-		go func() {
-			for scanner.Scan() {
-				errors.New(scanner.Text())
-			}
-		}()
-	}
-
-	// Wait for executing command.
-	if errWait := cmd.Wait(); errWait != nil {
-		return errors.New(errWait.Error())
+	// Run execution of the current command.
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("command '%s' ended with an error: %s", command, err.Error())
 	}
 
 	return nil
