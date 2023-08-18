@@ -10,9 +10,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/knadh/koanf/parsers/hcl"
-	"github.com/knadh/koanf/parsers/json"
-	"github.com/knadh/koanf/parsers/toml"
 	"github.com/knadh/koanf/parsers/yaml"
 	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/file"
@@ -26,12 +23,12 @@ import (
 func ParseFileWithEnvToStruct[T any](path, envPrefix string, model *T) (*T, error) {
 	// Check, if path is not empty.
 	if path == "" {
-		return nil, errors.New("error: given path of the structured file is empty")
+		return nil, errors.New("the given path of the structured file is empty")
 	}
 
 	// Check, if environment variables prefix was given.
 	if envPrefix == "" {
-		return nil, errors.New("error: given environment variables prefix is empty")
+		return nil, errors.New("the given environment variables prefix is empty")
 	}
 
 	// Create a new koanf instance and parse the given path.
@@ -75,21 +72,9 @@ func newKoanfByPath(path string) (*koanf.Koanf, error) {
 
 	// Check the format of the structured file.
 	switch parserFormat {
-	case ".json", ".yaml", ".yml", ".toml", ".tf":
+	case ".yaml", ".yml":
 		// Create a new variable for the koanf parser.
-		var parser koanf.Parser
-
-		// Check the format of the structured file for get right koanf parser.
-		switch parserFormat {
-		case ".json":
-			parser = json.Parser() // JSON format parser
-		case ".yaml", ".yml":
-			parser = yaml.Parser() // YAML format parser
-		case ".toml":
-			parser = toml.Parser() // TOML format parser
-		case ".tf":
-			parser = hcl.Parser(true) // HCL (Terraform) format parser
-		}
+		parser := yaml.Parser() // YAML format parser
 
 		// Parse path of the structured file as URL.
 		u, _ := url.Parse(path)
@@ -104,47 +89,47 @@ func newKoanfByPath(path string) (*koanf.Koanf, error) {
 			if err == nil || !os.IsNotExist(err) {
 				// Check, if file is not dir.
 				if fileInfo.IsDir() {
-					return nil, fmt.Errorf("error: path of the structured file (%s) is dir", path)
+					return nil, fmt.Errorf("path of the config file (%s) is dir", path)
 				}
 
 				// Load structured file from path (with parser of the file format).
 				if err = k.Load(file.Provider(path), parser); err != nil {
 					return nil, fmt.Errorf(
-						"error: not valid structure of the %s file from the given path (%s)",
+						"not valid structure of the %s file from the given path (%s)",
 						strings.ToUpper(strings.TrimPrefix(parserFormat, ".")), path,
 					)
 				}
 			} else {
-				return nil, fmt.Errorf("error: structured file is not found in the given path (%s)", path)
+				return nil, fmt.Errorf("config file is not found in the given path (%s)", path)
 			}
 		case "http", "https":
 			// Get the given file from URL.
 			resp, err := http.Get(path)
 			if err != nil {
-				return nil, fmt.Errorf("error: structured file is not found in the given URL (%s)", path)
+				return nil, fmt.Errorf("config file is not found in the given URL (%s)", path)
 			}
 			defer resp.Body.Close()
 
 			// Read the structured file from URL.
 			body, err := io.ReadAll(resp.Body)
 			if err != nil {
-				return nil, errors.New("error: raw body from the URL is not valid")
+				return nil, errors.New("raw body from the URL is not valid")
 			}
 
 			// Load structured file from URL (with parser of the file format).
 			if err = k.Load(rawbytes.Provider(body), parser); err != nil {
 				return nil, fmt.Errorf(
-					"error: not valid structure of the %s file from the given URL (%s)",
+					"not valid structure of the %s file from the given URL (%s)",
 					strings.ToUpper(strings.TrimPrefix(parserFormat, ".")), path,
 				)
 			}
 		default:
 			// If the path's schema is unknown, default action is error.
-			return nil, errors.New("error: unknown path of structured file, use system path or http(s) URL")
+			return nil, errors.New("unknown path of the config file, use system path or http(s) URL")
 		}
 	default:
 		// If the format of the structured file is unknown, default action is error.
-		return nil, errors.New("error: unknown format of structured file, see: https://github.com/knadh/koanf")
+		return nil, errors.New("unknown format of the config file, see: https://github.com/knadh/koanf")
 	}
 
 	return k, nil

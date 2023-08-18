@@ -96,7 +96,6 @@ func main() {
 	}
 
 	helpers.PrintStyled("Successfully checked required tools (git, npm, docker) on your local system!", "success", "margin-top")
-	helpers.PrintStyled(fmt.Sprintf("Analyzing the given configuration file ('%s')...", *configPath), "info", "margin-top")
 
 	// Check, if '-p' flag has path (or URL).
 	if *configPath == "" {
@@ -117,6 +116,8 @@ func main() {
 
 		helpers.PrintStyled("Config file '.cgapp.yml' was found, continue process...", "info", "margin-top-bottom")
 	}
+
+	helpers.PrintStyled(fmt.Sprintf("Analyzing the given configuration file ('%s')...", *configPath), "info", "margin-top")
 
 	// Initialize app with config path.
 	app, err := initialize(*configPath)
