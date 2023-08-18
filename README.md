@@ -121,8 +121,7 @@ cgapp -create [OPTION]
 
 ![cgapp_create][cgapp_create_gif]
 
-- 📺 Full demo video: https://recordit.co/OQAwkZBrjN
-- 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-create
+📖 Docs: https://github.com/create-go-app/cli/wiki/Command-create
 
 ### `-deploy`
 
@@ -142,8 +141,7 @@ Make sure that you have [Python 3.8+][python_url] and
 
 ![cgapp_deploy][cgapp_deploy_gif]
 
-- 📺 Full demo video: https://recordit.co/ishTf0Au1x
-- 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-deploy
+📖 Docs: https://github.com/create-go-app/cli/wiki/Command-deploy
 
 ## 📝 Production-ready project templates
 
