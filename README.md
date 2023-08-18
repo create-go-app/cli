@@ -201,7 +201,7 @@ The `Next.js` and `Nuxt` frontend parts will be generated using the latest
   - `next-ts` — generated template a TypeScript version of the Next.js app.
   - `next-tailwind-ts` — generated template a TypeScript version of the Next.js app with Tailwind CSS.
 - Frontend template with [Nuxt][nuxt_url]:
-  - `nuxt` — running interactive wizard for generate the Nuxt v3 app.
+  - `nuxt` — generated template a TypeScript version of the Nuxt v3+ app.
 
 > ❗️ Please make sure that you have `npm` version `7` or higher installed to 
 > create the frontend part of the project correctly. If you run the 
