@@ -26,6 +26,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -152,9 +153,38 @@ func main() {
 
 	// Check, if '-deploy' flag is true.
 	if *deployProject {
-		helpers.PrintStyled("Start deploying project... please, wait!", "info", "margin-top")
+		// Create a new slice for join errors.
+		errs := make([]error, 0)
 
-		// Deploy project to your remote host.
+		// Check, if 'backend' folder is exising.
+		_, err = os.Stat("backend")
+		if err != nil {
+			errs = append(errs, errors.New("'backend' folder is required, but not founded on the current dir"))
+		}
+
+		// Check, if 'hosts.ini' file is exising.
+		_, err = os.Stat("hosts.ini")
+		if err != nil {
+			errs = append(errs, errors.New("'hosts.ini' file is required, but not founded on the current dir"))
+		}
+
+		// Check, if 'playbook.yml' file is exising.
+		_, err = os.Stat("playbook.yml")
+		if err != nil {
+			errs = append(errs, errors.New("'playbook.yml' file is required, but not founded on the current dir"))
+		}
+
+		// Print errors, if presented.
+		if errors.Join(errs...) != nil {
+			helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
+			helpers.PrintStyled(errors.Join(errs...).Error(), "", "margin-left")
+			helpers.PrintStyled("For more information, see https://github.com/create-go-app/cli/wiki", "warning", "margin-top-bottom")
+			os.Exit(1)
+		}
+
+		helpers.PrintStyled("Start deploying project... please, wait!", "info", "margin-top-bottom")
+
+		// Deploy project to your remote server.
 		if err = app.Deploy(); err != nil {
 			helpers.PrintStyled("Please, fix error(s):", "error", "margin-top-bottom")
 			helpers.PrintStyled(err.Error(), "", "margin-left")
