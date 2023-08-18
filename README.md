@@ -161,9 +161,10 @@ Make sure that you have [Python 3.8+][python_url] and
 ### Frontend
 
 Frontend part will be generated using awesome tool [Vite.js][vitejs_url]
-under the hood. So, you'll always get the latest version of React, Preact, 
-Vue, Svelte, Solid, Lit, Qwik, or pure JavaScript/TypeScript templates for 
-your project.
+under the hood. 
+
+So, you'll always get the latest version of React, Preact, Vue, Svelte, 
+Solid, Lit, Qwik, or pure JavaScript/TypeScript templates for your project.
 
 | Name                              | Description                      | JavaScript  | Typescript     |
 |-----------------------------------|----------------------------------|-------------|----------------|
