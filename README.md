@@ -160,6 +160,11 @@ Make sure that you have [Python 3.8+][python_url] and
 
 ### Frontend
 
+Frontend part will be generated using awesome tool [Vite.js][vitejs_url]
+under the hood. So, you'll always get the latest version of `React`, `Preact`, 
+`Vue`, `Svelte`, `Solid`, `Lit`, `Qwik`, or pure JavaScript/TypeScript 
+templates for your project.
+
 - Pure JavaScript frontend template:
   - `vanilla` — generated template with pure JavaScript app.
   - `vanilla-ts` — generated template with pure TypeScript app.
@@ -186,6 +191,10 @@ Make sure that you have [Python 3.8+][python_url] and
 - Frontend template with [Qwik][qwik_url] web components:
   - `qwik` — generated template with a common Qwik app.
   - `qwik-ts` — generated template a TypeScript version of the Qwik app.
+
+The `Next.js` and `Nuxt` frontend parts will be generated using the latest 
+`create-next-app` and `nuxi` utilities.
+
 - Frontend template with [Next.js][nextjs_url]:
   - `next` — generated template with a common Next.js app.
   - `next-tailwind` — generated template with a common Next.js app with Tailwind CSS.
@@ -194,15 +203,7 @@ Make sure that you have [Python 3.8+][python_url] and
 - Frontend template with [Nuxt][nuxt_url]:
   - `nuxt` — running interactive wizard for generate the Nuxt v3 app.
 
-> ☝️ Frontend part will be generated using awesome tool [Vite.js][vitejs_url] 
-> under the hood. So, you'll always get the latest version of `React`, 
-> `Preact`, `Vue`, `Svelte`, `Solid`, `Lit`, `Qwik`, or pure 
-> JavaScript/TypeScript templates for your project!
-> 
-> The `Next.js` and `Nuxt` frontend parts will be generated using the 
-> `create-next-app` and `nuxi` utilities.
->
-> Please make sure that you have `npm` version `7` or higher installed to 
+> ❗️ Please make sure that you have `npm` version `7` or higher installed to 
 > create the frontend part of the project correctly. If you run the 
 > `cgapp -create` command using our [Docker image][docker_url], `npm` of the 
 > correct version is **already** included.
