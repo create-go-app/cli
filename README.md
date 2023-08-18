@@ -180,11 +180,11 @@ your project.
 The `Next.js` and `Nuxt` frontend parts will be generated using the latest 
 `create-next-app` and `nuxi` utilities.
 
-| Name                        | Description                              | JavaScript      | Typescript         |
-|-----------------------------|------------------------------------------|-----------------|--------------------|
-| [Next.js][nextjs_url]       | A common Next.js app                     | `next`          | `next-ts`          |
-| Next.js (with Tailwind CSS) | A common Next.js app with Tailwind CSS   | `next-tailwind` | `next-tailwind-ts` |
-| [Nuxt][nuxt_url]            | A TypeScript version of the Nuxt v3+ app | -               | `nuxt`             |
+| Name                                               | Description                            | JavaScript      | Typescript         |
+|----------------------------------------------------|----------------------------------------|-----------------|--------------------|
+| [Next.js][nextjs_url]                              | A common Next.js app                   | `next`          | `next-ts`          |
+| [Next.js (with Tailwind CSS)][nextjs_tailwind_url] | A common Next.js app with Tailwind CSS | `next-tailwind` | `next-tailwind-ts` |
+| [Nuxt][nuxt_url]                                   | A common Nuxt v3 app                   | -               | `nuxt`             |
 
 > ❗️ Please make sure that you have `npm` version `7` or higher installed to 
 > create the frontend part of the project correctly. If you run the 
@@ -308,6 +308,7 @@ created by [Vic Shóstak][author] and distributed under
 [react_swc_url]: https://swc.rs/
 [preact_url]: https://preactjs.com/
 [nextjs_url]: https://nextjs.org/
+[nextjs_tailwind_url]: https://nextjs.org/docs/app/building-your-application/styling/tailwind-css
 [nuxt_url]: https://nuxt.com/
 [svelte_url]: https://svelte.dev/
 [solid_url]: https://github.com/solidjs/solid
