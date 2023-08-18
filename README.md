@@ -170,7 +170,7 @@ Solid, Lit, Qwik, or pure JavaScript/TypeScript templates for your project.
 |-----------------------------------|----------------------------------|-------------|----------------|
 | Pure                              | A pure JavaScript/Typescript app | `vanilla`   | `vanilla-ts`   |
 | [React][react_url]                | A common React app               | `react`     | `react-ts`     |
-| [React (with SWC)][react_swc_url] | A common React app with SWC      | `react-swc` | `react-swc-ts` |
+| [React (with SWC)][react_swc_url] | A React app with SWC             | `react-swc` | `react-swc-ts` |
 | [Preact][preact_url]              | A common Preact app              | `preact`    | `preact-ts`    |
 | [Vue.js][vuejs_url]               | A common Vue.js app              | `vue`       | `vue-ts`       |
 | [Svelte][svelte_url]              | A common Svelte app              | `svelte`    | `svelte-ts`    |
