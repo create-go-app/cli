@@ -161,47 +161,30 @@ Make sure that you have [Python 3.8+][python_url] and
 ### Frontend
 
 Frontend part will be generated using awesome tool [Vite.js][vitejs_url]
-under the hood. So, you'll always get the latest version of `React`, `Preact`, 
-`Vue`, `Svelte`, `Solid`, `Lit`, `Qwik`, or pure JavaScript/TypeScript 
-templates for your project.
+under the hood. So, you'll always get the latest version of React, Preact, 
+Vue, Svelte, Solid, Lit, Qwik, or pure JavaScript/TypeScript templates for 
+your project.
 
-- Pure JavaScript frontend template:
-  - `vanilla` — generated template with pure JavaScript app.
-  - `vanilla-ts` — generated template with pure TypeScript app.
-- Frontend template with [React][react_url]:
-  - `react` — generated template with a common React app.
-  - `react-ts` — generated template with a TypeScript version of the React app.
-  - `react-swc` — generated template with a common React app with SWC.
-  - `react-swc-ts` — generated template with a TypeScript version of the React app with SWC.
-- Frontend template with [Preact][preact_url]:
-  - `preact` — generated template with a common Preact app.
-  - `preact-ts` — generated template with a TypeScript version of the Preact app.
-- Frontend template with [Vue.js][vuejs_url]:
-  - `vue` — generated template with a common Vue.js app.
-  - `vue-ts` — generated template with a TypeScript version of the Vue.js app.
-- Frontend template with [Svelte][svelte_url]:
-  - `svelte` — generated template with a common Svelte app.
-  - `svelte-ts` — generated template with a TypeScript version of the Svelte app.
-- Frontend template with [Solid][solid_url]:
-  - `solid` — generated template with a common Solid app.
-  - `solid-ts` — generated template with a TypeScript version of the Solid app.
-- Frontend template with [Lit][lit_url] web components:
-  - `lit` — generated template with a common Lit app.
-  - `lit-ts` — generated template a TypeScript version of the Lit app.
-- Frontend template with [Qwik][qwik_url] web components:
-  - `qwik` — generated template with a common Qwik app.
-  - `qwik-ts` — generated template a TypeScript version of the Qwik app.
+| Name                              | Description                      | JavaScript  | Typescript     |
+|-----------------------------------|----------------------------------|-------------|----------------|
+| Pure                              | A pure JavaScript/Typescript app | `vanilla`   | `vanilla-ts`   |
+| [React][react_url]                | A common React app               | `react`     | `react-ts`     |
+| [React (with SWC)][react_swc_url] | A common React app with SWC      | `react-swc` | `react-swc-ts` |
+| [Preact][preact_url]              | A common Preact app              | `preact`    | `preact-ts`    |
+| [Vue.js][vuejs_url]               | A common Vue.js app              | `vue`       | `vue-ts`       |
+| [Svelte][svelte_url]              | A common Svelte app              | `svelte`    | `svelte-ts`    |
+| [Solid][solid_url]                | A common Solid app               | `solid`     | `solid-ts`     |
+| [Lit][lit_url]                    | A common Lit app                 | `lit`       | `lit-ts`       |
+| [Qwik][qwik_url]                  | A common Qwik app                | `qwik`      | `qwik-ts`      |
 
 The `Next.js` and `Nuxt` frontend parts will be generated using the latest 
 `create-next-app` and `nuxi` utilities.
 
-- Frontend template with [Next.js][nextjs_url]:
-  - `next` — generated template with a common Next.js app.
-  - `next-ts` — generated template a TypeScript version of the Next.js app.
-  - `next-tailwind` — generated template with a common Next.js app with Tailwind CSS.
-  - `next-tailwind-ts` — generated template a TypeScript version of the Next.js app with Tailwind CSS.
-- Frontend template with [Nuxt][nuxt_url]:
-  - `nuxt` — generated template a TypeScript version of the Nuxt v3+ app.
+| Name                        | Description                              | JavaScript      | Typescript         |
+|-----------------------------|------------------------------------------|-----------------|--------------------|
+| [Next.js][nextjs_url]       | A common Next.js app                     | `next`          | `next-ts`          |
+| Next.js (with Tailwind CSS) | A common Next.js app with Tailwind CSS   | `next-tailwind` | `next-tailwind-ts` |
+| [Nuxt][nuxt_url]            | A TypeScript version of the Nuxt v3+ app | -               | `nuxt`             |
 
 > ❗️ Please make sure that you have `npm` version `7` or higher installed to 
 > create the frontend part of the project correctly. If you run the 
@@ -322,6 +305,7 @@ created by [Vic Shóstak][author] and distributed under
 [vitejs_url]: https://vitejs.dev/
 [vuejs_url]: https://vuejs.org/
 [react_url]: https://reactjs.org/
+[react_swc_url]: https://swc.rs/
 [preact_url]: https://preactjs.com/
 [nextjs_url]: https://nextjs.org/
 [nuxt_url]: https://nuxt.com/
