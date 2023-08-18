@@ -187,7 +187,10 @@ Make sure that you have [Python 3.8+][python_url] and
   - `qwik` — generated template with a common Qwik app.
   - `qwik-ts` — generated template a TypeScript version of the Qwik app.
 - Frontend template with [Next.js][nextjs_url]:
-  - `next` — running interactive wizard for generate the Next.js app.
+  - `next` — generated template with a common Next.js app.
+  - `next-tailwind` — generated template with a common Next.js app with Tailwind CSS.
+  - `next-ts` — generated template a TypeScript version of the Next.js app.
+  - `next-tailwind-ts` — generated template a TypeScript version of the Next.js app with Tailwind CSS.
 - Frontend template with [Nuxt][nuxt_url]:
   - `nuxt` — running interactive wizard for generate the Nuxt v3 app.
 
