@@ -114,37 +114,66 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	*/
 
 	if frontend != "none" {
-		// Checking, if use custom templates.
+		// Checking, if you use custom templates.
 		if useCustomTemplate {
 			// Clone frontend files from git repository.
 			if err := cgapp.GitClone("frontend", frontend); err != nil {
 				return cgapp.ShowError(err.Error())
 			}
 		} else {
-			switch {
-			case frontend == "next" || frontend == "next-ts":
-				var isTypeScript string
-				if frontend == "next-ts" {
-					isTypeScript = "--typescript"
-				}
-
+			switch frontend {
+			case "next":
 				// Create a default frontend template with Next.js (React).
 				if err := cgapp.ExecCommand(
-					"npx", []string{"create-next-app@latest", "frontend", isTypeScript}, true,
+					"npx",
+					[]string{
+						"create-next-app@latest", "frontend",
+						"--javascript",
+						"--eslint",
+						"--app",
+						"--tailwind", "false",
+						"--src-dir", "false",
+						"--import-alias", "false",
+					}, true,
 				); err != nil {
 					return err
 				}
-			case frontend == "nuxt3":
-				// Create a default frontend template with Nuxt 3 (Vue.js 3, TypeScript).
+			case "next-ts":
+				// Create a default frontend template with Next.js (React, Typescript).
 				if err := cgapp.ExecCommand(
-					"npx", []string{"nuxi", "init", "frontend"}, true,
+					"npx",
+					[]string{
+						"create-next-app@latest", "frontend",
+						"--typescript",
+						"--eslint",
+						"--app",
+						"--tailwind", "false",
+						"--src-dir", "false",
+						"--import-alias", "false",
+					}, true,
+				); err != nil {
+					return err
+				}
+			case "nuxt":
+				// Create a default frontend template with Nuxt v3 (Vue.js v3, Typescript).
+				if err := cgapp.ExecCommand(
+					"npx",
+					[]string{
+						"nuxi@latest", "init", "frontend",
+					}, true,
 				); err != nil {
 					return err
 				}
 			default:
 				// Create a default frontend template from Vite (Pure JS/TS, React, Preact, Vue, Svelte, Lit).
 				if err := cgapp.ExecCommand(
-					"npm", []string{"init", "vite@latest", "frontend", "--", "--template", frontend}, true,
+					"npm",
+					[]string{
+						"create", "vite@latest", "frontend",
+						"--",
+						"--template",
+						frontend,
+					}, true,
 				); err != nil {
 					return err
 				}

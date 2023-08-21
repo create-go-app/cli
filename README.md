@@ -137,40 +137,36 @@ cgapp deploy [OPTION]
 
 ### Frontend
 
-- Pure JavaScript frontend template:
-  - `vanilla` — generated template with pure JavaScript app.
-  - `vanilla-ts` — generated template with pure TypeScript app.
-- Frontend template with [React][react_url]:
-  - `react` — generated template with a common React app.
-  - `react-ts` — generated template with a TypeScript version of the React app.
-- Frontend template with [Preact][preact_url]:
-  - `preact` — generated template with a common Preact app.
-  - `preact-ts` — generated template with a TypeScript version of the Preact app.
-- Frontend template with [Next.js][nextjs_url]:
-  - `next` — generated template with a common Next.js app.
-  - `next-ts` — generated template with a TypeScript version of the Next.js app.
-- Frontend template with [Nuxt 3][nuxt3_url]:
-  - `nuxt3` — generated template with a common Nuxt 3 app.
-- Frontend template with [Vue.js][vuejs_url]:
-  - `vue` — generated template with a common Vue.js app.
-  - `vue-ts` — generated template with a TypeScript version of the Vue.js app.
-- Frontend template with [Svelte][svelte_url]:
-  - `svelte` — generated template with a common Svelte app.
-  - `svelte-ts` — generated template with a TypeScript version of the Svelte app.
-- Frontend template with [Lit][lit_url] web components:
-  - `lit` — generated template with a common Lit app.
-  - `lit-ts` — generated template a TypeScript version of the Lit app.
+Frontend part will be generated using awesome tool [Vite.js][vitejs_url]
+under the hood.
 
-> ☝️ Frontend part will be generated using awesome tool [Vite.js][vitejs_url] 
-> under the hood. So, you'll always get the latest version of `React`, 
-> `Preact`, `Vue`, `Svelte`, `Lit` or pure JavaScript/TypeScript templates 
-> for your project! And the `Next.js` and `Nuxt 3` frontend parts will be 
-> generated using the `create-next-app` and `nuxi` utilities.
->
-> Please make sure that you have `npm` version `7` or higher installed to 
-> create the frontend part of the project correctly. If you run the `cgapp 
-> create` command using our [Docker image][docker_url], `npm` of the correct 
-> version is **already** included.
+So, you'll always get the latest version of React, Preact, Vue, Svelte,
+Solid, Lit, Qwik, or pure JavaScript/TypeScript templates for your project.
+
+| Name                              | Description                      | JavaScript  | Typescript     |
+|-----------------------------------|----------------------------------|-------------|----------------|
+| Pure                              | A pure JavaScript/Typescript app | `vanilla`   | `vanilla-ts`   |
+| [React][react_url]                | A common React app               | `react`     | `react-ts`     |
+| [React (with SWC)][react_swc_url] | A React app with SWC             | `react-swc` | `react-swc-ts` |
+| [Preact][preact_url]              | A common Preact app              | `preact`    | `preact-ts`    |
+| [Vue.js][vuejs_url]               | A common Vue.js app              | `vue`       | `vue-ts`       |
+| [Svelte][svelte_url]              | A common Svelte app              | `svelte`    | `svelte-ts`    |
+| [Solid][solid_url]                | A common Solid app               | `solid`     | `solid-ts`     |
+| [Lit][lit_url]                    | A common Lit app                 | `lit`       | `lit-ts`       |
+| [Qwik][qwik_url]                  | A common Qwik app                | `qwik`      | `qwik-ts`      |
+
+The `Next.js` and `Nuxt` frontend parts will be generated using the latest
+`create-next-app` and `nuxi` utilities.
+
+| Name                                               | Description                     | JavaScript      | Typescript         |
+|----------------------------------------------------|---------------------------------|-----------------|--------------------|
+| [Next.js][nextjs_url]                              | A common Next.js app            | `next`          | `next-ts`          |
+| [Nuxt][nuxt_url]                                   | A common Nuxt v3 app            | -               | `nuxt`             |
+
+> ❗️ Please make sure that you have `npm` version `7` or higher installed to
+> create the frontend part of the project correctly. If you run the
+> `cgapp -create` command using our [Docker image][docker_url], `npm` of the
+> correct version is **already** included.
 
 ## 🚚 Pre-configured Ansible roles
 
@@ -290,7 +286,7 @@ created by [Vic Shóstak][author] and distributed under
 [react_url]: https://reactjs.org/
 [preact_url]: https://preactjs.com/
 [nextjs_url]: https://nextjs.org/
-[nuxt3_url]: https://v3.nuxtjs.org/
+[nuxt_url]: https://v3.nuxtjs.org/
 [svelte_url]: https://svelte.dev/
 [lit_url]: https://lit.dev/
 [chi_url]: https://github.com/go-chi/chi
@@ -300,3 +296,6 @@ created by [Vic Shóstak][author] and distributed under
 [python_url]: https://www.python.org/downloads/
 [ansible_url]: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems
 [brew_url]: https://brew.sh/
+[qwik_url]: https://github.com/BuilderIO/qwik
+[solid_url]: https://github.com/solidjs/solid
+[react_swc_url]: https://swc.rs/
