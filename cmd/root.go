@@ -47,7 +47,7 @@ frontend (JavaScript, TypeScript) and deploy automation
 -> Focus on writing code and thinking of business logic!
 <- The Create Go App CLI will take care of the rest.
 
-A helpful documentation and next steps -> https://create-go.app/`,
+A helpful documentation and next steps -> https://github.com/create-go-app/cli/wiki`,
 }
 
 func init() {

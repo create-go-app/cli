@@ -276,7 +276,7 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 	}
 	cgapp.ShowMessage(
 		"",
-		"* A helpful documentation and next steps with your project is here https://create-go.app/wiki",
+		"* A helpful documentation and next steps with your project is here https://github.com/create-go-app/cli/wiki",
 		false, true,
 	)
 	cgapp.ShowMessage(
