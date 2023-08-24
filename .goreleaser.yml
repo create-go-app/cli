@@ -8,7 +8,7 @@ before:
   hooks:
     - go mod download
     - go mod tidy
-    - go run github.com/google/wire/cmd/wire@latest
+    - go run github.com/google/wire/cmd/wire@latest ./...
     - go run github.com/securego/gosec/v2/cmd/gosec@latest -quiet ./...
     - go run github.com/go-critic/go-critic/cmd/gocritic@latest check -enableAll ./...
     - go run github.com/google/osv-scanner/cmd/osv-scanner@latest -r .
@@ -169,7 +169,7 @@ changelog:
     exclude: [ "^*.md", "^*.ya?ml" ]
   groups:
     - title: Features
-      regexp: ^.*?(F|f)eature.*?$
+      regexp: ^.*?((F|f)eature)|((A|a)dd).*?$
       order: 0
     - title: Bug fixes
       regexp: ^.*?((B|b)ug)|((F|f)ix).*?$

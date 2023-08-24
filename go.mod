@@ -3,7 +3,7 @@ module github.com/create-go-app/cli/v5
 go 1.21
 
 require (
-	github.com/charmbracelet/lipgloss v0.7.1
+	github.com/charmbracelet/lipgloss v0.8.0
 	github.com/google/wire v0.5.0
 	github.com/knadh/koanf/parsers/yaml v0.1.0
 	github.com/knadh/koanf/providers/env v0.1.0
