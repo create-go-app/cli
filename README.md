@@ -47,7 +47,7 @@ go install github.com/create-go-app/cli/v5/cmd/cgapp@latest
 Next, generate an example configuration file in the current dir:
 
 ```console
-cgapp -init
+cgapp init
 ```
 
 When the generation process is finished, open the `.cgapp.yml` file and fill 
@@ -63,14 +63,14 @@ out your credentials and other info.
 Let's create a new project:
 
 ```console
-cgapp -create
+cgapp create
 ```
 
 Now, make something awesome in the `backend` and `frontend` dirs, and you're 
 ready to automatically deploy to the remote host:
 
 ```console
-cgapp -deploy
+cgapp deploy
 ```
 
 That's all you need to know to start! 🎉
@@ -85,7 +85,7 @@ container:
 docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/cgapp:latest [COMMAND]
 ```
 
-> ❗️ Warning: the `-deploy` command is currently **unavailable** in this 
+> ❗️ Warning: the `deploy` command is currently **unavailable** in this 
 > image.
 
 ## 📖 Project Wiki
@@ -98,46 +98,46 @@ Also, the most frequently asked questions (FAQ) is [here][repo_wiki_faq_url].
 
 ## ⚙️ Commands & Options
 
-### `-init`
+### `init`
 
 CLI command for generate an example config file (called `.cgapp.yml`) in the 
 current dir.
 
 ```console
-cgapp -init
+cgapp init
 ```
 
-### `-create`
+### `create`
 
 CLI command for create a new project in the current dir.
 
 ```console
-cgapp -create [OPTION]
+cgapp create [OPTION]
 ```
 
-| Option | Description                                            | Type     | Default        | Required? |
-|--------|--------------------------------------------------------|----------|----------------|-----------|
-| `-p`   | Enables to define a path (or URL) for the config file. | `string` | `".cgapp.yml"` | No        |
+| Option     | Description                       | Type     | Default        | Required? |
+|------------|-----------------------------------|----------|----------------|-----------|
+| `--config` | Path (or URL) to the config file. | `string` | `".cgapp.yml"` | No        |
 
 ![cgapp_create][cgapp_create_gif]
 
 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-create
 
-### `-deploy`
+### `deploy`
 
 CLI command for deploy Docker containers with your project via Ansible to 
 the remote host.
 
 ```console
-cgapp -deploy [OPTION]
+cgapp deploy [OPTION]
 ```
 
 Make sure that you have [Python 3.8+][python_url] and
 [Ansible 2.9+][ansible_url] installed on your computer.
 
-| Option | Description                                            | Type     | Default        | Required? |
-|--------|--------------------------------------------------------|----------|----------------|-----------|
-| `-p`   | Enables to define a path (or URL) for the config file. | `string` | `".cgapp.yml"` | No        |
+| Option     | Description                       | Type     | Default        | Required? |
+|------------|-----------------------------------|----------|----------------|-----------|
+| `--config` | Path (or URL) to the config file. | `string` | `".cgapp.yml"` | No        |
 
 ![cgapp_deploy][cgapp_deploy_gif]
 
