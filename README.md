@@ -187,7 +187,7 @@ The `Next.js` and `Nuxt` frontend parts will be generated using the latest
 
 > ❗️ Please make sure that you have `npm` version `7` or higher installed to 
 > create the frontend part of the project correctly. If you run the 
-> `cgapp -create` command using our [Docker image][docker_url], `npm` of the 
+> `cgapp create` command using our [Docker image][docker_url], `npm` of the 
 > correct version is **already** included.
 
 ## 🚚 Pre-configured Ansible roles
