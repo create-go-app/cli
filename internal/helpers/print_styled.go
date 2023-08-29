@@ -28,6 +28,8 @@ func PrintStyled(s, state, style string) {
 		state = lg.Foreground(errorColor).SetString("✕ ").String()
 	case "warning":
 		state = lg.Foreground(warningColor).SetString("‼ ").String()
+	default:
+		state = lg.SetString("").String()
 	}
 
 	// Concat state with the given string.

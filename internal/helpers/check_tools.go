@@ -6,19 +6,15 @@ import (
 	"os/exec"
 )
 
-// CheckCLITools ...
+// CheckCLITools function for checking required tools by names.
 func CheckCLITools(commands []string) error {
 	// Create a new slice for join errors.
 	errs := make([]error, 0)
 
-	//
+	// Loop for given commands.
 	for _, command := range commands {
 		// Start execution command.
-		cmd := exec.Command(command, "-v")
-
-		//
-		_, err := cmd.Output()
-		if err != nil {
+		if err := exec.Command(command, "-v").Start(); err != nil {
 			errs = append(errs, fmt.Errorf("'%s' is required, but not installed on your system", command))
 		}
 	}
