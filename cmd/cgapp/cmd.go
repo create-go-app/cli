@@ -10,7 +10,7 @@ import (
 	"github.com/create-go-app/cli/v5/internal/helpers"
 )
 
-// runCmd ...
+// runCmd function to run cgapp cmd process.
 func runCmd() {
 	// Start timer.
 	start := time.Now()

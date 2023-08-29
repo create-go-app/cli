@@ -26,6 +26,6 @@
 package main
 
 func main() {
-	// Run cmd.
+	// Run cgapp cmd process.
 	runCmd()
 }
