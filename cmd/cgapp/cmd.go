@@ -18,7 +18,7 @@ func runCmd() {
 	// Parse flags.
 	flag.Parse()
 
-	// Set 'create' and 'deploy' config paths from option.
+	// Set 'create' and 'deploy' config paths from option '-c'.
 	createConfigPath, deployConfigPath := flag.Arg(2), flag.Arg(2)
 
 	helpers.PrintStyled("👋 Hello and welcome to the Create Go App CLI (v5)!", "", "margin-top-bottom")
