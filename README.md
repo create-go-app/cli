@@ -107,6 +107,9 @@ current dir.
 cgapp init
 ```
 
+> 💡 Hint: you can always refer to our [source code][repo_config_url] to 
+> see the configuration example.
+
 ### `create`
 
 CLI command for create a new project in the current dir.
@@ -118,8 +121,6 @@ cgapp create [OPTION]
 | Option | Description                       | Type     | Default        | Required? |
 |--------|-----------------------------------|----------|----------------|-----------|
 | `-c`   | Path (or URL) to the config file. | `string` | `".cgapp.yml"` | No        |
-
-![cgapp_create][cgapp_create_gif]
 
 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-create
 
@@ -138,8 +139,6 @@ Make sure that you have [Python 3.8+][python_url] and
 | Option | Description                       | Type     | Default        | Required? |
 |------|-----------------------------------|----------|----------------|-----------|
 | `-c` | Path (or URL) to the config file. | `string` | `".cgapp.yml"` | No        |
-
-![cgapp_deploy][cgapp_deploy_gif]
 
 📖 Docs: https://github.com/create-go-app/cli/wiki/Command-deploy
 
@@ -225,12 +224,12 @@ If you want to say **thank you** or/and support active development of
 `Create Go App CLI`:
 
 - Add a [GitHub Star][repo_url] to the project.
-- Tweet about project [on your Twitter][twitter_url] for all of your friends 
-  and colleagues.
+- Send message about project (with this [link][repo_url]) for all of your 
+  friends and colleagues.
 - Write interesting articles about project on [Dev.to][dev_to_url], or 
   personal blog.
 - Join DigitalOcean at our [referral link][author_do_ref_url] (your profit is 
-  **$100**, and we get $25).
+  $100, and we get $25).
 - Leave a review on our [ProductHunt][cgapp_product-hunt_url] page.
 
 [![Product Hunt][cgapp_product-hunt_img]][cgapp_product-hunt_url]
@@ -277,11 +276,10 @@ created by [Vic Shóstak][author] and distributed under
 [repo_wiki_url]: https://github.com/create-go-app/cli/wiki
 [repo_wiki_img]: https://img.shields.io/badge/docs-wiki_page-blue?style=for-the-badge&logo=none
 [repo_wiki_faq_url]: https://github.com/create-go-app/cli/wiki/FAQ
+[repo_config_url]: https://github.com/create-go-app/cli/blob/main/embed/configs/default.yml
 
 <!-- Project -->
 
-[cgapp_deploy_gif]: https://user-images.githubusercontent.com/11155743/116796941-3c421e00-aae9-11eb-9575-d72550814d7a.gif
-[cgapp_create_gif]: https://user-images.githubusercontent.com/11155743/116796937-38160080-aae9-11eb-8e21-fb1be2750aa4.gif
 [cgapp_product-hunt_url]: https://www.producthunt.com/posts/create-go-app?utm_source=badge-review&utm_medium=badge&utm_souce=badge-create-go-app#discussion-body
 [cgapp_product-hunt_img]: https://api.producthunt.com/widgets/embed-image/v1/review.svg?post_id=316086&theme=light
 [cgapp_chi-template_url]: https://github.com/create-go-app/chi-go-template
