@@ -108,7 +108,7 @@ cgapp init
 ```
 
 > 💡 Hint: you can always refer to our [source code][repo_config_url] to 
-> see the configuration example.
+> see the default configuration file.
 
 ### `create`
 
