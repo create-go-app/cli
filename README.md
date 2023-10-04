@@ -223,6 +223,10 @@ create the **most useful** tool for developers on the web today.
 
 Together, we can make this project **better** every day! 😘
 
+## 🔥 Other projects of the authors
+
+[![gowebly logo][gowebly_img_url]][gowebly_url]
+
 ## ⚠️ License
 
 [`Create Go App CLI`][repo_url] is free and open-source software licensed under 
@@ -299,3 +303,8 @@ created by [Vic Shóstak][author] and distributed under
 [qwik_url]: https://github.com/BuilderIO/qwik
 [solid_url]: https://github.com/solidjs/solid
 [react_swc_url]: https://swc.rs/
+
+<!-- Other projects links -->
+
+[gowebly_url]: https://github.com/gowebly/gowebly
+[gowebly_img_url]: https://github.com/gowebly/gowebly/assets/11155743/55c80da2-30c6-45e7-a813-1ddc42764480
