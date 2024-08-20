@@ -1,18 +1,15 @@
-.PHONY: clean lint security critic test install build release build-and-push-images delete-tag update-pkg-cache
+.PHONY: clean security critic test install build release build-and-push-images delete-tag update-pkg-cache
 
 clean:
 	rm -rf ./tmp ./tests
 
-lint:
-	$(GOPATH)/bin/golangci-lint run ./...
-
 security:
-	$(GOPATH)/bin/gosec -quiet ./...
+	go run github.com/securego/gosec/v2/cmd/gosec@latest -quiet ./...
 
 critic:
-	$(GOPATH)/bin/gocritic check -enableAll ./...
+	go run github.com/go-critic/go-critic/cmd/gocritic@latest check -enableAll ./...
 
-test: clean lint security critic
+test: clean security critic
 	mkdir ./tests
 	go test -coverprofile=./tests/coverage.out ./...
 	go tool cover -func=./tests/coverage.out
@@ -22,11 +19,11 @@ install: test
 	CGO_ENABLED=0 go build -ldflags="-s -w" -o $(GOPATH)/bin/cgapp ./cmd/cgapp/main.go
 
 build: test
-	$(GOPATH)/bin/goreleaser --snapshot --skip-publish --rm-dist
+	goreleaser --snapshot
 
 release: test
 	git tag -a v$(VERSION) -m "$(VERSION)"
-	$(GOPATH)/bin/goreleaser --snapshot --skip-publish --rm-dist
+	goreleaser --snapshot
 
 build-and-push-images: test
 	docker build -t docker.io/koddr/cgapp:latest .

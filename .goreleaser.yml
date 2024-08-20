@@ -1,3 +1,5 @@
+version: 2
+
 project_name: cgapp
 report_sizes: true
 
@@ -8,32 +10,30 @@ before:
   hooks:
     - go mod download
     - go mod tidy
-#    - go run github.com/google/wire/cmd/wire@latest
+    #    - go run github.com/google/wire/cmd/wire@latest
     - go run github.com/securego/gosec/v2/cmd/gosec@latest -quiet ./...
     - go run github.com/go-critic/go-critic/cmd/gocritic@latest check -enableAll ./...
     - go run github.com/google/osv-scanner/cmd/osv-scanner@latest -r .
     - go test -race ./...
 
 builds:
-  -
-    id: default
+  - id: default
     main: ./cmd/cgapp/main.go
-    env: [ CGO_ENABLED=0 ]
-    goos: [ linux, windows, darwin ]
-    goarch: [ amd64, arm64 ]
+    env: [CGO_ENABLED=0]
+    goos: [linux, windows, darwin]
+    goarch: [amd64, arm64]
 
 upx:
-  -
-    ids: [ default ]
+  - ids: [default]
     enabled: true
     compress: best
     lzma: true
     brute: true
-    goos: [ linux, windows ] # skip darwin (macOS 13.x Ventura is not support now)
-    goarch: [ amd64, arm64 ]
+    goos: [linux, windows] # skip darwin (macOS 13.x Ventura is not support now)
+    goarch: [amd64, arm64]
 
 release:
-  ids: [ default ]
+  ids: [default]
   draft: true
   replace_existing_draft: true
   target_commitish: "{{ .Commit }}"
@@ -44,46 +44,45 @@ release:
     ## ⚙️ The `{{ .Tag }}` release
   footer: |
     ## Install or update
-    
+
     For native Go installation (any platforms):
-    
+
     ```console
     go install github.com/create-go-app/cli/v4/cmd/cgapp@latest
     ```
 
     For [Homebrew][brew_url] users (GNU/Linux, macOS):
-    
+
     ```console
     # Tap a new formula:
     brew tap create-go-app/tap
-    
+
     # Installation:
     brew install create-go-app/tap/cli
-    
+
     # Upgrade to the latest:
     brew upgrade create-go-app/tap/cli
     ```
-    
+
     > 💡 Note: See the [`Wiki page`][wiki_url] to understand the project structure and get general recommendations.
-    
+
     ## Your help to improve project
-    
+
     I'd be truly grateful for help with:
-    
+
     - Creating tests (and/or benchmarks) for code.
     - Improving existing functions, structs, or tests.
     - Feature requests with interesting functions that would be good to add.
-    
+
     Your PRs & issues are welcome! Thanks 😉
-    
+
     [brew_url]: https://brew.sh
     [wiki_url]: https://github.com/create-go-app/cli/wiki
   disable: false
   skip_upload: false
 
 brews:
-  -
-    repository:
+  - repository:
       owner: create-go-app
       name: homebrew-tap
       branch: main
@@ -97,18 +96,18 @@ brews:
       name: Vic Shóstak
       email: koddr.me@gmail.com
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
-    folder: Formula
+    directory: Formula
     caveats: |
       After install (or update) cgapp, let's create a new project via interactive console UI in current folder:
-  
+
       $ cgapp create
-      
-      Next, open the generated Ansible inventory file (called hosts.ini) and fill in the variables according to your server configuration. 
-      
+
+      Next, open the generated Ansible inventory file (called hosts.ini) and fill in the variables according to your server configuration.
+
       And you're ready to automatically deploy this project:
-      
+
       $ cgapp deploy
-      
+
       That's all you need to know to start! 🎉
     homepage: "https://github.com/create-go-app/cli"
     description: |
@@ -121,9 +120,8 @@ brews:
       - name: npm
 
 dockers:
-  -
-    id: "{{ .ProjectName }}"
-    ids: [ default ]
+  - id: "{{ .ProjectName }}"
+    ids: [default]
     image_templates:
       - "koddr/{{ .ProjectName }}:latest"
       - "koddr/{{ .ProjectName }}:{{ .Tag }}"
@@ -141,32 +139,30 @@ dockers:
       - --tls-verify=false
 
 nfpms:
-  -
-    maintainer: Vic Shóstak <koddr.me@gmail.com>
+  - maintainer: Vic Shóstak <koddr.me@gmail.com>
     description: |
       Create a new production-ready project with backend (Golang), frontend (JavaScript, TypeScript) and deploy automation (Ansible, Docker) by running one CLI command.
       Focus on writing code and thinking of business-logic! The CLI will take care of the rest.
     homepage: "https://github.com/create-go-app/cli"
     license: Apache 2.0
-    formats: [ deb, rpm, apk, archlinux ]
-    dependencies: [ git, npm ]
+    formats: [deb, rpm, apk, archlinux]
+    dependencies: [git, npm]
 
 archives:
-  -
-    format_overrides:
+  - format_overrides:
       - goos: windows
         format: zip
-    files: [ LICENSE, README.md ]
+    files: [LICENSE, README.md]
 
 checksum:
   name_template: "checksums.txt"
 
 changelog:
-#  use: github
+  #  use: github
   sort: asc
   abbrev: -1
   filters:
-    exclude: [ "^*.md", "^*.ya?ml" ]
+    exclude: ["^*.md", "^*.ya?ml"]
   groups:
     - title: Features
       regexp: ^.*?(F|f)eature.*?$
