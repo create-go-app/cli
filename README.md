@@ -1,19 +1,19 @@
+<div align="center">
+
 [![Create Go App][repo_logo_img]][repo_url]
 
 # Create Go App CLI
 
 [![Go version][go_version_img]][go_dev_url]
 [![Go report][go_report_img]][go_report_url]
-[![Code coverage][go_code_coverage_img]][repo_url]
+[![Code coverage][go_code_coverage_img]][repo_url]<br/>
 [![Wiki][repo_wiki_img]][repo_wiki_url]
 [![License][repo_license_img]][repo_license_url]
 
 Create a new production-ready project with **backend** (Golang),
-**frontend** (JavaScript, TypeScript) and **deploy automation** (Ansible,
-Docker) by running only one CLI command.
+**frontend** (JavaScript, TypeScript) and **deploy automation** (Ansible, Docker) by running only one command. Focus on **writing your code** and **thinking of the business-logic**! The CLI will take care of the rest.
 
-Focus on **writing your code** and **thinking of the business-logic**! The CLI
-will take care of the rest.
+</div>
 
 ## ⚡️ Quick start
 
