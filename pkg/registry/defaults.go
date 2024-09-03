@@ -75,6 +75,7 @@ var (
 					"nuxt",
 					"vue",
 					"vue-ts",
+					"sveltekit",
 					"svelte",
 					"svelte-ts",
 					"solid",
