@@ -158,11 +158,11 @@ Solid, Lit, Qwik, or pure JavaScript/TypeScript templates for your project.
 The `Next.js` and `Nuxt` frontend parts will be generated using the latest
 `create-next-app` and `nuxi` utilities.
 
-| Name                       | Description            | JavaScript | Typescript |
-| -------------------------- | ---------------------- | ---------- | ---------- |
-| [Next.js][nextjs_url]      | A common Next.js app   | `next`     | `next-ts`  |
-| [Nuxt][nuxt_url]           | A common Nuxt v3 app   | -          | `nuxt`     |
-| [Sveltekit][sveltekit_url] | A common Sveltekit app | -          | `svelte`   |
+| Name                       | Description            | JavaScript | Typescript  |
+| -------------------------- | ---------------------- | ---------- | ----------- |
+| [Next.js][nextjs_url]      | A common Next.js app   | `next`     | `next-ts`   |
+| [Nuxt][nuxt_url]           | A common Nuxt v3 app   | -          | `nuxt`      |
+| [Sveltekit][sveltekit_url] | A common Sveltekit app | -          | `sveltekit` |
 
 > ❗️ Please make sure that you have `npm` version `7` or higher installed to
 > create the frontend part of the project correctly. If you run the
