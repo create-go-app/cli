@@ -164,6 +164,18 @@ func runCreateCmd(cmd *cobra.Command, args []string) error {
 				); err != nil {
 					return err
 				}
+			case "sveltekit":
+				// Create a default frontend template with Sveltekit (Svelte, Typescript).
+				if err := cgapp.ExecCommand(
+					"npm",
+					[]string{
+						"create", "@svelte-add/kit@latest", "frontend",
+						"--",
+						"--with", "typescript+eslint+prettier",
+					}, true,
+				); err != nil {
+					return err
+				}
 			default:
 				// Create a default frontend template from Vite (Pure JS/TS, React, Preact, Vue, Svelte, Lit).
 				if err := cgapp.ExecCommand(
