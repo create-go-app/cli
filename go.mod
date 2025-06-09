@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7
-	github.com/go-git/go-git/v5 v5.16.1
+	github.com/go-git/go-git/v5 v5.16.2
 	github.com/mattn/go-colorable v0.1.14
 	github.com/spf13/cobra v1.9.1
 )
