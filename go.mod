@@ -8,7 +8,7 @@ require (
 	github.com/AlecAivazis/survey/v2 v2.3.7
 	github.com/go-git/go-git/v5 v5.16.2
 	github.com/mattn/go-colorable v0.1.14
-	github.com/spf13/cobra v1.10.1
+	github.com/spf13/cobra v1.10.2
 )
 
 require (
